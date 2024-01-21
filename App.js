@@ -9,13 +9,25 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 export default function App() {
-  // TODO IMPORTANT: do sth about dynamic island / notch / standard screens!!!
+  return (
+    <SafeAreaProvider>
+      <MainComponent />
+    </SafeAreaProvider>
+  );
+}
+
+export function MainComponent() {
   const [amountDrank, setAmountDrank] = useState(0);
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <InfoText amountDrank={amountDrank}></InfoText>
       <InputDrink setAmountDrank={setAmountDrank} />
       <Statistics />
@@ -39,8 +51,8 @@ const styles = StyleSheet.create({
   infoText: {
     width: "100%",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   inputDrinkStyles: {
     flexDirection: "row",
