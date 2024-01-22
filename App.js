@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Button,
   ScrollView,
 } from "react-native";
 import { useState } from "react";
@@ -13,65 +14,100 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Picker } from "@react-native-picker/picker";
+
+const Root = createNativeStackNavigator();
 
 export default function App() {
+  const [amountDrank, setAmountDrank] = useState(0);
+
   return (
     <SafeAreaProvider>
-      <MainComponent />
+      <NavigationContainer>
+        <Root.Navigator
+          screenOptions={{
+            headerShown: false, //true,
+            // headerTitle: "",
+          }}
+        >
+          <Root.Screen name="home">
+            {(props) => (
+              <HomeScreen
+                {...props}
+                amountDrank={amountDrank}
+                setAmountDrank={setAmountDrank}
+              />
+            )}
+          </Root.Screen>
+          <Root.Screen name="inputDrinkAmountScreen">
+            {(props) => (
+              <InputDrinkAmountScreen
+                {...props}
+                amountDrank={amountDrank}
+                setAmountDrank={setAmountDrank}
+              />
+            )}
+          </Root.Screen>
+        </Root.Navigator>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
 
-export function MainComponent() {
-  const [amountDrank, setAmountDrank] = useState(0);
+function HomeScreen({ navigation, route, amountDrank, setAmountDrank }) {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <InfoText amountDrank={amountDrank}></InfoText>
-      <InputDrink setAmountDrank={setAmountDrank} />
+      <InputDrink navigation={navigation} setAmountDrank={setAmountDrank} />
       <Statistics />
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, // <-- fills the screen, equivalent to height 100%
-    backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
-    width: "100%",
-  },
-  glassStyles: {
-    width: 25,
-    height: 25,
-  },
-  infoText: {
-    width: "100%",
-    flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-  },
-  inputDrinkStyles: {
-    flexDirection: "row",
-    width: "100%",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  listItem: {
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  statistics: {
-    width: "100%",
-    flex: 1,
-    alignItems: "center", // Center horizontally
-    justifyContent: "center",
-  },
+const milliliterOptions = Array.from({ length: 75 }, (_, index) => {
+  return { label: `${(index + 1) * 10} ml`, value: (index + 1) * 10 };
 });
+
+function InputDrinkAmountScreen({
+  navigation,
+  route,
+  amountDrank,
+  setAmountDrank,
+}) {
+  const insets = useSafeAreaInsets();
+  const [volumeDrank, setVolumeDrank] = useState();
+
+  return (
+    <View style={[/*styles.container,*/ { paddingTop: insets.top }]}>
+      <View style={styles.inputDrinkAmountScreen.header}>
+        <Text style={styles.inputDrinkAmountScreen.header.text}>
+          How much did you drink?
+        </Text>
+      </View>
+      <Picker
+        style={styles.inputDrinkAmountScreen.picker}
+        selectedValue={amountDrank}
+        onValueChange={(itemValue, itemIndex) => setVolumeDrank(itemValue)}
+      >
+        {milliliterOptions.map((item) => (
+          <Picker.Item key={item.value} label={item.label} value={item.value} />
+        ))}
+      </Picker>
+      <View style={styles.inputDrinkAmountScreen.bottle}>
+        <Text>placeholder for image, filling up a bottle as you scroll</Text>
+      </View>
+      {/* <Text>
+        What did you drink? I know you drank {route.params.glassType.size}ml of
+        something
+      </Text> */}
+    </View>
+  );
+}
 
 function InfoText({ amountDrank }) {
   return (
@@ -81,47 +117,24 @@ function InfoText({ amountDrank }) {
   );
 }
 
-function InputDrink({ setAmountDrank }) {
-  const glassTypes = [
-    // { id: 1, size: 40, src: "smshotglass" },
-    // { id: 2, size: 50, src: "mdshotglass" },
-    // { id: 3, size: 100, src: "xlshotglass" },
-    { id: 4, size: 150, src: "wineglass" },
-    { id: 5, size: 300, src: "smglass" },
-    { id: 6, size: 400, src: "mdglass" },
-    { id: 7, size: 500, src: "xlglass" },
-    // { id: 8, size: 700, src: "xxlglass" },
-  ];
-
-  const listGlasses = glassTypes.map((glass) => (
-    <li key={glass.id}>
-      <Image style={styles.glassStyles} source={glassImages[glass.src]}></Image>
-    </li>
-  ));
-
+function InputDrink({ setAmountDrank, navigation }) {
   return (
     <>
-      <View style={styles.inputDrinkStyles}>
-        <ScrollView
-          bounces={true}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          {glassTypes.map((glass) => (
-            <View key={glass.id} style={styles.listItem}>
-              <TouchableOpacity
-                onPress={() => Alert.alert(`img w/ id:${glass.id} pressed!`)}
-              >
-                <Image
-                  style={styles.glassStyles}
-                  source={glassImages[glass.src]}
-                />
-              </TouchableOpacity>
-            </View>
-          ))}
-          {/* <Button title="Add drink" onPress={() => addDrink(amountDrank, setAmountDrank)} /> */}
-        </ScrollView>
-      </View>
+      {/* <Button
+          style={styles.addDrinkButton}
+          title="+"
+          onPress={() => navigation.navigate("inputDrinkAmountScreen")}
+        /> */}
+      <TouchableOpacity
+        style={styles.addDrinkButtonWrapper}
+        onPress={() => navigation.navigate("inputDrinkAmountScreen")}
+      >
+        <Image
+          style={styles.addDrinkButton}
+          source={require("./assets/icons/waterbottle.png")}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
     </>
   );
 }
@@ -141,13 +154,63 @@ function addDrink(amountDrank, setAmountDrank) {
   setAmountDrank(amountDrank + 1);
 }
 
-const glassImages = {
-  // smshotglass: require('@assets/glass_types/smshotglass.png'),
-  // mdshotglass: require('@assets/glass_types/mdshotglass.png'),
-  // xlshotglass: require('@assets/glass_types/xlshotglass.png'),
-  wineglass: require("./assets/glass_types/wineglass.png"),
-  smglass: require("./assets/glass_types/smglass.png"),
-  mdglass: require("./assets/glass_types/mdglass.png"),
-  xlglass: require("./assets/glass_types/xlglass.png"),
-  // xxlglass: require('@assets/glass_types/xxlglass.png'),
-};
+// CSS
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // <-- fills the screen, equivalent to height 100%
+    backgroundColor: "#fff",
+    // alignItems: "center",
+    // justifyContent: "center",
+    width: "100%",
+  },
+  inputDrinkAmountScreen: {
+    header: {
+      height: "25%",
+      width: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+      text: {
+        fontSize: 35,
+        fontWeight: 300,
+      },
+    },
+    picker: {
+      height: "25%",
+      width: "100%",
+    },
+    bottle: {
+      justifyContent: "center",
+      alignItems: "center",
+      height: "50%",
+      width: "100%",
+    },
+  },
+  addDrinkButtonWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  addDrinkButton: {
+    height: "50%",
+    width: "50%",
+  },
+  plusSign: {
+    fontSize: 24, // Size of the plus sign
+    fontWeight: "bold", // Bold the plus sign
+  },
+  infoText: {
+    width: "100%",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  listItem: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  statistics: {
+    width: "100%",
+    flex: 1,
+    alignItems: "center", // Center horizontally
+    justifyContent: "center",
+  },
+});
