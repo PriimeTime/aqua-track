@@ -23,17 +23,17 @@ const style = StyleSheet.create({
   header: {
     sm: {
       textAlign: "center",
-      fontSize: 35,
+      fontSize: 25,
       fontWeight: 500,
     },
     md: {
       textAlign: "center",
-      fontSize: 50,
+      fontSize: 30,
       fontWeight: 500,
     },
     lg: {
       textAlign: "center",
-      fontSize: 75,
+      fontSize: 35,
       fontWeight: 500,
     },
   },

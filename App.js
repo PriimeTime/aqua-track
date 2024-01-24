@@ -1,16 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
 import { useState } from "react";
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { MainHeader } from "./src/components/MainHeader";
-import { InputScreen } from "./src/components/InputScreen";
-import { Statistics } from "./src/components/Statistics";
+import { HomeScreen } from "./src/components/HomeScreen";
 import { QuantityInputScreen } from "./src/components/screens/inputdrink/QuantityInputScreen";
 import { TypeInputScreen } from "./src/components/screens/inputdrink/TypeInputScreen";
 
@@ -59,24 +52,3 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
-
-function HomeScreen({ navigation, route, amountDrank, setAmountDrank }) {
-  const insets = useSafeAreaInsets();
-
-  return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
-      <MainHeader amountDrank={amountDrank}></MainHeader>
-      <InputScreen navigation={navigation} setAmountDrank={setAmountDrank} />
-      <Statistics />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#fff",
-  },
-});
