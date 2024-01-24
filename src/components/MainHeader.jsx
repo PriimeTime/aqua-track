@@ -1,9 +1,13 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import { PrimaryHeader } from "./themes/text/PrimaryHeader";
 
 function MainHeader({ amountDrank }) {
   return (
     <View style={styles.wrapper}>
-      <Text>You drank {amountDrank} ml of liquid today!</Text>
+      <PrimaryHeader size={1}>
+        You drank {amountDrank} ml of liquid today!
+      </PrimaryHeader>
     </View>
   );
 }

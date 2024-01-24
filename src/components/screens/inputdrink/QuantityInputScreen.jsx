@@ -1,8 +1,11 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+
+import { PrimaryButton } from "../../themes/button/PrimaryButton";
+import { PrimaryText } from "../../themes/text/PrimaryText";
 
 const milliliterOptions = Array.from({ length: 50 }, (_, index) => {
   return {
@@ -42,7 +45,7 @@ function QuantityInputScreen({ navigation, amountDrank, setAmountDrank }) {
   return (
     <View style={{ paddingTop: insets.top }}>
       <View style={styles.header}>
-        <Text style={styles.header.text}>How much did you drink?</Text>
+        <PrimaryText size={1}>How much did you drink?</PrimaryText>
       </View>
 
       <Picker
@@ -63,9 +66,7 @@ function QuantityInputScreen({ navigation, amountDrank, setAmountDrank }) {
       </View>
 
       <View style={styles.buttonWrapper}>
-        <Pressable style={styles.buttonWrapper.button} onPress={handleContinue}>
-          <Text style={styles.buttonWrapper.button.text}>Continue</Text>
-        </Pressable>
+        <PrimaryButton onPress={handleContinue}>Continue</PrimaryButton>
       </View>
     </View>
   );
@@ -79,10 +80,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    text: {
-      fontSize: 35,
-      fontWeight: 300,
-    },
   },
   picker: {
     height: "25%",

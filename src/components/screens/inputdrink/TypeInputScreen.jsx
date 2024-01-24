@@ -1,5 +1,7 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { PrimaryButton } from "../../themes/button/PrimaryButton";
 
 function TypeInputScreen({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -13,14 +15,9 @@ function TypeInputScreen({ navigation }) {
         <Text>placeholder for drink selection</Text>
       </View>
       <View style={styles.footer}>
-        <Pressable
-          style={styles.footer.button}
-          onPress={() => navigation.navigate("home")}
-        >
-          <Text style={styles.footer.button.text}>
-            Yep, that's what I drank
-          </Text>
-        </Pressable>
+        <PrimaryButton fontSize={3} onPress={() => navigation.navigate("home")}>
+          Yep, that's what I drank
+        </PrimaryButton>
       </View>
     </View>
   );

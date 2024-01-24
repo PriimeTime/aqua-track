@@ -1,19 +1,15 @@
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import { ImageButton } from "./themes/button/ImageButton";
 
 function InputScreen({ navigation }) {
   return (
     <>
       <View style={styles.wrapper}>
-        <TouchableOpacity
-          style={styles.wrapper.imageButton}
+        <ImageButton
+          imgSrc={require("../../assets/icons/waterbottle.png")}
           onPress={() => navigation.navigate("quantityInputScreen")}
-        >
-          <Image
-            style={styles.wrapper.imageButton.image}
-            source={require("../../assets/icons/waterbottle.png")}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        ></ImageButton>
       </View>
     </>
   );
@@ -25,13 +21,5 @@ const styles = StyleSheet.create({
   wrapper: {
     width: "100%",
     height: "30%",
-    imageButton: {
-      justifyContent: "center",
-      alignItems: "center",
-      image: {
-        height: "100%",
-        width: "100%",
-      },
-    },
   },
 });
