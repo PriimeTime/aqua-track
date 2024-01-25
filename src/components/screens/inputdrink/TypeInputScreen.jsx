@@ -15,7 +15,7 @@ function TypeInputScreen({ navigation }) {
         <Text>placeholder for drink selection</Text>
       </View>
       <View style={styles.footer}>
-        <PrimaryButton fontSize={3} onPress={() => navigation.navigate("home")}>
+        <PrimaryButton onPress={() => navigation.navigate("home")}>
           Yep, that's what I drank
         </PrimaryButton>
       </View>
