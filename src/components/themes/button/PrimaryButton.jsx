@@ -1,5 +1,6 @@
 import { Pressable, Text } from "react-native";
 import { color } from "../../../utils/themes";
+import * as Haptics from "expo-haptics";
 
 function getTextStyle(size) {
   const fontSizeValues = {
@@ -47,10 +48,15 @@ function getButtonStyle(size, pressed) {
 }
 
 function PrimaryButton({ onPress, fontSize, children, buttonSize }) {
+  const handlePress = () => {
+    onPress();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
   return (
     <Pressable
       style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-      onPress={onPress}
+      onPress={handlePress}
     >
       <Text style={getTextStyle(fontSize)}>{children}</Text>
     </Pressable>
