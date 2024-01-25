@@ -47,20 +47,5 @@ const styles = StyleSheet.create({
     height: "25%",
     justifyContent: "center",
     alignItems: "center",
-    button: {
-      paddingVertical: 20,
-      paddingHorizontal: 60,
-      borderRadius: 20,
-      elevation: 3,
-      backgroundColor: "#007AFF", // default apple button blue color code
-      text: {
-        textAlign: "center",
-        fontSize: 25,
-        lineHeight: 30,
-        fontWeight: 400,
-        letterSpacing: 5,
-        color: "white",
-      },
-    },
   },
 });

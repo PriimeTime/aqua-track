@@ -21,6 +21,8 @@ function QuantityInputScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const [pickerValue, setPickerValue] = useState(10);
+  const [heightVal, setHeightVal] = useState(0);
+
   const [hasPickerValueChanged, setHasPickerValueChanged] = useState(false);
 
   useFocusEffect(
@@ -54,6 +56,11 @@ function QuantityInputScreen({ navigation }) {
         onValueChange={(itemValue) => {
           setPickerValue(itemValue);
           setHasPickerValueChanged(true);
+          setHeightVal(
+            (Number(itemValue) /
+              milliliterOptions[milliliterOptions.length - 1].value) *
+              100
+          );
         }}
       >
         {milliliterOptions.map((item) => (
@@ -61,8 +68,16 @@ function QuantityInputScreen({ navigation }) {
         ))}
       </Picker>
 
-      <View style={styles.bottle}>
-        <Text>placeholder for image, filling up a bottle as you scroll</Text>
+      <View style={styles.cupWrapper}>
+        <View style={styles.cupWrapper.cup}>
+          <View
+            style={[
+              styles.cupWrapper.cup.water,
+              { height: `${(heightVal / 100) * 80}%` },
+            ]}
+          ></View>
+          <View style={styles.cupWrapper.cup.light}></View>
+        </View>
       </View>
 
       <View style={styles.buttonWrapper}>
@@ -85,30 +100,45 @@ const styles = StyleSheet.create({
     height: "25%",
     width: "100%",
   },
-  bottle: {
+  cupWrapper: {
     justifyContent: "center",
     alignItems: "center",
     height: "35%",
     width: "100%",
+    cup: {
+      top: 10,
+      position: "absolute",
+      width: 150,
+      height: 250,
+      backgroundColor: "#189acf", // TODO: make this gradient
+      borderRadius: 2,
+      transform: [{ perspective: 10 }, { rotateX: "-1deg" }],
+      margin: 50,
+      water: {
+        position: "absolute",
+        bottom: "5%",
+        left: "10%",
+        width: "80%",
+        backgroundColor: "#0152BF", // TODO: make this gradient
+        borderRadius: "3px 3px 30px 30px", // TODO: does not work yet
+      },
+      light: {
+        position: "absolute",
+        left: "20%",
+        bottom: "20%",
+        zIndex: 1,
+        width: "15%",
+        height: "75%",
+        borderRadius: "0% 100% 100% 0% / 100% 0% 100% 0%", // TODO: does not work yet
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        transform: [{ scaleX: -1 }],
+      },
+    },
   },
   buttonWrapper: {
     height: "15%",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    button: {
-      paddingVertical: 20,
-      paddingHorizontal: 60,
-      borderRadius: 20,
-      elevation: 3,
-      backgroundColor: "#007AFF", // default apple button blue color code
-      text: {
-        fontSize: 25,
-        lineHeight: 30,
-        fontWeight: 400,
-        letterSpacing: 5,
-        color: "white",
-      },
-    },
   },
 });
