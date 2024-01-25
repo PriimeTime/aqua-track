@@ -6,13 +6,13 @@ import { MainHeader } from "./screens/MainHeader";
 import { InputScreen } from "./screens/InputScreen";
 import { Statistics } from "./screens/Statistics";
 
-function HomeScreen({ navigation, amountDrank, setAmountDrank }) {
+function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <MainHeader amountDrank={amountDrank}></MainHeader>
-      <InputScreen navigation={navigation} setAmountDrank={setAmountDrank} />
+      <MainHeader></MainHeader>
+      <InputScreen navigation={navigation} />
       <Statistics />
       <StatusBar style="auto" />
     </View>

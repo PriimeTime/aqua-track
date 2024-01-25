@@ -3,6 +3,8 @@ import { Picker } from "@react-native-picker/picker";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { increment } from "../../../store/store.js";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
@@ -14,12 +16,10 @@ const milliliterOptions = Array.from({ length: 50 }, (_, index) => {
   };
 });
 
-function addDrink(setAmountDrank, currentAmount, additionalAmount) {
-  setAmountDrank(currentAmount + Number(additionalAmount)); // convert picker value to a number
-}
-
-function QuantityInputScreen({ navigation, amountDrank, setAmountDrank }) {
+function QuantityInputScreen({ navigation }) {
   const insets = useSafeAreaInsets();
+  const dispatch = useDispatch();
+
   const [pickerValue, setPickerValue] = useState(10);
   const [hasPickerValueChanged, setHasPickerValueChanged] = useState(false);
 
@@ -36,7 +36,7 @@ function QuantityInputScreen({ navigation, amountDrank, setAmountDrank }) {
 
   const handleContinue = () => {
     if (hasPickerValueChanged && pickerValue !== 0) {
-      addDrink(setAmountDrank, amountDrank, pickerValue);
+      dispatch(increment(Number(pickerValue)));
       navigation.navigate("typeInputScreen");
       setPickerValue(10);
     }
