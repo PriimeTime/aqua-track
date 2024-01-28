@@ -1,5 +1,4 @@
-import { View, StyleSheet, Animated } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, StyleSheet, Animated, PanResponder } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
@@ -10,12 +9,10 @@ import { drinkTypeList } from "../../../utils/maps.js";
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
 
-const milliliterOptions = Array.from({ length: 50 }, (_, index) => {
-  return {
-    label: index === 0 ? "-" : `${(index + 1) * 10} ml`,
-    value: index === 0 ? 0 : (index + 1) * 10,
-  };
-});
+import {
+  inputBottleSizeInMilliliters,
+  incrementValue,
+} from "../../../utils/constants";
 
 function QuantityInputScreen({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -40,15 +37,36 @@ function QuantityInputScreen({ navigation }) {
     ]).start();
   };
 
-  const [pickerValue, setPickerValue] = useState(10);
+  const [quantityValue, setQuantityValue] = useState(0);
   const [heightVal, setHeightVal] = useState(0);
 
-  const [hasPickerValueChanged, setHasPickerValueChanged] = useState(false);
+  const [hasQuantityValueChanged, setHasQuantityValueChanged] = useState(false);
+
+  const scaleFactor = 0.55; // Adjust this value as needed for sensitivity
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (evt, gestureState) => {
+      const dragDistance = gestureState.dy * scaleFactor;
+
+      // Calculate the height of the water based on the drag
+      const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
+      setHeightVal(newHeight);
+
+      const bottleSize =
+        (Math.round(newHeight) * inputBottleSizeInMilliliters) / 100;
+      const quantityVal =
+        Math.ceil(bottleSize / incrementValue) * incrementValue;
+
+      setQuantityValue(quantityVal);
+      setHasQuantityValueChanged(true);
+    },
+  });
 
   useFocusEffect(
     useCallback(() => {
-      // Reset the hasPickerValueChanged to false when screen is focused
-      setHasPickerValueChanged(false);
+      // Reset the hasQuantityValueChanged to false when screen is focused
+      setHasQuantityValueChanged(false);
 
       return () => {
         // Optional: Any cleanup actions go here
@@ -57,10 +75,10 @@ function QuantityInputScreen({ navigation }) {
   );
 
   const handleContinue = () => {
-    if (hasPickerValueChanged && pickerValue !== 0) {
-      dispatch(increment(Number(pickerValue)));
+    if (hasQuantityValueChanged && quantityValue !== 0) {
+      dispatch(increment(Number(quantityValue)));
       navigation.navigate("home");
-      setPickerValue(10);
+      setQuantityValue(10);
     } else {
       triggerAnimation();
     }
@@ -81,25 +99,11 @@ function QuantityInputScreen({ navigation }) {
         </Animated.View>
       </View>
 
-      <Picker
-        style={styles.picker}
-        selectedValue={pickerValue}
-        onValueChange={(itemValue) => {
-          setPickerValue(itemValue);
-          setHasPickerValueChanged(true);
-          setHeightVal(
-            (Number(itemValue) /
-              milliliterOptions[milliliterOptions.length - 1].value) *
-              100
-          );
-        }}
-      >
-        {milliliterOptions.map((item) => (
-          <Picker.Item key={item.value} label={item.label} value={item.value} />
-        ))}
-      </Picker>
+      <View style={styles.amountDrank}>
+        <PrimaryText size={3}>{quantityValue} ml</PrimaryText>
+      </View>
 
-      <View style={styles.cupWrapper}>
+      <View style={styles.cupWrapper} {...panResponder.panHandlers}>
         <View style={styles.cupWrapper.cup}>
           <View
             style={[
@@ -122,19 +126,21 @@ export { QuantityInputScreen };
 
 const styles = StyleSheet.create({
   header: {
-    height: "25%",
+    height: "20%",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
-  picker: {
-    height: "25%",
+  amountDrank: {
+    height: "20%",
     width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   cupWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    height: "35%",
+    height: "45%",
     width: "100%",
     cup: {
       top: 10,
