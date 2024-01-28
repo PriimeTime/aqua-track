@@ -1,41 +1,62 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
+import { PrimaryText } from "../../themes/text/PrimaryText";
 import { CardButton } from "../../themes/button/CardButton";
 
-function TypeInputScreen({ navigation }) {
-  const insets = useSafeAreaInsets();
+import { setType, resetType } from "../../../store/store.js";
+import { drinkTypeList } from "../../../utils/maps";
 
-  const drinkTypes = [
-    { icon: "water-outline", label: "Water" },
-    { icon: "cafe-outline", label: "Tea" },
-    { icon: "water-outline", label: "Soda" },
-    { icon: "cafe-outline", label: "Coffee" },
-  ];
+function TypeInputScreen({ navigation }) {
+  const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
+  const drinkType = useSelector((state) => state.drinkType.value);
+
+  const handleCardPress = (id) => {
+    /**
+     * Toggle functionality
+     */
+    if (drinkType === id) {
+      dispatch(resetType());
+    } else {
+      dispatch(setType(id));
+    }
+  };
+
+  const handleButtonPress = () => {
+    if (drinkType > -1) {
+      navigation.navigate("quantityInputScreen");
+    } else {
+      // TODO: animate "what did you drink" text (jump a bit or sth)
+    }
+  };
 
   return (
     <View style={[{ paddingTop: insets.top }]}>
       <View style={styles.header}>
-        <Text style={styles.header.text}>What did you drink?</Text>
+        <PrimaryText size={1}>What did you drink?</PrimaryText>
       </View>
       <ScrollView
         style={styles.drinkTypeSelectionWrapper}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.drinkTypeContentContainer}
       >
-        {drinkTypes.map((drink, index) => (
-          <CardButton key={index} buttonIcon={drink.icon}>
+        {drinkTypeList.map((drink, index) => (
+          <CardButton
+            key={index}
+            buttonIcon={drink.icon}
+            selected={drinkType === drink.id}
+            onPress={() => handleCardPress(drink.id)}
+          >
             {drink.label}
           </CardButton>
         ))}
       </ScrollView>
 
       <View style={styles.footer}>
-        <PrimaryButton
-          onPress={() => navigation.navigate("quantityInputScreen")}
-        >
-          Yep, that's what I drank
-        </PrimaryButton>
+        <PrimaryButton onPress={handleButtonPress}>Continue</PrimaryButton>
       </View>
     </View>
   );
@@ -48,11 +69,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "25%",
     justifyContent: "center",
-    alignItems: "center",
-    text: {
-      fontSize: 35,
-      fontWeight: 300,
-    },
+    left: "5%",
   },
   drinkTypeSelectionWrapper: {
     width: "100%",

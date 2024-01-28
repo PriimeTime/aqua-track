@@ -3,8 +3,9 @@ import { Picker } from "@react-native-picker/picker";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { increment } from "../../../store/store.js";
+import { drinkTypeList } from "../../../utils/maps.js";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
@@ -19,6 +20,8 @@ const milliliterOptions = Array.from({ length: 50 }, (_, index) => {
 function QuantityInputScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
+
+  const drinkType = useSelector((state) => state.drinkType.value);
 
   const [pickerValue, setPickerValue] = useState(10);
   const [heightVal, setHeightVal] = useState(0);
@@ -44,10 +47,17 @@ function QuantityInputScreen({ navigation }) {
     }
   };
 
+  const drinkTypeObject = drinkTypeList.find((item) => item.id === drinkType);
+  const drinkTypeLabel = drinkTypeObject
+    ? drinkTypeObject.label.toLowerCase() + " "
+    : "";
+
   return (
     <View style={{ paddingTop: insets.top }}>
       <View style={styles.header}>
-        <PrimaryText size={1}>How much did you drink?</PrimaryText>
+        <PrimaryText size={1}>
+          How much {drinkTypeLabel}did you drink?
+        </PrimaryText>
       </View>
 
       <Picker

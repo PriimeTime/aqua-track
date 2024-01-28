@@ -24,7 +24,7 @@ function getTextStyle(size) {
   return baseStyle;
 }
 
-function getButtonStyle(size, pressed) {
+function getButtonStyle(selected) {
   const baseStyle = {
     width: "80%",
     left: "10%",
@@ -32,19 +32,16 @@ function getButtonStyle(size, pressed) {
     height: "80%",
     borderRadius: 20,
     borderWidth: 5,
-    borderColor: pressed ? color.PRIMARY_BUTTON_PRESSED : color.PRIMARY_BUTTON,
+    borderColor: selected ? color.PRIMARY_BUTTON_PRESSED : color.PRIMARY_BUTTON,
   };
 
   return baseStyle;
 }
 
-function CardButton({ onPress, buttonIcon, fontSize, children, buttonSize }) {
+function CardButton({ onPress, buttonIcon, fontSize, children, selected }) {
   return (
     <View style={styles.wrapper}>
-      <Pressable
-        style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-        onPress={onPress}
-      >
+      <Pressable style={getButtonStyle(selected)} onPress={onPress}>
         <View style={styles.container}>
           <Ionicons
             color={color.SECONDARY_BUTTON}
