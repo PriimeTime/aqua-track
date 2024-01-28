@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback } from "react";
@@ -23,6 +23,23 @@ function QuantityInputScreen({ navigation }) {
 
   const drinkType = useSelector((state) => state.drinkType.value);
 
+  const scaleValue = useState(new Animated.Value(1))[0];
+
+  const triggerAnimation = () => {
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   const [pickerValue, setPickerValue] = useState(10);
   const [heightVal, setHeightVal] = useState(0);
 
@@ -44,6 +61,8 @@ function QuantityInputScreen({ navigation }) {
       dispatch(increment(Number(pickerValue)));
       navigation.navigate("home");
       setPickerValue(10);
+    } else {
+      triggerAnimation();
     }
   };
 
@@ -55,9 +74,11 @@ function QuantityInputScreen({ navigation }) {
   return (
     <View style={{ paddingTop: insets.top }}>
       <View style={styles.header}>
-        <PrimaryText size={1}>
-          How much {drinkTypeLabel}did you drink?
-        </PrimaryText>
+        <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+          <PrimaryText size={1}>
+            How much {drinkTypeLabel}did you drink?
+          </PrimaryText>
+        </Animated.View>
       </View>
 
       <Picker

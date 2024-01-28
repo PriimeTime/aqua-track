@@ -1,6 +1,7 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useState } from "react";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
@@ -13,6 +14,23 @@ function TypeInputScreen({ navigation }) {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const drinkType = useSelector((state) => state.drinkType.value);
+
+  const scaleValue = useState(new Animated.Value(1))[0];
+
+  const triggerAnimation = () => {
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
 
   const handleCardPress = (id) => {
     /**
@@ -29,14 +47,16 @@ function TypeInputScreen({ navigation }) {
     if (drinkType > -1) {
       navigation.navigate("quantityInputScreen");
     } else {
-      // TODO: animate "what did you drink" text (jump a bit or sth)
+      triggerAnimation();
     }
   };
 
   return (
     <View style={[{ paddingTop: insets.top }]}>
       <View style={styles.header}>
-        <PrimaryText size={1}>What did you drink?</PrimaryText>
+        <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+          <PrimaryText size={1}>What did you drink?</PrimaryText>
+        </Animated.View>
       </View>
       <ScrollView
         style={styles.drinkTypeSelectionWrapper}
