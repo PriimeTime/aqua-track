@@ -8,7 +8,7 @@ function InputScreen({ navigation }) {
       <View style={styles.wrapper}>
         <ImageButton
           imgSrc={require("../../../assets/icons/waterbottle.png")}
-          onPress={() => navigation.navigate("quantityInputScreen")}
+          onPress={() => navigation.navigate("typeInputScreen")}
         ></ImageButton>
       </View>
     </>

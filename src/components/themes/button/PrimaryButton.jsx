@@ -38,7 +38,6 @@ function getButtonStyle(size, pressed) {
     paddingVertical: vertical,
     paddingHorizontal: horizontal,
     borderRadius: 20,
-    elevation: 3,
     backgroundColor: pressed
       ? color.PRIMARY_BUTTON_PRESSED
       : color.PRIMARY_BUTTON,

@@ -39,7 +39,7 @@ function QuantityInputScreen({ navigation }) {
   const handleContinue = () => {
     if (hasPickerValueChanged && pickerValue !== 0) {
       dispatch(increment(Number(pickerValue)));
-      navigation.navigate("typeInputScreen");
+      navigation.navigate("home");
       setPickerValue(10);
     }
   };
