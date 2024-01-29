@@ -7,7 +7,7 @@ import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
 import { CardButton } from "../../themes/button/CardButton";
 
-import { setType, resetType } from "../../../store/store.js";
+import { setType, resetType } from "../../../store/store";
 import { drinkTypeList } from "../../../utils/maps";
 
 function TypeInputScreen({ navigation }) {
@@ -32,19 +32,19 @@ function TypeInputScreen({ navigation }) {
     ]).start();
   };
 
-  const handleCardPress = (id) => {
+  const handleCardPress = (drink) => {
     /**
      * Toggle functionality
      */
-    if (drinkType === id) {
+    if (drinkType.id === drink.id) {
       dispatch(resetType());
     } else {
-      dispatch(setType(id));
+      dispatch(setType(drink));
     }
   };
 
   const handleButtonPress = () => {
-    if (drinkType > -1) {
+    if (drinkType.id > -1) {
       navigation.navigate("quantityInputScreen");
     } else {
       triggerAnimation();
@@ -67,8 +67,8 @@ function TypeInputScreen({ navigation }) {
           <CardButton
             key={index}
             buttonIcon={drink.icon}
-            selected={drinkType === drink.id}
-            onPress={() => handleCardPress(drink.id)}
+            selected={drinkType.id === drink.id}
+            onPress={() => handleCardPress(drink)}
           >
             {drink.label}
           </CardButton>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "25%",
     justifyContent: "center",
-    left: "5%",
+    alignItems: "center",
   },
   drinkTypeSelectionWrapper: {
     width: "100%",

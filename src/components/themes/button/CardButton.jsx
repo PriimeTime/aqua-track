@@ -32,7 +32,7 @@ function getButtonStyle(selected) {
     height: "80%",
     borderRadius: 20,
     borderWidth: 5,
-    borderColor: selected ? color.PRIMARY_BUTTON_PRESSED : color.PRIMARY_BUTTON,
+    borderColor: selected ? color.CARD_BUTTON_PRESSED : color.CARD_BUTTON,
   };
 
   return baseStyle;

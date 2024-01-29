@@ -3,11 +3,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { increment } from "../../../store/store.js";
-import { drinkTypeList } from "../../../utils/maps.js";
+import { increment } from "../../../store/store";
+import { drinkTypeList } from "../../../utils/maps";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
+import { QuantityInputBottle } from "./QuantityInputBottle";
 
 import {
   inputBottleSizeInMilliliters,
@@ -53,8 +54,13 @@ function QuantityInputScreen({ navigation }) {
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
       setHeightVal(newHeight);
 
-      const bottleSize =
-        (Math.round(newHeight) * inputBottleSizeInMilliliters) / 100;
+      const inputBottleObject = inputBottleSizeInMilliliters.filter(
+        (item) => item.drinkType === drinkType.drinkType
+      )[0];
+
+      const inputBottleSize = inputBottleObject.size;
+
+      const bottleSize = (Math.round(newHeight) * inputBottleSize) / 100;
       const quantityVal =
         Math.ceil(bottleSize / incrementValue) * incrementValue;
 
@@ -84,7 +90,9 @@ function QuantityInputScreen({ navigation }) {
     }
   };
 
-  const drinkTypeObject = drinkTypeList.find((item) => item.id === drinkType);
+  const drinkTypeObject = drinkTypeList.find(
+    (item) => item.id === drinkType.id
+  );
   const drinkTypeLabel = drinkTypeObject
     ? drinkTypeObject.label.toLowerCase() + " "
     : "";
@@ -104,15 +112,10 @@ function QuantityInputScreen({ navigation }) {
       </View>
 
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
-        <View style={styles.cupWrapper.cup}>
-          <View
-            style={[
-              styles.cupWrapper.cup.water,
-              { height: `${(heightVal / 100) * 80}%` },
-            ]}
-          ></View>
-          <View style={styles.cupWrapper.cup.light}></View>
-        </View>
+        <QuantityInputBottle
+          heightVal={heightVal}
+          liquidColor={drinkType.color}
+        ></QuantityInputBottle>
       </View>
 
       <View style={styles.buttonWrapper}>
@@ -142,35 +145,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "45%",
     width: "100%",
-    cup: {
-      top: 10,
-      position: "absolute",
-      width: 150,
-      height: 250,
-      backgroundColor: "#189acf", // TODO: make this gradient
-      borderRadius: 2,
-      transform: [{ perspective: 10 }, { rotateX: "-1deg" }],
-      margin: 50,
-      water: {
-        position: "absolute",
-        bottom: "5%",
-        left: "10%",
-        width: "80%",
-        backgroundColor: "#0152BF", // TODO: make this gradient
-        borderRadius: "3px 3px 30px 30px", // TODO: does not work yet
-      },
-      light: {
-        position: "absolute",
-        left: "20%",
-        bottom: "20%",
-        zIndex: 1,
-        width: "15%",
-        height: "75%",
-        borderRadius: "0% 100% 100% 0% / 100% 0% 100% 0%", // TODO: does not work yet
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        transform: [{ scaleX: -1 }],
-      },
-    },
   },
   buttonWrapper: {
     height: "15%",
