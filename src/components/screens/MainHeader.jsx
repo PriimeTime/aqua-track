@@ -22,7 +22,7 @@ function MainHeader() {
 
   function getHeaderText() {
     if (waterIntake === 0) {
-      return `You didn't drink anything yet. Time to hydrate yourself!`;
+      return `Time to hydrate yourself!`;
     } else {
       return `You drank ${metricUnitConversion(waterIntake)} of liquid today!`;
     }
@@ -30,7 +30,7 @@ function MainHeader() {
 
   return (
     <View style={styles.wrapper}>
-      <PrimaryHeader>{getHeaderText()}</PrimaryHeader>
+      <PrimaryHeader size={5}>{getHeaderText()}</PrimaryHeader>
     </View>
   );
 }

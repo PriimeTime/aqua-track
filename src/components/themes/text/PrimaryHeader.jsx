@@ -1,13 +1,16 @@
 import { Text } from "react-native";
 
 function getHeaderStyle(size) {
+  console.log(size);
   const fontValues = {
     1: { fontSize: 25 },
     2: { fontSize: 30 },
     3: { fontSize: 35 },
+    4: { fontSize: 40 },
+    5: { fontSize: 45 },
   };
 
-  const { fontSize } = fontValues[size] | 1;
+  const { fontSize } = fontValues[size];
 
   const baseStyle = {
     textAlign: "center",
