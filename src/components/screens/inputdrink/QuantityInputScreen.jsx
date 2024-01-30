@@ -9,6 +9,7 @@ import { drinkTypeList } from "../../../utils/maps";
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
+import { color } from "../../../utils/themes";
 
 import {
   inputBottleSizeInMilliliters,
@@ -98,7 +99,7 @@ function QuantityInputScreen({ navigation }) {
     : "";
 
   return (
-    <View style={{ paddingTop: insets.top }}>
+    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText size={1}>
@@ -128,6 +129,9 @@ function QuantityInputScreen({ navigation }) {
 export { QuantityInputScreen };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: color.APP_PRIMARY_BACKGROUND,
+  },
   header: {
     height: "20%",
     width: "100%",

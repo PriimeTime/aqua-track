@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 
 import { ImageButton } from "../themes/button/ImageButton";
 
-function InputScreen({ navigation }) {
+function MainButton({ navigation }) {
   return (
     <>
       <View style={styles.wrapper}>
@@ -15,7 +15,7 @@ function InputScreen({ navigation }) {
   );
 }
 
-export { InputScreen };
+export { MainButton };
 
 const styles = StyleSheet.create({
   wrapper: {

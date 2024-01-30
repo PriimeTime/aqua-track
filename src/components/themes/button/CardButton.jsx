@@ -1,4 +1,5 @@
-import { Pressable, Text, View, StyleSheet } from "react-native";
+import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
+import { useState } from "react";
 import { color } from "../../../utils/themes";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -32,16 +33,51 @@ function getButtonStyle(selected) {
     height: "80%",
     borderRadius: 20,
     borderWidth: 5,
-    borderColor: selected ? color.CARD_BUTTON_PRESSED : color.CARD_BUTTON,
+    borderColor: color.CARD_BUTTON,
+    backgroundColor: selected ? "#c6dbff" : color.APP_PRIMARY_BACKGROUND,
+    /**
+     * Give selected item a slight shadow
+     */
+    ...(selected && {
+      shadowColor: "black",
+      shadowOffset: { width: 5, height: 5 },
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+    }),
   };
 
   return baseStyle;
 }
 
 function CardButton({ onPress, buttonIcon, fontSize, children, selected }) {
+  const scaleValue = useState(new Animated.Value(1))[0];
+
+  const animateScale = (newValue) => {
+    Animated.timing(scaleValue, {
+      toValue: newValue,
+      duration: 75,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleOnPressIn = () => {
+    animateScale(0.9);
+  };
+
+  const handleOnPressOut = () => {
+    animateScale(1);
+  };
+
   return (
-    <View style={styles.wrapper}>
-      <Pressable style={getButtonStyle(selected)} onPress={onPress}>
+    <Animated.View
+      style={[styles.wrapper, { transform: [{ scale: scaleValue }] }]}
+    >
+      <Pressable
+        style={getButtonStyle(selected)}
+        onPress={onPress}
+        onPressIn={handleOnPressIn}
+        onPressOut={handleOnPressOut}
+      >
         <View style={styles.container}>
           <Ionicons
             color={color.SECONDARY_BUTTON}
@@ -51,7 +87,7 @@ function CardButton({ onPress, buttonIcon, fontSize, children, selected }) {
           <Text style={getTextStyle(fontSize)}>{children}</Text>
         </View>
       </Pressable>
-    </View>
+    </Animated.View>
   );
 }
 

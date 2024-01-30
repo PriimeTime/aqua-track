@@ -9,6 +9,7 @@ import { CardButton } from "../../themes/button/CardButton";
 
 import { setType, resetType } from "../../../store/store";
 import { drinkTypeList } from "../../../utils/maps";
+import { color } from "../../../utils/themes";
 
 function TypeInputScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function TypeInputScreen({ navigation }) {
   };
 
   return (
-    <View style={[{ paddingTop: insets.top }]}>
+    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText size={1}>What did you drink?</PrimaryText>
@@ -85,6 +86,9 @@ function TypeInputScreen({ navigation }) {
 export { TypeInputScreen };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: color.APP_PRIMARY_BACKGROUND,
+  },
   header: {
     width: "100%",
     height: "25%",

@@ -19,6 +19,13 @@ export { QuantityInputBottle };
 
 const styles = StyleSheet.create({
   glass: {
+    shadowColor: "black",
+    shadowOffset: { width: 10, height: 10 },
+    shadowOpacity: 0.4,
+    shadowRadius: 30,
+    /**
+     *
+     */
     top: 10,
     position: "absolute",
     width: 150,
