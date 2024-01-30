@@ -90,13 +90,15 @@ const styles = StyleSheet.create({
     backgroundColor: color.APP_PRIMARY_BACKGROUND,
   },
   header: {
-    width: "100%",
+    width: "90%",
+    left: "5%",
     height: "25%",
     justifyContent: "center",
     alignItems: "center",
   },
   drinkTypeSelectionWrapper: {
-    width: "100%",
+    width: "90%",
+    left: "5%",
     height: "50%",
   },
   drinkTypeContentContainer: {
@@ -105,7 +107,8 @@ const styles = StyleSheet.create({
     height: 500,
   },
   footer: {
-    width: "100%",
+    width: "90%",
+    left: "5%",
     height: "25%",
     justifyContent: "center",
     alignItems: "center",

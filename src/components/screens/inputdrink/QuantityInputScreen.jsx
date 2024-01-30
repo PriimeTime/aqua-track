@@ -110,7 +110,7 @@ function QuantityInputScreen({ navigation }) {
       dispatch(increment(Number(quantityValue)));
       navigation.navigate("home");
       setQuantityValue(10);
-    } else {
+    } else if (quantityValue <= 0) {
       triggerAnimation();
     }
   };
@@ -158,13 +158,15 @@ const styles = StyleSheet.create({
   },
   header: {
     height: "20%",
-    width: "100%",
+    width: "90%",
+    left: "5%",
     justifyContent: "center",
     alignItems: "center",
   },
   amountDrank: {
     height: "20%",
-    width: "100%",
+    width: "90%",
+    left: "5%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -172,11 +174,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: "45%",
-    width: "100%",
+    width: "90%",
+    left: "5%",
   },
   buttonWrapper: {
     height: "15%",
-    width: "100%",
+    width: "90%",
+    left: "5%",
     justifyContent: "center",
     alignItems: "center",
   },

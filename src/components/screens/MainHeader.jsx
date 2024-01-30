@@ -39,7 +39,8 @@ export { MainHeader };
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: "100%",
+    width: "90%",
+    left: "5%",
     height: "25%",
     justifyContent: "center",
     alignItems: "center",

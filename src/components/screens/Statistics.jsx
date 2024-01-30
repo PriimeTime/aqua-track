@@ -15,7 +15,8 @@ export { Statistics };
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: "100%",
+    width: "90%",
+    left: "5%",
     height: "45%",
     alignItems: "center", // Center horizontally
     justifyContent: "center",

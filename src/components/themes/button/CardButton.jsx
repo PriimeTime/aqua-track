@@ -27,11 +27,11 @@ function getTextStyle(size) {
 
 function getButtonStyle(selected) {
   const baseStyle = {
-    width: "80%",
-    left: "10%",
+    width: "90%",
+    left: "5%",
     top: "10%",
     height: "80%",
-    borderRadius: 20,
+    borderRadius: 30,
     borderWidth: 5,
     borderColor: color.CARD_BUTTON,
     backgroundColor: selected ? "#c6dbff" : color.APP_PRIMARY_BACKGROUND,
@@ -96,7 +96,6 @@ export { CardButton };
 const styles = StyleSheet.create({
   wrapper: { height: "25%", width: "50%" },
   container: {
-    position: "absolute",
     top: "15%",
     left: "7.5%",
   },
