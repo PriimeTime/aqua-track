@@ -1,105 +1,65 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, Text } from "react-native";
+import { color } from "../../../utils/themes";
+import * as Haptics from "expo-haptics";
 
 function getTextStyle(size) {
-  switch (size) {
-    case 1:
-      return styles.textExtraSmall;
-    case 2:
-      return styles.textSmall;
-    case 3:
-      return styles.textMedium;
-    case 4:
-      return styles.textLarge;
-    case 5:
-      return styles.textExtraLarge;
-    default:
-      return styles.textMedium;
-  }
+  const fontSizeValues = {
+    1: { fontSize: 15 },
+    2: { fontSize: 20 },
+    3: { fontSize: 25 },
+    4: { fontSize: 30 },
+    5: { fontSize: 35 },
+  };
+
+  const fontSize = fontSizeValues[size] || 25;
+
+  const baseStyle = {
+    textAlign: "center",
+    lineHeight: 30,
+    fontSize,
+    fontWeight: 400,
+    letterSpacing: 1.2,
+    color: "white",
+  };
+
+  return baseStyle;
 }
 
-function getButtonStyle(size) {
-  switch (size) {
-    case 1:
-      return styles.buttonSmall;
-    case 2:
-      return styles.buttonMedium;
-    case 3:
-      return styles.buttonLarge;
-    default:
-      return styles.buttonMedium;
-  }
+function getButtonStyle(size, pressed) {
+  const paddingValues = {
+    1: { vertical: 10, horizontal: 20 },
+    2: { vertical: 20, horizontal: 40 },
+    3: { vertical: 30, horizontal: 60 },
+  };
+
+  const { vertical, horizontal } = paddingValues[size] || paddingValues[2]; // Default to size 2 if not defined
+
+  const baseStyle = {
+    paddingVertical: vertical,
+    paddingHorizontal: horizontal,
+    borderRadius: 20,
+    backgroundColor: pressed
+      ? color.PRIMARY_BUTTON_PRESSED
+      : color.PRIMARY_BUTTON,
+  };
+
+  return baseStyle;
 }
 
 function PrimaryButton({ onPress, fontSize, children, buttonSize }) {
+  const handlePress = () => {
+    onPress();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
   return (
-    <Pressable style={getButtonStyle(buttonSize)} onPress={onPress}>
+    <Pressable
+      style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
+      onPress={handlePress}
+    >
       <Text style={getTextStyle(fontSize)}>{children}</Text>
     </Pressable>
   );
 }
 
 export { PrimaryButton };
-
-const styles = StyleSheet.create({
-  buttonSmall: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    elevation: 3,
-    backgroundColor: "#007AFF", // default apple button blue color code
-  },
-  buttonMedium: {
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    borderRadius: 20,
-    elevation: 3,
-    backgroundColor: "#007AFF", // default apple button blue color code
-  },
-  buttonLarge: {
-    paddingVertical: 30,
-    paddingHorizontal: 60,
-    borderRadius: 20,
-    elevation: 3,
-    backgroundColor: "#007AFF", // default apple button blue color code
-  },
-  textExtraSmall: {
-    textAlign: "center",
-    fontSize: 15,
-    lineHeight: 30,
-    fontWeight: 400,
-    letterSpacing: 1.2,
-    color: "white",
-  },
-  textSmall: {
-    textAlign: "center",
-    fontSize: 20,
-    lineHeight: 30,
-    fontWeight: 400,
-    letterSpacing: 1.2,
-    color: "white",
-  },
-  textMedium: {
-    textAlign: "center",
-    fontSize: 25,
-    lineHeight: 30,
-    fontWeight: 400,
-    letterSpacing: 1.2,
-    color: "white",
-  },
-  textLarge: {
-    textAlign: "center",
-    fontSize: 30,
-    lineHeight: 30,
-    fontWeight: 400,
-    letterSpacing: 1.2,
-    color: "white",
-  },
-  textExtraLarge: {
-    textAlign: "center",
-    fontSize: 35,
-    lineHeight: 30,
-    fontWeight: 400,
-    letterSpacing: 1.2,
-    color: "white",
-  },
-});

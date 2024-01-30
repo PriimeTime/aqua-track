@@ -15,10 +15,29 @@ const waterIntakeSlice = createSlice({
   },
 });
 
+const drinkTypeSlice = createSlice({
+  name: "drinkType",
+  initialState: {
+    value: -1,
+  },
+  reducers: {
+    setType: (state, action) => {
+      state.value = action.payload;
+    },
+    resetType: (state) => {
+      state.value = { id: -1 };
+    },
+  },
+});
+
 export const { increment, reset } = waterIntakeSlice.actions;
+export const { setType, resetType } = drinkTypeSlice.actions;
 
 const store = configureStore({
-  reducer: { waterIntake: waterIntakeSlice.reducer },
+  reducer: {
+    waterIntake: waterIntakeSlice.reducer,
+    drinkType: drinkTypeSlice.reducer,
+  },
 });
 
 export default store;

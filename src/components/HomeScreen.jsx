@@ -3,8 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { MainHeader } from "./screens/MainHeader";
-import { InputScreen } from "./screens/InputScreen";
+import { MainButton } from "./screens/MainButton";
 import { Statistics } from "./screens/Statistics";
+import { color } from "../utils/themes";
 
 function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -12,7 +13,7 @@ function HomeScreen({ navigation }) {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <MainHeader></MainHeader>
-      <InputScreen navigation={navigation} />
+      <MainButton navigation={navigation} />
       <Statistics />
       <StatusBar style="auto" />
     </View>
@@ -25,6 +26,6 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: color.APP_PRIMARY_BACKGROUND,
   },
 });

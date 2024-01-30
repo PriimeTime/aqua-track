@@ -1,23 +1,83 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView, Animated } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useState } from "react";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
+import { PrimaryText } from "../../themes/text/PrimaryText";
+import { CardButton } from "../../themes/button/CardButton";
+
+import { setType, resetType } from "../../../store/store";
+import { drinkTypeList } from "../../../utils/maps";
+import { color } from "../../../utils/themes";
 
 function TypeInputScreen({ navigation }) {
+  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
+  const drinkType = useSelector((state) => state.drinkType.value);
+
+  const scaleValue = useState(new Animated.Value(1))[0];
+
+  const triggerAnimation = () => {
+    Animated.sequence([
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const handleCardPress = (drink) => {
+    /**
+     * Toggle functionality
+     */
+    if (drinkType.id === drink.id) {
+      dispatch(resetType());
+    } else {
+      dispatch(setType(drink));
+    }
+  };
+
+  const handleButtonPress = () => {
+    if (drinkType.id > -1) {
+      navigation.navigate("quantityInputScreen");
+    } else {
+      triggerAnimation();
+    }
+  };
 
   return (
-    <View style={[{ paddingTop: insets.top }]}>
+    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
-        <Text style={styles.header.text}>What did you drink?</Text>
+        <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+          <PrimaryText size={1}>What did you drink?</PrimaryText>
+        </Animated.View>
       </View>
-      <View style={styles.drinkTypeSelectionWrapper}>
-        <Text>placeholder for drink selection</Text>
-      </View>
+      <ScrollView
+        style={styles.drinkTypeSelectionWrapper}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.drinkTypeContentContainer}
+      >
+        {drinkTypeList.map((drink, index) => (
+          <CardButton
+            key={index}
+            buttonIcon={drink.icon}
+            selected={drinkType.id === drink.id}
+            onPress={() => handleCardPress(drink)}
+          >
+            {drink.label}
+          </CardButton>
+        ))}
+      </ScrollView>
+
       <View style={styles.footer}>
-        <PrimaryButton fontSize={3} onPress={() => navigation.navigate("home")}>
-          Yep, that's what I drank
-        </PrimaryButton>
+        <PrimaryButton onPress={handleButtonPress}>Continue</PrimaryButton>
       </View>
     </View>
   );
@@ -26,41 +86,28 @@ function TypeInputScreen({ navigation }) {
 export { TypeInputScreen };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: color.APP_PRIMARY_BACKGROUND,
+  },
   header: {
     width: "100%",
     height: "25%",
     justifyContent: "center",
     alignItems: "center",
-    text: {
-      fontSize: 35,
-      fontWeight: 300,
-    },
   },
   drinkTypeSelectionWrapper: {
     width: "100%",
     height: "50%",
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  drinkTypeContentContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    height: 500,
   },
   footer: {
     width: "100%",
     height: "25%",
     justifyContent: "center",
     alignItems: "center",
-    button: {
-      paddingVertical: 20,
-      paddingHorizontal: 60,
-      borderRadius: 20,
-      elevation: 3,
-      backgroundColor: "#007AFF", // default apple button blue color code
-      text: {
-        textAlign: "center",
-        fontSize: 25,
-        lineHeight: 30,
-        fontWeight: 400,
-        letterSpacing: 5,
-        color: "white",
-      },
-    },
   },
 });

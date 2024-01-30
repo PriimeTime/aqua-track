@@ -1,16 +1,20 @@
-import { Text, StyleSheet } from "react-native";
+import { Text } from "react-native";
 
 function getHeaderStyle(size) {
-  switch (size) {
-    case 1:
-      return style.text.sm;
-    case 2:
-      return style.text.md;
-    case 3:
-      return style.text.lg;
-    default:
-      return style.text.md;
-  }
+  const fontValues = {
+    1: { fontSize: 35 },
+    2: { fontSize: 50 },
+    3: { fontSize: 75 },
+  };
+
+  const { fontSize } = fontValues[size] || 1; // Default to size 1 if not defined
+
+  const baseStyle = {
+    fontWeight: 300,
+    fontSize,
+  };
+
+  return baseStyle;
 }
 
 function PrimaryText({ children, size }) {
@@ -18,20 +22,3 @@ function PrimaryText({ children, size }) {
 }
 
 export { PrimaryText };
-
-const style = StyleSheet.create({
-  text: {
-    sm: {
-      fontSize: 35,
-      fontWeight: 300,
-    },
-    md: {
-      fontSize: 50,
-      fontWeight: 300,
-    },
-    lg: {
-      fontSize: 75,
-      fontWeight: 300,
-    },
-  },
-});
