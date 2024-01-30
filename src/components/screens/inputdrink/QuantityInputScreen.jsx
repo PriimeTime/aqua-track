@@ -1,10 +1,11 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { increment } from "../../../store/store";
 import { drinkTypeList } from "../../../utils/maps";
+import * as Haptics from "expo-haptics";
 
 import { PrimaryButton } from "../../themes/button/PrimaryButton";
 import { PrimaryText } from "../../themes/text/PrimaryText";
@@ -16,6 +17,22 @@ import {
   incrementValue,
 } from "../../../utils/constants";
 
+/**
+ * Debounce function to control
+ * haptic feedback intensity
+ */
+const useDebouncedCallback = (callback, delay) => {
+  const lastCall = useRef(0);
+
+  return (...args) => {
+    const now = new Date().getTime();
+    if (now - lastCall.current > delay) {
+      lastCall.current = now;
+      callback(...args);
+    }
+  };
+};
+
 function QuantityInputScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
@@ -23,6 +40,10 @@ function QuantityInputScreen({ navigation }) {
   const drinkType = useSelector((state) => state.drinkType.value);
 
   const scaleValue = useState(new Animated.Value(1))[0];
+
+  const debouncedHapticFeedback = useDebouncedCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  }, 25);
 
   const triggerAnimation = () => {
     Animated.sequence([
@@ -41,8 +62,11 @@ function QuantityInputScreen({ navigation }) {
 
   const [quantityValue, setQuantityValue] = useState(0);
   const [heightVal, setHeightVal] = useState(0);
-
   const [hasQuantityValueChanged, setHasQuantityValueChanged] = useState(false);
+
+  useEffect(() => {
+    debouncedHapticFeedback();
+  }, [quantityValue]);
 
   const scaleFactor = 0.55; // Adjust this value as needed for sensitivity
 
