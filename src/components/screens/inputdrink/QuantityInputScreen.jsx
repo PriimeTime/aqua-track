@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { increment } from "../../../store/store";
+import { increment, addToHistory } from "../../../store/store";
 import { drinkTypeList } from "../../../utils/maps";
 import * as Haptics from "expo-haptics";
 
@@ -106,17 +106,10 @@ function QuantityInputScreen({ navigation }) {
   );
 
   const handleContinue = () => {
-    if (
-      (hasQuantityValueChanged && quantityValue !== 0) ||
-      quantityValue >= 0
-    ) {
+    if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
       dispatch(increment(Number(quantityValue)));
+      dispatch(addToHistory({ ...drinkType, quantity: quantityValue }));
       navigation.navigate("home");
-      setQuantityValue(10);
-    } else if (quantityValue >= 0) {
-      dispatch(increment(Number(quantityValue)));
-      navigation.navigate("home");
-      setQuantityValue(10);
     } else {
       triggerAnimation();
     }

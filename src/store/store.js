@@ -30,13 +30,29 @@ const drinkTypeSlice = createSlice({
   },
 });
 
+const drinkHistorySlice = createSlice({
+  name: "drinkHistory",
+  initialState: [],
+  reducers: {
+    addToHistory: (state, action) => {
+      state.push(action.payload);
+    },
+    // TODO: removeItem
+    resetHistory: (state) => {
+      return [];
+    },
+  },
+});
+
 export const { increment, reset } = waterIntakeSlice.actions;
 export const { setType, resetType } = drinkTypeSlice.actions;
+export const { addToHistory, resetHistory } = drinkHistorySlice.actions;
 
 const store = configureStore({
   reducer: {
     waterIntake: waterIntakeSlice.reducer,
     drinkType: drinkTypeSlice.reducer,
+    drinkHistory: drinkHistorySlice.reducer,
   },
 });
 

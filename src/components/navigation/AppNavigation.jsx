@@ -67,7 +67,7 @@ function AppNavigation() {
               <Ionicons name="home-outline" color={color} size={size} />
             ),
           }}
-          name="Root"
+          name="Home"
           component={RootStack}
         ></Tab.Screen>
         <Tab.Screen
