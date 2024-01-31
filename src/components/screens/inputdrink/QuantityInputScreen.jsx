@@ -106,11 +106,18 @@ function QuantityInputScreen({ navigation }) {
   );
 
   const handleContinue = () => {
-    if (hasQuantityValueChanged && quantityValue !== 0) {
+    if (
+      (hasQuantityValueChanged && quantityValue !== 0) ||
+      quantityValue >= 0
+    ) {
       dispatch(increment(Number(quantityValue)));
       navigation.navigate("home");
       setQuantityValue(10);
-    } else if (quantityValue <= 0) {
+    } else if (quantityValue >= 0) {
+      dispatch(increment(Number(quantityValue)));
+      navigation.navigate("home");
+      setQuantityValue(10);
+    } else {
       triggerAnimation();
     }
   };

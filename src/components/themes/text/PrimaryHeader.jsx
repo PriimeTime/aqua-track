@@ -1,7 +1,6 @@
 import { Text } from "react-native";
 
 function getHeaderStyle(size) {
-  console.log(size);
   const fontValues = {
     1: { fontSize: 25 },
     2: { fontSize: 30 },

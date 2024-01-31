@@ -7,7 +7,7 @@ import { MainButton } from "./screens/MainButton";
 import { Statistics } from "./screens/Statistics";
 import { color } from "../utils/themes";
 
-function HomeScreen({ navigation }) {
+function RootScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -20,7 +20,7 @@ function HomeScreen({ navigation }) {
   );
 }
 
-export { HomeScreen };
+export { RootScreen };
 
 const styles = StyleSheet.create({
   container: {

@@ -8,6 +8,7 @@ const color = {
   SECONDARY_BUTTON: "#002396",
 
   APP_PRIMARY_BACKGROUND: "#5A79E0",
+  APP_SECONDARY_BACKGROUND: "#516CC9",
 };
 
 export { color };
