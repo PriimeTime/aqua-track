@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import PieChart from "react-native-pie-chart";
-import { color } from "../../utils/themes";
+import { shadow } from "../../utils/themes";
 import { useSelector } from "react-redux";
 
 function Statistics() {
@@ -41,11 +41,12 @@ function Statistics() {
         <View style={styles.statWrapper}>
           <View style={styles.pieChartWrapper}>
             <PieChart
+              style={styles.pieChart}
               widthAndHeight={widthAndHeight}
               series={series}
               sliceColor={sliceColor}
               coverRadius={0.7}
-              coverFill={color.APP_PRIMARY_BACKGROUND}
+              coverFill={false}
             />
           </View>
           <View style={styles.legendWrapper}>
@@ -103,6 +104,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  pieChart: {
+    ...shadow.slight_shadow,
+  },
   legendWrapper: {
     flexDirection: "row", // Align children horizontally
     flexWrap: "wrap",
@@ -112,6 +116,7 @@ const styles = StyleSheet.create({
     height: "25%",
   },
   legendItemWrapper: {
+    ...shadow.moderate_shadow,
     alignContent: "center",
     flexWrap: "wrap",
     width: "33.33%",
