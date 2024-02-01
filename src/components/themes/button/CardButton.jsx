@@ -1,6 +1,6 @@
 import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
 import { useState } from "react";
-import { color } from "../../../utils/themes";
+import { color, shadow } from "../../../utils/themes";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 function getTextStyle(size) {
@@ -27,22 +27,19 @@ function getTextStyle(size) {
 
 function getButtonStyle(selected) {
   const baseStyle = {
-    width: "80%",
-    left: "10%",
+    width: "90%",
+    left: "5%",
     top: "10%",
     height: "80%",
-    borderRadius: 20,
+    borderRadius: 30,
     borderWidth: 5,
     borderColor: color.CARD_BUTTON,
     backgroundColor: selected ? "#c6dbff" : color.APP_PRIMARY_BACKGROUND,
     /**
-     * Give selected item a slight shadow
+     * Give selected item a very slight shadow
      */
     ...(selected && {
-      shadowColor: "black",
-      shadowOffset: { width: 5, height: 5 },
-      shadowOpacity: 0.2,
-      shadowRadius: 10,
+      ...shadow.very_slight_shadow,
     }),
   };
 
@@ -96,7 +93,6 @@ export { CardButton };
 const styles = StyleSheet.create({
   wrapper: { height: "25%", width: "50%" },
   container: {
-    position: "absolute",
     top: "15%",
     left: "7.5%",
   },

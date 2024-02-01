@@ -7,7 +7,7 @@ function getHeaderStyle(size) {
     3: { fontSize: 75 },
   };
 
-  const { fontSize } = fontValues[size] || 1; // Default to size 1 if not defined
+  const { fontSize } = fontValues[size];
 
   const baseStyle = {
     fontWeight: 300,

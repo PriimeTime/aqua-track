@@ -19,7 +19,9 @@ export { MainButton };
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: "100%",
-    height: "30%",
+    padding: "5%",
+    width: "90%",
+    left: "5%",
+    height: "35%",
   },
 });
