@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState } from "react";
 
-import { PrimaryButton } from "../../themes/button/PrimaryButton";
-import { PrimaryText } from "../../themes/text/PrimaryText";
-import { CardButton } from "../../themes/button/CardButton";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
+import { PrimaryText } from "../../components/texts/PrimaryText";
+import { CardButton } from "../../components/buttons/CardButton";
 
-import { setType, resetType } from "../../../store/store";
-import { drinkTypeList } from "../../../utils/maps";
-import { color } from "../../../utils/themes";
+import { setType, resetType } from "../../store/store";
+import { drinkTypeList } from "../../utils/maps";
+import { color } from "../../utils/themes";
 
 function TypeInputScreen({ navigation }) {
   const dispatch = useDispatch();
@@ -64,6 +64,10 @@ function TypeInputScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.drinkTypeContentContainer}
       >
+        {/* Using index as key since the
+            card button list will not
+            be altered at any point
+            at runtime */}
         {drinkTypeList.map((drink, index) => (
           <CardButton
             key={index}

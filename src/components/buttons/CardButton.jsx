@@ -1,6 +1,6 @@
 import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
 import { useState } from "react";
-import { color, shadow } from "../../../utils/themes";
+import { color, shadow } from "../../utils/themes";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 function getTextStyle(size) {

@@ -3,19 +3,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { increment, addToHistory } from "../../../store/store";
-import { drinkTypeList } from "../../../utils/maps";
+import { increment, addToHistory } from "../../store/store";
+import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
 
-import { PrimaryButton } from "../../themes/button/PrimaryButton";
-import { PrimaryText } from "../../themes/text/PrimaryText";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
+import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
-import { color } from "../../../utils/themes";
+import { color } from "../../utils/themes";
 
 import {
   inputBottleSizeInMilliliters,
   incrementValue,
-} from "../../../utils/constants";
+} from "../../utils/constants";
 
 /**
  * Debounce function to control

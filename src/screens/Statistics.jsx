@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import PieChart from "react-native-pie-chart";
-import { shadow } from "../../utils/themes";
+import { shadow } from "../utils/themes";
 import { useSelector } from "react-redux";
 
 function Statistics() {
@@ -51,7 +51,7 @@ function Statistics() {
           </View>
           <View style={styles.legendWrapper}>
             {drinkHistoryWithPercentages.map((item) => (
-              <View key={item.id.toString()} style={styles.legendItemWrapper}>
+              <View key={item.id} style={styles.legendItemWrapper}>
                 <View style={styles.legendItemColorWrapper}>
                   <View
                     style={[

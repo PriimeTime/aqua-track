@@ -1,13 +1,13 @@
 import { StyleSheet, View } from "react-native";
 
-import { ImageButton } from "../themes/button/ImageButton";
+import { ImageButton } from "../components/buttons/ImageButton";
 
 function MainButton({ navigation }) {
   return (
     <>
       <View style={styles.wrapper}>
         <ImageButton
-          imgSrc={require("../../../assets/icons/waterbottle.png")}
+          imgSrc={require("../../assets/icons/waterbottle.png")}
           onPress={() => navigation.navigate("typeInputScreen")}
         ></ImageButton>
       </View>

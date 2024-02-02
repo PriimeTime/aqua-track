@@ -1,5 +1,5 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { AppNavigation } from "./components/navigation/AppNavigation";
+import { AppNavigation } from "./navigation/AppNavigation";
 
 function AppScreen() {
   return (

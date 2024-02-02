@@ -1,5 +1,5 @@
 import { Pressable, Text } from "react-native";
-import { color } from "../../../utils/themes";
+import { color } from "../../utils/themes";
 import * as Haptics from "expo-haptics";
 
 function getTextStyle(size) {

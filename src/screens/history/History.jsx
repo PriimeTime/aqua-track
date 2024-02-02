@@ -1,7 +1,7 @@
 import { Text, View, Button } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
-import { resetHistory } from "../../../store/store";
+import { resetHistory } from "../../store/store";
 
 function History() {
   const insets = useSafeAreaInsets();

@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import { RootScreen } from "../RootScreen";
+import { RootScreen } from "../screens/RootScreen";
 import { History } from "../screens/history/History";
 import { QuantityInputScreen } from "../screens/inputdrink/QuantityInputScreen";
 import { TypeInputScreen } from "../screens/inputdrink/TypeInputScreen";
 
-import { color } from "../../utils/themes";
+import { color } from "../utils/themes";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 
-import { PrimaryHeader } from "../themes/text/PrimaryHeader";
+import { PrimaryHeader } from "../components/texts/PrimaryHeader";
 
 const metricUnitConversion = (waterIntake) => {
   let retVal = `${waterIntake} ml`;
