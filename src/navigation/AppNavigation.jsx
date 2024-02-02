@@ -20,15 +20,15 @@ function RootStack() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="home">
-        {(props) => <RootScreen {...props} />}
-      </Stack.Screen>
-      <Stack.Screen name="quantityInputScreen">
-        {(props) => <QuantityInputScreen {...props} />}
-      </Stack.Screen>
-      <Stack.Screen name="typeInputScreen">
-        {(props) => <TypeInputScreen {...props} />}
-      </Stack.Screen>
+      <Stack.Screen name="home" component={RootScreen}></Stack.Screen>
+      <Stack.Screen
+        name="quantityInputScreen"
+        component={QuantityInputScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="typeInputScreen"
+        component={TypeInputScreen}
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 }

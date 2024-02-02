@@ -1,7 +1,7 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, addToHistory } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
@@ -33,12 +33,11 @@ const useDebouncedCallback = (callback, delay) => {
   };
 };
 
-function QuantityInputScreen({ navigation }) {
+function QuantityInputScreen() {
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
-
   const drinkType = useSelector((state) => state.drinkType.value);
-
   const scaleValue = useState(new Animated.Value(1))[0];
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {

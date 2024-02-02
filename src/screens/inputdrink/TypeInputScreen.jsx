@@ -2,6 +2,7 @@ import { View, StyleSheet, ScrollView, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
@@ -11,7 +12,8 @@ import { setType, resetType } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
 import { color } from "../../utils/themes";
 
-function TypeInputScreen({ navigation }) {
+function TypeInputScreen() {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const drinkType = useSelector((state) => state.drinkType.value);

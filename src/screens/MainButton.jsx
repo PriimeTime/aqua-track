@@ -1,8 +1,11 @@
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { ImageButton } from "../components/buttons/ImageButton";
 
-function MainButton({ navigation }) {
+function MainButton() {
+  const navigation = useNavigation();
+
   return (
     <>
       <View style={styles.wrapper}>

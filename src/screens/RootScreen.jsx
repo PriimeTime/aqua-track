@@ -8,14 +8,14 @@ import { MainButton } from "./MainButton";
 import { Statistics } from "./Statistics";
 import { color } from "../utils/themes";
 
-function RootScreen({ navigation }) {
+function RootScreen() {
   const insets = useSafeAreaInsets();
   const drinkHistory = useSelector((state) => state.drinkHistory);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <MainHeader></MainHeader>
-      <MainButton navigation={navigation} />
+      <MainButton />
       {drinkHistory.length > 0 && <Statistics />}
       <StatusBar style="auto" />
     </View>
