@@ -1,5 +1,5 @@
 import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
-import { useState } from "react";
+import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -47,7 +47,7 @@ function getButtonStyle(selected) {
 }
 
 function CardButton({ onPress, buttonIcon, fontSize, children, selected }) {
-  const scaleValue = useState(new Animated.Value(1))[0];
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const animateScale = (newValue) => {
     Animated.timing(scaleValue, {

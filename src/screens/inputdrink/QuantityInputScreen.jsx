@@ -38,7 +38,7 @@ function QuantityInputScreen() {
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
   const drinkType = useSelector((state) => state.drinkType.value);
-  const scaleValue = useState(new Animated.Value(1))[0];
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

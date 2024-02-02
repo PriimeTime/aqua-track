@@ -1,7 +1,7 @@
 import { View, StyleSheet, ScrollView, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
@@ -18,7 +18,7 @@ function TypeInputScreen() {
   const insets = useSafeAreaInsets();
   const drinkType = useSelector((state) => state.drinkType.value);
 
-  const scaleValue = useState(new Animated.Value(1))[0];
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const triggerAnimation = () => {
     Animated.sequence([
