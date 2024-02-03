@@ -125,14 +125,8 @@ function QuantityInputScreen() {
     <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={1}>
-            How much {drinkTypeLabel}did you drink?
-          </PrimaryText>
+          <PrimaryText size={3}>How much {drinkTypeLabel}?</PrimaryText>
         </Animated.View>
-      </View>
-
-      <View style={styles.amountDrank}>
-        <PrimaryText size={3}>{quantityValue} ml</PrimaryText>
       </View>
 
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
@@ -140,6 +134,10 @@ function QuantityInputScreen() {
           heightVal={heightVal}
           liquidColor={drinkType.color}
         ></QuantityInputBottle>
+      </View>
+
+      <View style={styles.amountDrank}>
+        <PrimaryText size={4}>{quantityValue} ml</PrimaryText>
       </View>
 
       <View style={styles.buttonWrapper}>

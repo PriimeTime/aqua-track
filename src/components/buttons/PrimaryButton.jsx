@@ -17,7 +17,6 @@ function getTextStyle(size) {
     textAlign: "center",
     lineHeight: 30,
     fontSize,
-    fontWeight: 400,
     letterSpacing: 1.2,
     color: "white",
   };

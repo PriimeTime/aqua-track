@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 
-import { PrimaryHeader } from "../components/texts/PrimaryHeader";
+import { PrimaryText } from "../components/texts/PrimaryText";
 
 const metricUnitConversion = (waterIntake) => {
   let retVal = `${waterIntake} ml`;
@@ -24,13 +24,15 @@ function MainHeader() {
     if (waterIntake === 0) {
       return `Time to hydrate yourself!`;
     } else {
-      return `You drank ${metricUnitConversion(waterIntake)} of liquid today!`;
+      return `Your intake today`;
     }
   }
 
   return (
     <View style={styles.wrapper}>
-      <PrimaryHeader size={5}>{getHeaderText()}</PrimaryHeader>
+      <PrimaryText size={3}>{getHeaderText()}</PrimaryText>
+      {/* TODO: make below unit into a card just like in the figma mock-up */}
+      <PrimaryText size={3}>{metricUnitConversion(waterIntake)}</PrimaryText>
     </View>
   );
 }

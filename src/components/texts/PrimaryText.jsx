@@ -1,16 +1,16 @@
 import { Text } from "react-native";
 
-function getHeaderStyle(size) {
+function getTextStyle(size) {
   const fontValues = {
-    1: { fontSize: 35 },
-    2: { fontSize: 50 },
-    3: { fontSize: 75 },
+    1: { fontSize: 20 },
+    2: { fontSize: 24 },
+    3: { fontSize: 36 },
+    4: { fontSize: 48 },
   };
 
   const { fontSize } = fontValues[size];
 
   const baseStyle = {
-    fontWeight: 300,
     fontSize,
   };
 
@@ -18,7 +18,7 @@ function getHeaderStyle(size) {
 }
 
 function PrimaryText({ children, size }) {
-  return <Text style={getHeaderStyle(size)}>{children}</Text>;
+  return <Text style={getTextStyle(size)}>{children}</Text>;
 }
 
 export { PrimaryText };

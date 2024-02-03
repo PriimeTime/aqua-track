@@ -58,7 +58,7 @@ function TypeInputScreen() {
     <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={1}>What did you drink?</PrimaryText>
+          <PrimaryText size={3}>What did you drink?</PrimaryText>
         </Animated.View>
       </View>
       <ScrollView
