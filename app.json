@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.priimetime.aquatrack"
@@ -31,6 +29,9 @@
       "eas": {
         "projectId": "1a0f1b7c-d073-40da-b592-b79e94c02390"
       }
-    }
+    },
+    "plugins": [
+      ["expo-font", { "fonts": ["./assets/fonts/Chewy-Regular.ttf"] }]
+    ]
   }
 }

@@ -14,6 +14,7 @@ function getTextStyle(size) {
   const fontSize = fontSizeValues[size] || 25;
 
   const baseStyle = {
+    fontFamily: "Chewy-Regular",
     textAlign: "center",
     lineHeight: 30,
     fontSize,

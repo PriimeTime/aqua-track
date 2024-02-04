@@ -11,6 +11,7 @@ function getTextStyle(size) {
   const { fontSize } = fontValues[size];
 
   const baseStyle = {
+    fontFamily: "Chewy-Regular",
     fontSize,
   };
 
