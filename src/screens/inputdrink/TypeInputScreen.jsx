@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
@@ -55,7 +56,13 @@ function TypeInputScreen() {
   };
 
   return (
-    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <LinearGradient
+      colors={[
+        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
+        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
+      ]}
+      style={[styles.wrapper, { paddingTop: insets.top }]}
+    >
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText size={3}>What did you drink?</PrimaryText>
@@ -85,7 +92,7 @@ function TypeInputScreen() {
       <View style={styles.footer}>
         <PrimaryButton onPress={handleButtonPress}>Continue</PrimaryButton>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 

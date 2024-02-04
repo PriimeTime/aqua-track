@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToHistory } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
@@ -121,7 +122,13 @@ function QuantityInputScreen() {
     : "";
 
   return (
-    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <LinearGradient
+      colors={[
+        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
+        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
+      ]}
+      style={[styles.wrapper, { paddingTop: insets.top }]}
+    >
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText size={3}>How much {drinkTypeLabel}?</PrimaryText>
@@ -142,7 +149,7 @@ function QuantityInputScreen() {
       <View style={styles.buttonWrapper}>
         <PrimaryButton onPress={handleContinue}>Continue</PrimaryButton>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
