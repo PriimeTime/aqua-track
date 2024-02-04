@@ -39,7 +39,7 @@ function TypeInputScreen() {
     /**
      * Toggle functionality
      */
-    if (drinkType.id === drink.id) {
+    if (drinkType.typeID === drink.typeID) {
       dispatch(resetType());
     } else {
       dispatch(setType(drink));
@@ -47,7 +47,7 @@ function TypeInputScreen() {
   };
 
   const handleButtonPress = () => {
-    if (drinkType.id > -1) {
+    if (drinkType.typeID > -1) {
       navigation.navigate("quantityInputScreen");
     } else {
       triggerAnimation();
@@ -74,7 +74,7 @@ function TypeInputScreen() {
           <CardButton
             key={index}
             buttonIcon={drink.icon}
-            selected={drinkType.id === drink.id}
+            selected={drinkType.typeID === drink.typeID}
             onPress={() => handleCardPress(drink)}
           >
             {drink.label}

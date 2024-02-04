@@ -3,25 +3,29 @@ import { useSelector } from "react-redux";
 
 import { PrimaryText } from "../components/texts/PrimaryText";
 
-const metricUnitConversion = (waterIntake) => {
-  let retVal = `${waterIntake} ml`;
+const metricUnitConversion = (totalIntake) => {
+  let retVal = `${totalIntake} ml`;
 
-  if (waterIntake > 500 && waterIntake < 1000) {
-    retVal = `${Math.round(waterIntake / 100)} dl`;
-  } else if (waterIntake >= 1000 && waterIntake < 5000) {
-    retVal = `${(waterIntake / 1000).toFixed(1)} l`;
-  } else if (waterIntake > 5000) {
-    retVal = `${Math.round(waterIntake / 1000)} l`;
+  if (totalIntake > 500 && totalIntake < 1000) {
+    retVal = `${Math.round(totalIntake / 100)} dl`;
+  } else if (totalIntake >= 1000 && totalIntake < 5000) {
+    retVal = `${(totalIntake / 1000).toFixed(1)} l`;
+  } else if (totalIntake > 5000) {
+    retVal = `${Math.round(totalIntake / 1000)} l`;
   }
 
   return retVal;
 };
 
 function MainHeader() {
-  const waterIntake = useSelector((state) => state.waterIntake.value);
+  const drinkHistory = useSelector((state) => state.drinkHistory);
+  const totalDrinkQuantity = drinkHistory.reduce(
+    (acc, val) => acc + val.quantity,
+    0
+  );
 
   function getHeaderText() {
-    if (waterIntake === 0) {
+    if (totalDrinkQuantity === 0) {
       return `Time to hydrate yourself!`;
     } else {
       return `Your intake today`;
@@ -32,7 +36,9 @@ function MainHeader() {
     <View style={styles.wrapper}>
       <PrimaryText size={3}>{getHeaderText()}</PrimaryText>
       {/* TODO: make below unit into a card just like in the figma mock-up */}
-      <PrimaryText size={3}>{metricUnitConversion(waterIntake)}</PrimaryText>
+      <PrimaryText size={3}>
+        {metricUnitConversion(totalDrinkQuantity)}
+      </PrimaryText>
     </View>
   );
 }

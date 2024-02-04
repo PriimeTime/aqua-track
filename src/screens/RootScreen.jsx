@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
 import { MainHeader } from "./MainHeader";
-import { MainButton } from "./MainButton";
+import { HomeWaterBottle } from "./HomeWaterBottle";
 import { Statistics } from "./Statistics";
 import { color } from "../utils/themes";
 
@@ -15,7 +15,7 @@ function RootScreen() {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <MainHeader></MainHeader>
-      <MainButton />
+      <HomeWaterBottle />
       {drinkHistory.length > 0 && <Statistics />}
       <StatusBar style="auto" />
     </View>

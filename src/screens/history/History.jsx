@@ -10,7 +10,6 @@ function History() {
 
   const handleOnPress = () => {
     dispatch(resetHistory());
-    console.log(drinkHistory);
   };
 
   return (
@@ -18,7 +17,7 @@ function History() {
       <Text style={{ paddingTop: insets.top }}>
         drinkHistory: {JSON.stringify(drinkHistory)}
       </Text>
-      <Button title="reset history" onPress={handleOnPress}></Button>
+      <Button title="debug: reset history" onPress={handleOnPress}></Button>
     </View>
   );
 }

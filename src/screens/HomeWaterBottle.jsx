@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { ImageButton } from "../components/buttons/ImageButton";
 
-function MainButton() {
+function HomeWaterBottle() {
   const navigation = useNavigation();
 
   return (
@@ -18,7 +18,7 @@ function MainButton() {
   );
 }
 
-export { MainButton };
+export { HomeWaterBottle };
 
 const styles = StyleSheet.create({
   wrapper: {

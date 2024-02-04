@@ -7,22 +7,24 @@ import { useFocusEffect } from "@react-navigation/native";
 
 function Statistics() {
   const drinkHistory = useSelector((state) => state.drinkHistory);
-  const totalDrinkQuantity = useSelector((state) => state.waterIntake.value);
-
+  const totalDrinkQuantity = drinkHistory.reduce(
+    (acc, val) => acc + val.quantity,
+    0
+  );
   const pieDimensions = 250;
-  const sliceColor = drinkHistory.map((item) => item.color);
 
   const reducedDrinkHistory = Object.values(
     drinkHistory.reduce((acc, item) => {
-      if (!acc[item.id]) {
-        acc[item.id] = { ...item };
+      if (!acc[item.typeID]) {
+        acc[item.typeID] = { ...item };
       } else {
-        acc[item.id].quantity += item.quantity;
+        acc[item.typeID].quantity += item.quantity;
       }
       return acc;
     }, {})
   );
 
+  const sliceColor = reducedDrinkHistory.map((item) => item.color);
   const pieValues = reducedDrinkHistory.map((item) => item.quantity);
 
   /**
@@ -90,7 +92,7 @@ function Statistics() {
           </View>
           <View style={styles.legendWrapper}>
             {drinkHistoryWithPercentages.map((item) => (
-              <View key={item.id} style={styles.legendItemWrapper}>
+              <View key={item.typeID} style={styles.legendItemWrapper}>
                 <View style={styles.legendItemColorWrapper}>
                   <View
                     style={[
