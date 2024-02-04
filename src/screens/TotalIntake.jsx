@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 import { PrimaryText } from "../components/texts/PrimaryText";
+import { StyleSheet, View } from "react-native";
+import { color, shadow } from "../utils/themes";
 
 const metricUnitConversion = (totalIntake) => {
   let retVal = `${totalIntake} ml`;
@@ -23,10 +25,26 @@ function TotalIntake() {
   );
 
   return (
-    <PrimaryText size={3}>
-      {metricUnitConversion(totalDrinkQuantity)}
-    </PrimaryText>
+    <View style={styles.wrapper}>
+      <PrimaryText size={3} color={color.SECONDARY_TEXT}>
+        {metricUnitConversion(totalDrinkQuantity)}
+      </PrimaryText>
+    </View>
   );
 }
 
 export { TotalIntake };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: "red",
+    paddingHorizontal: 27.5,
+    paddingVertical: 12.5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 36,
+    color: color.SECONDARY_TEXT,
+    backgroundColor: color.SECONDARY_BUTTON,
+    ...shadow.shadow,
+  },
+});

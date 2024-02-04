@@ -1,5 +1,5 @@
 import { Pressable, Text } from "react-native";
-import { color } from "../../utils/themes";
+import { color, shadow } from "../../utils/themes";
 import * as Haptics from "expo-haptics";
 
 function getTextStyle() {
@@ -22,10 +22,7 @@ function getButtonStyle(pressed) {
     alignItems: "center",
     justifyContent: "center",
     // TODO: outsource shadow into const object in themes
-    shadowColor: color.SECONDARY_TEXT,
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    ...shadow.shadow,
     backgroundColor: color.SECONDARY_BUTTON,
   };
 

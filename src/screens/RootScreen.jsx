@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   totalIntakeWrapper: {
     width: "90%",
     left: "5%",
-    height: "5%",
+    height: "10%",
     justifyContent: "center",
     alignItems: "center",
   },

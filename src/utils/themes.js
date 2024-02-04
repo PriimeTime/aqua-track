@@ -7,6 +7,7 @@ const color = {
 
   SECONDARY_BUTTON: "#FFFFFF",
 
+  PRIMARY_TEXT: "#003061",
   SECONDARY_TEXT: "#3C91E6",
 
   APP_PRIMARY_BACKGROUND_FIRST_GRADIENT: "#FFFFFF",
@@ -38,6 +39,12 @@ const shadow = {
     shadowOffset: { width: 10, height: 10 },
     shadowOpacity: 0.4,
     shadowRadius: 30,
+  },
+  shadow: {
+    shadowColor: color.SECONDARY_TEXT,
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
 };
 
