@@ -7,6 +7,7 @@ import { RootScreen } from "../screens/RootScreen";
 import { History } from "../screens/history/History";
 import { QuantityInputScreen } from "../screens/inputdrink/QuantityInputScreen";
 import { TypeInputScreen } from "../screens/inputdrink/TypeInputScreen";
+import { SettingsList } from "../screens/settings/SettingsList";
 
 import { color } from "../utils/themes";
 
@@ -21,6 +22,7 @@ function RootStack() {
       }}
     >
       <Stack.Screen name="home" component={RootScreen}></Stack.Screen>
+      <Stack.Screen name="settings" component={SettingsList}></Stack.Screen>
       <Stack.Screen
         name="quantityInputScreen"
         component={QuantityInputScreen}
