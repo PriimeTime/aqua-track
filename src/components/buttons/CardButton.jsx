@@ -1,29 +1,8 @@
 import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
-import { useState } from "react";
-import { color, shadow } from "../../../utils/themes";
+import { useRef } from "react";
+import { color, shadow } from "../../utils/themes";
+import { PrimaryText } from "../texts/PrimaryText";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-function getTextStyle(size) {
-  const fontSizeValues = {
-    1: { fontSize: 15 },
-    2: { fontSize: 20 },
-    3: { fontSize: 25 },
-    4: { fontSize: 30 },
-    5: { fontSize: 35 },
-  };
-
-  const fontSize = fontSizeValues[size] || 25;
-
-  const baseStyle = {
-    fontSize,
-    fontWeight: 500,
-    letterSpacing: 1.2,
-    paddingTop: 10,
-    color: color.SECONDARY_BUTTON,
-  };
-
-  return baseStyle;
-}
 
 function getButtonStyle(selected) {
   const baseStyle = {
@@ -46,8 +25,8 @@ function getButtonStyle(selected) {
   return baseStyle;
 }
 
-function CardButton({ onPress, buttonIcon, fontSize, children, selected }) {
-  const scaleValue = useState(new Animated.Value(1))[0];
+function CardButton({ onPress, buttonIcon, children, selected }) {
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const animateScale = (newValue) => {
     Animated.timing(scaleValue, {
@@ -81,7 +60,9 @@ function CardButton({ onPress, buttonIcon, fontSize, children, selected }) {
             size={25}
             name={buttonIcon}
           ></Ionicons>
-          <Text style={getTextStyle(fontSize)}>{children}</Text>
+          <View style={styles.cardTextWrapper}>
+            <PrimaryText size={1}>{children}</PrimaryText>
+          </View>
         </View>
       </Pressable>
     </Animated.View>
@@ -95,5 +76,9 @@ const styles = StyleSheet.create({
   container: {
     top: "15%",
     left: "7.5%",
+  },
+  cardTextWrapper: {
+    top: "5%",
+    left: "2.5%",
   },
 });

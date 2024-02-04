@@ -1,20 +1,22 @@
 import { View, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 
-import { MainHeader } from "./screens/MainHeader";
-import { MainButton } from "./screens/MainButton";
-import { Statistics } from "./screens/Statistics";
+import { MainHeader } from "./MainHeader";
+import { HomeWaterBottle } from "./HomeWaterBottle";
+import { Statistics } from "./Statistics";
 import { color } from "../utils/themes";
 
-function RootScreen({ navigation }) {
+function RootScreen() {
   const insets = useSafeAreaInsets();
+  const drinkHistory = useSelector((state) => state.drinkHistory);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <MainHeader></MainHeader>
-      <MainButton navigation={navigation} />
-      <Statistics />
+      <HomeWaterBottle />
+      {drinkHistory.length > 0 && <Statistics />}
       <StatusBar style="auto" />
     </View>
   );

@@ -1,22 +1,24 @@
 import { View, StyleSheet, ScrollView, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-import { PrimaryButton } from "../../themes/button/PrimaryButton";
-import { PrimaryText } from "../../themes/text/PrimaryText";
-import { CardButton } from "../../themes/button/CardButton";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
+import { PrimaryText } from "../../components/texts/PrimaryText";
+import { CardButton } from "../../components/buttons/CardButton";
 
-import { setType, resetType } from "../../../store/store";
-import { drinkTypeList } from "../../../utils/maps";
-import { color } from "../../../utils/themes";
+import { setType, resetType } from "../../store/store";
+import { drinkTypeList } from "../../utils/maps";
+import { color } from "../../utils/themes";
 
-function TypeInputScreen({ navigation }) {
+function TypeInputScreen() {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const drinkType = useSelector((state) => state.drinkType.value);
 
-  const scaleValue = useState(new Animated.Value(1))[0];
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const triggerAnimation = () => {
     Animated.sequence([
@@ -37,7 +39,7 @@ function TypeInputScreen({ navigation }) {
     /**
      * Toggle functionality
      */
-    if (drinkType.id === drink.id) {
+    if (drinkType.typeID === drink.typeID) {
       dispatch(resetType());
     } else {
       dispatch(setType(drink));
@@ -45,7 +47,7 @@ function TypeInputScreen({ navigation }) {
   };
 
   const handleButtonPress = () => {
-    if (drinkType.id > -1) {
+    if (drinkType.typeID > -1) {
       navigation.navigate("quantityInputScreen");
     } else {
       triggerAnimation();
@@ -56,7 +58,7 @@ function TypeInputScreen({ navigation }) {
     <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={1}>What did you drink?</PrimaryText>
+          <PrimaryText size={3}>What did you drink?</PrimaryText>
         </Animated.View>
       </View>
       <ScrollView
@@ -64,11 +66,15 @@ function TypeInputScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.drinkTypeContentContainer}
       >
+        {/* Using index as key since the
+            card button list will not
+            be altered at any point
+            at runtime */}
         {drinkTypeList.map((drink, index) => (
           <CardButton
             key={index}
             buttonIcon={drink.icon}
-            selected={drinkType.id === drink.id}
+            selected={drinkType.typeID === drink.typeID}
             onPress={() => handleCardPress(drink)}
           >
             {drink.label}

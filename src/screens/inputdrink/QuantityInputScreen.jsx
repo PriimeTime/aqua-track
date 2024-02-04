@@ -1,21 +1,21 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { increment, addToHistory } from "../../../store/store";
-import { drinkTypeList } from "../../../utils/maps";
+import { addToHistory } from "../../store/store";
+import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
 
-import { PrimaryButton } from "../../themes/button/PrimaryButton";
-import { PrimaryText } from "../../themes/text/PrimaryText";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
+import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
-import { color } from "../../../utils/themes";
+import { color } from "../../utils/themes";
 
 import {
   inputBottleSizeInMilliliters,
   incrementValue,
-} from "../../../utils/constants";
+} from "../../utils/constants";
 
 /**
  * Debounce function to control
@@ -33,13 +33,12 @@ const useDebouncedCallback = (callback, delay) => {
   };
 };
 
-function QuantityInputScreen({ navigation }) {
+function QuantityInputScreen() {
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
-
   const drinkType = useSelector((state) => state.drinkType.value);
-
-  const scaleValue = useState(new Animated.Value(1))[0];
+  const scaleValue = useRef(new Animated.Value(1)).current;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -107,7 +106,6 @@ function QuantityInputScreen({ navigation }) {
 
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      dispatch(increment(Number(quantityValue)));
       dispatch(addToHistory({ ...drinkType, quantity: quantityValue }));
       navigation.navigate("home");
     } else {
@@ -116,7 +114,7 @@ function QuantityInputScreen({ navigation }) {
   };
 
   const drinkTypeObject = drinkTypeList.find(
-    (item) => item.id === drinkType.id
+    (item) => item.typeID === drinkType.typeID
   );
   const drinkTypeLabel = drinkTypeObject
     ? drinkTypeObject.label.toLowerCase() + " "
@@ -126,14 +124,8 @@ function QuantityInputScreen({ navigation }) {
     <View style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={1}>
-            How much {drinkTypeLabel}did you drink?
-          </PrimaryText>
+          <PrimaryText size={3}>How much {drinkTypeLabel}?</PrimaryText>
         </Animated.View>
-      </View>
-
-      <View style={styles.amountDrank}>
-        <PrimaryText size={3}>{quantityValue} ml</PrimaryText>
       </View>
 
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
@@ -141,6 +133,10 @@ function QuantityInputScreen({ navigation }) {
           heightVal={heightVal}
           liquidColor={drinkType.color}
         ></QuantityInputBottle>
+      </View>
+
+      <View style={styles.amountDrank}>
+        <PrimaryText size={4}>{quantityValue} ml</PrimaryText>
       </View>
 
       <View style={styles.buttonWrapper}>

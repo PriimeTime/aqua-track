@@ -1,13 +1,16 @@
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import { ImageButton } from "../themes/button/ImageButton";
+import { ImageButton } from "../components/buttons/ImageButton";
 
-function MainButton({ navigation }) {
+function HomeWaterBottle() {
+  const navigation = useNavigation();
+
   return (
     <>
       <View style={styles.wrapper}>
         <ImageButton
-          imgSrc={require("../../../assets/icons/waterbottle.png")}
+          imgSrc={require("../../assets/icons/waterbottle.png")}
           onPress={() => navigation.navigate("typeInputScreen")}
         ></ImageButton>
       </View>
@@ -15,7 +18,7 @@ function MainButton({ navigation }) {
   );
 }
 
-export { MainButton };
+export { HomeWaterBottle };
 
 const styles = StyleSheet.create({
   wrapper: {

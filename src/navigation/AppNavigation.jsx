@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import { RootScreen } from "../RootScreen";
+import { RootScreen } from "../screens/RootScreen";
 import { History } from "../screens/history/History";
 import { QuantityInputScreen } from "../screens/inputdrink/QuantityInputScreen";
 import { TypeInputScreen } from "../screens/inputdrink/TypeInputScreen";
 
-import { color } from "../../utils/themes";
+import { color } from "../utils/themes";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,15 +20,15 @@ function RootStack() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="home">
-        {(props) => <RootScreen {...props} />}
-      </Stack.Screen>
-      <Stack.Screen name="quantityInputScreen">
-        {(props) => <QuantityInputScreen {...props} />}
-      </Stack.Screen>
-      <Stack.Screen name="typeInputScreen">
-        {(props) => <TypeInputScreen {...props} />}
-      </Stack.Screen>
+      <Stack.Screen name="home" component={RootScreen}></Stack.Screen>
+      <Stack.Screen
+        name="quantityInputScreen"
+        component={QuantityInputScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="typeInputScreen"
+        component={TypeInputScreen}
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 }

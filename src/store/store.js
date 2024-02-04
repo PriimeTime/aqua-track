@@ -1,19 +1,6 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
-
-const waterIntakeSlice = createSlice({
-  name: "waterIntake",
-  initialState: {
-    value: 0,
-  },
-  reducers: {
-    increment: (state, action) => {
-      state.value += action.payload;
-    },
-    reset: (state) => {
-      state.value = 0;
-    },
-  },
-});
+import { uid } from "uid";
+import { asyncStorageMiddleware } from "../middleware/asyncStorageMiddleware";
 
 const drinkTypeSlice = createSlice({
   name: "drinkType",
@@ -34,8 +21,12 @@ const drinkHistorySlice = createSlice({
   name: "drinkHistory",
   initialState: [],
   reducers: {
+    setHistory: (state, action) => {
+      return action.payload;
+    },
     addToHistory: (state, action) => {
-      state.push(action.payload);
+      const id = uid(6);
+      state.push({ id, ...action.payload });
     },
     // TODO: removeItem
     resetHistory: (state) => {
@@ -44,16 +35,17 @@ const drinkHistorySlice = createSlice({
   },
 });
 
-export const { increment, reset } = waterIntakeSlice.actions;
 export const { setType, resetType } = drinkTypeSlice.actions;
-export const { addToHistory, resetHistory } = drinkHistorySlice.actions;
+export const { addToHistory, resetHistory, setHistory } =
+  drinkHistorySlice.actions;
 
 const store = configureStore({
   reducer: {
-    waterIntake: waterIntakeSlice.reducer,
     drinkType: drinkTypeSlice.reducer,
     drinkHistory: drinkHistorySlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(asyncStorageMiddleware),
 });
 
 export default store;

@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { shadow } from "../../../utils/themes";
+import { shadow } from "../../utils/themes";
 
 function QuantityInputBottle({ heightVal, liquidColor }) {
   return (
