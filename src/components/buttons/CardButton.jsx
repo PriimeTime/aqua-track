@@ -4,28 +4,7 @@ import { color, shadow } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-function getButtonStyle(selected) {
-  const baseStyle = {
-    width: "90%",
-    left: "5%",
-    top: "10%",
-    height: "80%",
-    borderRadius: 30,
-    borderWidth: 5,
-    borderColor: color.CARD_BUTTON,
-    backgroundColor: selected ? "#c6dbff" : color.APP_PRIMARY_BACKGROUND,
-    /**
-     * Give selected item a very slight shadow
-     */
-    ...(selected && {
-      ...shadow.very_slight_shadow,
-    }),
-  };
-
-  return baseStyle;
-}
-
-function CardButton({ onPress, buttonIcon, children, selected }) {
+function CardButton({ onPress, buttonIcon, children }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const animateScale = (newValue) => {
@@ -49,17 +28,15 @@ function CardButton({ onPress, buttonIcon, children, selected }) {
       style={[styles.wrapper, { transform: [{ scale: scaleValue }] }]}
     >
       <Pressable
-        style={getButtonStyle(selected)}
+        style={styles.cardButton}
         onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
         <View style={styles.container}>
-          <Ionicons
-            color={color.SECONDARY_BUTTON}
-            size={25}
-            name={buttonIcon}
-          ></Ionicons>
+          <View style={styles.cardIconWrapper}>
+            <Ionicons color={"black"} size={25} name={buttonIcon}></Ionicons>
+          </View>
           <View style={styles.cardTextWrapper}>
             <PrimaryText size={1}>{children}</PrimaryText>
           </View>
@@ -73,12 +50,35 @@ export { CardButton };
 
 const styles = StyleSheet.create({
   wrapper: { height: "25%", width: "50%" },
+  cardButton: {
+    width: "90%",
+    left: "5%",
+    top: "10%",
+    height: "80%",
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: color.CARD_BUTTON_BORDER,
+    backgroundColor: color.CARD_BUTTON_BACKGROUND,
+  },
   container: {
-    top: "15%",
-    left: "7.5%",
+    width: "85%",
+    left: "12.5%",
+    height: "90%",
+    top: "2.5%",
+    flexDirection: "row",
   },
   cardTextWrapper: {
+    width: "50%",
+    height: "80%",
     top: "5%",
-    left: "2.5%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardIconWrapper: {
+    width: "50%",
+    height: "80%",
+    top: "5%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

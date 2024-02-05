@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView, Animated } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -9,50 +9,21 @@ import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 
-import { setType, resetType } from "../../store/store";
+import { setType } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
 import { color } from "../../utils/themes";
+import { BackButton } from "../../components/buttons/BackButton";
 
 function TypeInputScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
-  const drinkType = useSelector((state) => state.drinkType.value);
 
   const scaleValue = useRef(new Animated.Value(1)).current;
 
-  const triggerAnimation = () => {
-    Animated.sequence([
-      Animated.timing(scaleValue, {
-        toValue: 1.1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleValue, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
-  const handleCardPress = (drink) => {
-    /**
-     * Toggle functionality
-     */
-    if (drinkType.typeID === drink.typeID) {
-      dispatch(resetType());
-    } else {
-      dispatch(setType(drink));
-    }
-  };
-
-  const handleButtonPress = () => {
-    if (drinkType.typeID > -1) {
-      navigation.navigate("quantityInputScreen");
-    } else {
-      triggerAnimation();
-    }
+  const handleButtonPress = (drink) => {
+    dispatch(setType(drink));
+    navigation.navigate("quantityInputScreen");
   };
 
   return (
@@ -63,6 +34,9 @@ function TypeInputScreen() {
       ]}
       style={[styles.wrapper, { paddingTop: insets.top }]}
     >
+      <View style={styles.backButton}>
+        <BackButton></BackButton>
+      </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText size={3}>What did you drink?</PrimaryText>
@@ -81,8 +55,7 @@ function TypeInputScreen() {
           <CardButton
             key={index}
             buttonIcon={drink.icon}
-            selected={drinkType.typeID === drink.typeID}
-            onPress={() => handleCardPress(drink)}
+            onPress={() => handleButtonPress(drink)}
           >
             {drink.label}
           </CardButton>
@@ -101,18 +74,25 @@ export { TypeInputScreen };
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: color.APP_PRIMARY_BACKGROUND,
+    flex: 1,
+  },
+  backButton: {
+    width: "90%",
+    left: "5%",
+    height: "10%",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   header: {
     width: "90%",
     left: "5%",
-    height: "25%",
+    height: "15%",
     justifyContent: "center",
     alignItems: "center",
   },
   drinkTypeSelectionWrapper: {
     width: "90%",
     left: "5%",
-    height: "50%",
   },
   drinkTypeContentContainer: {
     flexDirection: "row",
