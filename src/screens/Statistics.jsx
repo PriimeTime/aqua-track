@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   pieChart: {
-    ...shadow.slight_shadow,
+    ...shadow,
   },
   legendWrapper: {
     flexDirection: "row", // Align children horizontally
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     height: "25%",
   },
   legendItemWrapper: {
-    ...shadow.moderate_shadow,
+    ...shadow,
     alignContent: "center",
     flexWrap: "wrap",
     width: "33.33%",

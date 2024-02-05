@@ -1,5 +1,7 @@
-import { Pressable, Text } from "react-native";
-import { color } from "../../utils/themes";
+import { Pressable, Text, Animated } from "react-native";
+import { useRef } from "react";
+import { color, shadow } from "../../utils/themes";
+import { animateButtonPress } from "../../utils/animations";
 import * as Haptics from "expo-haptics";
 
 function getTextStyle(size) {
@@ -41,24 +43,39 @@ function getButtonStyle(size, pressed) {
     backgroundColor: pressed
       ? color.PRIMARY_BUTTON_PRESSED
       : color.PRIMARY_BUTTON,
+    ...shadow,
   };
 
   return baseStyle;
 }
 
 function PrimaryButton({ onPress, fontSize, children, buttonSize }) {
+  const scaleValue = useRef(new Animated.Value(1)).current;
+
+  const handleOnPressIn = () => {
+    animateButtonPress(scaleValue, 0.9);
+  };
+
+  const handleOnPressOut = () => {
+    animateButtonPress(scaleValue, 1);
+  };
+
   const handlePress = () => {
     onPress();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   return (
-    <Pressable
-      style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-      onPress={handlePress}
-    >
-      <Text style={getTextStyle(fontSize)}>{children}</Text>
-    </Pressable>
+    <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+      <Pressable
+        style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
+        onPress={handlePress}
+        onPressIn={handleOnPressIn}
+        onPressOut={handleOnPressOut}
+      >
+        <Text style={getTextStyle(fontSize)}>{children}</Text>
+      </Pressable>
+    </Animated.View>
   );
 }
 

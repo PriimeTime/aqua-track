@@ -61,10 +61,6 @@ function TypeInputScreen() {
           </CardButton>
         ))}
       </ScrollView>
-
-      <View style={styles.footer}>
-        <PrimaryButton onPress={handleButtonPress}>Continue</PrimaryButton>
-      </View>
     </LinearGradient>
   );
 }
@@ -97,12 +93,5 @@ const styles = StyleSheet.create({
   drinkTypeContentContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  footer: {
-    width: "90%",
-    left: "5%",
-    height: "25%",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

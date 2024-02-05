@@ -20,7 +20,7 @@ export { QuantityInputBottle };
 
 const styles = StyleSheet.create({
   glass: {
-    ...shadow.strong_shadow,
+    ...shadow,
     top: 10,
     position: "absolute",
     width: 150,

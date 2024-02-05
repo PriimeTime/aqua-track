@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
     borderRadius: 36,
     color: color.SECONDARY_TEXT,
     backgroundColor: color.SECONDARY_BUTTON,
-    ...shadow.shadow,
+    ...shadow,
   },
 });

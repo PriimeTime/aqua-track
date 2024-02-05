@@ -1,31 +1,34 @@
-import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
+import { Pressable, View, StyleSheet, Animated } from "react-native";
 import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
+import { animateButtonPress } from "../../utils/animations";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 function CardButton({ onPress, buttonIcon, children }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
-
-  const animateScale = (newValue) => {
-    Animated.timing(scaleValue, {
-      toValue: newValue,
-      duration: 75,
-      useNativeDriver: true,
-    }).start();
-  };
+  const shadowOpacity = useRef(new Animated.Value(0)).current;
 
   const handleOnPressIn = () => {
-    animateScale(0.9);
+    animateButtonPress(scaleValue, 0.9);
+    animateButtonPress(shadowOpacity, 0.25);
   };
 
   const handleOnPressOut = () => {
-    animateScale(1);
+    animateButtonPress(scaleValue, 1);
+    animateButtonPress(shadowOpacity, 0);
   };
 
   return (
     <Animated.View
-      style={[styles.wrapper, { transform: [{ scale: scaleValue }] }]}
+      style={[
+        styles.wrapper,
+        {
+          transform: [{ scale: scaleValue }],
+          shadowOpacity: shadowOpacity,
+          shadowOffset: { width: 0, height: 4 },
+        },
+      ]}
     >
       <Pressable
         style={styles.cardButton}

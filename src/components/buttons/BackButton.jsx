@@ -1,7 +1,9 @@
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, Animated } from "react-native";
+import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
+import { animateButtonPress } from "../../utils/animations";
 
 function getTextStyle() {
   const baseStyle = {
@@ -23,8 +25,7 @@ function getButtonStyle(pressed) {
     borderRadius: 24,
     alignItems: "center",
     justifyContent: "center",
-    // TODO: outsource shadow into const object in themes
-    ...shadow.shadow,
+    ...shadow,
     backgroundColor: color.SECONDARY_BUTTON,
   };
 
@@ -32,6 +33,7 @@ function getButtonStyle(pressed) {
 }
 
 function BackButton({ buttonSize }) {
+  const scaleValue = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
   const popAction = StackActions.pop(1);
 
@@ -40,13 +42,25 @@ function BackButton({ buttonSize }) {
     navigation.dispatch(popAction);
   };
 
+  const handleOnPressIn = () => {
+    animateButtonPress(scaleValue, 0.9);
+  };
+
+  const handleOnPressOut = () => {
+    animateButtonPress(scaleValue, 1);
+  };
+
   return (
-    <Pressable
-      style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-      onPress={handlePress}
-    >
-      <Text style={getTextStyle()}>{"Back".toUpperCase()}</Text>
-    </Pressable>
+    <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+      <Pressable
+        style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
+        onPress={handlePress}
+        onPressIn={handleOnPressIn}
+        onPressOut={handleOnPressOut}
+      >
+        <Text style={getTextStyle()}>{"Back".toUpperCase()}</Text>
+      </Pressable>
+    </Animated.View>
   );
 }
 

@@ -22,7 +22,7 @@ function getButtonStyle(pressed) {
     alignItems: "center",
     justifyContent: "center",
     // TODO: outsource shadow into const object in themes
-    ...shadow.shadow,
+    ...shadow,
     backgroundColor: color.SECONDARY_BUTTON,
   };
 

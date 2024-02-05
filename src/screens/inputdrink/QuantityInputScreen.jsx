@@ -12,6 +12,7 @@ import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
 import { color } from "../../utils/themes";
+import { BackButton } from "../../components/buttons/BackButton";
 
 import {
   inputBottleSizeInMilliliters,
@@ -129,25 +130,27 @@ function QuantityInputScreen() {
       ]}
       style={[styles.wrapper, { paddingTop: insets.top }]}
     >
+      <View style={styles.backButton}>
+        <BackButton></BackButton>
+      </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText size={3}>How much {drinkTypeLabel}?</PrimaryText>
         </Animated.View>
       </View>
-
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
         <QuantityInputBottle
           heightVal={heightVal}
           liquidColor={drinkType.color}
         ></QuantityInputBottle>
       </View>
-
       <View style={styles.amountDrank}>
         <PrimaryText size={4}>{quantityValue} ml</PrimaryText>
       </View>
-
       <View style={styles.buttonWrapper}>
-        <PrimaryButton onPress={handleContinue}>Continue</PrimaryButton>
+        <PrimaryButton onPress={handleContinue}>
+          {"Add this amount".toUpperCase()}
+        </PrimaryButton>
       </View>
     </LinearGradient>
   );
@@ -159,15 +162,22 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: color.APP_PRIMARY_BACKGROUND,
   },
+  backButton: {
+    width: "90%",
+    left: "5%",
+    height: "10%",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
   header: {
-    height: "20%",
+    height: "10%",
     width: "90%",
     left: "5%",
     justifyContent: "center",
     alignItems: "center",
   },
   amountDrank: {
-    height: "20%",
+    height: "15%",
     width: "90%",
     left: "5%",
     justifyContent: "center",
@@ -176,7 +186,7 @@ const styles = StyleSheet.create({
   cupWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    height: "45%",
+    height: "50%",
     width: "90%",
     left: "5%",
   },
