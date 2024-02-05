@@ -49,7 +49,7 @@ function CardButton({ onPress, buttonIcon, children }) {
 export { CardButton };
 
 const styles = StyleSheet.create({
-  wrapper: { height: "25%", width: "50%" },
+  wrapper: { height: 125, width: "50%" },
   cardButton: {
     width: "90%",
     left: "5%",

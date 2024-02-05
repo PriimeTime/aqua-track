@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   drinkTypeContentContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    height: 500,
   },
   footer: {
     width: "90%",
