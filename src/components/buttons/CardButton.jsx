@@ -1,11 +1,21 @@
-import { Pressable, View, StyleSheet, Animated } from "react-native";
+import { Pressable, View, StyleSheet, Animated, Image } from "react-native";
 import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-function CardButton({ onPress, buttonIcon, children }) {
+const drinkImageMap = {
+  waterbottle: require("../../../assets/icons/drinks/water-bottle.png"),
+  tea: require("../../../assets/icons/drinks/tea.png"),
+  can: require("../../../assets/icons/drinks/can.png"),
+  beer: require("../../../assets/icons/drinks/beer.png"),
+  winebottle: require("../../../assets/icons/drinks/wine-bottle.png"),
+  liquor: require("../../../assets/icons/drinks/liquor.png"),
+  coffeecup: require("../../../assets/icons/drinks/coffee-cup.png"),
+};
+
+function CardButton({ onPress, imageSrc, children }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const shadowOpacity = useRef(new Animated.Value(0)).current;
 
@@ -37,8 +47,11 @@ function CardButton({ onPress, buttonIcon, children }) {
         onPressOut={handleOnPressOut}
       >
         <View style={styles.container}>
-          <View style={styles.cardIconWrapper}>
-            <Ionicons color={"black"} size={25} name={buttonIcon}></Ionicons>
+          <View style={styles.cardImageWrapper}>
+            <Image
+              style={styles.cardImage}
+              source={drinkImageMap[imageSrc]}
+            ></Image>
           </View>
           <View style={styles.cardTextWrapper}>
             <PrimaryText size={1}>{children}</PrimaryText>
@@ -77,10 +90,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  cardIconWrapper: {
+  cardImageWrapper: {
     width: "50%",
     height: "80%",
     top: "5%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardImage: {
+    width: "75%",
+    height: "75%",
     justifyContent: "center",
     alignItems: "center",
   },

@@ -54,7 +54,7 @@ function TypeInputScreen() {
         {drinkTypeList.map((drink, index) => (
           <CardButton
             key={index}
-            buttonIcon={drink.icon}
+            imageSrc={drink.imageSrc}
             onPress={() => handleButtonPress(drink)}
           >
             {drink.label}
