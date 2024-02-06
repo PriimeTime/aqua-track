@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   header: {
     width: "90%",
     left: "5%",
-    height: "15%",
+    height: "10%",
     justifyContent: "center",
     alignItems: "center",
   },

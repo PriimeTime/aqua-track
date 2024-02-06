@@ -50,12 +50,12 @@ function QuantityInputScreen() {
     Animated.sequence([
       Animated.timing(scaleValue, {
         toValue: 1.1,
-        duration: 200,
+        duration: 125,
         useNativeDriver: true,
       }),
       Animated.timing(scaleValue, {
         toValue: 1,
-        duration: 200,
+        duration: 125,
         useNativeDriver: true,
       }),
     ]).start();
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   amountDrank: {
-    height: "15%",
+    height: "10%",
     width: "90%",
     left: "5%",
     justifyContent: "center",
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   cupWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    height: "50%",
+    height: "55%",
     width: "90%",
     left: "5%",
   },

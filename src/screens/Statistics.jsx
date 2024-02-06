@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   wrapper: {
     width: "90%",
     left: "5%",
-    height: "35%",
+    height: "30%",
     alignItems: "center",
     justifyContent: "center",
   },

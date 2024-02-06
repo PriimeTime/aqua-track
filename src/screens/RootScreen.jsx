@@ -27,7 +27,7 @@ function RootScreen() {
       ]}
       style={[styles.container, { paddingTop: insets.top }]}
     >
-      <View style={styles.settingsButtonWrapper}>
+      <View style={styles.headerWrapper}>
         <SettingsButton onPress={() => navigation.navigate("settings")}>
           <Ionicons
             color={color.SECONDARY_TEXT}
@@ -35,8 +35,6 @@ function RootScreen() {
             name="settings"
           ></Ionicons>
         </SettingsButton>
-      </View>
-      <View style={styles.mainHeaderWrapper}>
         <MainHeader></MainHeader>
       </View>
       <View style={styles.totalIntakeWrapper}>
@@ -58,19 +56,19 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  settingsButtonWrapper: {
+  headerWrapper: {
     width: "90%",
     left: "5%",
-    height: "10%",
-    alignItems: "flex-end",
+    height: "15%",
+    /**
+     * Do not use alignItems
+     * here, because it would
+     * overwrite alignItems
+     * in children which is used
+     * to position the settings button
+     * and the header text
+     */
     justifyContent: "center",
-  },
-  mainHeaderWrapper: {
-    width: "90%",
-    left: "5%",
-    height: "10%",
-    justifyContent: "center",
-    alignItems: "center",
   },
   totalIntakeWrapper: {
     width: "90%",
@@ -80,9 +78,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   homeWaterBottleWrapper: {
-    padding: "5%",
     width: "90%",
     left: "5%",
-    height: "35%",
+    height: "45%",
   },
 });

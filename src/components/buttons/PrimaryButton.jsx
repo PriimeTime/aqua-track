@@ -1,4 +1,4 @@
-import { Pressable, Text, Animated } from "react-native";
+import { Pressable, Text, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { animateButtonPress } from "../../utils/animations";
@@ -66,7 +66,14 @@ function PrimaryButton({ onPress, fontSize, children, buttonSize }) {
   };
 
   return (
-    <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
+    <Animated.View
+      style={[
+        styles.buttonWrapper,
+        {
+          transform: [{ scale: scaleValue }],
+        },
+      ]}
+    >
       <Pressable
         style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
         onPress={handlePress}
@@ -80,3 +87,10 @@ function PrimaryButton({ onPress, fontSize, children, buttonSize }) {
 }
 
 export { PrimaryButton };
+
+const styles = StyleSheet.create({
+  buttonWrapper: {
+    height: "60%",
+    width: "100%",
+  },
+});

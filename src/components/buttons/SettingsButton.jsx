@@ -1,4 +1,4 @@
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { color, shadow } from "../../utils/themes";
 import * as Haptics from "expo-haptics";
 
@@ -36,12 +36,14 @@ function SettingsButton({ onPress, children, buttonSize }) {
   };
 
   return (
-    <Pressable
-      style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-      onPress={handlePress}
-    >
-      <Text style={getTextStyle()}>{children}</Text>
-    </Pressable>
+    <View style={{ alignItems: "flex-end" }}>
+      <Pressable
+        style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
+        onPress={handlePress}
+      >
+        <Text style={getTextStyle()}>{children}</Text>
+      </Pressable>
+    </View>
   );
 }
 
