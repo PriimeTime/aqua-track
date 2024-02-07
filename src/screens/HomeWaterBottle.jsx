@@ -8,7 +8,7 @@ function HomeWaterBottle() {
     <>
       <ImageButton
         imgSrc={require("../../assets/icons/mainwaterbottle.png")}
-        onPress={() => navigation.navigate("typeInputScreen")}
+        onPress={() => navigation.navigate("TypeInputScreen")}
       ></ImageButton>
     </>
   );

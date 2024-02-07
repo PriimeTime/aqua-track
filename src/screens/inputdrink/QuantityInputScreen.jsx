@@ -109,7 +109,7 @@ function QuantityInputScreen() {
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
       dispatch(addToHistory({ ...drinkType, quantity: quantityValue }));
-      navigation.navigate("home");
+      navigation.navigate("Home");
     } else {
       triggerAnimation();
     }

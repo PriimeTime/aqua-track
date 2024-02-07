@@ -28,7 +28,7 @@ function RootScreen() {
       style={[styles.container, { paddingTop: insets.top }]}
     >
       <View style={styles.headerWrapper}>
-        <SettingsButton onPress={() => navigation.navigate("settings")}>
+        <SettingsButton onPress={() => navigation.navigate("Settings")}>
           <Ionicons
             color={color.SECONDARY_TEXT}
             size={30}

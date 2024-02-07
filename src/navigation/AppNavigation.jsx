@@ -14,74 +14,58 @@ import { color } from "../utils/themes";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function RootStack() {
+function HomeTabs() {
   return (
-    <Stack.Navigator
+    <Tab.Navigator
       screenOptions={{
-        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: color.APP_SECONDARY_BACKGROUND,
+          height: 90,
+        },
+        tabBarActiveTintColor: "lightblue",
+        tabBarInactiveTintColor: "black",
       }}
     >
-      <Stack.Screen name="home" component={RootScreen}></Stack.Screen>
-      <Stack.Screen name="settings" component={SettingsList}></Stack.Screen>
-      <Stack.Screen
-        name="quantityInputScreen"
-        component={QuantityInputScreen}
-      ></Stack.Screen>
-      <Stack.Screen
-        name="typeInputScreen"
-        component={TypeInputScreen}
-      ></Stack.Screen>
-    </Stack.Navigator>
-  );
-}
-
-function HistoryStack() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="history">
-        {(props) => <History {...props} />}
-      </Stack.Screen>
-    </Stack.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={RootScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="History"
+        component={History}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="list-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
 function AppNavigation() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: color.APP_SECONDARY_BACKGROUND,
-            height: 90,
-          },
-          tabBarActiveTintColor: "lightblue",
-          tabBarInactiveTintColor: "black",
-        }}
-      >
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home-outline" color={color} size={size} />
-            ),
-          }}
-          name="Home"
-          component={RootStack}
-        ></Tab.Screen>
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Ionicons name="list-outline" color={color} size={size} />
-            ),
-          }}
-          name="History"
-          component={HistoryStack}
-        ></Tab.Screen>
-      </Tab.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="HomeTabs"
+          component={HomeTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="QuantityInputScreen"
+          component={QuantityInputScreen}
+        />
+        <Stack.Screen name="TypeInputScreen" component={TypeInputScreen} />
+        <Stack.Screen name="Settings" component={SettingsList} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

@@ -23,7 +23,7 @@ function TypeInputScreen() {
 
   const handleButtonPress = (drink) => {
     dispatch(setType(drink));
-    navigation.navigate("quantityInputScreen");
+    navigation.navigate("QuantityInputScreen");
   };
 
   return (
