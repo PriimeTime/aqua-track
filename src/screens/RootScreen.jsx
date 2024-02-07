@@ -40,10 +40,20 @@ function RootScreen() {
       <View style={styles.totalIntakeWrapper}>
         <TotalIntake></TotalIntake>
       </View>
-      <View style={styles.homeWaterBottleWrapper}>
+      <View
+        style={[
+          styles.homeWaterBottleWrapper,
+          { height: drinkHistory.length > 0 && false ? "45%" : "75%" },
+        ]}
+      >
         <HomeWaterBottle />
       </View>
-      {drinkHistory.length > 0 && <Statistics />}
+      {/* TODO: uncomment statistics */}
+      {drinkHistory.length > 0 && false && (
+        <View style={styles.statisticsWrapper}>
+          <Statistics></Statistics>
+        </View>
+      )}
       <StatusBar style="auto" />
     </LinearGradient>
   );
@@ -80,6 +90,10 @@ const styles = StyleSheet.create({
   homeWaterBottleWrapper: {
     width: "90%",
     left: "5%",
-    height: "45%",
+  },
+  statisticsWrapper: {
+    width: "90%",
+    left: "5%",
+    height: "30%",
   },
 });
