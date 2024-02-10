@@ -1,4 +1,7 @@
 const color = {
+  WHITE: "#FFFFFF",
+  LIGHTBLUE: "#8FC7FF",
+
   PRIMARY_BUTTON: "#3C91E6",
   PRIMARY_BUTTON_PRESSED: "#003061",
 

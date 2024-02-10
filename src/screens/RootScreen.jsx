@@ -6,6 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
 import { MainHeader } from "./MainHeader";
 import { HomeWaterBottle } from "./HomeWaterBottle";
@@ -46,7 +47,7 @@ function RootScreen() {
           { height: drinkHistory.length > 0 && false ? "45%" : "75%" },
         ]}
       >
-        <HomeWaterBottle />
+        <HomeWaterBottle imgSrc={WaterBottleImage} />
       </View>
       {/* TODO: uncomment statistics */}
       {drinkHistory.length > 0 && false && (

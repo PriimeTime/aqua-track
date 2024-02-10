@@ -3,16 +3,22 @@ import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import WaterBottle from "../../../assets/icons/drinks/water-bottle.png";
+import Tea from "../../../assets/icons/drinks/tea.png";
+import Can from "../../../assets/icons/drinks/can.png";
+import Beer from "../../../assets/icons/drinks/beer.png";
+import WineBottle from "../../../assets/icons/drinks/wine-bottle.png";
+import Liquor from "../../../assets/icons/drinks/liquor.png";
+import CoffeeCup from "../../../assets/icons/drinks/coffee-cup.png";
 
 const drinkImageMap = {
-  waterbottle: require("../../../assets/icons/drinks/water-bottle.png"),
-  tea: require("../../../assets/icons/drinks/tea.png"),
-  can: require("../../../assets/icons/drinks/can.png"),
-  beer: require("../../../assets/icons/drinks/beer.png"),
-  winebottle: require("../../../assets/icons/drinks/wine-bottle.png"),
-  liquor: require("../../../assets/icons/drinks/liquor.png"),
-  coffeecup: require("../../../assets/icons/drinks/coffee-cup.png"),
+  waterbottle: WaterBottle,
+  tea: Tea,
+  can: Can,
+  beer: Beer,
+  winebottle: WineBottle,
+  liquor: Liquor,
+  coffeecup: CoffeeCup,
 };
 
 function CardButton({ onPress, imageSrc, children }) {
