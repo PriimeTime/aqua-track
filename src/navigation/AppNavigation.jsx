@@ -1,9 +1,10 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text } from "react-native";
-import WaterDrop from "../../assets/icons/WaterDrop.svg";
+import { View, StyleSheet } from "react-native";
 
+import WaterDropButton from "./WaterDropButton";
+import CustomTabBar from "./CustomTabBar";
 import { RootScreen } from "../screens/RootScreen";
 import { History } from "../screens/history/History";
 import { QuantityInputScreen } from "../screens/inputdrink/QuantityInputScreen";
@@ -16,20 +17,12 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeTabs() {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: {
-          position: "absolute",
-          bottom: 50,
-          left: "5%",
-          elevation: 5,
-          backgroundColor: color.WHITE,
-          ...shadow,
-          borderRadius: 36,
-          height: 72,
-          width: "90%",
-        },
+        tabBarStyle: styles.waterDrop,
       }}
     >
       <Tab.Screen
@@ -39,30 +32,11 @@ function HomeTabs() {
           headerShown: false,
           tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                width: 100,
-                borderRadius: 25,
-                backgroundColor: focused ? color.LIGHTBLUE : color.WHITE,
-                height: 50,
-                top: 22,
-                left: "5%",
-                width: "90%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  color: focused ? color.WHITE : color.LIGHTBLUE,
-                  fontFamily: "Chewy-Regular",
-                  fontSize: 20,
-                  textTransform: "uppercase",
-                }}
-              >
-                home
-              </Text>
-            </View>
+            <CustomTabBar
+              title="Home"
+              focused={focused}
+              direction="left"
+            ></CustomTabBar>
           ),
         }}
       />
@@ -72,16 +46,12 @@ function HomeTabs() {
         options={{
           tabBarLabel: "",
           headerShown: false,
-          tabBarIcon: (size) => <WaterDrop width={110} height={110} />,
+          tabBarIcon: (size) => (
+            <WaterDropButton
+              onPress={() => navigation.navigate("TypeInputScreen")}
+            ></WaterDropButton>
+          ),
         }}
-        listeners={({ navigation }) => ({
-          tabPress: (e) => {
-            // Prevent default action
-            e.preventDefault();
-            // Navigate to the TypeInputScreen using the stack navigator
-            navigation.navigate("TypeInputScreen");
-          },
-        })}
       />
 
       <Tab.Screen
@@ -91,30 +61,11 @@ function HomeTabs() {
           tabBarLabel: "",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <View
-              style={{
-                width: 100,
-                borderRadius: 25,
-                backgroundColor: focused ? color.LIGHTBLUE : color.WHITE,
-                height: 50,
-                top: 22,
-                right: "5%",
-                width: "90%",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  color: focused ? color.WHITE : color.LIGHTBLUE,
-                  fontFamily: "Chewy-Regular",
-                  fontSize: 20,
-                  textTransform: "uppercase",
-                }}
-              >
-                History
-              </Text>
-            </View>
+            <CustomTabBar
+              title="History"
+              focused={focused}
+              direction="right"
+            ></CustomTabBar>
           ),
         }}
       />
@@ -143,3 +94,17 @@ function AppNavigation() {
 }
 
 export { AppNavigation };
+
+const styles = StyleSheet.create({
+  waterDrop: {
+    position: "absolute",
+    bottom: 50,
+    left: "5%",
+    elevation: 5,
+    backgroundColor: color.WHITE,
+    ...shadow,
+    borderRadius: 36,
+    height: 72,
+    width: "90%",
+  },
+});
