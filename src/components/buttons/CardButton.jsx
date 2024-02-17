@@ -71,7 +71,7 @@ function CardButton({ onPress, imageSrc, children }) {
 export { CardButton };
 
 const styles = StyleSheet.create({
-  wrapper: { height: 125, width: "50%" },
+  wrapper: { height: "100%", width: "50%" },
   cardButton: {
     width: "90%",
     left: "5%",
@@ -108,5 +108,6 @@ const styles = StyleSheet.create({
     height: "75%",
     justifyContent: "center",
     alignItems: "center",
+    objectFit: "contain",
   },
 });

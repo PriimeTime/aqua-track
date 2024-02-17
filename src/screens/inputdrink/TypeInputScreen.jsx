@@ -5,7 +5,6 @@ import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 

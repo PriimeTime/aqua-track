@@ -1,8 +1,11 @@
-import { Animated, Pressable, View } from "react-native";
+import { Animated, Pressable } from "react-native";
 import WaterDrop from "../../assets/icons/WaterDrop.svg";
 import { useRef } from "react";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 
-export default function WaterDropButton({ onPress }) {
+const waterDropDimensions = hp("12%");
+
+export default function WaterDropButton({ onPress, ...props }) {
   const scale = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -23,6 +26,7 @@ export default function WaterDropButton({ onPress }) {
 
   return (
     <Pressable
+      {...props}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={onPress}
@@ -32,7 +36,10 @@ export default function WaterDropButton({ onPress }) {
           transform: [{ scale: scale }],
         }}
       >
-        <WaterDrop width={110} height={110}></WaterDrop>
+        <WaterDrop
+          width={waterDropDimensions}
+          height={waterDropDimensions}
+        ></WaterDrop>
       </Animated.View>
     </Pressable>
   );
