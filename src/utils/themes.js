@@ -29,4 +29,9 @@ const shadow = {
   shadowRadius: 5,
 };
 
-export { color, shadow };
+const dimensions = {
+  CARD_BUTTON_HEIGHT_PHONE: 120,
+  CARD_BUTTON_HEIGHT_TABLET: 240,
+};
+
+export { color, shadow, dimensions };

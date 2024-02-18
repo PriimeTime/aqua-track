@@ -3,25 +3,25 @@ import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
-import WaterBottle from "../../../assets/icons/drinks/water-bottle.png";
-import Tea from "../../../assets/icons/drinks/tea.png";
-import Can from "../../../assets/icons/drinks/can.png";
-import Beer from "../../../assets/icons/drinks/beer.png";
-import WineBottle from "../../../assets/icons/drinks/wine-bottle.png";
-import Liquor from "../../../assets/icons/drinks/liquor.png";
-import CoffeeCup from "../../../assets/icons/drinks/coffee-cup.png";
+import waterbottle from "../../../assets/icons/drinks/water-bottle.png";
+import tea from "../../../assets/icons/drinks/tea.png";
+import can from "../../../assets/icons/drinks/can.png";
+import beer from "../../../assets/icons/drinks/beer.png";
+import winebottle from "../../../assets/icons/drinks/wine-bottle.png";
+import liquor from "../../../assets/icons/drinks/liquor.png";
+import coffeecup from "../../../assets/icons/drinks/coffee-cup.png";
 
 const drinkImageMap = {
-  waterbottle: WaterBottle,
-  tea: Tea,
-  can: Can,
-  beer: Beer,
-  winebottle: WineBottle,
-  liquor: Liquor,
-  coffeecup: CoffeeCup,
+  waterbottle,
+  tea,
+  can,
+  beer,
+  winebottle,
+  liquor,
+  coffeecup,
 };
 
-function CardButton({ onPress, imageSrc, children }) {
+function CardButton({ onPress, imageSrc, children, style }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const shadowOpacity = useRef(new Animated.Value(0)).current;
 
@@ -44,6 +44,7 @@ function CardButton({ onPress, imageSrc, children }) {
           shadowOpacity: shadowOpacity,
           shadowOffset: { width: 0, height: 4 },
         },
+        style,
       ]}
     >
       <Pressable
@@ -52,16 +53,14 @@ function CardButton({ onPress, imageSrc, children }) {
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
-        <View style={styles.container}>
-          <View style={styles.cardImageWrapper}>
-            <Image
-              style={styles.cardImage}
-              source={drinkImageMap[imageSrc]}
-            ></Image>
-          </View>
-          <View style={styles.cardTextWrapper}>
-            <PrimaryText size={1}>{children}</PrimaryText>
-          </View>
+        <View style={styles.cardImageWrapper}>
+          <Image
+            style={styles.cardImage}
+            source={drinkImageMap[imageSrc]}
+          ></Image>
+        </View>
+        <View style={styles.cardTextWrapper}>
+          <PrimaryText size={1}>{children}</PrimaryText>
         </View>
       </Pressable>
     </Animated.View>
@@ -71,43 +70,31 @@ function CardButton({ onPress, imageSrc, children }) {
 export { CardButton };
 
 const styles = StyleSheet.create({
-  wrapper: { height: "100%", width: "50%" },
+  wrapper: {
+    height: "100%",
+    width: "100%",
+  },
   cardButton: {
-    width: "90%",
-    left: "5%",
-    top: "10%",
-    height: "80%",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
     borderRadius: 24,
     borderWidth: 2,
     borderColor: color.CARD_BUTTON_BORDER,
     backgroundColor: color.CARD_BUTTON_BACKGROUND,
   },
-  container: {
-    width: "85%",
-    left: "12.5%",
-    height: "90%",
-    top: "2.5%",
-    flexDirection: "row",
-  },
   cardTextWrapper: {
-    width: "50%",
-    height: "80%",
-    top: "5%",
+    width: "48%",
     justifyContent: "center",
     alignItems: "center",
   },
   cardImageWrapper: {
-    width: "50%",
-    height: "80%",
-    top: "5%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: "48%",
   },
   cardImage: {
-    width: "75%",
-    height: "75%",
-    justifyContent: "center",
-    alignItems: "center",
+    width: "100%",
+    height: "100%",
     objectFit: "contain",
   },
 });

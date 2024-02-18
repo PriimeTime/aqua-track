@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView, Animated } from "react-native";
+import { View, StyleSheet, Animated, FlatList } from "react-native";
 import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
@@ -10,7 +10,7 @@ import { CardButton } from "../../components/buttons/CardButton";
 
 import { setType } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
-import { color } from "../../utils/themes";
+import { color, dimensions } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
 
 function TypeInputScreen() {
@@ -41,25 +41,31 @@ function TypeInputScreen() {
           <PrimaryText size={3}>What did you drink?</PrimaryText>
         </Animated.View>
       </View>
-      <ScrollView
-        style={styles.drinkTypeSelectionWrapper}
+      <FlatList
+        numColumns={2}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.drinkTypeContentContainer}
-      >
-        {/* Using index as key since the
-            card button list will not
-            be altered at any point
-            at runtime */}
-        {drinkTypeList.map((drink, index) => (
+        style={styles.drinkTypeSelectionWrapper}
+        data={drinkTypeList}
+        renderItem={({ item }) => (
           <CardButton
-            key={index}
-            imageSrc={drink.imageSrc}
-            onPress={() => handleButtonPress(drink)}
+            style={{
+              width: "46%",
+              padding: "2%",
+              height: dimensions.CARD_BUTTON_HEIGHT_PHONE,
+            }}
+            imageSrc={item.imageSrc}
+            onPress={() => handleButtonPress(item)}
           >
-            {drink.label}
+            {item.label}
           </CardButton>
-        ))}
-      </ScrollView>
+        )}
+        keyExtractor={(item) => item.typeID}
+        getItemLayout={(data, index) => ({
+          length: dimensions.CARD_BUTTON_HEIGHT_PHONE,
+          offset: dimensions.CARD_BUTTON_HEIGHT_PHONE * index,
+          index,
+        })}
+      ></FlatList>
     </LinearGradient>
   );
 }
