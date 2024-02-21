@@ -1,24 +1,36 @@
 import { Pressable, Text, View } from "react-native";
 import { color, shadow } from "../../utils/themes";
+import SCREEN_SIZE from "../../utils/screenSize";
 import * as Haptics from "expo-haptics";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-function getTextStyle() {
-  const baseStyle = {
-    textAlign: "center",
-    lineHeight: 30,
-    letterSpacing: 1.2,
-    color: color.SECONDARY_TEXT,
-  };
+const buttonSizes = {
+  SMALL: 48,
+  MEDIUM: 64,
+  LARGE: 128,
+};
 
-  return baseStyle;
-}
+const buttonRadius = {
+  SMALL: 24,
+  MEDIUM: 32,
+  LARGE: 128,
+};
+
+const iconSize = {
+  SMALL: 25,
+  MEDIUM: 35,
+  LARGE: 70,
+};
 
 // TODO: play spin animation when pressed
 function getButtonStyle(pressed) {
+  const size = buttonSizes[SCREEN_SIZE];
+  const radius = buttonRadius[SCREEN_SIZE];
+
   const baseStyle = {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: size,
+    height: size,
+    borderRadius: radius,
     alignItems: "center",
     justifyContent: "center",
     // TODO: outsource shadow into const object in themes
@@ -41,7 +53,11 @@ function SettingsButton({ onPress, children, buttonSize }) {
         style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
         onPress={handlePress}
       >
-        <Text style={getTextStyle()}>{children}</Text>
+        <Ionicons
+          color={color.SECONDARY_TEXT}
+          size={iconSize[SCREEN_SIZE]}
+          name="settings"
+        ></Ionicons>
       </Pressable>
     </View>
   );

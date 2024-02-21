@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
 import { MainHeader } from "./MainHeader";
@@ -29,13 +28,9 @@ function RootScreen() {
       style={[styles.container, { paddingTop: insets.top }]}
     >
       <View style={styles.headerWrapper}>
-        <SettingsButton onPress={() => navigation.navigate("Settings")}>
-          <Ionicons
-            color={color.SECONDARY_TEXT}
-            size={30}
-            name="settings"
-          ></Ionicons>
-        </SettingsButton>
+        <SettingsButton
+          onPress={() => navigation.navigate("Settings")}
+        ></SettingsButton>
         <MainHeader></MainHeader>
       </View>
       <View style={styles.totalIntakeWrapper}>

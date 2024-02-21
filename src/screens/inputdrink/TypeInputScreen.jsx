@@ -12,6 +12,18 @@ import { setType } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
 import { color, dimensions } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
+import SCREEN_SIZE from "../../utils/screenSize";
+
+const cardButtonHeight =
+  SCREEN_SIZE === "LARGE"
+    ? dimensions.CARD_BUTTON_HEIGHT_TABLET
+    : dimensions.CARD_BUTTON_HEIGHT_PHONE;
+
+const headerSize = {
+  SMALL: 3,
+  MEDIUM: 3,
+  LARGE: 6,
+};
 
 function TypeInputScreen() {
   const navigation = useNavigation();
@@ -38,7 +50,9 @@ function TypeInputScreen() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={3}>What did you drink?</PrimaryText>
+          <PrimaryText size={headerSize[SCREEN_SIZE]}>
+            What did you drink?
+          </PrimaryText>
         </Animated.View>
       </View>
       <FlatList
@@ -50,8 +64,8 @@ function TypeInputScreen() {
           <CardButton
             style={{
               width: "46%",
-              padding: "2%",
-              height: dimensions.CARD_BUTTON_HEIGHT_PHONE,
+              margin: "2%",
+              height: cardButtonHeight,
             }}
             imageSrc={item.imageSrc}
             onPress={() => handleButtonPress(item)}
@@ -61,8 +75,8 @@ function TypeInputScreen() {
         )}
         keyExtractor={(item) => item.typeID}
         getItemLayout={(data, index) => ({
-          length: dimensions.CARD_BUTTON_HEIGHT_PHONE,
-          offset: dimensions.CARD_BUTTON_HEIGHT_PHONE * index,
+          length: cardButtonHeight,
+          offset: cardButtonHeight * index,
           index,
         })}
       ></FlatList>

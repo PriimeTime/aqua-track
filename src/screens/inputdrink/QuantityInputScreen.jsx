@@ -18,6 +18,7 @@ import {
   inputBottleSizeInMilliliters,
   incrementValue,
 } from "../../utils/constants";
+import SCREEN_SIZE from "../../utils/screenSize";
 
 /**
  * Debounce function to control
@@ -33,6 +34,18 @@ const useDebouncedCallback = (callback, delay) => {
       callback(...args);
     }
   };
+};
+
+const headerTextSize = {
+  SMALL: 4,
+  MEDIUM: 4,
+  LARGE: 8,
+};
+
+const sensitivity = {
+  SMALL: 0.75,
+  MEDIUM: 0.45,
+  LARGE: 0.25,
 };
 
 function QuantityInputScreen() {
@@ -69,14 +82,12 @@ function QuantityInputScreen() {
     debouncedHapticFeedback();
   }, [quantityValue]);
 
-  const scaleFactor = 0.55; // Adjust this value as needed for sensitivity
-
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (evt, gestureState) => {
-      const dragDistance = gestureState.dy * scaleFactor;
+      const dragDistance = gestureState.dy * sensitivity[SCREEN_SIZE];
 
-      // Calculate the height of the water based on the drag
+      // Calculate height of water based on drag
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
       setHeightVal(newHeight);
 
@@ -135,7 +146,9 @@ function QuantityInputScreen() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={3}>How much {drinkTypeLabel}?</PrimaryText>
+          <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+            How much {drinkTypeLabel}?
+          </PrimaryText>
         </Animated.View>
       </View>
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
@@ -145,7 +158,9 @@ function QuantityInputScreen() {
         ></QuantityInputBottle>
       </View>
       <View style={styles.amountDrank}>
-        <PrimaryText size={4}>{quantityValue} ml</PrimaryText>
+        <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+          {quantityValue} ml
+        </PrimaryText>
       </View>
       <View style={styles.buttonWrapper}>
         <PrimaryButton onPress={handleContinue}>

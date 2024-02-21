@@ -10,6 +10,7 @@ import beer from "../../../assets/icons/drinks/beer.png";
 import winebottle from "../../../assets/icons/drinks/wine-bottle.png";
 import liquor from "../../../assets/icons/drinks/liquor.png";
 import coffeecup from "../../../assets/icons/drinks/coffee-cup.png";
+import SCREEN_SIZE from "../../utils/screenSize";
 
 const drinkImageMap = {
   waterbottle,
@@ -19,6 +20,24 @@ const drinkImageMap = {
   winebottle,
   liquor,
   coffeecup,
+};
+
+const cardButtonBorderRadius = {
+  SMALL: 24,
+  MEDIUM: 24,
+  LARGE: 48,
+};
+
+const cardBorderWidth = {
+  SMALL: 4,
+  MEDIUM: 4,
+  LARGE: 7,
+};
+
+const cardTextSize = {
+  SMALL: 1,
+  MEDIUM: 2,
+  LARGE: 4,
 };
 
 function CardButton({ onPress, imageSrc, children, style }) {
@@ -60,7 +79,7 @@ function CardButton({ onPress, imageSrc, children, style }) {
           ></Image>
         </View>
         <View style={styles.cardTextWrapper}>
-          <PrimaryText size={1}>{children}</PrimaryText>
+          <PrimaryText size={cardTextSize[SCREEN_SIZE]}>{children}</PrimaryText>
         </View>
       </Pressable>
     </Animated.View>
@@ -79,8 +98,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     flexDirection: "row",
-    borderRadius: 24,
-    borderWidth: 2,
+    borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
+    borderWidth: cardBorderWidth[SCREEN_SIZE],
     borderColor: color.CARD_BUTTON_BORDER,
     backgroundColor: color.CARD_BUTTON_BACKGROUND,
   },

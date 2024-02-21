@@ -7,6 +7,10 @@ function getTextStyle(size, colorParam) {
     2: { fontSize: 24 },
     3: { fontSize: 36 },
     4: { fontSize: 48 },
+    5: { fontSize: 64 },
+    6: { fontSize: 72 },
+    7: { fontSize: 86 },
+    8: { fontSize: 92 },
   };
 
   const { fontSize } = fontValues[size];

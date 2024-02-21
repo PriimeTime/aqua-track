@@ -1,5 +1,30 @@
 import { View, StyleSheet } from "react-native";
 import { shadow, color } from "../../utils/themes";
+import SCREEN_SIZE from "../../utils/screenSize";
+
+const bottleHeight = {
+  SMALL: 275,
+  MEDIUM: 380,
+  LARGE: 600,
+};
+
+const bottleWidth = {
+  SMALL: 150,
+  MEDIUM: 190,
+  LARGE: 300,
+};
+
+const borderWidth = {
+  SMALL: 10,
+  MEDIUM: 12,
+  LARGE: 18,
+};
+
+const borderRadius = {
+  SMALL: 20,
+  MEDIUM: 24,
+  LARGE: 42,
+};
 
 function QuantityInputBottle({ heightVal, liquidColor }) {
   return (
@@ -22,16 +47,16 @@ const styles = StyleSheet.create({
   glass: {
     ...shadow,
     top: 10,
-    width: 200,
-    height: 400,
+    width: bottleWidth[SCREEN_SIZE],
+    height: bottleHeight[SCREEN_SIZE],
     borderColor: color.CUP_COLOR,
-    borderBottomWidth: 12,
-    borderLeftWidth: 12,
-    borderRightWidth: 12,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 24,
-    borderBottomLeftRadius: 24,
+    borderBottomWidth: borderWidth[SCREEN_SIZE],
+    borderLeftWidth: borderWidth[SCREEN_SIZE],
+    borderRightWidth: borderWidth[SCREEN_SIZE],
+    borderTopLeftRadius: borderWidth[SCREEN_SIZE],
+    borderTopRightRadius: borderWidth[SCREEN_SIZE],
+    borderBottomRightRadius: borderRadius[SCREEN_SIZE],
+    borderBottomLeftRadius: borderRadius[SCREEN_SIZE],
     liquid: {
       position: "absolute",
       bottom: "2.5%",
@@ -39,19 +64,5 @@ const styles = StyleSheet.create({
       width: "90%",
       borderRadius: 8,
     },
-    // light: {
-    //   position: "absolute",
-    //   left: "20%",
-    //   bottom: "20%",
-    //   zIndex: 1,
-    //   width: "15%",
-    //   height: "75%",
-    //   borderTopLeftRadius: "0% 100%",
-    //   borderTopRightRadius: "100% 0%",
-    //   borderBottomRightRadius: "100% 100%",
-    //   borderBottomLeftRadius: "0% 0%",
-    //   backgroundColor: "rgba(255, 255, 255, 0.1)",
-    //   transform: [{ scaleX: -1 }],
-    // },
   },
 });

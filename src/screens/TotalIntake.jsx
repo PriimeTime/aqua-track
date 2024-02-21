@@ -2,6 +2,31 @@ import { useSelector } from "react-redux";
 import { PrimaryText } from "../components/texts/PrimaryText";
 import { StyleSheet, View } from "react-native";
 import { color, shadow } from "../utils/themes";
+import SCREEN_SIZE from "../utils/screenSize";
+
+const cardSize = {
+  SMALL: 2,
+  MEDIUM: 3,
+  LARGE: 4,
+};
+
+const cardPaddingHorizontal = {
+  SMALL: 20,
+  MEDIUM: 27.5,
+  LARGE: 30,
+};
+
+const cardPaddingVertical = {
+  SMALL: 10,
+  MEDIUM: 12.5,
+  LARGE: 15,
+};
+
+const cardBorderRadius = {
+  SMALL: 30,
+  MEDIUM: 36,
+  LARGE: 72,
+};
 
 const metricUnitConversion = (totalIntake) => {
   let retVal = `${totalIntake} ml`;
@@ -26,7 +51,7 @@ function TotalIntake() {
 
   return (
     <View style={styles.wrapper}>
-      <PrimaryText size={3} color={color.SECONDARY_TEXT}>
+      <PrimaryText size={cardSize[SCREEN_SIZE]} color={color.SECONDARY_TEXT}>
         {metricUnitConversion(totalDrinkQuantity)}
       </PrimaryText>
     </View>
@@ -37,12 +62,11 @@ export { TotalIntake };
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "red",
-    paddingHorizontal: 27.5,
-    paddingVertical: 12.5,
+    paddingHorizontal: cardPaddingHorizontal[SCREEN_SIZE],
+    paddingVertical: cardPaddingVertical[SCREEN_SIZE],
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 36,
+    borderRadius: cardBorderRadius[SCREEN_SIZE],
     color: color.SECONDARY_TEXT,
     backgroundColor: color.SECONDARY_BUTTON,
     ...shadow,
