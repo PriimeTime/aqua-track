@@ -77,44 +77,33 @@ function Statistics() {
 
   return (
     <View style={styles.wrapper}>
-      {pieValues.length > 0 ? (
-        <View style={styles.statWrapper}>
-          <View style={styles.pieChartWrapper}>
-            <VictoryPie
-              padAngle={5}
-              animate={{ easing: "exp" }}
-              data={graphicData}
-              width={pieDimensions}
-              height={pieDimensions}
-              colorScale={sliceColor}
-              innerRadius={50}
-            />
+      <View style={styles.pieChartWrapper}>
+        <VictoryPie
+          padAngle={5}
+          animate={{ easing: "exp" }}
+          data={graphicData}
+          width={pieDimensions}
+          height={pieDimensions}
+          colorScale={sliceColor}
+          innerRadius={50}
+        />
+      </View>
+      <View style={styles.legendWrapper}>
+        {drinkHistoryWithPercentages.map((item) => (
+          <View key={item.typeID} style={styles.legendItemWrapper}>
+            <View style={styles.legendItemColorWrapper}>
+              <View
+                style={[styles.legendItemColor, { borderColor: item.color }]}
+              ></View>
+            </View>
+            <View style={styles.legendItemLabel}>
+              <Text>
+                {Math.round(item.percent)} % {item.label}
+              </Text>
+            </View>
           </View>
-          <View style={styles.legendWrapper}>
-            {drinkHistoryWithPercentages.map((item) => (
-              <View key={item.typeID} style={styles.legendItemWrapper}>
-                <View style={styles.legendItemColorWrapper}>
-                  <View
-                    style={[
-                      styles.legendItemColor,
-                      { borderColor: item.color },
-                    ]}
-                  ></View>
-                </View>
-                <View style={styles.legendItemLabel}>
-                  <Text>
-                    {Math.round(item.percent)} % {item.label}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
-      ) : (
-        <View style={styles.emptyStatWrapper}>
-          <Text>no data</Text>
-        </View>
-      )}
+        ))}
+      </View>
     </View>
   );
 }
@@ -123,21 +112,9 @@ export { Statistics };
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: "90%",
-    left: "5%",
-    height: "40%",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  statWrapper: {
-    height: "100%",
-    width: "100%",
-  },
-  emptyStatWrapper: {
-    height: "90%",
-    width: "90%",
-    justifyContent: "center",
-    alignItems: "center",
   },
   pieChartWrapper: {
     width: "100%",
@@ -146,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   pieChart: {
-    ...shadow.slight_shadow,
+    ...shadow,
   },
   legendWrapper: {
     flexDirection: "row", // Align children horizontally
@@ -157,7 +134,7 @@ const styles = StyleSheet.create({
     height: "25%",
   },
   legendItemWrapper: {
-    ...shadow.moderate_shadow,
+    ...shadow,
     alignContent: "center",
     flexWrap: "wrap",
     width: "33.33%",

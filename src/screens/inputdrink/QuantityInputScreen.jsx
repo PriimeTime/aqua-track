@@ -6,16 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToHistory } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
 import { color } from "../../utils/themes";
+import { BackButton } from "../../components/buttons/BackButton";
 
 import {
   inputBottleSizeInMilliliters,
   incrementValue,
 } from "../../utils/constants";
+import SCREEN_SIZE from "../../utils/screenSize";
 
 /**
  * Debounce function to control
@@ -33,6 +36,18 @@ const useDebouncedCallback = (callback, delay) => {
   };
 };
 
+const headerTextSize = {
+  SMALL: 4,
+  MEDIUM: 4,
+  LARGE: 8,
+};
+
+const sensitivity = {
+  SMALL: 0.75,
+  MEDIUM: 0.45,
+  LARGE: 0.25,
+};
+
 function QuantityInputScreen() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
@@ -48,12 +63,12 @@ function QuantityInputScreen() {
     Animated.sequence([
       Animated.timing(scaleValue, {
         toValue: 1.1,
-        duration: 200,
+        duration: 125,
         useNativeDriver: true,
       }),
       Animated.timing(scaleValue, {
         toValue: 1,
-        duration: 200,
+        duration: 125,
         useNativeDriver: true,
       }),
     ]).start();
@@ -67,14 +82,12 @@ function QuantityInputScreen() {
     debouncedHapticFeedback();
   }, [quantityValue]);
 
-  const scaleFactor = 0.55; // Adjust this value as needed for sensitivity
-
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (evt, gestureState) => {
-      const dragDistance = gestureState.dy * scaleFactor;
+      const dragDistance = gestureState.dy * sensitivity[SCREEN_SIZE];
 
-      // Calculate the height of the water based on the drag
+      // Calculate height of water based on drag
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
       setHeightVal(newHeight);
 
@@ -107,7 +120,7 @@ function QuantityInputScreen() {
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
       dispatch(addToHistory({ ...drinkType, quantity: quantityValue }));
-      navigation.navigate("home");
+      navigation.navigate("Home");
     } else {
       triggerAnimation();
     }
@@ -121,28 +134,40 @@ function QuantityInputScreen() {
     : "";
 
   return (
-    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <LinearGradient
+      colors={[
+        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
+        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
+      ]}
+      style={[styles.wrapper, { paddingTop: insets.top }]}
+    >
+      <View style={styles.backButton}>
+        <BackButton></BackButton>
+      </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={3}>How much {drinkTypeLabel}?</PrimaryText>
+          <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+            How much {drinkTypeLabel}?
+          </PrimaryText>
         </Animated.View>
       </View>
-
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
         <QuantityInputBottle
           heightVal={heightVal}
           liquidColor={drinkType.color}
         ></QuantityInputBottle>
       </View>
-
       <View style={styles.amountDrank}>
-        <PrimaryText size={4}>{quantityValue} ml</PrimaryText>
+        <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+          {quantityValue} ml
+        </PrimaryText>
       </View>
-
       <View style={styles.buttonWrapper}>
-        <PrimaryButton onPress={handleContinue}>Continue</PrimaryButton>
+        <PrimaryButton onPress={handleContinue}>
+          {"Add this amount".toUpperCase()}
+        </PrimaryButton>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -152,15 +177,22 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: color.APP_PRIMARY_BACKGROUND,
   },
+  backButton: {
+    width: "90%",
+    left: "5%",
+    height: "10%",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
   header: {
-    height: "20%",
+    height: "10%",
     width: "90%",
     left: "5%",
     justifyContent: "center",
     alignItems: "center",
   },
   amountDrank: {
-    height: "20%",
+    height: "10%",
     width: "90%",
     left: "5%",
     justifyContent: "center",
@@ -169,7 +201,7 @@ const styles = StyleSheet.create({
   cupWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    height: "45%",
+    height: "55%",
     width: "90%",
     left: "5%",
   },

@@ -25,7 +25,7 @@ function AppScreen() {
        * If storage not empty,
        * fill redux with storage data
        */
-      if (storedData.length > 0) {
+      if (storedData?.length > 0) {
         dispatch(setHistory(storedData));
       }
     };

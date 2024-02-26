@@ -1,91 +1,86 @@
-import { View, StyleSheet, ScrollView, Animated } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { View, StyleSheet, Animated, FlatList } from "react-native";
+import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
-import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 
-import { setType, resetType } from "../../store/store";
+import { setType } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
-import { color } from "../../utils/themes";
+import { color, dimensions } from "../../utils/themes";
+import { BackButton } from "../../components/buttons/BackButton";
+import SCREEN_SIZE from "../../utils/screenSize";
+
+const cardButtonHeight =
+  SCREEN_SIZE === "LARGE"
+    ? dimensions.CARD_BUTTON_HEIGHT_TABLET
+    : dimensions.CARD_BUTTON_HEIGHT_PHONE;
+
+const headerSize = {
+  SMALL: 3,
+  MEDIUM: 3,
+  LARGE: 6,
+};
 
 function TypeInputScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
-  const drinkType = useSelector((state) => state.drinkType.value);
 
   const scaleValue = useRef(new Animated.Value(1)).current;
 
-  const triggerAnimation = () => {
-    Animated.sequence([
-      Animated.timing(scaleValue, {
-        toValue: 1.1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(scaleValue, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  };
-
-  const handleCardPress = (drink) => {
-    /**
-     * Toggle functionality
-     */
-    if (drinkType.typeID === drink.typeID) {
-      dispatch(resetType());
-    } else {
-      dispatch(setType(drink));
-    }
-  };
-
-  const handleButtonPress = () => {
-    if (drinkType.typeID > -1) {
-      navigation.navigate("quantityInputScreen");
-    } else {
-      triggerAnimation();
-    }
+  const handleButtonPress = (drink) => {
+    dispatch(setType(drink));
+    navigation.navigate("QuantityInputScreen");
   };
 
   return (
-    <View style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <LinearGradient
+      colors={[
+        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
+        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
+      ]}
+      style={[styles.wrapper, { paddingTop: insets.top }]}
+    >
+      <View style={styles.backButton}>
+        <BackButton></BackButton>
+      </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={3}>What did you drink?</PrimaryText>
+          <PrimaryText size={headerSize[SCREEN_SIZE]}>
+            What did you drink?
+          </PrimaryText>
         </Animated.View>
       </View>
-      <ScrollView
-        style={styles.drinkTypeSelectionWrapper}
+      <FlatList
+        numColumns={2}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.drinkTypeContentContainer}
-      >
-        {/* Using index as key since the
-            card button list will not
-            be altered at any point
-            at runtime */}
-        {drinkTypeList.map((drink, index) => (
+        style={styles.drinkTypeSelectionWrapper}
+        data={drinkTypeList}
+        renderItem={({ item }) => (
           <CardButton
-            key={index}
-            buttonIcon={drink.icon}
-            selected={drinkType.typeID === drink.typeID}
-            onPress={() => handleCardPress(drink)}
+            style={{
+              width: "46%",
+              margin: "2%",
+              height: cardButtonHeight,
+            }}
+            imageSrc={item.imageSrc}
+            onPress={() => handleButtonPress(item)}
           >
-            {drink.label}
+            {item.label}
           </CardButton>
-        ))}
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <PrimaryButton onPress={handleButtonPress}>Continue</PrimaryButton>
-      </View>
-    </View>
+        )}
+        keyExtractor={(item) => item.typeID}
+        getItemLayout={(data, index) => ({
+          length: cardButtonHeight,
+          offset: cardButtonHeight * index,
+          index,
+        })}
+      ></FlatList>
+    </LinearGradient>
   );
 }
 
@@ -94,29 +89,28 @@ export { TypeInputScreen };
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: color.APP_PRIMARY_BACKGROUND,
+    flex: 1,
+  },
+  backButton: {
+    width: "90%",
+    left: "5%",
+    height: "10%",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   header: {
     width: "90%",
     left: "5%",
-    height: "25%",
+    height: "10%",
     justifyContent: "center",
     alignItems: "center",
   },
   drinkTypeSelectionWrapper: {
     width: "90%",
     left: "5%",
-    height: "50%",
   },
   drinkTypeContentContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    height: 500,
-  },
-  footer: {
-    width: "90%",
-    left: "5%",
-    height: "25%",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

@@ -1,30 +1,21 @@
-import { StyleSheet, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Image } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { ImageButton } from "../components/buttons/ImageButton";
-
-function HomeWaterBottle() {
-  const navigation = useNavigation();
-
+function HomeWaterBottle({ imgSrc }) {
   return (
-    <>
-      <View style={styles.wrapper}>
-        <ImageButton
-          imgSrc={require("../../assets/icons/waterbottle.png")}
-          onPress={() => navigation.navigate("typeInputScreen")}
-        ></ImageButton>
-      </View>
-    </>
+    <Image style={styles.button.image} source={imgSrc} resizeMode="contain" />
   );
 }
 
 export { HomeWaterBottle };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    padding: "5%",
-    width: "90%",
-    left: "5%",
-    height: "35%",
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    image: {
+      height: "100%",
+      width: "100%",
+    },
   },
 });

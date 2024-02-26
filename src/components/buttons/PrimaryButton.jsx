@@ -1,22 +1,27 @@
-import { Pressable, Text } from "react-native";
-import { color } from "../../utils/themes";
+import { Pressable, Text, Animated, StyleSheet } from "react-native";
+import { useRef } from "react";
+import { color, shadow } from "../../utils/themes";
+import { animateButtonPress } from "../../utils/animations";
 import * as Haptics from "expo-haptics";
+import SCREEN_SIZE from "../../utils/screenSize";
 
-function getTextStyle(size) {
-  const fontSizeValues = {
-    1: { fontSize: 15 },
-    2: { fontSize: 20 },
-    3: { fontSize: 25 },
-    4: { fontSize: 30 },
-    5: { fontSize: 35 },
-  };
+const textSize = {
+  SMALL: 20,
+  MEDIUM: 25,
+  LARGE: 40,
+};
 
-  const fontSize = fontSizeValues[size] || 25;
+const buttonBorderRadius = {
+  SMALL: 30,
+  MEDIUM: 30,
+  LARGE: 60,
+};
 
+function getTextStyle() {
   const baseStyle = {
+    fontFamily: "Chewy-Regular",
     textAlign: "center",
-    lineHeight: 30,
-    fontSize,
+    fontSize: textSize[SCREEN_SIZE],
     letterSpacing: 1.2,
     color: "white",
   };
@@ -25,40 +30,61 @@ function getTextStyle(size) {
 }
 
 function getButtonStyle(size, pressed) {
-  const paddingValues = {
-    1: { vertical: 10, horizontal: 20 },
-    2: { vertical: 20, horizontal: 40 },
-    3: { vertical: 30, horizontal: 60 },
-  };
-
-  const { vertical, horizontal } = paddingValues[size] || paddingValues[2]; // Default to size 2 if not defined
-
   const baseStyle = {
-    paddingVertical: vertical,
-    paddingHorizontal: horizontal,
-    borderRadius: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: buttonBorderRadius[SCREEN_SIZE],
     backgroundColor: pressed
       ? color.PRIMARY_BUTTON_PRESSED
       : color.PRIMARY_BUTTON,
+    ...shadow,
   };
 
   return baseStyle;
 }
 
 function PrimaryButton({ onPress, fontSize, children, buttonSize }) {
+  const scaleValue = useRef(new Animated.Value(1)).current;
+
+  const handleOnPressIn = () => {
+    animateButtonPress(scaleValue, 0.9);
+  };
+
+  const handleOnPressOut = () => {
+    animateButtonPress(scaleValue, 1);
+  };
+
   const handlePress = () => {
     onPress();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   return (
-    <Pressable
-      style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-      onPress={handlePress}
+    <Animated.View
+      style={[
+        styles.buttonWrapper,
+        {
+          transform: [{ scale: scaleValue }],
+        },
+      ]}
     >
-      <Text style={getTextStyle(fontSize)}>{children}</Text>
-    </Pressable>
+      <Pressable
+        style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
+        onPress={handlePress}
+        onPressIn={handleOnPressIn}
+        onPressOut={handleOnPressOut}
+      >
+        <Text style={getTextStyle(fontSize)}>{children}</Text>
+      </Pressable>
+    </Animated.View>
   );
 }
 
 export { PrimaryButton };
+
+const styles = StyleSheet.create({
+  buttonWrapper: {
+    height: "60%",
+    width: "90%",
+  },
+});

@@ -1,68 +1,85 @@
-import { Pressable, Text, View, StyleSheet, Animated } from "react-native";
+import { Pressable, View, StyleSheet, Animated, Image } from "react-native";
 import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { animateButtonPress } from "../../utils/animations";
+import waterbottle from "../../../assets/icons/drinks/water-bottle.png";
+import tea from "../../../assets/icons/drinks/tea.png";
+import can from "../../../assets/icons/drinks/can.png";
+import beer from "../../../assets/icons/drinks/beer.png";
+import winebottle from "../../../assets/icons/drinks/wine-bottle.png";
+import liquor from "../../../assets/icons/drinks/liquor.png";
+import coffeecup from "../../../assets/icons/drinks/coffee-cup.png";
+import SCREEN_SIZE from "../../utils/screenSize";
 
-function getButtonStyle(selected) {
-  const baseStyle = {
-    width: "90%",
-    left: "5%",
-    top: "10%",
-    height: "80%",
-    borderRadius: 30,
-    borderWidth: 5,
-    borderColor: color.CARD_BUTTON,
-    backgroundColor: selected ? "#c6dbff" : color.APP_PRIMARY_BACKGROUND,
-    /**
-     * Give selected item a very slight shadow
-     */
-    ...(selected && {
-      ...shadow.very_slight_shadow,
-    }),
-  };
+const drinkImageMap = {
+  waterbottle,
+  tea,
+  can,
+  beer,
+  winebottle,
+  liquor,
+  coffeecup,
+};
 
-  return baseStyle;
-}
+const cardButtonBorderRadius = {
+  SMALL: 24,
+  MEDIUM: 24,
+  LARGE: 48,
+};
 
-function CardButton({ onPress, buttonIcon, children, selected }) {
+const cardBorderWidth = {
+  SMALL: 4,
+  MEDIUM: 4,
+  LARGE: 7,
+};
+
+const cardTextSize = {
+  SMALL: 1,
+  MEDIUM: 2,
+  LARGE: 4,
+};
+
+function CardButton({ onPress, imageSrc, children, style }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
-
-  const animateScale = (newValue) => {
-    Animated.timing(scaleValue, {
-      toValue: newValue,
-      duration: 75,
-      useNativeDriver: true,
-    }).start();
-  };
+  const shadowOpacity = useRef(new Animated.Value(0)).current;
 
   const handleOnPressIn = () => {
-    animateScale(0.9);
+    animateButtonPress(scaleValue, 0.9);
+    animateButtonPress(shadowOpacity, 0.25);
   };
 
   const handleOnPressOut = () => {
-    animateScale(1);
+    animateButtonPress(scaleValue, 1);
+    animateButtonPress(shadowOpacity, 0);
   };
 
   return (
     <Animated.View
-      style={[styles.wrapper, { transform: [{ scale: scaleValue }] }]}
+      style={[
+        styles.wrapper,
+        {
+          transform: [{ scale: scaleValue }],
+          shadowOpacity: shadowOpacity,
+          shadowOffset: { width: 0, height: 4 },
+        },
+        style,
+      ]}
     >
       <Pressable
-        style={getButtonStyle(selected)}
+        style={styles.cardButton}
         onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
-        <View style={styles.container}>
-          <Ionicons
-            color={color.SECONDARY_BUTTON}
-            size={25}
-            name={buttonIcon}
-          ></Ionicons>
-          <View style={styles.cardTextWrapper}>
-            <PrimaryText size={1}>{children}</PrimaryText>
-          </View>
+        <View style={styles.cardImageWrapper}>
+          <Image
+            style={styles.cardImage}
+            source={drinkImageMap[imageSrc]}
+          ></Image>
+        </View>
+        <View style={styles.cardTextWrapper}>
+          <PrimaryText size={cardTextSize[SCREEN_SIZE]}>{children}</PrimaryText>
         </View>
       </Pressable>
     </Animated.View>
@@ -72,13 +89,31 @@ function CardButton({ onPress, buttonIcon, children, selected }) {
 export { CardButton };
 
 const styles = StyleSheet.create({
-  wrapper: { height: "25%", width: "50%" },
-  container: {
-    top: "15%",
-    left: "7.5%",
+  wrapper: {
+    height: "100%",
+    width: "100%",
+  },
+  cardButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
+    borderWidth: cardBorderWidth[SCREEN_SIZE],
+    borderColor: color.CARD_BUTTON_BORDER,
+    backgroundColor: color.CARD_BUTTON_BACKGROUND,
   },
   cardTextWrapper: {
-    top: "5%",
-    left: "2.5%",
+    width: "48%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardImageWrapper: {
+    width: "48%",
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
   },
 });

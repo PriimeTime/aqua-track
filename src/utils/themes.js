@@ -1,41 +1,37 @@
 const color = {
-  PRIMARY_BUTTON: "#007AFF",
-  PRIMARY_BUTTON_PRESSED: "#0056B3",
-  // CARD_BUTTON: "#007AFF",
-  CARD_BUTTON: "#002396",
-  CARD_BUTTON_PRESSED: "#000000",
-  // SECONDARY_BUTTON: "#008EEB",
-  SECONDARY_BUTTON: "#002396",
+  WHITE: "#FFFFFF",
+  LIGHTBLUE: "#8FC7FF",
 
-  APP_PRIMARY_BACKGROUND: "#5A79E0",
+  PRIMARY_BUTTON: "#3C91E6",
+  PRIMARY_BUTTON_PRESSED: "#003061",
+
+  CARD_BUTTON_BORDER: "#003061",
+  CARD_BUTTON_PRESSED: "#000000",
+  CARD_BUTTON_BACKGROUND: "#FFFFFF",
+
+  SECONDARY_BUTTON: "#FFFFFF",
+
+  PRIMARY_TEXT: "#003061",
+  SECONDARY_TEXT: "#3C91E6",
+  TERTIARY_TEXT: "#8FC7FF",
+
+  CUP_COLOR: "#003061",
+
+  APP_PRIMARY_BACKGROUND_FIRST_GRADIENT: "#FFFFFF",
+  APP_PRIMARY_BACKGROUND_SECOND_GRADIENT: "#CCE7FF",
   APP_SECONDARY_BACKGROUND: "#516CC9",
 };
 
 const shadow = {
-  very_slight_shadow: {
-    shadowColor: "black",
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-  },
-  slight_shadow: {
-    shadowColor: "black",
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 15,
-  },
-  moderate_shadow: {
-    shadowColor: "black",
-    shadowOffset: { width: 10, height: 10 },
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-  },
-  strong_shadow: {
-    shadowColor: "black",
-    shadowOffset: { width: 10, height: 10 },
-    shadowOpacity: 0.4,
-    shadowRadius: 30,
-  },
+  shadowColor: color.SECONDARY_TEXT,
+  shadowOffset: { width: 5, height: 5 },
+  shadowOpacity: 0.2,
+  shadowRadius: 5,
 };
 
-export { color, shadow };
+const dimensions = {
+  CARD_BUTTON_HEIGHT_PHONE: 120,
+  CARD_BUTTON_HEIGHT_TABLET: 240,
+};
+
+export { color, shadow, dimensions };
