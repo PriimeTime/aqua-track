@@ -1,6 +1,6 @@
 import { Pressable, View, StyleSheet, Animated, Image } from "react-native";
 import { useRef } from "react";
-import { color, shadow } from "../../utils/themes";
+import { color } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
 import waterbottle from "../../../assets/icons/drinks/water-bottle.png";

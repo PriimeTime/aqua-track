@@ -27,30 +27,34 @@ function RootScreen() {
       ]}
       style={[styles.container, { paddingTop: insets.top }]}
     >
-      <View style={styles.headerWrapper}>
-        <SettingsButton
-          onPress={() => navigation.navigate("Settings")}
-        ></SettingsButton>
-        <MainHeader></MainHeader>
-      </View>
-      <View style={styles.totalIntakeWrapper}>
-        <TotalIntake></TotalIntake>
-      </View>
-      <View
-        style={[
-          styles.homeWaterBottleWrapper,
-          { height: drinkHistory.length > 0 && false ? "45%" : "75%" },
-        ]}
-      >
-        <HomeWaterBottle imgSrc={WaterBottleImage} />
-      </View>
-      {/* TODO: uncomment statistics */}
-      {drinkHistory.length > 0 && false && (
-        <View style={styles.statisticsWrapper}>
-          <Statistics></Statistics>
+      <View style={styles.wrapper}>
+        <View style={styles.settingsWrapper}>
+          <SettingsButton
+            onPress={() => navigation.navigate("Settings")}
+          ></SettingsButton>
         </View>
-      )}
-      <StatusBar style="auto" />
+        <View style={styles.headerWrapper}>
+          <MainHeader></MainHeader>
+        </View>
+        <View style={styles.totalIntakeWrapper}>
+          <TotalIntake></TotalIntake>
+        </View>
+        <View
+          style={[
+            /*styles.homeWaterBottleWrapper,*/
+            { height: drinkHistory.length > 0 && false ? "40%" : "70%" },
+          ]}
+        >
+          <HomeWaterBottle imgSrc={WaterBottleImage} />
+        </View>
+        {/* TODO: uncomment statistics */}
+        {drinkHistory.length > 0 && false && (
+          <View style={styles.statisticsWrapper}>
+            <Statistics></Statistics>
+          </View>
+        )}
+        <StatusBar style="auto" />
+      </View>
     </LinearGradient>
   );
 }
@@ -62,10 +66,25 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  headerWrapper: {
+  wrapper: {
     width: "90%",
     left: "5%",
-    height: "15%",
+    height: "100%",
+  },
+  settingsWrapper: {
+    height: "10%",
+    /**
+     * Do not use alignItems
+     * here, because it would
+     * overwrite alignItems
+     * in children which is used
+     * to position the settings button
+     * and the header text
+     */
+    justifyContent: "center",
+  },
+  headerWrapper: {
+    height: "10%",
     /**
      * Do not use alignItems
      * here, because it would
@@ -77,19 +96,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   totalIntakeWrapper: {
-    width: "90%",
-    left: "5%",
     height: "10%",
     justifyContent: "center",
     alignItems: "center",
   },
-  homeWaterBottleWrapper: {
-    width: "90%",
-    left: "5%",
-  },
+  // homeWaterBottleWrapper: {
+  // },
   statisticsWrapper: {
-    width: "90%",
-    left: "5%",
-    height: "30%",
+    height: "25%",
   },
 });
