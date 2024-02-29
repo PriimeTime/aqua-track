@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     top: 10,
     width: bottleWidth[SCREEN_SIZE],
     height: bottleHeight[SCREEN_SIZE],
-    borderColor: color.CUP_COLOR,
+    borderColor: color.DARK_BLUE,
     borderBottomWidth: borderWidth[SCREEN_SIZE],
     borderLeftWidth: borderWidth[SCREEN_SIZE],
     borderRightWidth: borderWidth[SCREEN_SIZE],

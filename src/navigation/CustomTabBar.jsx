@@ -2,6 +2,25 @@ import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import WaterDropButton from "./WaterDropButton";
 import { color, shadow } from "../utils/themes";
+import SCREEN_SIZE from "../utils/screenSize";
+
+const fontSizes = {
+  SMALL: 16,
+  MEDIUM: 20,
+  LARGE: 28,
+};
+
+const navbarBorderRadius = {
+  SMALL: 26,
+  MEDIUM: 36,
+  LARGE: 72,
+};
+
+const navbarPadding = {
+  SMALL: "2%",
+  MEDIUM: "2.5%",
+  LARGE: "1.5%",
+};
 
 function CustomTabBar({ state, navigation }) {
   return (
@@ -66,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: "2.5%",
+    padding: navbarPadding[SCREEN_SIZE],
   },
   navigationBar: {
     position: "absolute",
@@ -74,20 +93,20 @@ const styles = StyleSheet.create({
     left: "5%",
     backgroundColor: color.WHITE,
     ...shadow,
-    borderRadius: 36,
+    borderRadius: navbarBorderRadius[SCREEN_SIZE],
     height: "7.5%",
     width: "90%",
   },
   container: {
     width: "100%",
     height: "100%",
-    borderRadius: 36,
+    borderRadius: navbarBorderRadius[SCREEN_SIZE],
     justifyContent: "center",
     alignItems: "center",
   },
   text: {
     fontFamily: "Chewy-Regular",
-    fontSize: 20,
+    fontSize: fontSizes[SCREEN_SIZE],
     textTransform: "uppercase",
   },
 });

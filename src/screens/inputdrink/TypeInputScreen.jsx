@@ -20,9 +20,9 @@ const cardButtonHeight =
     : dimensions.CARD_BUTTON_HEIGHT_PHONE;
 
 const headerSize = {
-  SMALL: 3,
-  MEDIUM: 3,
-  LARGE: 6,
+  SMALL: 5,
+  MEDIUM: 6,
+  LARGE: 9,
 };
 
 function TypeInputScreen() {

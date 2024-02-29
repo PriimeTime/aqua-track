@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector, useDispatch } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,13 +6,31 @@ import { useNavigation } from "@react-navigation/native";
 
 import { SettingsButton } from "../../components/buttons/SettingsButton";
 import { resetHistory } from "../../store/store";
-import { color } from "../../utils/themes";
+import { color, dimensions } from "../../utils/themes";
+import { HistoryItem } from "./HistoryItem";
+import { totalDrinkQuantity } from "../../utils/helpers";
+import SCREEN_SIZE from "../../utils/screenSize";
+import { HistoryBottom } from "./HistoryBottom";
 
 function History() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const drinkHistory = useSelector((state) => state.drinkHistory);
   const dispatch = useDispatch();
+
+  const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
+
+  const historyItemGap = {
+    SMALL: 8,
+    MEDIUM: 10,
+    LARGE: 20,
+  };
+
+  const listItemHeight = {
+    SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
+    MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
+    LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
+  };
 
   const handleOnPress = () => {
     dispatch(resetHistory());
@@ -37,15 +55,34 @@ function History() {
           ></SettingsButton>
         </View>
         <View style={styles.tabsWrapper}>
-          <Text>placeholder tab bar for history</Text>
+          {/* TODO <Text>placeholder tab bar for history</Text> */}
         </View>
         <View style={styles.listWrapper}>
-          <Text style={{ paddingTop: insets.top }}>
-            drinkHistory: {JSON.stringify(drinkHistory)}
-          </Text>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ gap: historyItemGap[SCREEN_SIZE] }}
+            data={drinkHistory}
+            renderItem={({ item }) => (
+              <HistoryItem
+                imageSrc={item.imageSrc}
+                title={item.label}
+                time={item.time}
+                quantity={item.quantity}
+                typeID={item.typeID}
+              ></HistoryItem>
+            )}
+            keyExtractor={(item) => item.id}
+            getItemLayout={(data, index) => ({
+              length: listItemHeight[SCREEN_SIZE],
+              offset: listItemHeight[SCREEN_SIZE] * index,
+              index,
+            })}
+          ></FlatList>
         </View>
         <View style={styles.bottomWrapper}>
-          <Text>today's total: 5.1L (placeholder)</Text>
+          <HistoryBottom
+            totalDrinkQuantityToday={totalDrinkQuantityToday}
+          ></HistoryBottom>
         </View>
       </View>
     </LinearGradient>
@@ -60,12 +97,12 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   wrapper: {
-    width: "90%",
-    left: "5%",
+    width: "100%",
     height: "100%",
   },
   settingsWrapper: {
-    backgroundColor: "pink",
+    width: "90%",
+    left: "5%",
     height: "10%",
     /**
      * Do not use alignItems
@@ -78,15 +115,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tabsWrapper: {
-    backgroundColor: "violet",
     height: "10%",
   },
   listWrapper: {
-    backgroundColor: "cyan",
+    width: "90%",
+    left: "5%",
     height: "55%",
   },
   bottomWrapper: {
-    backgroundColor: "green",
     height: "25%",
   },
 });

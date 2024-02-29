@@ -37,7 +37,7 @@ function getButtonStyle(pressed) {
     justifyContent: "center",
     // TODO: outsource shadow into const object in themes
     ...shadow,
-    backgroundColor: color.SECONDARY_BUTTON,
+    backgroundColor: color.WHITE,
   };
 
   return baseStyle;
@@ -75,7 +75,7 @@ function SettingsButton({ onPress, children, buttonSize }) {
           onPressOut={handleOnPressOut}
         >
           <Ionicons
-            color={color.SECONDARY_TEXT}
+            color={color.BLUE}
             size={iconSize[SCREEN_SIZE]}
             name="settings"
           />

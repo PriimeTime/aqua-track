@@ -37,9 +37,9 @@ const useDebouncedCallback = (callback, delay) => {
 };
 
 const headerTextSize = {
-  SMALL: 4,
-  MEDIUM: 4,
-  LARGE: 8,
+  SMALL: 6,
+  MEDIUM: 7,
+  LARGE: 9,
 };
 
 const sensitivity = {
@@ -119,7 +119,12 @@ function QuantityInputScreen() {
 
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      dispatch(addToHistory({ ...drinkType, quantity: quantityValue }));
+      const timeHours = new Date().getHours();
+      const timeMins = new Date().getMinutes();
+
+      const time = `${timeHours}:${timeMins}`;
+
+      dispatch(addToHistory({ ...drinkType, quantity: quantityValue, time }));
       navigation.navigate("Home");
     } else {
       triggerAnimation();

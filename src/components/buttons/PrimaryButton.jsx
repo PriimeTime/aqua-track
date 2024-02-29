@@ -34,9 +34,7 @@ function getButtonStyle(size, pressed) {
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: buttonBorderRadius[SCREEN_SIZE],
-    backgroundColor: pressed
-      ? color.PRIMARY_BUTTON_PRESSED
-      : color.PRIMARY_BUTTON,
+    backgroundColor: pressed ? color.DARK_BLUE : color.BLUE,
     ...shadow,
   };
 
