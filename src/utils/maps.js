@@ -5,6 +5,7 @@ import beer from "../../assets/icons/drinks/beer.png";
 import winebottle from "../../assets/icons/drinks/wine-bottle.png";
 import liquor from "../../assets/icons/drinks/liquor.png";
 import coffeecup from "../../assets/icons/drinks/coffee-cup.png";
+import energydrink from "../../assets/icons/drinks/energy-drink.png";
 
 const drinkImageMap = {
   waterbottle,
@@ -14,6 +15,7 @@ const drinkImageMap = {
   winebottle,
   liquor,
   coffeecup,
+  energydrink,
 };
 
 const drinkTypeList = [
@@ -42,7 +44,7 @@ const drinkTypeList = [
     typeID: 4,
     imageSrc: "coffeecup",
     label: "Coffee",
-    drinkType: "coffee",
+    drinkType: "caffeine",
     color: "#634832",
   },
   {
@@ -65,6 +67,13 @@ const drinkTypeList = [
     label: "Spirit",
     drinkType: "spirit",
     color: "#B74322",
+  },
+  {
+    typeID: 8,
+    imageSrc: "energydrink",
+    label: "Energy Drink",
+    drinkType: "caffeine",
+    color: "#CCDC2A",
   },
 ];
 

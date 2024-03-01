@@ -19,7 +19,7 @@ const cardBorderWidth = {
 };
 
 const cardTextSize = {
-  SMALL: 3,
+  SMALL: 2,
   MEDIUM: 4,
   LARGE: 8,
 };
