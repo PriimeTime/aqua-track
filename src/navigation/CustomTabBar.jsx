@@ -47,7 +47,9 @@ function CustomTabBar({ state, navigation }) {
 
           if (!isFocused && !event.defaultPrevented) {
             if (route.name === "AddDrink") {
-              navigation.navigate("TypeInputScreen"); // Update the navigation target for AddDrink
+              setTimeout(() => {
+                navigation.navigate("TypeInputScreen"); // Update the navigation target for AddDrink
+              }, 100);
             } else {
               navigation.navigate(route.name);
             }

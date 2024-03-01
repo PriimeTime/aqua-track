@@ -36,6 +36,7 @@ function CardButton({ onPress, imageSrc, children, style }) {
   const handleOnPressOut = () => {
     animateButtonPress(scaleValue, 1);
     animateButtonPress(shadowOpacity, 0);
+    onPress();
   };
 
   return (
@@ -52,7 +53,6 @@ function CardButton({ onPress, imageSrc, children, style }) {
     >
       <Pressable
         style={styles.cardButton}
-        onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >

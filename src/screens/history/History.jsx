@@ -5,7 +5,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
 import { SettingsButton } from "../../components/buttons/SettingsButton";
-import { resetHistory } from "../../store/store";
 import { color, dimensions } from "../../utils/themes";
 import { HistoryItem } from "./HistoryItem";
 import { totalDrinkQuantity } from "../../utils/helpers";
@@ -32,10 +31,6 @@ function History() {
     LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
   };
 
-  const handleOnPress = () => {
-    dispatch(resetHistory());
-  };
-
   return (
     <LinearGradient
       colors={[
@@ -45,10 +40,6 @@ function History() {
       style={[styles.container, { paddingTop: insets.top }]}
     >
       <View style={styles.wrapper}>
-        {/* <Text style={{ paddingTop: insets.top }}>
-          test text drinkHistory: {JSON.stringify(drinkHistory)}
-        </Text> */}
-        {/* <Button title="debug: reset history" onPress={handleOnPress}></Button> */}
         <View style={styles.settingsWrapper}>
           <SettingsButton
             onPress={() => navigation.navigate("Settings")}
@@ -69,6 +60,7 @@ function History() {
                 time={item.time}
                 quantity={item.quantity}
                 typeID={item.typeID}
+                itemID={item.id}
               ></HistoryItem>
             )}
             keyExtractor={(item) => item.id}

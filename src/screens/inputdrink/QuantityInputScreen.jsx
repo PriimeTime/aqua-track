@@ -37,8 +37,8 @@ const useDebouncedCallback = (callback, delay) => {
 };
 
 const headerTextSize = {
-  SMALL: 6,
-  MEDIUM: 7,
+  SMALL: 5,
+  MEDIUM: 6,
   LARGE: 9,
 };
 
@@ -119,8 +119,9 @@ function QuantityInputScreen() {
 
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      const timeHours = new Date().getHours();
-      const timeMins = new Date().getMinutes();
+      const date = new Date();
+      const timeHours = date.getHours();
+      const timeMins = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
 
       const time = `${timeHours}:${timeMins}`;
 

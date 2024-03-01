@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-function useGroupedDrinkHistory(typeID) {
+function useGroupedDrinkHistoryQuantity(typeID) {
   const drinkHistory = useSelector((state) => state.drinkHistory);
 
   const reducedDrinkHistory = Object.values(
@@ -16,7 +16,7 @@ function useGroupedDrinkHistory(typeID) {
 
   const retVal = reducedDrinkHistory.find((item) => item.typeID === typeID);
 
-  return retVal.quantity;
+  return retVal?.quantity;
 }
 
-export { useGroupedDrinkHistory };
+export { useGroupedDrinkHistoryQuantity };

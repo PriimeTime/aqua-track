@@ -4,7 +4,7 @@ import { PrimaryText } from "../../components/texts/PrimaryText.jsx";
 import { SecondaryText } from "../../components/texts/SecondaryText.jsx";
 import { InfoCard } from "../../components/cards/InfoCard.jsx";
 import { color, dimensions } from "../../utils/themes.js";
-import { useGroupedDrinkHistory } from "../../hooks/useGroupedDrinkHistory.js";
+import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity.js";
 import { metricUnitConversion } from "../../utils/helpers.js";
 import { HistoryDeleteButton } from "./HistoryDeleteButton.jsx";
 import SCREEN_SIZE from "../../utils/screenSize.js";
@@ -46,8 +46,8 @@ const infoCardSizeTotalFontSize = {
 };
 
 const drinkTitleSize = {
-  SMALL: 3,
-  MEDIUM: 5,
+  SMALL: 1,
+  MEDIUM: 2,
   LARGE: 7,
 };
 
@@ -57,8 +57,8 @@ const drinkTimeSize = {
   LARGE: 6,
 };
 
-function HistoryItem({ imageSrc, title, time, quantity, typeID }) {
-  const groupedDrinkHistoryQuantity = useGroupedDrinkHistory(typeID);
+function HistoryItem({ imageSrc, itemID, title, time, quantity, typeID }) {
+  const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(typeID);
 
   return (
     <View style={styles.cardWrapper}>
@@ -86,7 +86,7 @@ function HistoryItem({ imageSrc, title, time, quantity, typeID }) {
         </View>
       </View>
       <View style={styles.cardDeleteButtonWrapper}>
-        <HistoryDeleteButton></HistoryDeleteButton>
+        <HistoryDeleteButton itemID={itemID}></HistoryDeleteButton>
       </View>
     </View>
   );
