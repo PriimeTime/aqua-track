@@ -32,15 +32,18 @@ function HistoryDeleteButton({ itemID, size }) {
 
   const dispatch = useDispatch();
 
+  const handleOnPress = () => {
+    setTimeout(() => {
+      dispatch(removeFromHistory({ id: itemID }));
+    }, 150);
+  };
+
   const handleOnPressIn = () => {
     animateButtonPress(scaleValue, 0.85);
   };
 
   const handleOnPressOut = () => {
     animateButtonPress(scaleValue, 1);
-    setTimeout(() => {
-      dispatch(removeFromHistory({ id: itemID }));
-    }, 150);
   };
 
   const buttonIconSize = {
@@ -60,6 +63,7 @@ function HistoryDeleteButton({ itemID, size }) {
     >
       <Pressable
         style={getButtonStyle(size)}
+        onPress={handleOnPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
