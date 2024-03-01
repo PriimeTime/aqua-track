@@ -20,7 +20,7 @@ const cardBorderWidth = {
 
 const cardTextSize = {
   SMALL: 2,
-  MEDIUM: 4,
+  MEDIUM: 2,
   LARGE: 8,
 };
 

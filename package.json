@@ -5,7 +5,8 @@
   "scripts": {
     "start": "expo start",
     "build-simulator": "eas build --profile development-simulator --platform ios",
-    "build-device": "eas build --profile development --platform ios",
+    "build-device-expo": "eas build --profile development --platform ios",
+    "build-device-standalone": "eas build --profile production --platform ios",
     "dev": "expo start --dev-client",
     "ios": "expo start --ios",
     "ios-app": "expo start --dev-client",
