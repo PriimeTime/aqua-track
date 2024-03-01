@@ -1,8 +1,10 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Animated, View } from "react-native";
+import { useRef } from "react";
 import { color, shadow } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { animateButtonPress } from "../../utils/animations";
 
 const buttonSizes = {
   SMALL: 48,
@@ -35,30 +37,50 @@ function getButtonStyle(pressed) {
     justifyContent: "center",
     // TODO: outsource shadow into const object in themes
     ...shadow,
-    backgroundColor: color.SECONDARY_BUTTON,
+    backgroundColor: color.WHITE,
   };
 
   return baseStyle;
 }
 
 function SettingsButton({ onPress, children, buttonSize }) {
+  const scaleValue = useRef(new Animated.Value(1)).current;
+
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPress();
   };
 
+  const handleOnPressIn = () => {
+    animateButtonPress(scaleValue, 0.8);
+  };
+
+  const handleOnPressOut = () => {
+    animateButtonPress(scaleValue, 1);
+  };
+
   return (
     <View style={{ alignItems: "flex-end" }}>
-      <Pressable
-        style={({ pressed }) => getButtonStyle(buttonSize, pressed)}
-        onPress={handlePress}
+      <Animated.View
+        style={[
+          {
+            transform: [{ scale: scaleValue }],
+          },
+          getButtonStyle(buttonSize),
+        ]}
       >
-        <Ionicons
-          color={color.SECONDARY_TEXT}
-          size={iconSize[SCREEN_SIZE]}
-          name="settings"
-        ></Ionicons>
-      </Pressable>
+        <Pressable
+          onPress={handlePress}
+          onPressIn={handleOnPressIn}
+          onPressOut={handleOnPressOut}
+        >
+          <Ionicons
+            color={color.BLUE}
+            size={iconSize[SCREEN_SIZE]}
+            name="settings"
+          />
+        </Pressable>
+      </Animated.View>
     </View>
   );
 }

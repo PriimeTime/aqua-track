@@ -3,9 +3,9 @@ import { View } from "react-native";
 import SCREEN_SIZE from "../utils/screenSize";
 
 const textSize = {
-  SMALL: 2,
-  MEDIUM: 3,
-  LARGE: 6,
+  SMALL: 5,
+  MEDIUM: 6,
+  LARGE: 9,
 };
 
 function MainHeader() {

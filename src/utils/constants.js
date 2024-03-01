@@ -1,7 +1,7 @@
 const inputBottleSizeInMilliliters = [
   { drinkType: "normal", size: 500 },
   { drinkType: "herb", size: 500 },
-  { drinkType: "coffee", size: 250 },
+  { drinkType: "caffeine", size: 250 },
   { drinkType: "alcohol", size: 500 },
   { drinkType: "liquor", size: 250 },
   { drinkType: "spirit", size: 50 },

@@ -27,15 +27,11 @@ export default function WaterDropButton({ onPress, ...props }) {
       tension: 70,
       useNativeDriver: true,
     }).start();
+    onPress();
   };
 
   return (
-    <Pressable
-      {...props}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      onPress={onPress}
-    >
+    <Pressable {...props} onPressIn={handlePressIn} onPressOut={handlePressOut}>
       <Animated.View
         style={{
           transform: [{ scale: scale }],

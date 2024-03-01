@@ -3,22 +3,19 @@ import { color } from "../../utils/themes";
 
 function getTextStyle(size, colorParam) {
   const fontValues = {
-    1: { fontSize: 22 },
-    2: { fontSize: 24 },
-    3: { fontSize: 26 },
-    4: { fontSize: 28 },
-    5: { fontSize: 32 },
-    6: { fontSize: 36 },
-    7: { fontSize: 48 },
-    8: { fontSize: 64 },
-    9: { fontSize: 72 },
-    10: { fontSize: 86 },
-    11: { fontSize: 92 },
+    1: { fontSize: 12 },
+    2: { fontSize: 14 },
+    3: { fontSize: 16 },
+    4: { fontSize: 18 },
+    5: { fontSize: 20 },
+    6: { fontSize: 24 },
+    7: { fontSize: 36 },
+    8: { fontSize: 48 },
   };
 
   const { fontSize } = fontValues[size];
 
-  let colorVal = color.DARK_BLUE;
+  let colorVal = color.LIGHTBLUE;
 
   if (colorParam) {
     colorVal = colorParam;
@@ -33,8 +30,8 @@ function getTextStyle(size, colorParam) {
   return baseStyle;
 }
 
-function PrimaryText({ children, size, color }) {
+function SecondaryText({ children, size, color }) {
   return <Text style={getTextStyle(size, color)}>{children}</Text>;
 }
 
-export { PrimaryText };
+export { SecondaryText };

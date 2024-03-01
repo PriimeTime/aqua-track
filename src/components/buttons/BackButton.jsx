@@ -36,7 +36,7 @@ function getTextStyle() {
     fontSize: fontSizes[SCREEN_SIZE],
     textAlign: "center",
     letterSpacing: 1.2,
-    color: color.TERTIARY_TEXT,
+    color: color.LIGHTBLUE,
   };
 
   return baseStyle;
@@ -50,7 +50,7 @@ function getButtonStyle(pressed) {
     alignItems: "center",
     justifyContent: "center",
     ...shadow,
-    backgroundColor: color.SECONDARY_BUTTON,
+    backgroundColor: color.WHITE,
   };
 
   return baseStyle;

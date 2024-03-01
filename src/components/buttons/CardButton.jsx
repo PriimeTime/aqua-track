@@ -1,26 +1,10 @@
 import { Pressable, View, StyleSheet, Animated, Image } from "react-native";
 import { useRef } from "react";
-import { color, shadow } from "../../utils/themes";
+import { color } from "../../utils/themes";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
-import waterbottle from "../../../assets/icons/drinks/water-bottle.png";
-import tea from "../../../assets/icons/drinks/tea.png";
-import can from "../../../assets/icons/drinks/can.png";
-import beer from "../../../assets/icons/drinks/beer.png";
-import winebottle from "../../../assets/icons/drinks/wine-bottle.png";
-import liquor from "../../../assets/icons/drinks/liquor.png";
-import coffeecup from "../../../assets/icons/drinks/coffee-cup.png";
+import { drinkImageMap } from "../../utils/maps";
 import SCREEN_SIZE from "../../utils/screenSize";
-
-const drinkImageMap = {
-  waterbottle,
-  tea,
-  can,
-  beer,
-  winebottle,
-  liquor,
-  coffeecup,
-};
 
 const cardButtonBorderRadius = {
   SMALL: 24,
@@ -29,15 +13,15 @@ const cardButtonBorderRadius = {
 };
 
 const cardBorderWidth = {
-  SMALL: 4,
+  SMALL: 3.5,
   MEDIUM: 4,
   LARGE: 7,
 };
 
 const cardTextSize = {
-  SMALL: 1,
-  MEDIUM: 2,
-  LARGE: 4,
+  SMALL: 2,
+  MEDIUM: 4,
+  LARGE: 8,
 };
 
 function CardButton({ onPress, imageSrc, children, style }) {
@@ -52,6 +36,7 @@ function CardButton({ onPress, imageSrc, children, style }) {
   const handleOnPressOut = () => {
     animateButtonPress(scaleValue, 1);
     animateButtonPress(shadowOpacity, 0);
+    onPress();
   };
 
   return (
@@ -68,7 +53,6 @@ function CardButton({ onPress, imageSrc, children, style }) {
     >
       <Pressable
         style={styles.cardButton}
-        onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
@@ -100,8 +84,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
     borderWidth: cardBorderWidth[SCREEN_SIZE],
-    borderColor: color.CARD_BUTTON_BORDER,
-    backgroundColor: color.CARD_BUTTON_BACKGROUND,
+    borderColor: color.DARK_BLUE,
+    backgroundColor: color.WHITE,
   },
   cardTextWrapper: {
     width: "48%",

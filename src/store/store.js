@@ -28,15 +28,17 @@ const drinkHistorySlice = createSlice({
       const id = uid(6);
       state.push({ id, ...action.payload });
     },
-    // TODO: removeItem
-    resetHistory: (state) => {
-      return [];
+    removeFromHistory: (state, action) => {
+      return state.filter((item) => item.id !== action.payload.id);
     },
+    // resetHistory: (state) => {
+    //   return [];
+    // },
   },
 });
 
 export const { setType, resetType } = drinkTypeSlice.actions;
-export const { addToHistory, resetHistory, setHistory } =
+export const { addToHistory, setHistory, removeFromHistory } =
   drinkHistorySlice.actions;
 
 const store = configureStore({
