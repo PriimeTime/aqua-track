@@ -61,6 +61,7 @@ function History() {
                 quantity={item.quantity}
                 typeID={item.typeID}
                 itemID={item.id}
+                hydrationQuantity={item.hydrationQuantity}
               ></HistoryItem>
             )}
             keyExtractor={(item) => item.id}

@@ -14,10 +14,7 @@ import { QuantityInputBottle } from "./QuantityInputBottle";
 import { color } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
 
-import {
-  inputBottleSizeInMilliliters,
-  incrementValue,
-} from "../../utils/constants";
+import { inputDrinkConfig } from "../../utils/constants";
 import SCREEN_SIZE from "../../utils/screenSize";
 
 /**
@@ -38,7 +35,7 @@ const useDebouncedCallback = (callback, delay) => {
 
 const headerTextSize = {
   SMALL: 5,
-  MEDIUM: 6,
+  MEDIUM: 5,
   LARGE: 9,
 };
 
@@ -54,6 +51,15 @@ function QuantityInputScreen() {
   const dispatch = useDispatch();
   const drinkType = useSelector((state) => state.drinkType.value);
   const scaleValue = useRef(new Animated.Value(1)).current;
+
+  const inputBottleObject = inputDrinkConfig.filter(
+    (item) => item.drinkType === drinkType.drinkType
+  )[0];
+
+  // Not destructuring this on purpose for better readability
+  const inputBottleSize = inputBottleObject.size;
+  const incrementValue = inputBottleObject.increment;
+  const hydroFactor = inputBottleObject.hydroFactor;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -91,12 +97,6 @@ function QuantityInputScreen() {
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
       setHeightVal(newHeight);
 
-      const inputBottleObject = inputBottleSizeInMilliliters.filter(
-        (item) => item.drinkType === drinkType.drinkType
-      )[0];
-
-      const inputBottleSize = inputBottleObject.size;
-
       const bottleSize = (Math.round(newHeight) * inputBottleSize) / 100;
       const quantityVal =
         Math.ceil(bottleSize / incrementValue) * incrementValue;
@@ -125,7 +125,14 @@ function QuantityInputScreen() {
 
       const time = `${timeHours}:${timeMins}`;
 
-      dispatch(addToHistory({ ...drinkType, quantity: quantityValue, time }));
+      const drinkItem = {
+        ...drinkType,
+        quantity: quantityValue,
+        time,
+        hydrationQuantity: quantityValue * hydroFactor,
+      };
+
+      dispatch(addToHistory(drinkItem));
       navigation.navigate("Home");
     } else {
       triggerAnimation();
