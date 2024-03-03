@@ -19,9 +19,9 @@ const cardBorderWidth = {
 };
 
 const cardTextSize = {
-  SMALL: 2,
-  MEDIUM: 2,
-  LARGE: 8,
+  SMALL: 1,
+  MEDIUM: 1,
+  LARGE: 7,
 };
 
 function CardButton({ onPress, imageSrc, children, style }) {

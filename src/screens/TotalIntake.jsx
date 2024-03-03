@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+import { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { PrimaryText } from "../components/texts/PrimaryText";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { color, shadow } from "../utils/themes";
 import SCREEN_SIZE from "../utils/screenSize";
 import {
@@ -45,17 +47,31 @@ function TotalIntake() {
     2500
   );
 
+  const [currentHydrationLevel, setCurrentHydrationLevel] = useState(
+    hydrationLevelInPercent
+  );
+  const [prevHydrationLevel, setPrevHydrationLevel] = useState(
+    hydrationLevelInPercent
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      setPrevHydrationLevel(currentHydrationLevel);
+      setCurrentHydrationLevel(hydrationLevelInPercent);
+    }, [hydrationLevelInPercent])
+  );
+
   return (
     <View style={styles.wrapper}>
       <PrimaryText size={cardSize[SCREEN_SIZE]} color={color.BLUE}>
         {/* {metricUnitConversion(totalDrinkQuantityToday)} */}
         {/* TODO change hard coded 2500ml to dynamic value */}
-        {/* TODO if % changed, trigger countup from prevVal
-        to nextVal!!! */}
         <CountUp
+          key={currentHydrationLevel}
           isCounting
-          end={hydrationLevelInPercent}
-          duration={1}
+          start={prevHydrationLevel}
+          end={currentHydrationLevel}
+          duration={1} // Duration in seconds
           easing={"easeOutCubic"}
         />
         %
