@@ -30,7 +30,7 @@ const fontSizes = {
 
 function HistoryBottom({ totalDrinkQuantityToday }) {
   return (
-    <View>
+    <>
       <LinearGradient
         colors={[color.GRADIENT_LIGHTER_BLUE, color.GRADIENT_DARKER_BLUE]}
       >
@@ -42,7 +42,7 @@ function HistoryBottom({ totalDrinkQuantityToday }) {
           {metricUnitConversion(totalDrinkQuantityToday)}
         </Text>
       </View>
-    </View>
+    </>
   );
 }
 

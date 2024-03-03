@@ -11,7 +11,9 @@ const textSize = {
 function MainHeader() {
   return (
     <View style={{ alignItems: "center" }}>
-      <PrimaryText size={textSize[SCREEN_SIZE]}>Your intake today</PrimaryText>
+      <PrimaryText size={textSize[SCREEN_SIZE]}>
+        Your hydration today
+      </PrimaryText>
     </View>
   );
 }

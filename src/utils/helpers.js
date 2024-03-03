@@ -1,6 +1,24 @@
+/**
+ *
+ * @param {*} num
+ * @returns rounded number
+ * if retVal would be negative,
+ * it returns zero
+ */
+
 const formatNumber = (num) => {
   const roundedNumber = Math.round(num);
   return Math.max(0, roundedNumber);
+};
+
+/**
+ *
+ * @param {*} num
+ * @param {*} denom
+ * @returns positive percent of num/denom
+ */
+const displayPositivePercent = (num, denom) => {
+  return formatNumber((num / denom) * 100);
 };
 
 /**
@@ -48,4 +66,5 @@ export {
   metricUnitConversion,
   totalDrinkQuantity,
   totalHydratingDrinkQuantity,
+  displayPositivePercent,
 };

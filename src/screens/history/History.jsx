@@ -70,6 +70,11 @@ function History() {
               offset: listItemHeight[SCREEN_SIZE] * index,
               index,
             })}
+            /* Below line is needed to create
+            an artificial gap between the
+            HistoryBottom component and the
+            bottom of the FlatList */
+            ListFooterComponent={<View />}
           ></FlatList>
         </View>
         <View style={styles.bottomWrapper}>
