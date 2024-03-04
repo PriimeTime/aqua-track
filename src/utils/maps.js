@@ -10,6 +10,25 @@ import cocktail from "../../assets/icons/drinks/cocktail.png";
 import juice from "../../assets/icons/drinks/juice.png";
 import milk from "../../assets/icons/drinks/milk.png";
 
+import user from "../../assets/icons/settings/user.png";
+import bell from "../../assets/icons/settings/bell.png";
+import statistics from "../../assets/icons/settings/statistics.png";
+import settings from "../../assets/icons/settings/settings.png";
+
+const settingsImageMap = {
+  user,
+  bell,
+  statistics,
+  settings,
+};
+
+const settingsList = [
+  { id: 1, title: "Profile Settings", imageSrc: "user" },
+  { id: 2, title: "Notifications", imageSrc: "bell" },
+  { id: 3, title: "Statistics & History", imageSrc: "statistics" },
+  { id: 4, title: "App Settings", imageSrc: "settings" },
+];
+
 const drinkImageMap = {
   waterbottle,
   tea,
@@ -104,4 +123,4 @@ const drinkTypeList = [
   },
 ];
 
-export { drinkTypeList, drinkImageMap };
+export { drinkTypeList, drinkImageMap, settingsImageMap, settingsList };

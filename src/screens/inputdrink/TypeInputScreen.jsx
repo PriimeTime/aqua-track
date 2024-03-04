@@ -88,7 +88,6 @@ export { TypeInputScreen };
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: color.APP_PRIMARY_BACKGROUND,
     flex: 1,
   },
   backButton: {

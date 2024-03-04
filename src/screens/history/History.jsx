@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
 import { SettingsButton } from "../../components/buttons/SettingsButton";
-import { color, dimensions } from "../../utils/themes";
+import { color, listItemHeight } from "../../utils/themes";
 import { HistoryItem } from "./HistoryItem";
 import { totalDrinkQuantity } from "../../utils/helpers";
 import SCREEN_SIZE from "../../utils/screenSize";
@@ -25,63 +25,55 @@ function History() {
     LARGE: 20,
   };
 
-  const listItemHeight = {
-    SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
-    MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
-    LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
-  };
-
   return (
     <LinearGradient
       colors={[
         color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
         color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
       ]}
-      style={[styles.container, { paddingTop: insets.top }]}
+      style={[styles.wrapper, { paddingTop: insets.top }]}
     >
-      <View style={styles.wrapper}>
-        <View style={styles.settingsWrapper}>
-          <SettingsButton
-            onPress={() => navigation.navigate("Settings")}
-          ></SettingsButton>
-        </View>
-        <View style={styles.tabsWrapper}>
-          {/* TODO <Text>placeholder tab bar for history</Text> */}
-        </View>
-        <View style={styles.listWrapper}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ gap: historyItemGap[SCREEN_SIZE] }}
-            data={drinkHistory}
-            renderItem={({ item }) => (
-              <HistoryItem
-                imageSrc={item.imageSrc}
-                title={item.label}
-                time={item.time}
-                quantity={item.quantity}
-                typeID={item.typeID}
-                itemID={item.id}
-                hydrationQuantity={item.hydrationQuantity}
-              ></HistoryItem>
-            )}
-            keyExtractor={(item) => item.id}
-            getItemLayout={(data, index) => ({
-              length: listItemHeight[SCREEN_SIZE],
-              offset: listItemHeight[SCREEN_SIZE] * index,
-              index,
-            })}
-            /* Below line is needed to create
+      <View style={styles.settingsWrapper}>
+        <SettingsButton
+          onPress={() => navigation.navigate("Settings")}
+        ></SettingsButton>
+      </View>
+      <View style={styles.tabsWrapper}>
+        {/* TODO <Text>placeholder tab bar for history</Text> */}
+      </View>
+      <View style={styles.listWrapper}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ gap: historyItemGap[SCREEN_SIZE] }}
+          data={drinkHistory}
+          renderItem={({ item }) => (
+            <HistoryItem
+              imageSrc={item.imageSrc}
+              title={item.label}
+              time={item.time}
+              quantity={item.quantity}
+              typeID={item.typeID}
+              itemID={item.id}
+              hydrationQuantity={item.hydrationQuantity}
+            ></HistoryItem>
+          )}
+          keyExtractor={(item) => item.id}
+          getItemLayout={(data, index) => ({
+            length: listItemHeight[SCREEN_SIZE],
+            offset: listItemHeight[SCREEN_SIZE] * index,
+            index,
+          })}
+          /* Below line is needed to create
             an artificial gap between the
             HistoryBottom component and the
             bottom of the FlatList */
-            ListFooterComponent={<View />}
-          ></FlatList>
-        </View>
-        <View style={styles.bottomWrapper}>
-          <HistoryBottom
-            totalDrinkQuantityToday={totalDrinkQuantityToday}
-          ></HistoryBottom>
-        </View>
+          ListFooterComponent={<View />}
+        ></FlatList>
+      </View>
+      <View style={styles.bottomWrapper}>
+        <HistoryBottom
+          totalDrinkQuantityToday={totalDrinkQuantityToday}
+        ></HistoryBottom>
       </View>
     </LinearGradient>
   );
@@ -90,10 +82,6 @@ function History() {
 export { History };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-  },
   wrapper: {
     width: "100%",
     height: "100%",
