@@ -23,10 +23,30 @@ const settingsImageMap = {
 };
 
 const settingsList = [
-  { id: 1, title: "Profile Settings", imageSrc: "user" },
-  { id: 2, title: "Notifications", imageSrc: "bell" },
-  { id: 3, title: "Statistics & History", imageSrc: "statistics" },
-  { id: 4, title: "App Settings", imageSrc: "settings" },
+  {
+    id: 1,
+    title: "Profile Settings",
+    imageSrc: "user",
+    routeName: "ProfileSettings",
+  },
+  {
+    id: 2,
+    title: "Notifications",
+    imageSrc: "bell",
+    routeName: "NotificationsSettings",
+  },
+  {
+    id: 3,
+    title: "Statistics & History",
+    imageSrc: "statistics",
+    routeName: "StatisticsSettings",
+  },
+  {
+    id: 4,
+    title: "App Settings",
+    imageSrc: "settings",
+    routeName: "AppSettings",
+  },
 ];
 
 const drinkImageMap = {

@@ -1,8 +1,11 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Animated, Pressable } from "react-native";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import SCREEN_SIZE from "../../utils/screenSize";
 import { settingsImageMap } from "../../utils/maps";
 import { color, listItemHeight } from "../../utils/themes";
+import { useRef } from "react";
+import { animateButtonPress } from "../../utils/animations";
+import { useNavigation } from "@react-navigation/native";
 
 const titleSize = {
   SMALL: 1,
@@ -22,19 +25,42 @@ const itemBorderWidth = {
   LARGE: 3,
 };
 
-function SettingsItem({ title, imageSrc }) {
+function SettingsItem({ title, imageSrc, routeName }) {
+  const navigation = useNavigation();
+  const scaleValue = useRef(new Animated.Value(1)).current;
+
+  const handleOnPress = () => {
+    navigation.navigate(routeName);
+  };
+
+  const handleOnPressIn = () => {
+    animateButtonPress(scaleValue, 0.9);
+  };
+
+  const handleOnPressOut = () => {
+    animateButtonPress(scaleValue, 1);
+  };
+
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.itemIconWrapper}>
-        <Image
-          style={styles.itemIcon}
-          source={settingsImageMap[imageSrc]}
-        ></Image>
-      </View>
-      <View style={styles.itemTitleWrapper}>
-        <PrimaryText size={titleSize[SCREEN_SIZE]}>{title}</PrimaryText>
-      </View>
-    </View>
+    <Animated.View style={[{ transform: [{ scale: scaleValue }] }]}>
+      <Pressable
+        onPress={handleOnPress}
+        onPressIn={handleOnPressIn}
+        onPressOut={handleOnPressOut}
+      >
+        <View style={styles.wrapper}>
+          <View style={styles.itemIconWrapper}>
+            <Image
+              style={styles.itemIcon}
+              source={settingsImageMap[imageSrc]}
+            ></Image>
+          </View>
+          <View style={styles.itemTitleWrapper}>
+            <PrimaryText size={titleSize[SCREEN_SIZE]}>{title}</PrimaryText>
+          </View>
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 }
 

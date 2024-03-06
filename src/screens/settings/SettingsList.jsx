@@ -47,6 +47,7 @@ function SettingsList() {
             <SettingsItem
               imageSrc={item.imageSrc}
               title={item.title}
+              routeName={item.routeName}
             ></SettingsItem>
           )}
           keyExtractor={(item) => item.id}
