@@ -21,6 +21,12 @@ const settingsItemGap = {
   LARGE: 20,
 };
 
+const listMarginTop = {
+  SMALL: 50,
+  MEDIUM: 50,
+  LARGE: 150,
+};
+
 function SettingsList() {
   const insets = useSafeAreaInsets();
 
@@ -35,7 +41,10 @@ function SettingsList() {
       <View style={styles.settingsListWrapper}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: settingsItemGap[SCREEN_SIZE] }}
+          contentContainerStyle={{
+            gap: settingsItemGap[SCREEN_SIZE],
+            paddingBottom: listMarginTop[SCREEN_SIZE],
+          }}
           data={settingsList}
           renderItem={({ item }) => (
             <SettingsItem
@@ -77,6 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   settingsListWrapper: {
+    marginTop: listMarginTop[SCREEN_SIZE],
     height: "80%",
     width: "90%",
     left: "5%",

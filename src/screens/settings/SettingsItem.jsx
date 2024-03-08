@@ -68,7 +68,7 @@ export { SettingsItem };
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: listItemHeight[SCREEN_SIZE],
+    height: listItemHeight[SCREEN_SIZE] * 0.75,
     width: "100%",
     flexDirection: "row",
     backgroundColor: color.WHITE,
@@ -81,10 +81,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   itemIcon: {
-    width: "60%",
-    height: "60%",
-    left: "20%",
-    top: "20%",
+    width: "40%",
+    height: "40%",
+    left: "30%",
+    top: "30%",
     objectFit: "contain",
   },
   itemTitleWrapper: {
