@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToHistory } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
@@ -16,6 +15,7 @@ import { BackButton } from "../../components/buttons/BackButton";
 
 import { inputDrinkConfig } from "../../utils/constants";
 import SCREEN_SIZE from "../../utils/screenSize";
+import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 /**
  * Debounce function to control
@@ -147,13 +147,7 @@ function QuantityInputScreen() {
     : "";
 
   return (
-    <LinearGradient
-      colors={[
-        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
-        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
-      ]}
-      style={[styles.wrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={[{ paddingTop: insets.top }]}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
@@ -180,16 +174,13 @@ function QuantityInputScreen() {
           {"Add this amount".toUpperCase()}
         </PrimaryButton>
       </View>
-    </LinearGradient>
+    </GradientWrapper>
   );
 }
 
 export { QuantityInputScreen };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: color.APP_PRIMARY_BACKGROUND,
-  },
   backButton: {
     width: "90%",
     left: "5%",

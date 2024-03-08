@@ -1,21 +1,20 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSelector, useDispatch } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
+import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import { SettingsButton } from "../../components/buttons/SettingsButton";
-import { color, listItemHeight } from "../../utils/themes";
+import { listItemHeight } from "../../utils/themes";
 import { HistoryItem } from "./HistoryItem";
 import { totalDrinkQuantity } from "../../utils/helpers";
 import SCREEN_SIZE from "../../utils/screenSize";
 import { HistoryBottom } from "./HistoryBottom";
+import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 function History() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const drinkHistory = useSelector((state) => state.drinkHistory);
-  const dispatch = useDispatch();
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
 
@@ -26,13 +25,7 @@ function History() {
   };
 
   return (
-    <LinearGradient
-      colors={[
-        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
-        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
-      ]}
-      style={[styles.wrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.settingsWrapper}>
         <SettingsButton
           onPress={() => navigation.navigate("Settings")}
@@ -75,7 +68,7 @@ function History() {
           totalDrinkQuantityToday={totalDrinkQuantityToday}
         ></HistoryBottom>
       </View>
-    </LinearGradient>
+    </GradientWrapper>
   );
 }
 

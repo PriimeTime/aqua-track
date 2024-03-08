@@ -3,16 +3,16 @@ import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 
 import { setType } from "../../store/store";
 import { drinkTypeList } from "../../utils/maps";
-import { color, dimensions } from "../../utils/themes";
+import { dimensions } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
 import SCREEN_SIZE from "../../utils/screenSize";
+import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 const cardButtonHeight =
   SCREEN_SIZE === "LARGE"
@@ -38,13 +38,7 @@ function TypeInputScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={[
-        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
-        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
-      ]}
-      style={[styles.wrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
@@ -80,7 +74,7 @@ function TypeInputScreen() {
           index,
         })}
       ></FlatList>
-    </LinearGradient>
+    </GradientWrapper>
   );
 }
 

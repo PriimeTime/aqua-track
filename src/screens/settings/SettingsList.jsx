@@ -1,13 +1,13 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
-import { color, listItemHeight } from "../../utils/themes";
-import { LinearGradient } from "expo-linear-gradient";
+import { listItemHeight } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import SCREEN_SIZE from "../../utils/screenSize";
 import { SettingsItem } from "./SettingsItem";
 import { FlatList } from "react-native";
 import { settingsList } from "../../utils/maps";
+import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 const headerHeight = {
   SMALL: 5,
@@ -25,13 +25,7 @@ function SettingsList() {
   const insets = useSafeAreaInsets();
 
   return (
-    <LinearGradient
-      colors={[
-        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
-        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
-      ]}
-      style={[styles.wrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>
@@ -58,7 +52,7 @@ function SettingsList() {
           })}
         ></FlatList>
       </View>
-    </LinearGradient>
+    </GradientWrapper>
   );
 }
 
