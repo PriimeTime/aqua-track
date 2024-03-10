@@ -11,41 +11,65 @@ import juice from "../../assets/icons/drinks/juice.png";
 import milk from "../../assets/icons/drinks/milk.png";
 
 import user from "../../assets/icons/settings/user.png";
-import bell from "../../assets/icons/settings/bell.png";
-import statistics from "../../assets/icons/settings/statistics.png";
-import settings from "../../assets/icons/settings/settings.png";
+import ruler from "../../assets/icons/settings/ruler.png";
+import notification from "../../assets/icons/settings/notification.png";
+import analytics from "../../assets/icons/settings/analytics.png";
+import themes from "../../assets/icons/settings/themes.png";
+import languages from "../../assets/icons/settings/languages.png";
+import information from "../../assets/icons/settings/information.png";
 
 const settingsImageMap = {
   user,
-  bell,
-  statistics,
-  settings,
+  ruler,
+  notification,
+  analytics,
+  themes,
+  languages,
+  information,
 };
 
 const settingsList = [
   {
     id: 1,
-    title: "Profile Settings",
+    title: "Account",
     imageSrc: "user",
-    routeName: "ProfileSettings",
+    routeName: "AccountSettings",
   },
   {
     id: 2,
-    title: "Notifications",
-    imageSrc: "bell",
-    routeName: "NotificationsSettings",
+    title: "Metrics & Body Measurements",
+    imageSrc: "ruler",
+    routeName: "ProfileSettings",
   },
   {
     id: 3,
-    title: "Statistics & History",
-    imageSrc: "statistics",
-    routeName: "StatisticsSettings",
+    title: "Notifications",
+    imageSrc: "notification",
+    routeName: "NotificationsSettings",
   },
   {
     id: 4,
-    title: "App Settings",
-    imageSrc: "settings",
-    routeName: "AppSettings",
+    title: "Statistics & History",
+    imageSrc: "analytics",
+    routeName: "StatisticsSettings",
+  },
+  {
+    id: 5,
+    title: "Theme",
+    imageSrc: "themes",
+    routeName: "ThemeSettings",
+  },
+  {
+    id: 6,
+    title: "Language",
+    imageSrc: "languages",
+    routeName: "LanguageSettings",
+  },
+  {
+    id: 7,
+    title: "About",
+    imageSrc: "information",
+    routeName: "AboutSettings",
   },
 ];
 
