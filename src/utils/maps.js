@@ -1,31 +1,31 @@
-import waterbottle from "../../assets/icons/drinks/water-bottle.png";
-import tea from "../../assets/icons/drinks/tea.png";
-import can from "../../assets/icons/drinks/can.png";
-import beer from "../../assets/icons/drinks/beer.png";
-import winebottle from "../../assets/icons/drinks/wine-bottle.png";
-import liquor from "../../assets/icons/drinks/liquor.png";
-import coffeecup from "../../assets/icons/drinks/coffee-cup.png";
-import energydrink from "../../assets/icons/drinks/energy-drink.png";
-import cocktail from "../../assets/icons/drinks/cocktail.png";
-import juice from "../../assets/icons/drinks/juice.png";
-import milk from "../../assets/icons/drinks/milk.png";
+import waterbottle from "../../assets/icons/drinks/water-bottle-cute.png";
+import tea from "../../assets/icons/drinks/tea-cute.png";
+import can from "../../assets/icons/drinks/soda-cute.png";
+import beer from "../../assets/icons/drinks/beer-cute.png";
+import winebottle from "../../assets/icons/drinks/wine-cute.png";
+import liquor from "../../assets/icons/drinks/spirit-cute.png";
+import coffeecup from "../../assets/icons/drinks/coffee-cute.png";
+import energydrink from "../../assets/icons/drinks/energy-drink-cute.png";
+import cocktail from "../../assets/icons/drinks/cocktail-cute.png";
+import juice from "../../assets/icons/drinks/juice-cute.png";
+import milk from "../../assets/icons/drinks/milk-cute.png";
 
-import user from "../../assets/icons/settings/user.png";
-import ruler from "../../assets/icons/settings/ruler.png";
-import notification from "../../assets/icons/settings/notification.png";
-import analytics from "../../assets/icons/settings/analytics.png";
-import themes from "../../assets/icons/settings/themes.png";
-import languages from "../../assets/icons/settings/languages.png";
-import information from "../../assets/icons/settings/information.png";
+import user from "../../assets/icons/settings/user-cute.png";
+import ruler from "../../assets/icons/settings/ruler-cute.png";
+import notification from "../../assets/icons/settings/notification-cute.png";
+import statistics from "../../assets/icons/settings/statistic-cute.png";
+import theme from "../../assets/icons/settings/theme-cute.png";
+import language from "../../assets/icons/settings/language-cute.png";
+import about from "../../assets/icons/settings/about-cute.png";
 
 const settingsImageMap = {
   user,
   ruler,
   notification,
-  analytics,
-  themes,
-  languages,
-  information,
+  statistics,
+  theme,
+  language,
+  about,
 };
 
 const settingsList = [
@@ -50,25 +50,25 @@ const settingsList = [
   {
     id: 4,
     title: "Statistics & History",
-    imageSrc: "analytics",
+    imageSrc: "statistics",
     routeName: "StatisticsSettings",
   },
   {
     id: 5,
     title: "Theme",
-    imageSrc: "themes",
+    imageSrc: "theme",
     routeName: "ThemeSettings",
   },
   {
     id: 6,
     title: "Language",
-    imageSrc: "languages",
+    imageSrc: "language",
     routeName: "LanguageSettings",
   },
   {
     id: 7,
     title: "About",
-    imageSrc: "information",
+    imageSrc: "about",
     routeName: "AboutSettings",
   },
 ];
