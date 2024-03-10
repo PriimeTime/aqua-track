@@ -1,4 +1,4 @@
-import store from "./src/store/store";
+import store from "./src/store/index";
 import { Provider } from "react-redux";
 import AppScreen from "./src/AppScreen";
 import { useFonts } from "expo-font";

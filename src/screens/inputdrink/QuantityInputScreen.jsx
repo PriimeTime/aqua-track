@@ -3,14 +3,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { addToHistory } from "../../store/store";
+import { addToHistory } from "../../store/drinkHistory";
 import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
-import { color } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
 
 import { inputDrinkConfig } from "../../utils/constants";

@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 
-import { setType } from "../../store/store";
+import { setType } from "../../store/index";
 import { drinkTypeList } from "../../utils/maps";
 import { dimensions } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";

@@ -3,7 +3,7 @@ import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { color } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { removeFromHistory } from "../../store/store";
+import { removeFromHistory } from "../../store/drinkHistory";
 import { useDispatch } from "react-redux";
 import { animateButtonPress } from "../../utils/animations";
 
