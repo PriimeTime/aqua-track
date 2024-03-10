@@ -12,7 +12,7 @@ const drinkTypeSlice = createSlice({
       state.value = action.payload;
     },
     resetType: (state) => {
-      state.value = { id: -1 };
+      state.value = -1;
     },
   },
 });
