@@ -100,7 +100,7 @@ const drinkTypeList = [
     imageSrc: "juice",
     label: "Juice",
     drinkType: "normal",
-    color: "#FFA500",
+    color: "#F5882A",
   },
   {
     typeID: 3,
@@ -121,7 +121,7 @@ const drinkTypeList = [
     imageSrc: "milk",
     label: "Dairy",
     drinkType: "normal",
-    color: "#FFF8E7",
+    color: "#FFFAF5",
   },
   {
     typeID: 2,
@@ -149,7 +149,7 @@ const drinkTypeList = [
     imageSrc: "cocktail",
     label: "Cocktail",
     drinkType: "alcohol_mid",
-    color: "#FF6347",
+    color: "#2ADBB5",
   },
   {
     typeID: 6,
