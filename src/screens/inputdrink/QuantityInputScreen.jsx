@@ -1,8 +1,12 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import { addToHistory } from "../../store/drinkHistory";
 import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
@@ -45,10 +49,12 @@ const sensitivity = {
 };
 
 function QuantityInputScreen() {
-  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
+  const route = useRoute();
   const dispatch = useDispatch();
-  const drinkType = useSelector((state) => state.drinkType.value);
+
+  const { drinkType } = route.params;
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const inputBottleObject = inputDrinkConfig.filter(

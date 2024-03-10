@@ -1,5 +1,4 @@
 import { View, StyleSheet, Animated, FlatList } from "react-native";
-import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -7,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 
-import { setType } from "../../store/index";
 import { drinkTypeList } from "../../utils/maps";
 import { dimensions } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
@@ -27,14 +25,12 @@ const headerSize = {
 
 function TypeInputScreen() {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const handleButtonPress = (drink) => {
-    dispatch(setType(drink));
-    navigation.navigate("QuantityInputScreen");
+    navigation.navigate("QuantityInputScreen", { drinkType: drink });
   };
 
   return (
