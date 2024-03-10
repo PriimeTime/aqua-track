@@ -3,7 +3,7 @@ import { drinkImageMap } from "../../utils/maps.js";
 import { PrimaryText } from "../../components/texts/PrimaryText.jsx";
 import { SecondaryText } from "../../components/texts/SecondaryText.jsx";
 import { InfoCard } from "../../components/cards/InfoCard.jsx";
-import { color, dimensions } from "../../utils/themes.js";
+import { color, listItemHeight } from "../../utils/themes.js";
 import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity.js";
 import { metricUnitConversion } from "../../utils/helpers.js";
 import { HistoryDeleteButton } from "./HistoryDeleteButton.jsx";
@@ -19,12 +19,6 @@ const itemBorderWidth = {
   SMALL: 1.5,
   MEDIUM: 2,
   LARGE: 3,
-};
-
-const listItemHeight = {
-  SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
-  MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
-  LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
 };
 
 const infoCardSizeCurrentAmount = {

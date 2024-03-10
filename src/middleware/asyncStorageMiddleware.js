@@ -5,7 +5,7 @@ const asyncStorageMiddleware = (store) => (next) => async (action) => {
   const newState = store.getState(); // Get the new state after the action is processed.
 
   // Update AsyncStorage based on specific actions or state changes.
-  if (action.type.startsWith("drinkHistory/")) {
+  if (action.type.startsWith("drinkHistory")) {
     await AsyncStorage.setItem(
       "currentHistory",
       JSON.stringify(newState.drinkHistory)

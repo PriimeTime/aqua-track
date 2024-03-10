@@ -19,9 +19,9 @@ const cardBorderWidth = {
 };
 
 const cardTextSize = {
-  SMALL: 2,
-  MEDIUM: 4,
-  LARGE: 8,
+  SMALL: 1,
+  MEDIUM: 1,
+  LARGE: 7,
 };
 
 function CardButton({ onPress, imageSrc, children, style }) {
@@ -36,7 +36,6 @@ function CardButton({ onPress, imageSrc, children, style }) {
   const handleOnPressOut = () => {
     animateButtonPress(scaleValue, 1);
     animateButtonPress(shadowOpacity, 0);
-    onPress();
   };
 
   return (
@@ -53,6 +52,7 @@ function CardButton({ onPress, imageSrc, children, style }) {
     >
       <Pressable
         style={styles.cardButton}
+        onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >

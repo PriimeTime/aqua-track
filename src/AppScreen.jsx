@@ -3,7 +3,7 @@ import { AppNavigation } from "./navigation/AppNavigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setHistory } from "./store/store";
+import { setHistory } from "./store/drinkHistory";
 
 const readAsyncStorage = async (keyName) => {
   try {

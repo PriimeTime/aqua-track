@@ -29,4 +29,10 @@ const dimensions = {
   LIST_ITEM_HEIGHT_LARGE: 150,
 };
 
-export { color, shadow, dimensions };
+const listItemHeight = {
+  SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
+  MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
+  LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
+};
+
+export { color, shadow, dimensions, listItemHeight };

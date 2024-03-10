@@ -3,7 +3,7 @@ import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { color } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { removeFromHistory } from "../../store/store";
+import { removeFromHistory } from "../../store/drinkHistory";
 import { useDispatch } from "react-redux";
 import { animateButtonPress } from "../../utils/animations";
 
@@ -32,15 +32,18 @@ function HistoryDeleteButton({ itemID, size }) {
 
   const dispatch = useDispatch();
 
+  const handleOnPress = () => {
+    setTimeout(() => {
+      dispatch(removeFromHistory({ id: itemID }));
+    }, 150);
+  };
+
   const handleOnPressIn = () => {
     animateButtonPress(scaleValue, 0.85);
   };
 
   const handleOnPressOut = () => {
     animateButtonPress(scaleValue, 1);
-    setTimeout(() => {
-      dispatch(removeFromHistory({ id: itemID }));
-    }, 150);
   };
 
   const buttonIconSize = {
@@ -60,6 +63,7 @@ function HistoryDeleteButton({ itemID, size }) {
     >
       <Pressable
         style={getButtonStyle(size)}
+        onPress={handleOnPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >

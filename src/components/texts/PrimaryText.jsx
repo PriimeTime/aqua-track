@@ -34,7 +34,11 @@ function getTextStyle(size, colorParam) {
 }
 
 function PrimaryText({ children, size, color }) {
-  return <Text style={getTextStyle(size, color)}>{children}</Text>;
+  return (
+    <Text numberOfLines={1} style={getTextStyle(size, color)}>
+      {children}
+    </Text>
+  );
 }
 
 export { PrimaryText };

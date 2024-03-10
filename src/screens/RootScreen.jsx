@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
@@ -12,7 +11,7 @@ import { HomeWaterBottle } from "./HomeWaterBottle";
 import { Statistics } from "./Statistics";
 import { TotalIntake } from "./TotalIntake";
 import { SettingsButton } from "../components/buttons/SettingsButton";
-import { color } from "../utils/themes";
+import { GradientWrapper } from "../components/themes/GradientWrapper";
 
 function RootScreen() {
   const navigation = useNavigation();
@@ -20,13 +19,7 @@ function RootScreen() {
   const drinkHistory = useSelector((state) => state.drinkHistory);
 
   return (
-    <LinearGradient
-      colors={[
-        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
-        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
-      ]}
-      style={[styles.container, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.wrapper}>
         <View style={styles.settingsWrapper}>
           <SettingsButton
@@ -55,7 +48,7 @@ function RootScreen() {
         )}
         <StatusBar style="auto" />
       </View>
-    </LinearGradient>
+    </GradientWrapper>
   );
 }
 

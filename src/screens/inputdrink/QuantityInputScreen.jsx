@@ -1,24 +1,24 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { addToHistory } from "../../store/store";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { addToHistory } from "../../store/drinkHistory";
 import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
-import { color } from "../../utils/themes";
 import { BackButton } from "../../components/buttons/BackButton";
 
-import {
-  inputBottleSizeInMilliliters,
-  incrementValue,
-} from "../../utils/constants";
+import { inputDrinkConfig } from "../../utils/constants";
 import SCREEN_SIZE from "../../utils/screenSize";
+import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 /**
  * Debounce function to control
@@ -38,7 +38,7 @@ const useDebouncedCallback = (callback, delay) => {
 
 const headerTextSize = {
   SMALL: 5,
-  MEDIUM: 6,
+  MEDIUM: 5,
   LARGE: 9,
 };
 
@@ -49,11 +49,22 @@ const sensitivity = {
 };
 
 function QuantityInputScreen() {
-  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
+  const route = useRoute();
   const dispatch = useDispatch();
-  const drinkType = useSelector((state) => state.drinkType.value);
+
+  const { drinkType } = route.params;
   const scaleValue = useRef(new Animated.Value(1)).current;
+
+  const inputBottleObject = inputDrinkConfig.filter(
+    (item) => item.drinkType === drinkType.drinkType
+  )[0];
+
+  // Not destructuring this on purpose for better readability
+  const inputBottleSize = inputBottleObject.size;
+  const incrementValue = inputBottleObject.increment;
+  const hydroFactor = inputBottleObject.hydroFactor;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -91,12 +102,6 @@ function QuantityInputScreen() {
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
       setHeightVal(newHeight);
 
-      const inputBottleObject = inputBottleSizeInMilliliters.filter(
-        (item) => item.drinkType === drinkType.drinkType
-      )[0];
-
-      const inputBottleSize = inputBottleObject.size;
-
       const bottleSize = (Math.round(newHeight) * inputBottleSize) / 100;
       const quantityVal =
         Math.ceil(bottleSize / incrementValue) * incrementValue;
@@ -125,7 +130,14 @@ function QuantityInputScreen() {
 
       const time = `${timeHours}:${timeMins}`;
 
-      dispatch(addToHistory({ ...drinkType, quantity: quantityValue, time }));
+      const drinkItem = {
+        ...drinkType,
+        quantity: quantityValue,
+        time,
+        hydrationQuantity: quantityValue * hydroFactor,
+      };
+
+      dispatch(addToHistory(drinkItem));
       navigation.navigate("Home");
     } else {
       triggerAnimation();
@@ -140,13 +152,7 @@ function QuantityInputScreen() {
     : "";
 
   return (
-    <LinearGradient
-      colors={[
-        color.APP_PRIMARY_BACKGROUND_FIRST_GRADIENT,
-        color.APP_PRIMARY_BACKGROUND_SECOND_GRADIENT,
-      ]}
-      style={[styles.wrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={[{ paddingTop: insets.top }]}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
@@ -173,16 +179,13 @@ function QuantityInputScreen() {
           {"Add this amount".toUpperCase()}
         </PrimaryButton>
       </View>
-    </LinearGradient>
+    </GradientWrapper>
   );
 }
 
 export { QuantityInputScreen };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: color.APP_PRIMARY_BACKGROUND,
-  },
   backButton: {
     width: "90%",
     left: "5%",

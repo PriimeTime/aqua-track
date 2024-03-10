@@ -5,7 +5,8 @@
   "scripts": {
     "start": "expo start",
     "build-simulator": "eas build --profile development-simulator --platform ios",
-    "build-device": "eas build --profile development --platform ios",
+    "build-device-expo": "eas build --profile development --platform ios",
+    "build-device-standalone": "eas build --profile production --platform ios",
     "dev": "expo start --dev-client",
     "ios": "expo start --ios",
     "ios-app": "expo start --dev-client",
@@ -36,7 +37,9 @@
     "react-native-web": "~0.19.6",
     "react-redux": "^9.1.0",
     "uid": "^2.0.2",
-    "victory-native": "^36.8.4"
+    "use-count-up": "^3.0.1",
+    "victory-native": "^36.8.4",
+    "react-native-reanimated": "~3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
