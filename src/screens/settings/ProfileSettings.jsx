@@ -1,7 +1,7 @@
-import { Text } from "react-native";
+import { ContentPage } from "../ContentPage";
 
 function ProfileSettings() {
-  return <Text>profilesettings_placeholder</Text>;
+  return <ContentPage title="Metrics & Body Measurements"></ContentPage>;
 }
 
 export { ProfileSettings };
