@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import { BackButton } from "../components/buttons/BackButton";
 import { PrimaryText } from "../components/texts/PrimaryText";
 import SCREEN_SIZE from "../utils/screenSize";
+import { ScrollView } from "react-native";
 
 const headerHeight = {
   SMALL: 5,
@@ -19,14 +20,12 @@ function ContentPage({ title, children }) {
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>
-      {title && (
-        <View style={styles.titleWrapper}>
-          <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
-        </View>
-      )}
-      <View style={[styles.wrapper, { height: title ? "80%" : "90%" }]}>
-        {children}
+      <View style={styles.titleWrapper}>
+        <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
       </View>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={[styles.wrapper, { height: "80%" }]}>{children}</View>
+      </ScrollView>
     </GradientWrapper>
   );
 }

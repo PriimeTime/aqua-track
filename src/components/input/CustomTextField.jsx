@@ -1,7 +1,7 @@
 import { StyleSheet, View, TextInput, Text } from "react-native";
 import { SecondaryText } from "../texts/SecondaryText";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { color } from "../../utils/themes";
+import { color, inputFieldHeight } from "../../utils/themes";
 
 const textFontValues = {
   1: { fontSize: 12 },
@@ -31,13 +31,7 @@ const titleSize = {
   LARGE: 8,
 };
 
-textFieldHeight = {
-  SMALL: 40,
-  MEDIUM: 50,
-  LARGE: 100,
-};
-
-function CustomTextField({ label, keyboardType, maxLength, append }) {
+function CustomTextField({ label, keyboardType, maxLength, append, ...props }) {
   let textAlign = "auto";
 
   if (keyboardType === "numeric") {
@@ -45,9 +39,9 @@ function CustomTextField({ label, keyboardType, maxLength, append }) {
   }
 
   return (
-    <>
+    <View style={{ width: "50%" }} {...props}>
       {label && (
-        <View style={{ width: "25%" }}>
+        <View style={styles.labelWrapper}>
           <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
             {label}
           </SecondaryText>
@@ -59,7 +53,7 @@ function CustomTextField({ label, keyboardType, maxLength, append }) {
             styles.textInput,
             {
               textAlign,
-              width: append ? "75%" : "100%",
+              width: append ? "65%" : "100%",
             },
           ]}
           keyboardType={keyboardType}
@@ -71,13 +65,17 @@ function CustomTextField({ label, keyboardType, maxLength, append }) {
           </View>
         )}
       </View>
-    </>
+    </View>
   );
 }
 
 export { CustomTextField };
 
 const styles = StyleSheet.create({
+  labelWrapper: {
+    width: "50%",
+    marginBottom: "2.5%",
+  },
   appendWrapper: {
     height: "100%",
     width: "25%",
@@ -93,15 +91,14 @@ const styles = StyleSheet.create({
   textInputWrapper: {
     paddingRight: "2.5%",
     paddingLeft: "2.5%",
-    width: "25%",
-    height: textFieldHeight[SCREEN_SIZE],
+    width: "50%",
+    height: inputFieldHeight[SCREEN_SIZE],
     flexDirection: "row",
-    borderRadius: textFieldHeight[SCREEN_SIZE] / 2,
+    borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
     backgroundColor: color.WHITE,
   },
   textInput: {
-    top: "5%",
-    height: "90%",
+    height: "100%",
     fontFamily: "Chewy-Regular",
     fontSize: textFontValues[titleSize[SCREEN_SIZE]].fontSize,
     color: color.DARK_BLUE,
