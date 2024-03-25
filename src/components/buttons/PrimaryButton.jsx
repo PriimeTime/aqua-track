@@ -83,6 +83,6 @@ export { PrimaryButton };
 const styles = StyleSheet.create({
   buttonWrapper: {
     height: "60%",
-    width: "90%",
+    width: "100%",
   },
 });

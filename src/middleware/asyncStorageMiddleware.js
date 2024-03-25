@@ -12,6 +12,13 @@ const asyncStorageMiddleware = (store) => (next) => async (action) => {
     );
   }
 
+  if (action.type.startsWith("userData/setUserMetrics")) {
+    await AsyncStorage.setItem(
+      "userMetrics",
+      JSON.stringify(newState.userData.userMetrics)
+    );
+  }
+
   return result;
 };
 

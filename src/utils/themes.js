@@ -35,4 +35,10 @@ const listItemHeight = {
   LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
 };
 
-export { color, shadow, dimensions, listItemHeight };
+const inputFieldHeight = {
+  SMALL: 40,
+  MEDIUM: 50,
+  LARGE: 100,
+};
+
+export { color, shadow, dimensions, listItemHeight, inputFieldHeight };
