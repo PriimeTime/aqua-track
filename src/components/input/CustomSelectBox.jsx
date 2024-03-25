@@ -21,11 +21,12 @@ const titleSize = {
   LARGE: 8,
 };
 
-function CustomSelectBox({ items, label }) {
+function CustomSelectBox({ items, label, handleOnSelect }) {
   const [selectedItemId, setSelectedItemId] = useState(-1);
 
-  const handleOnPress = (id) => {
+  const handleOnPress = ({ id, title }) => {
     setSelectedItemId(id);
+    handleOnSelect(title);
   };
 
   return (
@@ -49,7 +50,7 @@ function CustomSelectBox({ items, label }) {
                   selectedItemId === item.id ? color.BLUE : color.WHITE,
               },
             ]}
-            onPress={() => handleOnPress(item.id)}
+            onPress={() => handleOnPress(item)}
           >
             <Text
               style={[

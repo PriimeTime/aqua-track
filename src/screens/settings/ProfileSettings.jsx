@@ -2,6 +2,11 @@ import { ContentPage } from "../ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
 import { CustomSelectBox } from "../../components/input/CustomSelectBox";
 import { View } from "react-native";
+import { useState } from "react";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserMetrics } from "../../store/userData";
+import { useNavigation, StackActions } from "@react-navigation/native";
 
 const genderSelectBoxItems = [
   { id: 1, title: "Male" },
@@ -24,6 +29,26 @@ const ContentWrapper = ({ children, ...props }) => {
 };
 
 function ProfileSettings() {
+  const popAction = StackActions.pop(1);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const userMetrics = useSelector((state) => state.userData.userMetrics);
+
+  const [metricObject, setMetricObject] = useState(userMetrics);
+
+  const handleOnChange = (value, name) => {
+    setMetricObject((prevValue) => {
+      const retVal = { ...prevValue };
+      retVal[name] = value;
+      return retVal;
+    });
+  };
+
+  const handleOnSave = () => {
+    dispatch(setUserMetrics(metricObject));
+    navigation.dispatch(popAction);
+  };
+
   return (
     <ContentPage title="Metrics & Body Measurements">
       <ContentWrapper>
@@ -31,12 +56,15 @@ function ProfileSettings() {
           keyboardType="numeric"
           maxLength={2}
           label="Age"
+          value={metricObject.age}
+          handleOnChangeText={(value) => handleOnChange(value, "age")}
         ></CustomTextField>
       </ContentWrapper>
       <ContentWrapper>
         <CustomSelectBox
           items={genderSelectBoxItems}
           label="Gender"
+          handleOnSelect={(value) => handleOnChange(value, "gender")}
         ></CustomSelectBox>
       </ContentWrapper>
       <ContentWrapper>
@@ -46,12 +74,16 @@ function ProfileSettings() {
             maxLength={3}
             label="Height"
             append="cm"
+            value={metricObject.height}
+            handleOnChangeText={(value) => handleOnChange(value, "height")}
           ></CustomTextField>
           <CustomTextField
             keyboardType="numeric"
             maxLength={3}
             label="Weight"
             append="kg"
+            value={metricObject.weight}
+            handleOnChangeText={(value) => handleOnChange(value, "weight")}
           ></CustomTextField>
         </View>
       </ContentWrapper>
@@ -59,7 +91,18 @@ function ProfileSettings() {
         <CustomSelectBox
           items={exerciseLevelSelectBoxItems}
           label="Exercise Level"
+          handleOnSelect={(value) => handleOnChange(value, "exerciseLvl")}
         ></CustomSelectBox>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <PrimaryButton onPress={handleOnSave}>
+            {"Save changes".toUpperCase()}
+          </PrimaryButton>
+        </View>
       </ContentWrapper>
     </ContentPage>
   );

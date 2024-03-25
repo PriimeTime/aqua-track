@@ -31,7 +31,15 @@ const titleSize = {
   LARGE: 8,
 };
 
-function CustomTextField({ label, keyboardType, maxLength, append, ...props }) {
+function CustomTextField({
+  value,
+  handleOnChangeText,
+  label,
+  keyboardType,
+  maxLength,
+  append,
+  ...props
+}) {
   let textAlign = "auto";
 
   if (keyboardType === "numeric") {
@@ -58,6 +66,8 @@ function CustomTextField({ label, keyboardType, maxLength, append, ...props }) {
           ]}
           keyboardType={keyboardType}
           maxLength={maxLength}
+          value={value}
+          onChangeText={handleOnChangeText}
         ></TextInput>
         {append && (
           <View style={styles.appendWrapper}>
