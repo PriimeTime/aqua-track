@@ -38,11 +38,12 @@ function CustomTextField({
   inputType,
   maxLength,
   append,
+  fullWidth,
   ...props
 }) {
+  let keyboardType = "default";
   let textAlign = "auto";
   let isPassword = false;
-  let keyboardType = "default";
 
   switch (inputType) {
     case "numeric":
@@ -54,8 +55,14 @@ function CustomTextField({
       break;
   }
 
+  let textFieldWidth = "50%";
+
+  if (fullWidth) {
+    textFieldWidth = "100%";
+  }
+
   return (
-    <View style={{ width: "100%" }} {...props}>
+    <View style={{ width: textFieldWidth }} {...props}>
       {label && (
         <View style={styles.labelWrapper}>
           <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
@@ -63,7 +70,7 @@ function CustomTextField({
           </SecondaryText>
         </View>
       )}
-      <View style={styles.textInputWrapper}>
+      <View style={[styles.textInputWrapper, { width: textFieldWidth }]}>
         <TextInput
           style={[
             styles.textInput,
@@ -110,7 +117,6 @@ const styles = StyleSheet.create({
   textInputWrapper: {
     paddingRight: "2.5%",
     paddingLeft: "2.5%",
-    width: "50%",
     height: inputFieldHeight[SCREEN_SIZE],
     flexDirection: "row",
     borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
