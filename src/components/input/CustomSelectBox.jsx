@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { color, inputFieldHeight } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SecondaryText } from "../texts/SecondaryText";
 
 const boxTextFontValues = {
@@ -21,8 +21,17 @@ const titleSize = {
   LARGE: 8,
 };
 
-function CustomSelectBox({ items, label, handleOnSelect }) {
+function CustomSelectBox({ value, items, label, handleOnSelect }) {
   const [selectedItemId, setSelectedItemId] = useState(-1);
+
+  useEffect(() => {
+    if (value) {
+      const selectedItem = items.find((item) => item.title === value);
+      if (selectedItem) {
+        setSelectedItemId(selectedItem.id);
+      }
+    }
+  }, [value, items]);
 
   const handleOnPress = ({ id, title }) => {
     setSelectedItemId(id);

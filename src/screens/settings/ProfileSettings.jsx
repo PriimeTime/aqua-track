@@ -65,6 +65,7 @@ function ProfileSettings() {
           items={genderSelectBoxItems}
           label="Gender"
           handleOnSelect={(value) => handleOnChange(value, "gender")}
+          value={metricObject.gender}
         ></CustomSelectBox>
       </ContentWrapper>
       <ContentWrapper>
@@ -92,6 +93,7 @@ function ProfileSettings() {
           items={exerciseLevelSelectBoxItems}
           label="Exercise Level"
           handleOnSelect={(value) => handleOnChange(value, "exerciseLvl")}
+          value={metricObject.exerciseLvl}
         ></CustomSelectBox>
         <View
           style={{
