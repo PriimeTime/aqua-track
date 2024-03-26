@@ -35,19 +35,27 @@ function CustomTextField({
   value,
   handleOnChangeText,
   label,
-  keyboardType,
+  inputType,
   maxLength,
   append,
   ...props
 }) {
   let textAlign = "auto";
+  let isPassword = false;
+  let keyboardType = "default";
 
-  if (keyboardType === "numeric") {
-    textAlign = "center";
+  switch (inputType) {
+    case "numeric":
+      textAlign = "center";
+      keyboardType = inputType;
+      break;
+    case "password":
+      isPassword = true;
+      break;
   }
 
   return (
-    <View style={{ width: "50%" }} {...props}>
+    <View style={{ width: "100%" }} {...props}>
       {label && (
         <View style={styles.labelWrapper}>
           <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
@@ -65,6 +73,7 @@ function CustomTextField({
             },
           ]}
           keyboardType={keyboardType}
+          secureTextEntry={isPassword}
           maxLength={maxLength}
           value={value}
           onChangeText={handleOnChangeText}

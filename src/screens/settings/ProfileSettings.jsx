@@ -53,7 +53,7 @@ function ProfileSettings() {
     <ContentPage title="Metrics & Body Measurements">
       <ContentWrapper>
         <CustomTextField
-          keyboardType="numeric"
+          inputType="numeric"
           maxLength={2}
           label="Age"
           value={metricObject.age}
@@ -71,7 +71,7 @@ function ProfileSettings() {
       <ContentWrapper>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <CustomTextField
-            keyboardType="numeric"
+            inputType="numeric"
             maxLength={3}
             label="Height"
             append="cm"
@@ -79,7 +79,7 @@ function ProfileSettings() {
             handleOnChangeText={(value) => handleOnChange(value, "height")}
           ></CustomTextField>
           <CustomTextField
-            keyboardType="numeric"
+            inputType="numeric"
             maxLength={3}
             label="Weight"
             append="kg"
