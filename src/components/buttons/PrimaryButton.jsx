@@ -8,7 +8,7 @@ import SCREEN_SIZE from "../../utils/screenSize";
 const textSize = {
   SMALL: 20,
   MEDIUM: 25,
-  LARGE: 40,
+  LARGE: 60,
 };
 
 const buttonBorderRadius = {
@@ -82,7 +82,8 @@ export { PrimaryButton };
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    height: "60%",
+    justifyContent: "center",
+    height: "50%",
     width: "100%",
   },
 });

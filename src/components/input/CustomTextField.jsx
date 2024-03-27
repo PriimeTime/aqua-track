@@ -70,13 +70,20 @@ function CustomTextField({
           </SecondaryText>
         </View>
       )}
-      <View style={[styles.textInputWrapper, { width: textFieldWidth }]}>
+      <View
+        style={[
+          styles.textInputWrapper,
+          {
+            width: textFieldWidth,
+          },
+        ]}
+      >
         <TextInput
           style={[
             styles.textInput,
             {
               textAlign,
-              width: append ? "65%" : "100%",
+              width: append ? "65%" : "90%",
             },
           ]}
           keyboardType={keyboardType}
@@ -121,6 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
     backgroundColor: color.WHITE,
+    justifyContent: "center",
   },
   textInput: {
     height: "100%",

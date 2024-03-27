@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { ContentPage } from "../ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 
 const ContentWrapper = ({ children, ...props }) => {
   return (
@@ -9,6 +10,8 @@ const ContentWrapper = ({ children, ...props }) => {
     </View>
   );
 };
+
+const handleOnLogin = () => {};
 
 function AccountSettings() {
   return (
@@ -23,6 +26,11 @@ function AccountSettings() {
           label="Password"
         ></CustomTextField>
       </ContentWrapper>
+      <View>
+        <PrimaryButton onPress={handleOnLogin}>
+          {"login".toUpperCase()}
+        </PrimaryButton>
+      </View>
     </ContentPage>
   );
 }
