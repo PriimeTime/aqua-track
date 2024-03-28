@@ -36,6 +36,17 @@ const dimensions = {
   LIST_ITEM_HEIGHT_LARGE: 150,
 };
 
+const inputFontSizeValues = {
+  1: { fontSize: 12 },
+  2: { fontSize: 14 },
+  3: { fontSize: 16 },
+  4: { fontSize: 18 },
+  5: { fontSize: 20 },
+  6: { fontSize: 24 },
+  7: { fontSize: 36 },
+  8: { fontSize: 48 },
+};
+
 const listItemHeight = {
   SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
   MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
@@ -62,4 +73,5 @@ export {
   inputFieldHeight,
   cardBorderWidth,
   fontFamily,
+  inputFontSizeValues,
 };

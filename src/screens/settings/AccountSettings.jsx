@@ -6,7 +6,7 @@ import { InputContentWrapper } from "./InputContentWrapper";
 import { color, fontFamily } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
 import googleLogo from "../../../assets/icons/google-logo.png";
-import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -31,56 +31,108 @@ const GoogleButton = ({ children }) => {
   );
 };
 
-const handleOnLogin = () => {};
-
-const handleOnRegister = () => {};
-
-const handleOnAppleSignIn = () => {};
-
-const handleOnGoogleSignIn = () => {};
-
 function AccountSettings() {
+  const handleOnLogin = () => {};
+  const handleOnLogout = () => {};
+  const handleOnRegister = () => {};
+
+  const handleToggleLogin = () => {
+    showRegisterPage ? setTitle("Login") : setTitle("Register");
+    setShowRegisterPage(!showRegisterPage);
+  };
+
+  const handleOnAppleSignIn = () => {};
+  const handleOnGoogleSignIn = () => {};
+
+  const [title, setTitle] = useState("Login");
+
+  /**
+   * Handles whether register or login page
+   * should be shown when user is not logged in
+   */
+  const [showRegisterPage, setShowRegisterPage] = useState(false);
+
+  // TODO: fetch user login state here
+  // if logged in --> show logout option instead of login options
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <ContentPage title="Account">
-      <InputContentWrapper>
-        <CustomTextField fullWidth label="E-mail"></CustomTextField>
-      </InputContentWrapper>
-      <InputContentWrapper>
-        <CustomTextField
-          fullWidth
-          inputType="password"
-          label="Password"
-        ></CustomTextField>
-      </InputContentWrapper>
-      <PrimaryButton onPress={handleOnLogin}>
-        {"login".toUpperCase()}
-      </PrimaryButton>
-      <PrimaryButton
-        btnColor={color.WHITE}
-        textStyle={{ color: color.BLUE }}
-        onPress={() => handleOnRegister(navigation)}
-      >
-        {"register".toUpperCase()}
-      </PrimaryButton>
-      <PrimaryButton
-        btnColor={color.WHITE}
-        custom
-        onPress={handleOnGoogleSignIn}
-      >
-        <GoogleButton>{"Sign in with Google"}</GoogleButton>
-      </PrimaryButton>
-      <PrimaryButton
-        btnColor={color.BLACK}
-        onPress={handleOnAppleSignIn}
-        textStyle={{
-          letterSpacing: 0,
-          fontWeight: "bold",
-          fontFamily: fontFamily.SYSTEM,
-          color: color.WHITE,
-        }}
-      >
-        {" Sign in with Apple"}
-      </PrimaryButton>
+    <ContentPage key={title} title={title}>
+      {!isLoggedIn && (
+        <>
+          <InputContentWrapper>
+            <CustomTextField fullWidth label="E-mail"></CustomTextField>
+          </InputContentWrapper>
+          <InputContentWrapper>
+            <CustomTextField
+              fullWidth
+              inputType="password"
+              label="Password"
+            ></CustomTextField>
+          </InputContentWrapper>
+          {showRegisterPage && (
+            <>
+              <InputContentWrapper>
+                <CustomTextField
+                  fullWidth
+                  inputType="password"
+                  label="Confirm password"
+                ></CustomTextField>
+              </InputContentWrapper>
+              <PrimaryButton onPress={handleOnRegister}>
+                {"register".toUpperCase()}
+              </PrimaryButton>
+              <PrimaryButton
+                btnColor={color.WHITE}
+                textStyle={{ color: color.BLUE }}
+                onPress={handleToggleLogin}
+              >
+                {"login".toUpperCase()}
+              </PrimaryButton>
+            </>
+          )}
+          {!showRegisterPage && (
+            <>
+              <PrimaryButton onPress={handleOnLogin}>
+                {"login".toUpperCase()}
+              </PrimaryButton>
+              <PrimaryButton
+                btnColor={color.WHITE}
+                textStyle={{ color: color.BLUE }}
+                onPress={handleToggleLogin}
+              >
+                {"register".toUpperCase()}
+              </PrimaryButton>
+              <PrimaryButton
+                btnColor={color.WHITE}
+                custom
+                onPress={handleOnGoogleSignIn}
+              >
+                <GoogleButton>{"Sign in with Google"}</GoogleButton>
+              </PrimaryButton>
+              <PrimaryButton
+                btnColor={color.BLACK}
+                onPress={handleOnAppleSignIn}
+                textStyle={{
+                  letterSpacing: 0,
+                  fontWeight: "bold",
+                  fontFamily: fontFamily.SYSTEM,
+                  color: color.WHITE,
+                }}
+              >
+                {" Sign in with Apple"}
+              </PrimaryButton>
+            </>
+          )}
+        </>
+      )}
+      {isLoggedIn && (
+        <>
+          <PrimaryButton onPress={handleOnLogout}>
+            {"log out".toUpperCase()}
+          </PrimaryButton>
+        </>
+      )}
     </ContentPage>
   );
 }

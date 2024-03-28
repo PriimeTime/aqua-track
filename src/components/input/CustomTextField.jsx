@@ -1,18 +1,11 @@
 import { StyleSheet, View, TextInput, Text } from "react-native";
 import { SecondaryText } from "../texts/SecondaryText";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { color, inputFieldHeight } from "../../utils/themes";
-
-const textFontValues = {
-  1: { fontSize: 12 },
-  2: { fontSize: 14 },
-  3: { fontSize: 16 },
-  4: { fontSize: 18 },
-  5: { fontSize: 20 },
-  6: { fontSize: 24 },
-  7: { fontSize: 36 },
-  8: { fontSize: 48 },
-};
+import {
+  color,
+  inputFieldHeight,
+  inputFontSizeValues,
+} from "../../utils/themes";
 
 const appendFontValues = {
   1: { fontSize: 9 },
@@ -133,7 +126,7 @@ const styles = StyleSheet.create({
   textInput: {
     height: "100%",
     fontFamily: "Chewy-Regular",
-    fontSize: textFontValues[titleSize[SCREEN_SIZE]].fontSize,
+    fontSize: inputFontSizeValues[titleSize[SCREEN_SIZE]].fontSize,
     color: color.DARK_BLUE,
   },
 });
