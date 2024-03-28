@@ -3,7 +3,7 @@ import { drinkImageMap } from "../../utils/maps.js";
 import { PrimaryText } from "../../components/texts/PrimaryText.jsx";
 import { SecondaryText } from "../../components/texts/SecondaryText.jsx";
 import { InfoCard } from "../../components/cards/InfoCard.jsx";
-import { color, listItemHeight } from "../../utils/themes.js";
+import { color, listItemHeight, cardBorderWidth } from "../../utils/themes.js";
 import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity.js";
 import { metricUnitConversion } from "../../utils/helpers.js";
 import { HistoryDeleteButton } from "./HistoryDeleteButton.jsx";
@@ -13,12 +13,6 @@ const itemBorderRadius = {
   SMALL: 15,
   MEDIUM: 20,
   LARGE: 25,
-};
-
-const itemBorderWidth = {
-  SMALL: 1.5,
-  MEDIUM: 2,
-  LARGE: 3,
 };
 
 const infoCardSizeCurrentAmount = {
@@ -93,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
     borderRadius: itemBorderRadius[SCREEN_SIZE],
-    borderWidth: itemBorderWidth[SCREEN_SIZE],
+    borderWidth: cardBorderWidth[SCREEN_SIZE],
     height: listItemHeight[SCREEN_SIZE],
     width: "100%",
     flexDirection: "row",

@@ -5,6 +5,7 @@ const color = {
   BLUE: "#3C91E6",
   DARK_BLUE: "#003061",
   RED: "#FF7575",
+  BLACK: "#000000",
 
   GRADIENT_LIGHTER_BLUE: "#BADCFF",
   GRADIENT_DARKER_BLUE: "#DCEFFF",
@@ -12,6 +13,12 @@ const color = {
   APP_PRIMARY_BACKGROUND_FIRST_GRADIENT: "#FFFFFF", // WHITE
   APP_PRIMARY_BACKGROUND_SECOND_GRADIENT: "#CCE7FF",
   APP_SECONDARY_BACKGROUND: "#516CC9",
+};
+
+const fontFamily = {
+  DEFAULT: "Chewy-Regular",
+  SYSTEM: "System",
+  GOOGLE: "Roboto",
 };
 
 const shadow = {
@@ -41,4 +48,18 @@ const inputFieldHeight = {
   LARGE: 100,
 };
 
-export { color, shadow, dimensions, listItemHeight, inputFieldHeight };
+const cardBorderWidth = {
+  SMALL: 1,
+  MEDIUM: 1.5,
+  LARGE: 3,
+};
+
+export {
+  color,
+  shadow,
+  dimensions,
+  listItemHeight,
+  inputFieldHeight,
+  cardBorderWidth,
+  fontFamily,
+};

@@ -7,6 +7,7 @@ import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserMetrics } from "../../store/userData";
 import { useNavigation, StackActions } from "@react-navigation/native";
+import { InputContentWrapper } from "./InputContentWrapper";
 
 const genderSelectBoxItems = [
   { id: 1, title: "Male" },
@@ -19,14 +20,6 @@ const exerciseLevelSelectBoxItems = [
   { id: 2, title: "Medium" },
   { id: 3, title: "High" },
 ];
-
-const ContentWrapper = ({ children, ...props }) => {
-  return (
-    <View style={{ marginBottom: "5%" }} {...props}>
-      {children}
-    </View>
-  );
-};
 
 function ProfileSettings() {
   const popAction = StackActions.pop(1);
@@ -51,7 +44,7 @@ function ProfileSettings() {
 
   return (
     <ContentPage title="Metrics & Body Measurements">
-      <ContentWrapper>
+      <InputContentWrapper>
         <CustomTextField
           inputType="numeric"
           maxLength={2}
@@ -59,16 +52,16 @@ function ProfileSettings() {
           value={metricObject.age}
           handleOnChangeText={(value) => handleOnChange(value, "age")}
         ></CustomTextField>
-      </ContentWrapper>
-      <ContentWrapper>
+      </InputContentWrapper>
+      <InputContentWrapper>
         <CustomSelectBox
           items={genderSelectBoxItems}
           label="Gender"
           handleOnSelect={(value) => handleOnChange(value, "gender")}
           value={metricObject.gender}
         ></CustomSelectBox>
-      </ContentWrapper>
-      <ContentWrapper>
+      </InputContentWrapper>
+      <InputContentWrapper>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <CustomTextField
             inputType="numeric"
@@ -87,25 +80,18 @@ function ProfileSettings() {
             handleOnChangeText={(value) => handleOnChange(value, "weight")}
           ></CustomTextField>
         </View>
-      </ContentWrapper>
-      <ContentWrapper>
+      </InputContentWrapper>
+      <InputContentWrapper>
         <CustomSelectBox
           items={exerciseLevelSelectBoxItems}
           label="Exercise Level"
           handleOnSelect={(value) => handleOnChange(value, "exerciseLvl")}
           value={metricObject.exerciseLvl}
         ></CustomSelectBox>
-        <View
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <PrimaryButton onPress={handleOnSave}>
-            {"Save changes".toUpperCase()}
-          </PrimaryButton>
-        </View>
-      </ContentWrapper>
+      </InputContentWrapper>
+      <PrimaryButton onPress={handleOnSave}>
+        {"Save changes".toUpperCase()}
+      </PrimaryButton>
     </ContentPage>
   );
 }
