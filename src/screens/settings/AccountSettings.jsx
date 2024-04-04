@@ -2,11 +2,15 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { ContentPage } from "../ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
-import { InputContentWrapper } from "./InputContentWrapper";
 import { color, fontFamily } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
 import googleLogo from "../../../assets/icons/google-logo.png";
 import { useState } from "react";
+import {
+  validateConfirmPassword,
+  validateEmail,
+  validatePassword,
+} from "../../utils/validation";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -14,6 +18,12 @@ const textSize = {
   SMALL: 20,
   MEDIUM: 25,
   LARGE: 60,
+};
+
+const errorTextSize = {
+  SMALL: 15,
+  MEDIUM: 20,
+  LARGE: 30,
 };
 
 const GoogleButton = ({ children }) => {
@@ -32,19 +42,81 @@ const GoogleButton = ({ children }) => {
 };
 
 function AccountSettings() {
-  const handleOnLogin = () => {};
-  const handleOnLogout = () => {};
-  const handleOnRegister = () => {};
+  const handleOnLogin = () => {
+    const isValid = validateForm();
+    // TODO: firebase email login
+  };
+
+  const handleOnLogout = () => {
+    // TODO: firebase email logout
+  };
+
+  const handleOnRegister = () => {
+    const isValid = validateForm(true);
+    // TODO: firebase email register
+  };
 
   const handleToggleLogin = () => {
     showRegisterPage ? setTitle("Login") : setTitle("Register");
     setShowRegisterPage(!showRegisterPage);
   };
 
-  const handleOnAppleSignIn = () => {};
-  const handleOnGoogleSignIn = () => {};
+  const handleInputChange = (fieldName, value) => {
+    setFormState((prevForm) => ({
+      ...prevForm,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleOnAppleSignIn = () => {
+    // TODO: firebase apple signin
+  };
+  const handleOnGoogleSignIn = () => {
+    // TODO: firebase google signin
+  };
+
+  const validateForm = (isRegister = false) => {
+    let validationObj = { newErrors: {}, isValid: true };
+
+    // Validate email
+    const emailValidation = validateEmail(formState.email);
+    if (!emailValidation.isValid) {
+      validationObj.newErrors.email = emailValidation.newErrors;
+      validationObj.isValid = false;
+    }
+
+    // Validate password
+    const passwordValidation = validatePassword(formState.password);
+    if (!passwordValidation.isValid) {
+      validationObj.newErrors.password = passwordValidation.newErrors;
+      validationObj.isValid = false;
+    }
+
+    // Validate confirm password
+    if (isRegister) {
+      const confirmPasswordValidation = validateConfirmPassword(
+        formState.password,
+        formState.confirmPassword
+      );
+      if (!confirmPasswordValidation.isValid) {
+        validationObj.newErrors.confirmPassword =
+          confirmPasswordValidation.newErrors;
+        validationObj.isValid = false;
+      }
+    }
+
+    // Set errors
+    setFormErrors(validationObj.newErrors);
+    return validationObj.isValid;
+  };
 
   const [title, setTitle] = useState("Login");
+  const [formErrors, setFormErrors] = useState({});
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   /**
    * Handles whether register or login page
@@ -60,25 +132,38 @@ function AccountSettings() {
     <ContentPage key={title} title={title}>
       {!isLoggedIn && (
         <>
-          <InputContentWrapper>
-            <CustomTextField fullWidth label="E-mail"></CustomTextField>
-          </InputContentWrapper>
-          <InputContentWrapper>
-            <CustomTextField
-              fullWidth
-              inputType="password"
-              label="Password"
-            ></CustomTextField>
-          </InputContentWrapper>
+          <CustomTextField
+            handleOnChangeText={(text) => handleInputChange("email", text)}
+            fullWidth
+            label="E-mail"
+          ></CustomTextField>
+          <View style={styles.errorWrapper}>
+            <Text style={styles.errorText}>{formErrors.email}</Text>
+          </View>
+          <CustomTextField
+            handleOnChangeText={(text) => handleInputChange("password", text)}
+            fullWidth
+            inputType="password"
+            label="Password"
+          ></CustomTextField>
+          <View style={styles.errorWrapper}>
+            <Text style={styles.errorText}>{formErrors.password}</Text>
+          </View>
           {showRegisterPage && (
             <>
-              <InputContentWrapper>
-                <CustomTextField
-                  fullWidth
-                  inputType="password"
-                  label="Confirm password"
-                ></CustomTextField>
-              </InputContentWrapper>
+              <CustomTextField
+                handleOnChangeText={(text) =>
+                  handleInputChange("confirmPassword", text)
+                }
+                fullWidth
+                inputType="password"
+                label="Confirm password"
+              ></CustomTextField>
+              <View style={styles.errorWrapper}>
+                <Text style={styles.errorText}>
+                  {formErrors.confirmPassword}
+                </Text>
+              </View>
               <PrimaryButton onPress={handleOnRegister}>
                 {"register".toUpperCase()}
               </PrimaryButton>
@@ -140,6 +225,15 @@ function AccountSettings() {
 export { AccountSettings };
 
 const styles = StyleSheet.create({
+  errorWrapper: {
+    justifyContent: "center",
+    height: errorTextSize[SCREEN_SIZE] * 1.5,
+  },
+  errorText: {
+    fontFamily: fontFamily.DEFAULT,
+    fontSize: errorTextSize[SCREEN_SIZE],
+    color: color.RED,
+  },
   googleButton: {
     wrapper: {
       width: "100%",
