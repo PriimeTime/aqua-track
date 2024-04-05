@@ -43,8 +43,9 @@ const GoogleButton = ({ children }) => {
 
 function AccountSettings() {
   const handleOnLogin = () => {
-    const isValid = validateForm();
-    // TODO: firebase email login
+    if (validateForm()) {
+      // TODO: firebase email login
+    }
   };
 
   const handleOnLogout = () => {
@@ -52,8 +53,16 @@ function AccountSettings() {
   };
 
   const handleOnRegister = () => {
-    const isValid = validateForm(true);
-    // TODO: firebase email register
+    if (validateForm(true)) {
+      // TODO: firebase email register
+    }
+  };
+
+  const handleOnAppleSignIn = () => {
+    // TODO: firebase apple signin
+  };
+  const handleOnGoogleSignIn = () => {
+    // TODO: firebase google signin
   };
 
   const handleToggleLogin = () => {
@@ -68,46 +77,72 @@ function AccountSettings() {
     }));
   };
 
-  const handleOnAppleSignIn = () => {
-    // TODO: firebase apple signin
-  };
-  const handleOnGoogleSignIn = () => {
-    // TODO: firebase google signin
-  };
-
-  const validateForm = (isRegister = false) => {
-    let validationObj = { newErrors: {}, isValid: true };
-
-    // Validate email
-    const emailValidation = validateEmail(formState.email);
-    if (!emailValidation.isValid) {
-      validationObj.newErrors.email = emailValidation.newErrors;
-      validationObj.isValid = false;
+  const resetInputValidation = (fieldName) => {
+    if (formErrors[fieldName]) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: "",
+      }));
     }
+  };
 
-    // Validate password
-    const passwordValidation = validatePassword(formState.password);
-    if (!passwordValidation.isValid) {
-      validationObj.newErrors.password = passwordValidation.newErrors;
-      validationObj.isValid = false;
-    }
+  const validateForm = (isRegister = false, fieldName) => {
+    let newErrors = { ...formErrors }; // Start with current errors
+    let isValid = true;
 
-    // Validate confirm password
-    if (isRegister) {
-      const confirmPasswordValidation = validateConfirmPassword(
-        formState.password,
-        formState.confirmPassword
-      );
-      if (!confirmPasswordValidation.isValid) {
-        validationObj.newErrors.confirmPassword =
-          confirmPasswordValidation.newErrors;
-        validationObj.isValid = false;
+    const validateField = (fieldKey) => {
+      switch (fieldKey) {
+        case "email":
+          const emailValidation = validateEmail(formState.email);
+          if (!emailValidation.isValid) {
+            newErrors.email = emailValidation.newErrors;
+            isValid = false;
+          } else {
+            delete newErrors.email;
+          }
+          break;
+        case "password":
+          const passwordValidation = validatePassword(formState.password);
+          if (!passwordValidation.isValid) {
+            newErrors.password = passwordValidation.newErrors;
+            isValid = false;
+          } else {
+            delete newErrors.password;
+          }
+          break;
+        case "confirmPassword":
+          if (isRegister) {
+            const confirmPasswordValidation = validateConfirmPassword(
+              formState.password,
+              formState.confirmPassword
+            );
+            if (!confirmPasswordValidation.isValid) {
+              newErrors.confirmPassword = confirmPasswordValidation.newErrors;
+              isValid = false;
+            } else {
+              delete newErrors.confirmPassword;
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    if (fieldName) {
+      // Validate specific field
+      validateField(fieldName);
+    } else {
+      // Validate all fields
+      validateField("email");
+      validateField("password");
+      if (isRegister) {
+        validateField("confirmPassword");
       }
     }
 
-    // Set errors
-    setFormErrors(validationObj.newErrors);
-    return validationObj.isValid;
+    setFormErrors(newErrors); // Update state with new errors
+    return isValid;
   };
 
   const [title, setTitle] = useState("Login");
@@ -134,6 +169,8 @@ function AccountSettings() {
         <>
           <CustomTextField
             handleOnChangeText={(text) => handleInputChange("email", text)}
+            handleOnBlur={() => validateForm("email")}
+            handleOnFocus={() => resetInputValidation("email")}
             fullWidth
             label="E-mail"
           ></CustomTextField>
@@ -142,6 +179,8 @@ function AccountSettings() {
           </View>
           <CustomTextField
             handleOnChangeText={(text) => handleInputChange("password", text)}
+            handleOnBlur={() => validateForm("password")}
+            handleOnFocus={() => resetInputValidation("password")}
             fullWidth
             inputType="password"
             label="Password"
@@ -155,6 +194,8 @@ function AccountSettings() {
                 handleOnChangeText={(text) =>
                   handleInputChange("confirmPassword", text)
                 }
+                handleOnBlur={() => validateForm(true, "confirmPassword")}
+                handleOnFocus={() => resetInputValidation("confirmPassword")}
                 fullWidth
                 inputType="password"
                 label="Confirm password"

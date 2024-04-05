@@ -27,6 +27,8 @@ const titleSize = {
 function CustomTextField({
   value,
   handleOnChangeText,
+  handleOnBlur,
+  handleOnFocus,
   label,
   inputType,
   maxLength,
@@ -84,6 +86,8 @@ function CustomTextField({
           maxLength={maxLength}
           value={value}
           onChangeText={handleOnChangeText}
+          onBlur={handleOnBlur}
+          onFocus={handleOnFocus}
         ></TextInput>
         {append && (
           <View style={styles.appendWrapper}>
