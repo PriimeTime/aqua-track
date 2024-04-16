@@ -2,14 +2,14 @@ import { View, Image, StyleSheet, Animated, Pressable } from "react-native";
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import SCREEN_SIZE from "../../utils/screenSize";
 import { settingsImageMap } from "../../utils/maps";
-import { color, listItemHeight } from "../../utils/themes";
+import { color, listItemHeight, cardBorderWidth } from "../../utils/themes";
 import { useRef } from "react";
 import { animateButtonPress } from "../../utils/animations";
 import { useNavigation } from "@react-navigation/native";
 
 const titleSize = {
   SMALL: 1,
-  MEDIUM: 5,
+  MEDIUM: 4,
   LARGE: 7,
 };
 
@@ -17,12 +17,6 @@ const itemBorderRadius = {
   SMALL: 15,
   MEDIUM: 20,
   LARGE: 25,
-};
-
-const itemBorderWidth = {
-  SMALL: 1.5,
-  MEDIUM: 2,
-  LARGE: 3,
 };
 
 function SettingsItem({ title, imageSrc, routeName }) {
@@ -56,7 +50,9 @@ function SettingsItem({ title, imageSrc, routeName }) {
             ></Image>
           </View>
           <View style={styles.itemTitleWrapper}>
-            <PrimaryText size={titleSize[SCREEN_SIZE]}>{title}</PrimaryText>
+            <View style={{ width: "95%", left: 0 }}>
+              <PrimaryText size={titleSize[SCREEN_SIZE]}>{title}</PrimaryText>
+            </View>
           </View>
         </View>
       </Pressable>
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
     borderRadius: itemBorderRadius[SCREEN_SIZE],
-    borderWidth: itemBorderWidth[SCREEN_SIZE],
+    borderWidth: cardBorderWidth[SCREEN_SIZE],
   },
   itemIconWrapper: {
     width: "20%",

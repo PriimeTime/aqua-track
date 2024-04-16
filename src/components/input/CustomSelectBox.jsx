@@ -1,19 +1,12 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { color, inputFieldHeight } from "../../utils/themes";
+import {
+  color,
+  inputFieldHeight,
+  inputFontSizeValues,
+} from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SecondaryText } from "../texts/SecondaryText";
-
-const boxTextFontValues = {
-  1: { fontSize: 9 },
-  2: { fontSize: 11 },
-  3: { fontSize: 13 },
-  4: { fontSize: 15 },
-  5: { fontSize: 17 },
-  6: { fontSize: 20 },
-  7: { fontSize: 26 },
-  8: { fontSize: 30 },
-};
 
 const titleSize = {
   SMALL: 4,
@@ -21,8 +14,17 @@ const titleSize = {
   LARGE: 8,
 };
 
-function CustomSelectBox({ items, label, handleOnSelect }) {
+function CustomSelectBox({ value, items, label, handleOnSelect }) {
   const [selectedItemId, setSelectedItemId] = useState(-1);
+
+  useEffect(() => {
+    if (value) {
+      const selectedItem = items.find((item) => item.title === value);
+      if (selectedItem) {
+        setSelectedItemId(selectedItem.id);
+      }
+    }
+  }, [value, items]);
 
   const handleOnPress = ({ id, title }) => {
     setSelectedItemId(id);
@@ -88,6 +90,6 @@ const styles = StyleSheet.create({
   },
   selectBoxText: {
     fontFamily: "Chewy-Regular",
-    fontSize: boxTextFontValues[titleSize[SCREEN_SIZE]].fontSize,
+    fontSize: inputFontSizeValues[titleSize[SCREEN_SIZE]].fontSize,
   },
 });

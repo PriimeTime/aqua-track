@@ -1,18 +1,11 @@
 import { StyleSheet, View, TextInput, Text } from "react-native";
 import { SecondaryText } from "../texts/SecondaryText";
 import SCREEN_SIZE from "../../utils/screenSize";
-import { color, inputFieldHeight } from "../../utils/themes";
-
-const textFontValues = {
-  1: { fontSize: 12 },
-  2: { fontSize: 14 },
-  3: { fontSize: 16 },
-  4: { fontSize: 18 },
-  5: { fontSize: 20 },
-  6: { fontSize: 24 },
-  7: { fontSize: 36 },
-  8: { fontSize: 48 },
-};
+import {
+  color,
+  inputFieldHeight,
+  inputFontSizeValues,
+} from "../../utils/themes";
 
 const appendFontValues = {
   1: { fontSize: 9 },
@@ -34,20 +27,37 @@ const titleSize = {
 function CustomTextField({
   value,
   handleOnChangeText,
+  handleOnBlur,
+  handleOnFocus,
   label,
-  keyboardType,
+  inputType,
   maxLength,
   append,
+  fullWidth,
   ...props
 }) {
+  let keyboardType = "default";
   let textAlign = "auto";
+  let isPassword = false;
 
-  if (keyboardType === "numeric") {
-    textAlign = "center";
+  switch (inputType) {
+    case "numeric":
+      textAlign = "center";
+      keyboardType = inputType;
+      break;
+    case "password":
+      isPassword = true;
+      break;
+  }
+
+  let textFieldWidth = "50%";
+
+  if (fullWidth) {
+    textFieldWidth = "100%";
   }
 
   return (
-    <View style={{ width: "50%" }} {...props}>
+    <View style={{ width: textFieldWidth }} {...props}>
       {label && (
         <View style={styles.labelWrapper}>
           <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
@@ -55,19 +65,29 @@ function CustomTextField({
           </SecondaryText>
         </View>
       )}
-      <View style={styles.textInputWrapper}>
+      <View
+        style={[
+          styles.textInputWrapper,
+          {
+            width: textFieldWidth,
+          },
+        ]}
+      >
         <TextInput
           style={[
             styles.textInput,
             {
               textAlign,
-              width: append ? "65%" : "100%",
+              width: append ? "65%" : "90%",
             },
           ]}
           keyboardType={keyboardType}
+          secureTextEntry={isPassword}
           maxLength={maxLength}
           value={value}
           onChangeText={handleOnChangeText}
+          onBlur={handleOnBlur}
+          onFocus={handleOnFocus}
         ></TextInput>
         {append && (
           <View style={styles.appendWrapper}>
@@ -101,16 +121,16 @@ const styles = StyleSheet.create({
   textInputWrapper: {
     paddingRight: "2.5%",
     paddingLeft: "2.5%",
-    width: "50%",
     height: inputFieldHeight[SCREEN_SIZE],
     flexDirection: "row",
     borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
     backgroundColor: color.WHITE,
+    justifyContent: "center",
   },
   textInput: {
     height: "100%",
     fontFamily: "Chewy-Regular",
-    fontSize: textFontValues[titleSize[SCREEN_SIZE]].fontSize,
+    fontSize: inputFontSizeValues[titleSize[SCREEN_SIZE]].fontSize,
     color: color.DARK_BLUE,
   },
 });

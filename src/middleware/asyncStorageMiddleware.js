@@ -19,6 +19,13 @@ const asyncStorageMiddleware = (store) => (next) => async (action) => {
     );
   }
 
+  if (action.type.startsWith("userData/setUserLoginState")) {
+    await AsyncStorage.setItem(
+      "userAuth",
+      JSON.stringify(newState.userData.userAuth)
+    );
+  }
+
   return result;
 };
 
