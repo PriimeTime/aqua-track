@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setHistory } from "./store/drinkHistory";
 import { readAsyncStorage } from "./utils/middleware";
-import { setUserMetrics } from "./store/userData";
+import { setUserLoginState, setUserMetrics } from "./store/userData";
 
 function AppScreen() {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ function AppScreen() {
     const fetchData = async () => {
       const currentHistory = await readAsyncStorage("currentHistory");
       const userMetrics = await readAsyncStorage("userMetrics");
+      const userAuth = await readAsyncStorage("userAuth");
 
       /**
        * If storage not empty,
@@ -24,6 +25,10 @@ function AppScreen() {
 
       if (userMetrics) {
         dispatch(setUserMetrics(userMetrics));
+      }
+
+      if (userAuth) {
+        dispatch(setUserLoginState(userAuth));
       }
     };
 

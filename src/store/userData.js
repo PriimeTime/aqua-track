@@ -8,6 +8,9 @@ const initialState = {
     weight: "",
     exerciseLvl: null,
   },
+  userAuth: {
+    isLoggedIn: false,
+  },
 };
 
 const userDataSlice = createSlice({
@@ -20,9 +23,12 @@ const userDataSlice = createSlice({
     setUserMetrics: (state, action) => {
       state.userMetrics = { ...state.userMetrics, ...action.payload };
     },
+    setUserLoginState: (state, action) => {
+      state.userAuth = { ...state.userAuth, ...action.payload };
+    },
   },
 });
 
-export const { setUserMetrics } = userDataSlice.actions;
+export const { setUserMetrics, setUserLoginState } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

@@ -18,7 +18,7 @@ const hasPasswordLowerCaseChar = (password) => {
   return /[a-z]/.test(password);
 };
 
-export const validateEmail = (emailField) => {
+export const validateEmail = (isRegister, emailField) => {
   if (emailField.length === 0) {
     return {
       isValid: false,
@@ -26,64 +26,78 @@ export const validateEmail = (emailField) => {
     };
   }
 
-  if (!isEmailValid(emailField)) {
-    return {
-      isValid: false,
-      newErrors: "Invalid e-mail.",
-    };
+  // Only show this error message if user is registering
+  if (isRegister) {
+    if (!isEmailValid(emailField)) {
+      return {
+        isValid: false,
+        newErrors: "Invalid e-mail.",
+      };
+    }
   }
 
   return { isValid: true, newErrors: "" };
 };
 
-export const validatePassword = (pwField) => {
+export const validatePassword = (isRegister, pwField) => {
   const pwMinLen = 6;
   const pwMaxLen = 30;
 
-  if (pwField.length < pwMinLen) {
-    return {
-      isValid: false,
-      newErrors: `Password must be at least ${pwMinLen} characters`,
-    };
-  }
+  if (isRegister) {
+    if (pwField.length < pwMinLen) {
+      return {
+        isValid: false,
+        newErrors: `Password must be at least ${pwMinLen} characters`,
+      };
+    }
 
-  if (pwField.length > pwMaxLen) {
-    return {
-      isValid: false,
-      newErrors: `Password must not be longer than ${pwMaxLen} characters`,
-    };
-  }
+    if (pwField.length > pwMaxLen) {
+      return {
+        isValid: false,
+        newErrors: `Password must not be longer than ${pwMaxLen} characters`,
+      };
+    }
 
-  if (!hasPasswordDigit(pwField)) {
-    return {
-      isValid: false,
-      newErrors: `Password must contain at least one digit`,
-    };
-  }
+    if (!hasPasswordDigit(pwField)) {
+      return {
+        isValid: false,
+        newErrors: `Password must contain at least one digit`,
+      };
+    }
 
-  if (!hasPasswordLowerCaseChar(pwField)) {
-    return {
-      isValid: false,
-      newErrors: `Password must contain at least one lower case character`,
-    };
-  }
+    if (!hasPasswordLowerCaseChar(pwField)) {
+      return {
+        isValid: false,
+        newErrors: `Password must contain at least one lower case character`,
+      };
+    }
 
-  if (!hasPasswordUpperCaseChar(pwField)) {
-    return {
-      isValid: false,
-      newErrors: `Password must contain at least one upper case character`,
-    };
+    if (!hasPasswordUpperCaseChar(pwField)) {
+      return {
+        isValid: false,
+        newErrors: `Password must contain at least one upper case character`,
+      };
+    }
+  } else {
+    if (pwField.length === 0) {
+      return {
+        isValid: false,
+        newErrors: `Please enter your password`,
+      };
+    }
   }
 
   return { isValid: true, newErrors: "" };
 };
 
-export const validateConfirmPassword = (pwField, confPwField) => {
-  if (confPwField !== pwField) {
-    return {
-      isValid: false,
-      newErrors: "Passwords do not match",
-    };
+export const validateConfirmPassword = (isRegister, pwField, confPwField) => {
+  if (isRegister) {
+    if (confPwField !== pwField) {
+      return {
+        isValid: false,
+        newErrors: "Passwords do not match",
+      };
+    }
   }
 
   return { isValid: true, newErrors: "" };

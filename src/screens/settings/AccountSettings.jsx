@@ -6,11 +6,22 @@ import { color, fontFamily } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
 import googleLogo from "../../../assets/icons/google-logo.png";
 import { useState } from "react";
+import { setUserLoginState } from "../../store/userData";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   validateConfirmPassword,
   validateEmail,
   validatePassword,
 } from "../../utils/validation";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+
+import app from "../../../firebase";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -42,19 +53,99 @@ const GoogleButton = ({ children }) => {
 };
 
 function AccountSettings() {
-  const handleOnLogin = () => {
+  const dispatch = useDispatch();
+  const userAuth = useSelector((state) => state.userData.userAuth);
+
+  const [title, setTitle] = useState("Login");
+  const [formErrors, setFormErrors] = useState({});
+  const [formState, setFormState] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  /**
+   * Handles whether register or login page
+   * should be shown when user is not logged in
+   */
+  const [showRegisterPage, setShowRegisterPage] = useState(false);
+
+  const resetFormState = () => {
+    setFormState({
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
+
+  const handleOnLogin = async () => {
     if (validateForm()) {
-      // TODO: firebase email login
+      const auth = getAuth(app);
+      try {
+        const userCredentials = await signInWithEmailAndPassword(
+          auth,
+          formState.email,
+          formState.password
+        );
+
+        // TODO: handle userCredentials
+
+        dispatch(setUserLoginState({ isLoggedIn: true }));
+      } catch (error) {
+        const errMsg = error.message;
+        if (errMsg.includes("invalid-email")) {
+          setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "Invalid e-mail",
+          }));
+        } else if (errMsg.includes("invalid-credential")) {
+          setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "Wrong e-mail or password",
+          }));
+        } else {
+          setFormErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "Something went wrong. Please try again.",
+          }));
+        }
+      }
     }
   };
 
-  const handleOnLogout = () => {
-    // TODO: firebase email logout
+  const handleOnLogout = async () => {
+    const auth = getAuth(app);
+    try {
+      await signOut(auth);
+      dispatch(setUserLoginState({ isLoggedIn: false }));
+    } catch (error) {
+      console.error("Error signing out:", error);
+      // Handle errors if sign out fails, such as a network error
+    }
   };
 
-  const handleOnRegister = () => {
+  const handleOnRegister = async () => {
     if (validateForm(true)) {
-      // TODO: firebase email register
+      const auth = getAuth(app);
+      try {
+        const userCredentials = await createUserWithEmailAndPassword(
+          auth,
+          formState.email,
+          formState.password
+        );
+
+        // TODO: show alert box here with successful register message
+
+        // setTimeout(() => {
+        //   setShowRegisterPage(false);
+        // }, 10000);
+
+        resetFormState();
+        setTitle("Login");
+        setShowRegisterPage(false);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -67,6 +158,7 @@ function AccountSettings() {
 
   const handleToggleLogin = () => {
     showRegisterPage ? setTitle("Login") : setTitle("Register");
+    resetFormState();
     setShowRegisterPage(!showRegisterPage);
   };
 
@@ -93,7 +185,8 @@ function AccountSettings() {
     const validateField = (fieldKey) => {
       switch (fieldKey) {
         case "email":
-          const emailValidation = validateEmail(formState.email);
+          const emailValidation = validateEmail(isRegister, formState.email);
+          console.log(`isRegister: ${isRegister}`);
           if (!emailValidation.isValid) {
             newErrors.email = emailValidation.newErrors;
             isValid = false;
@@ -102,7 +195,10 @@ function AccountSettings() {
           }
           break;
         case "password":
-          const passwordValidation = validatePassword(formState.password);
+          const passwordValidation = validatePassword(
+            isRegister,
+            formState.password
+          );
           if (!passwordValidation.isValid) {
             newErrors.password = passwordValidation.newErrors;
             isValid = false;
@@ -113,6 +209,7 @@ function AccountSettings() {
         case "confirmPassword":
           if (isRegister) {
             const confirmPasswordValidation = validateConfirmPassword(
+              isRegister,
               formState.password,
               formState.confirmPassword
             );
@@ -145,31 +242,14 @@ function AccountSettings() {
     return isValid;
   };
 
-  const [title, setTitle] = useState("Login");
-  const [formErrors, setFormErrors] = useState({});
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  /**
-   * Handles whether register or login page
-   * should be shown when user is not logged in
-   */
-  const [showRegisterPage, setShowRegisterPage] = useState(false);
-
-  // TODO: fetch user login state here
-  // if logged in --> show logout option instead of login options
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   return (
     <ContentPage key={title} title={title}>
-      {!isLoggedIn && (
+      {!userAuth.isLoggedIn && (
         <>
           <CustomTextField
+            value={formState.email}
             handleOnChangeText={(text) => handleInputChange("email", text)}
-            handleOnBlur={() => validateForm("email")}
+            handleOnBlur={() => validateForm(false, "email")}
             handleOnFocus={() => resetInputValidation("email")}
             fullWidth
             label="E-mail"
@@ -178,8 +258,9 @@ function AccountSettings() {
             <Text style={styles.errorText}>{formErrors.email}</Text>
           </View>
           <CustomTextField
+            value={formState.password}
             handleOnChangeText={(text) => handleInputChange("password", text)}
-            handleOnBlur={() => validateForm("password")}
+            handleOnBlur={() => validateForm(false, "password")}
             handleOnFocus={() => resetInputValidation("password")}
             fullWidth
             inputType="password"
@@ -191,6 +272,7 @@ function AccountSettings() {
           {showRegisterPage && (
             <>
               <CustomTextField
+                value={formState.confirmPassword}
                 handleOnChangeText={(text) =>
                   handleInputChange("confirmPassword", text)
                 }
@@ -252,7 +334,7 @@ function AccountSettings() {
           )}
         </>
       )}
-      {isLoggedIn && (
+      {userAuth.isLoggedIn && (
         <>
           <PrimaryButton onPress={handleOnLogout}>
             {"log out".toUpperCase()}
