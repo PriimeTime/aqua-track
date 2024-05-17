@@ -109,7 +109,7 @@ const getHoursMinutesFromUnixDate = (unixTime) => {
   const date = new Date(unixTime);
 
   const hours = date.getHours();
-  const minutes = date.getMinutes();
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Ensure minutes are two digits
 
   const timeString = `${hours}:${minutes}`;
 
