@@ -1,4 +1,11 @@
-import { Pressable, Text, Animated, StyleSheet, View } from "react-native";
+import {
+  Pressable,
+  Text,
+  Animated,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { useRef } from "react";
 import { color, fontFamily, shadow } from "../../utils/themes";
 import { animateButtonPress } from "../../utils/animations";
@@ -92,6 +99,7 @@ function PrimaryButton({
   buttonSize,
   textStyle,
   custom,
+  isLoading,
 }) {
   const scaleValue = useRef(new Animated.Value(1)).current;
 
@@ -104,13 +112,21 @@ function PrimaryButton({
   };
 
   const handlePress = () => {
-    onPress();
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (!isLoading) {
+      onPress();
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
   };
 
   const defaultContent = (
     <View style={styles.textWrapper}>
       <Text style={[getTextStyle(fontSize), textStyle]}>{children}</Text>
+    </View>
+  );
+
+  const loadingContent = (
+    <View style={styles.textWrapper}>
+      <ActivityIndicator size="large" color={color.WHITE} />
     </View>
   );
 
@@ -128,9 +144,9 @@ function PrimaryButton({
         onPress={handlePress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
+        disabled={isLoading}
       >
-        {custom && children}
-        {!custom && defaultContent}
+        {isLoading ? loadingContent : custom ? children : defaultContent}
       </Pressable>
     </Animated.View>
   );

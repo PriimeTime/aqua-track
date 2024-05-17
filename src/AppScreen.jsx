@@ -1,24 +1,83 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AppNavigation } from "./navigation/AppNavigation";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setHistory } from "./store/drinkHistory";
 import { readAsyncStorage } from "./utils/middleware";
-import { setUserLoginState, setUserMetrics } from "./store/userData";
+import { setUserAuth, setUserMetrics } from "./store/userData";
+import { setNetworkStatus } from "./store/general";
+import { useDatabaseSync } from "./hooks/useDatabaseSync";
+
+import NetInfo from "@react-native-community/netinfo";
+
+const handleAppStateChange = async (nextAppState) => {
+  if (nextAppState === "active") {
+    console.log("App has come to the foreground!");
+    // update firestore with new data!
+  }
+};
 
 function AppScreen() {
   const dispatch = useDispatch();
 
+  const isInternetReachable = useSelector(
+    (state) => state.general.networkStatus.isReachable
+  );
+  const userDrinkHistory = useSelector((state) => state.drinkHistory);
+  const userMetrics = useSelector((state) => state.userData.userMetrics);
+  const isLoggedIn = useSelector((state) => state.userData.userAuth.isLoggedIn);
+  const userUID = useSelector((state) => state.userData.userAuth.uid);
+
+  /**
+   * Listen to internet connectivity changes
+   */
   useEffect(() => {
-    const fetchData = async () => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      const networkInfo = {
+        isConnected: state.isConnected,
+        isReachable: state.isInternetReachable,
+      };
+
+      dispatch(setNetworkStatus(networkInfo));
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  /**
+   * Sync drinkHistory to database
+   * when internet becomes reachable and
+   * when drinkHistory changes
+   */
+  useDatabaseSync(
+    [userDrinkHistory],
+    { userDrinkHistory },
+    isLoggedIn,
+    isInternetReachable,
+    userUID
+  );
+
+  /**
+   * Sync userMetrics to database
+   * when internet becomes reachable and
+   * when drinkHistory changes
+   */
+  useDatabaseSync(
+    [userMetrics],
+    { userMetrics },
+    isLoggedIn,
+    isInternetReachable,
+    userUID
+  );
+
+  const fetchDataFromAsyncStorage = async () => {
+    try {
       const currentHistory = await readAsyncStorage("currentHistory");
       const userMetrics = await readAsyncStorage("userMetrics");
       const userAuth = await readAsyncStorage("userAuth");
 
-      /**
-       * If storage not empty,
-       * fill redux with storage data
-       */
       if (currentHistory?.length > 0) {
         dispatch(setHistory(currentHistory));
       }
@@ -28,11 +87,15 @@ function AppScreen() {
       }
 
       if (userAuth) {
-        dispatch(setUserLoginState(userAuth));
+        dispatch(setUserAuth(userAuth));
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch data from storage:", error);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchDataFromAsyncStorage();
   }, []);
 
   return (

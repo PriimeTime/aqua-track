@@ -1,4 +1,39 @@
 /**
+ * @param {*} obj
+ * @returns a boolean
+ * that determines if the
+ * given object is empty or not
+ * based on whether it has nested
+ * properties and if it has, it also
+ * checks if they are empty
+ */
+function isEmptyObject(obj) {
+  // Check if the object itself has no properties
+  if (Object.keys(obj).length === 0) return true;
+
+  // Iterate over properties and check for emptiness
+  return Object.keys(obj).every((key) => {
+    const value = obj[key];
+    if (Array.isArray(value)) return value.length === 0;
+    if (typeof value === "object" && value !== null)
+      return isEmptyObject(value);
+    return false;
+  });
+}
+
+/**
+ * @param {*} num
+ * @returns a promise that
+ * will resolve in the given
+ * time
+ */
+const sleep = (timeMs) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeMs);
+  });
+};
+
+/**
  *
  * @param {*} num
  * @returns rounded number
@@ -62,9 +97,31 @@ const totalHydratingDrinkQuantity = (drinkHistory) => {
   return drinkHistory.reduce((acc, val) => acc + val.hydrationQuantity, 0);
 };
 
+/**
+ *
+ * @param {*} unixTime
+ * @returns a string with
+ * hours and minutes pulled from the
+ * unixTime param, in the following format:
+ * hh:mm
+ */
+const getHoursMinutesFromUnixDate = (unixTime) => {
+  const date = new Date(unixTime);
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+
+  const timeString = `${hours}:${minutes}`;
+
+  return timeString;
+};
+
 export {
+  isEmptyObject,
+  sleep,
   metricUnitConversion,
   totalDrinkQuantity,
   totalHydratingDrinkQuantity,
   displayPositivePercent,
+  getHoursMinutesFromUnixDate,
 };

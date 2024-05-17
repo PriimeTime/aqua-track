@@ -5,8 +5,12 @@ import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { color, fontFamily } from "../../utils/themes";
 import SCREEN_SIZE from "../../utils/screenSize";
 import googleLogo from "../../../assets/icons/google-logo.png";
-import { useState } from "react";
-import { setUserLoginState } from "../../store/userData";
+import { useEffect, useState } from "react";
+import {
+  setUserMetrics,
+  setUserUID,
+  setUserLoginState,
+} from "../../store/userData";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -16,12 +20,14 @@ import {
 } from "../../utils/validation";
 import {
   getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 
-import app from "../../../firebase";
+import { loadUserData, updateUserData } from "../../utils/database";
+import { setHistory } from "../../store/drinkHistory";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -54,8 +60,13 @@ const GoogleButton = ({ children }) => {
 
 function AccountSettings() {
   const dispatch = useDispatch();
-  const userAuth = useSelector((state) => state.userData.userAuth);
+  const auth = getAuth();
 
+  const userMetrics = useSelector((state) => state.userData.userMetrics);
+  const userDrinkHistory = useSelector((state) => state.drinkHistory);
+
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [title, setTitle] = useState("Login");
   const [formErrors, setFormErrors] = useState({});
   const [formState, setFormState] = useState({
@@ -63,6 +74,23 @@ function AccountSettings() {
     password: "",
     confirmPassword: "",
   });
+
+  /**
+   * Listen to firebase auth state changes
+   */
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setTitle("Account");
+        setIsLoggedIn(true);
+      } else {
+        setTitle("Login");
+        setIsLoggedIn(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   /**
    * Handles whether register or login page
@@ -79,73 +107,104 @@ function AccountSettings() {
   };
 
   const handleOnLogin = async () => {
-    if (validateForm()) {
-      const auth = getAuth(app);
-      try {
-        const userCredentials = await signInWithEmailAndPassword(
-          auth,
-          formState.email,
-          formState.password
-        );
+    setLoading(true);
 
-        // TODO: handle userCredentials
-
-        dispatch(setUserLoginState({ isLoggedIn: true }));
-      } catch (error) {
-        const errMsg = error.message;
-        if (errMsg.includes("invalid-email")) {
-          setFormErrors((prevErrors) => ({
-            ...prevErrors,
-            email: "Invalid e-mail",
-          }));
-        } else if (errMsg.includes("invalid-credential")) {
-          setFormErrors((prevErrors) => ({
-            ...prevErrors,
-            email: "Wrong e-mail or password",
-          }));
-        } else {
-          setFormErrors((prevErrors) => ({
-            ...prevErrors,
-            email: "Something went wrong. Please try again.",
-          }));
-        }
-      }
+    if (!validateForm()) {
+      setLoading(false);
+      return;
     }
-  };
 
-  const handleOnLogout = async () => {
-    const auth = getAuth(app);
     try {
-      await signOut(auth);
-      dispatch(setUserLoginState({ isLoggedIn: false }));
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        formState.email,
+        formState.password
+      );
+
+      const user = userCredentials.user;
+      dispatch(setUserUID(user.uid));
+
+      const userData = await loadUserData(user.uid);
+
+      dispatch(setHistory(userData.userDrinkHistory));
+      dispatch(setUserMetrics(userData.userMetrics));
+      dispatch(setUserLoginState(true));
+      setLoading(false);
     } catch (error) {
-      console.error("Error signing out:", error);
-      // Handle errors if sign out fails, such as a network error
+      const errMsg = error.message;
+
+      if (errMsg.includes("invalid-email")) {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Invalid e-mail",
+        }));
+      } else if (errMsg.includes("invalid-credential")) {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Wrong e-mail or password",
+        }));
+      } else {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Something went wrong. Please try again.",
+        }));
+      }
+      setLoading(false);
     }
   };
 
   const handleOnRegister = async () => {
-    if (validateForm(true)) {
-      const auth = getAuth(app);
-      try {
-        const userCredentials = await createUserWithEmailAndPassword(
-          auth,
-          formState.email,
-          formState.password
-        );
+    setLoading(true);
 
-        // TODO: show alert box here with successful register message
+    if (!validateForm(true)) {
+      return;
+    }
 
-        // setTimeout(() => {
-        //   setShowRegisterPage(false);
-        // }, 10000);
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        formState.email,
+        formState.password
+      );
 
-        resetFormState();
-        setTitle("Login");
-        setShowRegisterPage(false);
-      } catch (error) {
-        console.error(error);
-      }
+      // TODO: show alert box here with successful register message
+
+      const user = userCredentials.user;
+      const userUID = user.uid;
+
+      dispatch(setUserUID(userUID));
+
+      // Initialize user data in Firestore after successful registration
+      await updateUserData(userUID, {
+        userMetrics,
+        userDrinkHistory,
+        userUID,
+      });
+
+      dispatch(setUserLoginState(true));
+
+      // setTimeout(() => {
+      //   setShowRegisterPage(false);
+      // }, 10000);
+
+      resetFormState();
+      setTitle("Login"); // TODO: set this to Account instead
+      setShowRegisterPage(false);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  const handleOnLogout = async () => {
+    try {
+      await signOut(auth);
+      dispatch(setUserLoginState(false));
+      // TODO reset app state
+    } catch (error) {
+      console.error("Error signing out:", error);
+      // Handle errors if sign out fails, such as a network error
     }
   };
 
@@ -244,7 +303,7 @@ function AccountSettings() {
 
   return (
     <ContentPage key={title} title={title}>
-      {!userAuth.isLoggedIn && (
+      {!isLoggedIn && (
         <>
           <CustomTextField
             value={formState.email}
@@ -294,6 +353,7 @@ function AccountSettings() {
                 btnColor={color.WHITE}
                 textStyle={{ color: color.BLUE }}
                 onPress={handleToggleLogin}
+                isLoading={loading}
               >
                 {"login".toUpperCase()}
               </PrimaryButton>
@@ -301,7 +361,7 @@ function AccountSettings() {
           )}
           {!showRegisterPage && (
             <>
-              <PrimaryButton onPress={handleOnLogin}>
+              <PrimaryButton isLoading={loading} onPress={handleOnLogin}>
                 {"login".toUpperCase()}
               </PrimaryButton>
               <PrimaryButton
@@ -334,7 +394,7 @@ function AccountSettings() {
           )}
         </>
       )}
-      {userAuth.isLoggedIn && (
+      {isLoggedIn && (
         <>
           <PrimaryButton onPress={handleOnLogout}>
             {"log out".toUpperCase()}

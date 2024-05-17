@@ -5,7 +5,10 @@ import { SecondaryText } from "../../components/texts/SecondaryText.jsx";
 import { InfoCard } from "../../components/cards/InfoCard.jsx";
 import { color, listItemHeight, cardBorderWidth } from "../../utils/themes.js";
 import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity.js";
-import { metricUnitConversion } from "../../utils/helpers.js";
+import {
+  getHoursMinutesFromUnixDate,
+  metricUnitConversion,
+} from "../../utils/helpers.js";
 import { HistoryDeleteButton } from "./HistoryDeleteButton.jsx";
 import SCREEN_SIZE from "../../utils/screenSize.js";
 
@@ -58,7 +61,9 @@ function HistoryItem({ imageSrc, itemID, title, time, quantity, typeID }) {
       </View>
       <View style={styles.cardInfoWrapper}>
         <PrimaryText size={drinkTitleSize[SCREEN_SIZE]}>{title}</PrimaryText>
-        <SecondaryText size={drinkTimeSize[SCREEN_SIZE]}>{time}</SecondaryText>
+        <SecondaryText size={drinkTimeSize[SCREEN_SIZE]}>
+          {getHoursMinutesFromUnixDate(time)}
+        </SecondaryText>
       </View>
       <View style={styles.cardTotalWrapper}>
         <View style={styles.cardTotalTop}>
