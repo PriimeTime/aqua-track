@@ -1,6 +1,6 @@
 import store from "./src/store/index";
 import { Provider } from "react-redux";
-import AppScreen from "./src/AppScreen";
+import MainAppScreen from "./src/screens/MainAppScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
@@ -26,7 +26,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Provider store={store}>
-        <AppScreen></AppScreen>
+        <MainAppScreen></MainAppScreen>
       </Provider>
     </View>
   );
