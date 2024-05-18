@@ -7,9 +7,8 @@ import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
 
 import { drinkTypeList } from "../../utils/maps";
-import { dimensions } from "../../utils/themes";
+import { dimensions, SCREEN_SIZE } from "../../utils/constants";
 import { BackButton } from "../../components/buttons/BackButton";
-import SCREEN_SIZE from "../../utils/screenSize";
 import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 const cardButtonHeight =

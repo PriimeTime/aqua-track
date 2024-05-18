@@ -7,10 +7,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRef } from "react";
-import { color, fontFamily, shadow } from "../../utils/themes";
+import { color, fontFamily, shadow, SCREEN_SIZE } from "../../utils/constants";
 import { animateButtonPress } from "../../utils/animations";
 import * as Haptics from "expo-haptics";
-import SCREEN_SIZE from "../../utils/screenSize";
 
 const textSize = {
   SMALL: 20,

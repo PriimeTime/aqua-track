@@ -1,11 +1,11 @@
 import { StyleSheet, View, TextInput, Text } from "react-native";
 import { SecondaryText } from "../texts/SecondaryText";
-import SCREEN_SIZE from "../../utils/screenSize";
 import {
+  SCREEN_SIZE,
   color,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/themes";
+} from "../../utils/constants";
 
 const appendFontValues = {
   1: { fontSize: 9 },

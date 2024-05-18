@@ -2,8 +2,7 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { ContentPage } from "../ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
-import { color, fontFamily } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, fontFamily, SCREEN_SIZE } from "../../utils/constants";
 import googleLogo from "../../../assets/icons/google-logo.png";
 import { useEffect, useState } from "react";
 import {

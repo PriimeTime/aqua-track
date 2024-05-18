@@ -3,7 +3,7 @@ import { AppNavigation } from "../navigation/AppNavigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setHistory } from "../store/drinkHistory";
-import { readAsyncStorage } from "../utils/middleware";
+import { readAsyncStorage } from "../utils/storage";
 import { setUserAuth, setUserMetrics } from "../store/userData";
 import { setNetworkStatus } from "../store/general";
 import { useDatabaseSync } from "../hooks/useDatabaseSync";

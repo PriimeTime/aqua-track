@@ -3,14 +3,12 @@ import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { PrimaryText } from "../components/texts/PrimaryText";
 import { StyleSheet, View } from "react-native";
-import { color, shadow } from "../utils/themes";
-import SCREEN_SIZE from "../utils/screenSize";
+import { color, shadow, SCREEN_SIZE } from "../utils/constants";
 import {
-  metricUnitConversion,
   totalDrinkQuantity,
   totalHydratingDrinkQuantity,
   displayPositivePercent,
-} from "../utils/helpers.js";
+} from "../utils/helpers";
 import { CountUp } from "use-count-up";
 
 const cardSize = {

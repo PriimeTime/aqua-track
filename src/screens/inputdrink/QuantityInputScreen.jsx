@@ -16,8 +16,7 @@ import { PrimaryText } from "../../components/texts/PrimaryText";
 import { QuantityInputBottle } from "./QuantityInputBottle";
 import { BackButton } from "../../components/buttons/BackButton";
 
-import { inputDrinkConfig } from "../../utils/constants";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { inputDrinkConfig, SCREEN_SIZE } from "../../utils/constants";
 import { GradientWrapper } from "../../components/themes/GradientWrapper";
 
 /**

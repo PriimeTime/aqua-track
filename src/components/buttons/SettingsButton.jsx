@@ -1,7 +1,6 @@
 import { Pressable, Animated, View } from "react-native";
 import { useRef } from "react";
-import { color, shadow } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, shadow, SCREEN_SIZE } from "../../utils/constants";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { animateButtonPress } from "../../utils/animations";

@@ -1,10 +1,10 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import {
+  SCREEN_SIZE,
   color,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+} from "../../utils/constants";
 import { useEffect, useState } from "react";
 import { SecondaryText } from "../texts/SecondaryText";
 

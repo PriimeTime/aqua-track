@@ -1,10 +1,9 @@
 import { Pressable, View, StyleSheet, Animated, Image } from "react-native";
 import { useRef } from "react";
-import { color, cardBorderWidth } from "../../utils/themes";
+import { color, cardBorderWidth, SCREEN_SIZE } from "../../utils/constants";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
 import { drinkImageMap } from "../../utils/maps";
-import SCREEN_SIZE from "../../utils/screenSize";
 
 const cardButtonBorderRadius = {
   SMALL: 24,

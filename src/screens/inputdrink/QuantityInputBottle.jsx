@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { shadow, color } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { shadow, color, SCREEN_SIZE } from "../../utils/constants";
 
 const bottleHeight = {
   SMALL: 275,

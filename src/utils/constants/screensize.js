@@ -13,4 +13,4 @@ if (width < 400 && height < 700) {
   SCREEN_SIZE = "LARGE";
 }
 
-export default SCREEN_SIZE;
+export { SCREEN_SIZE };

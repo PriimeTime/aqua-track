@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { color } from "../../utils/themes";
+import { color } from "../../utils/constants";
 
 function getTextStyle(size, colorParam) {
   const fontValues = {

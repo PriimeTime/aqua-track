@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { color } from "../../utils/themes";
+import { color } from "../../utils/constants";
 
 function getCardStyle(size, secondary) {
   const heightValues = {

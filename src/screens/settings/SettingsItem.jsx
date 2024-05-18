@@ -1,8 +1,12 @@
 import { View, Image, StyleSheet, Animated, Pressable } from "react-native";
 import { PrimaryText } from "../../components/texts/PrimaryText";
-import SCREEN_SIZE from "../../utils/screenSize";
 import { settingsImageMap } from "../../utils/maps";
-import { color, listItemHeight, cardBorderWidth } from "../../utils/themes";
+import {
+  color,
+  listItemHeight,
+  cardBorderWidth,
+  SCREEN_SIZE,
+} from "../../utils/constants";
 import { useRef } from "react";
 import { animateButtonPress } from "../../utils/animations";
 import { useNavigation } from "@react-navigation/native";

@@ -1,10 +1,9 @@
 import { Pressable, Text, Animated } from "react-native";
 import { useRef } from "react";
-import { color, shadow } from "../../utils/themes";
+import { color, shadow, SCREEN_SIZE } from "../../utils/constants";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import { animateButtonPress } from "../../utils/animations";
-import SCREEN_SIZE from "../../utils/screenSize";
 
 const fontSizes = {
   SMALL: 20,

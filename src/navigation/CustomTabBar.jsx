@@ -1,8 +1,7 @@
 import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import WaterDropButton from "./WaterDropButton";
-import { color, shadow } from "../utils/themes";
-import SCREEN_SIZE from "../utils/screenSize";
+import { color, shadow, SCREEN_SIZE } from "../utils/constants";
 
 const fontSizes = {
   SMALL: 16,

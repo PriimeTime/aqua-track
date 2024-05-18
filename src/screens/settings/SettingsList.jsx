@@ -1,9 +1,8 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
-import { listItemHeight } from "../../utils/themes";
+import { listItemHeight, SCREEN_SIZE } from "../../utils/constants";
 import { BackButton } from "../../components/buttons/BackButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
-import SCREEN_SIZE from "../../utils/screenSize";
 import { SettingsItem } from "./SettingsItem";
 import { FlatList } from "react-native";
 import { settingsList } from "../../utils/maps";

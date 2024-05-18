@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { metricUnitConversion } from "../../utils/helpers";
-import { color } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, SCREEN_SIZE } from "../../utils/constants";
 
 const bottomLineBorderTopWidth = {
   SMALL: 1.5,

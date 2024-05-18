@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import { SettingsButton } from "../../components/buttons/SettingsButton";
-import { listItemHeight } from "../../utils/themes";
+import { listItemHeight, SCREEN_SIZE } from "../../utils/constants";
 import { HistoryItem } from "./HistoryItem";
 import { totalDrinkQuantity } from "../../utils/helpers";
-import SCREEN_SIZE from "../../utils/screenSize";
 import { HistoryBottom } from "./HistoryBottom";
 import { GradientWrapper } from "../../components/themes/GradientWrapper";
 

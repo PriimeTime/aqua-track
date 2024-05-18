@@ -1,10 +1,9 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { GradientWrapper } from "../components/themes/GradientWrapper";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { BackButton } from "../components/buttons/BackButton";
 import { PrimaryText } from "../components/texts/PrimaryText";
-import SCREEN_SIZE from "../utils/screenSize";
-import { ScrollView } from "react-native";
+import { SCREEN_SIZE } from "../utils/constants";
 
 const headerHeight = {
   SMALL: 5,

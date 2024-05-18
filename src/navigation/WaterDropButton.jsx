@@ -2,7 +2,7 @@ import { Animated, Pressable } from "react-native";
 import WaterDrop from "../../assets/icons/WaterDrop.svg";
 import { useRef } from "react";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
-import SCREEN_SIZE from "../utils/screenSize";
+import { SCREEN_SIZE } from "../utils/constants";
 
 const waterDropSizes = {
   SMALL: hp("12%"),
