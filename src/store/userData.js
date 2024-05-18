@@ -10,6 +10,7 @@ const initialState = {
   },
   userAuth: {
     isLoggedIn: false,
+    uid: null,
   },
 };
 
@@ -23,12 +24,19 @@ const userDataSlice = createSlice({
     setUserMetrics: (state, action) => {
       state.userMetrics = { ...state.userMetrics, ...action.payload };
     },
-    setUserLoginState: (state, action) => {
+    setUserAuth: (state, action) => {
       state.userAuth = { ...state.userAuth, ...action.payload };
+    },
+    setUserLoginState: (state, action) => {
+      state.userAuth.isLoggedIn = action.payload;
+    },
+    setUserUID: (state, action) => {
+      state.userAuth.uid = action.payload;
     },
   },
 });
 
-export const { setUserMetrics, setUserLoginState } = userDataSlice.actions;
+export const { setUserMetrics, setUserAuth, setUserLoginState, setUserUID } =
+  userDataSlice.actions;
 
 export default userDataSlice.reducer;

@@ -124,11 +124,7 @@ function QuantityInputScreen() {
 
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      const date = new Date();
-      const timeHours = date.getHours();
-      const timeMins = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
-
-      const time = `${timeHours}:${timeMins}`;
+      const time = Date.now();
 
       const drinkItem = {
         ...drinkType,
