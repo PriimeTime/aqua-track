@@ -6,12 +6,12 @@ import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
-import { MainHeader } from "./MainHeader";
-import { HomeWaterBottle } from "./HomeWaterBottle";
+import { MainHeader } from "../components/MainHeader";
+import { HomeWaterBottle } from "../components/HomeWaterBottle";
 import { Statistics } from "./Statistics";
-import { TotalIntake } from "./TotalIntake";
+import { TotalIntake } from "../components/TotalIntake";
 import { SettingsButton } from "../components/buttons/SettingsButton";
-import { GradientWrapper } from "../components/themes/GradientWrapper";
+import { GradientWrapper } from "../components/wrappers/GradientWrapper";
 
 function RootScreen() {
   const navigation = useNavigation();

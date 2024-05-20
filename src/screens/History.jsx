@@ -3,12 +3,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import { SettingsButton } from "../../components/buttons/SettingsButton";
-import { listItemHeight, SCREEN_SIZE } from "../../utils/constants";
-import { HistoryItem } from "./HistoryItem";
-import { totalDrinkQuantity } from "../../utils/helpers";
-import { HistoryBottom } from "./HistoryBottom";
-import { GradientWrapper } from "../../components/themes/GradientWrapper";
+import { SettingsButton } from "../components/buttons/SettingsButton";
+import { listItemHeight, SCREEN_SIZE } from "../utils/constants";
+import { HistoryItem } from "../components/history/HistoryItem";
+import { totalDrinkQuantity } from "../utils/helpers";
+import { HistoryBottom } from "../components/history/HistoryBottom";
+import { GradientWrapper } from "../components/wrappers/GradientWrapper";
 
 function History() {
   const navigation = useNavigation();

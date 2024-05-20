@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
-import WaterDropButton from "./WaterDropButton";
+import WaterDropButton from "../components/navigation/WaterDropButton";
 import { color, shadow, SCREEN_SIZE } from "../utils/constants";
 
 const fontSizes = {
@@ -47,7 +47,7 @@ function CustomTabBar({ state, navigation }) {
           if (!isFocused && !event.defaultPrevented) {
             if (route.name === "AddDrink") {
               setTimeout(() => {
-                navigation.navigate("TypeInputScreen"); // Update the navigation target for AddDrink
+                navigation.navigate("DrinkSelection"); // Update the navigation target for AddDrink
               }, 100);
             } else {
               navigation.navigate(route.name);

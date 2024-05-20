@@ -9,7 +9,7 @@ import { CardButton } from "../../components/buttons/CardButton";
 import { drinkTypeList } from "../../utils/maps";
 import { dimensions, SCREEN_SIZE } from "../../utils/constants";
 import { BackButton } from "../../components/buttons/BackButton";
-import { GradientWrapper } from "../../components/themes/GradientWrapper";
+import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
 
 const cardButtonHeight =
   SCREEN_SIZE === "LARGE"
@@ -22,14 +22,14 @@ const headerSize = {
   LARGE: 9,
 };
 
-function TypeInputScreen() {
+function DrinkSelection() {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const handleButtonPress = (drink) => {
-    navigation.navigate("QuantityInputScreen", { drinkType: drink });
+    navigation.navigate("DrinkAmount", { drinkType: drink });
   };
 
   return (
@@ -73,7 +73,7 @@ function TypeInputScreen() {
   );
 }
 
-export { TypeInputScreen };
+export { DrinkSelection };
 
 const styles = StyleSheet.create({
   wrapper: {

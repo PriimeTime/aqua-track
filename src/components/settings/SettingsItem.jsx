@@ -1,5 +1,5 @@
 import { View, Image, StyleSheet, Animated, Pressable } from "react-native";
-import { PrimaryText } from "../../components/texts/PrimaryText";
+import { PrimaryText } from "../texts/PrimaryText";
 import { settingsImageMap } from "../../utils/maps";
 import {
   color,

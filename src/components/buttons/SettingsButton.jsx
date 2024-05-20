@@ -11,12 +11,6 @@ const buttonSizes = {
   LARGE: 128,
 };
 
-const buttonRadius = {
-  SMALL: 24,
-  MEDIUM: 32,
-  LARGE: 128,
-};
-
 const iconSize = {
   SMALL: 25,
   MEDIUM: 35,
@@ -26,12 +20,12 @@ const iconSize = {
 // TODO: play spin animation when pressed
 function getButtonStyle(pressed) {
   const size = buttonSizes[SCREEN_SIZE];
-  const radius = buttonRadius[SCREEN_SIZE];
+  const borderRadius = size / 2; // Create circle
 
   const baseStyle = {
     width: size,
     height: size,
-    borderRadius: radius,
+    borderRadius,
     alignItems: "center",
     justifyContent: "center",
     // TODO: outsource shadow into const object in themes

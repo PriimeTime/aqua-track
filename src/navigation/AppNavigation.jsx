@@ -4,10 +4,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 
 import { RootScreen } from "../screens/RootScreen";
-import { History } from "../screens/history/History";
-import { QuantityInputScreen } from "../screens/inputdrink/QuantityInputScreen";
-import { TypeInputScreen } from "../screens/inputdrink/TypeInputScreen";
-import { SettingsList } from "../screens/settings/SettingsList";
+import { History } from "../screens/History";
+import { DrinkAmount } from "../screens/drinkInput/DrinkAmount";
+import { DrinkSelection } from "../screens/drinkInput/DrinkSelection";
+import { SettingsList } from "../components/settings/SettingsList";
 import { AccountSettings } from "../screens/settings/AccountSettings";
 import { ProfileSettings } from "../screens/settings/ProfileSettings";
 import { NotificationsSettings } from "../screens/settings/NotificationsSettings";
@@ -58,11 +58,8 @@ function AppNavigation() {
           component={HomeTabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="QuantityInputScreen"
-          component={QuantityInputScreen}
-        />
-        <Stack.Screen name="TypeInputScreen" component={TypeInputScreen} />
+        <Stack.Screen name="DrinkAmount" component={DrinkAmount} />
+        <Stack.Screen name="DrinkSelection" component={DrinkSelection} />
         <Stack.Screen name="Settings" component={SettingsList} />
         <Stack.Screen
           name="AccountSettings"

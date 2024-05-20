@@ -1,4 +1,4 @@
-import { ContentPage } from "../ContentPage";
+import { ContentPage } from "../../components/wrappers/ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
 import { CustomSelectBox } from "../../components/input/CustomSelectBox";
 import { View } from "react-native";
@@ -7,7 +7,7 @@ import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserMetrics } from "../../store/userData";
 import { useNavigation, StackActions } from "@react-navigation/native";
-import { InputContentWrapper } from "./InputContentWrapper";
+import { InputContentWrapper } from "../../components/input/InputContentWrapper";
 
 const genderSelectBoxItems = [
   { id: 1, title: "Male" },

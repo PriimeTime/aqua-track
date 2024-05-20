@@ -25,7 +25,7 @@ const borderRadius = {
   LARGE: 42,
 };
 
-function QuantityInputBottle({ heightVal, liquidColor }) {
+function DrinkAmountBottle({ heightVal, liquidColor }) {
   return (
     <View style={styles.glass}>
       <View
@@ -40,7 +40,7 @@ function QuantityInputBottle({ heightVal, liquidColor }) {
   );
 }
 
-export { QuantityInputBottle };
+export { DrinkAmountBottle };
 
 const styles = StyleSheet.create({
   glass: {

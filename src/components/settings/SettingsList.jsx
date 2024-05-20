@@ -1,12 +1,12 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
 import { listItemHeight, SCREEN_SIZE } from "../../utils/constants";
-import { BackButton } from "../../components/buttons/BackButton";
-import { PrimaryText } from "../../components/texts/PrimaryText";
+import { BackButton } from "../buttons/BackButton";
+import { PrimaryText } from "../texts/PrimaryText";
 import { SettingsItem } from "./SettingsItem";
 import { FlatList } from "react-native";
 import { settingsList } from "../../utils/maps";
-import { GradientWrapper } from "../../components/themes/GradientWrapper";
+import { GradientWrapper } from "../wrappers/GradientWrapper";
 
 const headerHeight = {
   SMALL: 5,

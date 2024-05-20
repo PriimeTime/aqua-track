@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import { ContentPage } from "../ContentPage";
+import { ContentPage } from "../../components/wrappers/ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { color, fontFamily, SCREEN_SIZE } from "../../utils/constants";
