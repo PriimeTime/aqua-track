@@ -10,7 +10,8 @@
     "dev": "expo start --dev-client",
     "ios": "expo start --ios",
     "ios-app": "expo start --dev-client",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "ts:check": "tsc"
   },
   "dependencies": {
     "@expo/metro-runtime": "^3.1.1",
@@ -41,7 +42,9 @@
     "uid": "^2.0.2",
     "use-count-up": "^3.0.1",
     "victory-native": "^36.8.4",
-    "@react-native-community/netinfo": "11.1.0"
+    "@react-native-community/netinfo": "11.1.0",
+    "typescript": "^5.3.0",
+    "@types/react": "~18.2.45"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
