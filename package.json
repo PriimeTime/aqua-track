@@ -9,7 +9,9 @@
     "build-device-standalone": "eas build --profile production --platform ios",
     "dev": "expo start --dev-client",
     "ios": "expo start --ios",
+    "ios-ts": "npm run ts:check && expo start --ios",
     "ios-app": "expo start --dev-client",
+    "ios-app-ts": "npm run ts:check && expo start --dev-client",
     "web": "expo start --web",
     "ts:check": "tsc"
   },

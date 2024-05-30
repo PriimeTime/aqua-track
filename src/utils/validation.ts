@@ -1,4 +1,4 @@
-const isEmailValid = (email) => {
+const isEmailValid = (email: string) => {
   return email
     .toLowerCase()
     .match(
@@ -6,19 +6,19 @@ const isEmailValid = (email) => {
     );
 };
 
-const hasPasswordDigit = (password) => {
+const hasPasswordDigit = (password: string) => {
   return /[0-9]/.test(password);
 };
 
-const hasPasswordUpperCaseChar = (password) => {
+const hasPasswordUpperCaseChar = (password: string) => {
   return /[A-Z]/.test(password);
 };
 
-const hasPasswordLowerCaseChar = (password) => {
+const hasPasswordLowerCaseChar = (password: string) => {
   return /[a-z]/.test(password);
 };
 
-export const validateEmail = (isRegister, emailField) => {
+export const validateEmail = (isRegister: boolean, emailField: string) => {
   if (emailField.length === 0) {
     return {
       isValid: false,
@@ -39,7 +39,7 @@ export const validateEmail = (isRegister, emailField) => {
   return { isValid: true, newErrors: "" };
 };
 
-export const validatePassword = (isRegister, pwField) => {
+export const validatePassword = (isRegister: boolean, pwField: string) => {
   const pwMinLen = 6;
   const pwMaxLen = 30;
 
@@ -90,7 +90,11 @@ export const validatePassword = (isRegister, pwField) => {
   return { isValid: true, newErrors: "" };
 };
 
-export const validateConfirmPassword = (isRegister, pwField, confPwField) => {
+export const validateConfirmPassword = (
+  isRegister: boolean,
+  pwField: string,
+  confPwField: string
+) => {
   if (isRegister) {
     if (confPwField !== pwField) {
       return {
