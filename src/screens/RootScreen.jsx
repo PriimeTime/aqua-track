@@ -19,7 +19,7 @@ function RootScreen() {
   const drinkHistory = useSelector((state) => state.drinkHistory);
 
   return (
-    <GradientWrapper style={[styles.container, { paddingTop: insets.top }]}>
+    <GradientWrapper style={{ paddingTop: insets.top }}>
       <View style={styles.wrapper}>
         <View style={styles.settingsWrapper}>
           <SettingsButton
@@ -55,10 +55,6 @@ function RootScreen() {
 export { RootScreen };
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-  },
   wrapper: {
     width: "90%",
     left: "5%",

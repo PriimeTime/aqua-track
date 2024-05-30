@@ -28,7 +28,6 @@ function getButtonStyle(pressed) {
     borderRadius,
     alignItems: "center",
     justifyContent: "center",
-    // TODO: outsource shadow into const object in themes
     ...shadow,
     backgroundColor: color.WHITE,
   };

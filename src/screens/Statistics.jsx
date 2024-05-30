@@ -110,6 +110,7 @@ function Statistics() {
 
 export { Statistics };
 
+// TODO: refactor to use proper pseudo-flexbox styling
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

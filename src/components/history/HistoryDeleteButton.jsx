@@ -20,7 +20,6 @@ function getButtonStyle(size, pressed) {
     backgroundColor: color.RED,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: pressed ? color.DARK_BLUE : color.BLUE,
   };
 
   return baseStyle;

@@ -24,7 +24,7 @@ function History() {
   };
 
   return (
-    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <GradientWrapper style={{ paddingTop: insets.top }}>
       <View style={styles.settingsWrapper}>
         <SettingsButton
           onPress={() => navigation.navigate("Settings")}
@@ -74,10 +74,6 @@ function History() {
 export { History };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    width: "100%",
-    height: "100%",
-  },
   settingsWrapper: {
     width: "90%",
     left: "5%",

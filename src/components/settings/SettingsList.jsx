@@ -68,7 +68,8 @@ export { SettingsList };
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
+    height: "100%",
+    width: "100%",
   },
   backButtonWrapper: {
     width: "90%",

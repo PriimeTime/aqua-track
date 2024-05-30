@@ -23,7 +23,7 @@ function ContentPage({ title, children }) {
         <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
       </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={[styles.wrapper, { height: "80%" }]}>{children}</View>
+        <View style={styles.wrapper}>{children}</View>
       </ScrollView>
     </GradientWrapper>
   );
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: "90%",
+    height: "80%",
     left: "5%",
   },
   titleWrapper: {

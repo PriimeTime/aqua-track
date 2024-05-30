@@ -8,6 +8,7 @@ import {
   listItemHeight,
   cardBorderWidth,
   SCREEN_SIZE,
+  fontFamily,
 } from "../../utils/constants";
 import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity";
 import {
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   cardTotalBottomText: {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     color: color.BLUE,
     marginRight: 5,
     fontSize: infoCardSizeTotalFontSize[SCREEN_SIZE],

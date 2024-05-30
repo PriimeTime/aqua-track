@@ -84,8 +84,6 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: cardPaddingHorizontal[SCREEN_SIZE],
     paddingVertical: cardPaddingVertical[SCREEN_SIZE],
-    justifyContent: "center",
-    alignItems: "center",
     borderRadius: cardBorderRadius[SCREEN_SIZE],
     color: color.BLUE,
     backgroundColor: color.WHITE,

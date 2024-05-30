@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import WaterDropButton from "../components/navigation/WaterDropButton";
-import { color, shadow, SCREEN_SIZE } from "../utils/constants";
+import { color, shadow, SCREEN_SIZE, fontFamily } from "../utils/constants";
 
 const fontSizes = {
   SMALL: 16,
@@ -84,8 +84,6 @@ export { CustomTabBar };
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     padding: navbarPadding[SCREEN_SIZE],
   },
   navigationBar: {
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize: fontSizes[SCREEN_SIZE],
     textTransform: "uppercase",
   },

@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
   cardButton: {
     justifyContent: "center",
     alignItems: "center",
-    flex: 1,
     flexDirection: "row",
     borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
     borderWidth: cardBorderWidth[SCREEN_SIZE],
