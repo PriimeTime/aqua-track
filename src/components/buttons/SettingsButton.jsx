@@ -1,7 +1,6 @@
 import { Pressable, Animated, View } from "react-native";
 import { useRef } from "react";
-import { color, shadow } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, shadow, SCREEN_SIZE } from "../../utils/constants";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { animateButtonPress } from "../../utils/animations";
@@ -9,12 +8,6 @@ import { animateButtonPress } from "../../utils/animations";
 const buttonSizes = {
   SMALL: 48,
   MEDIUM: 64,
-  LARGE: 128,
-};
-
-const buttonRadius = {
-  SMALL: 24,
-  MEDIUM: 32,
   LARGE: 128,
 };
 
@@ -27,15 +20,14 @@ const iconSize = {
 // TODO: play spin animation when pressed
 function getButtonStyle(pressed) {
   const size = buttonSizes[SCREEN_SIZE];
-  const radius = buttonRadius[SCREEN_SIZE];
+  const borderRadius = size / 2; // Create circle
 
   const baseStyle = {
     width: size,
     height: size,
-    borderRadius: radius,
+    borderRadius,
     alignItems: "center",
     justifyContent: "center",
-    // TODO: outsource shadow into const object in themes
     ...shadow,
     backgroundColor: color.WHITE,
   };

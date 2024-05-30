@@ -1,8 +1,7 @@
 import { Pressable, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { color } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, SCREEN_SIZE } from "../../utils/constants";
 import { removeFromHistory } from "../../store/drinkHistory";
 import { useDispatch } from "react-redux";
 import { animateButtonPress } from "../../utils/animations";
@@ -21,7 +20,6 @@ function getButtonStyle(size, pressed) {
     backgroundColor: color.RED,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: pressed ? color.DARK_BLUE : color.BLUE,
   };
 
   return baseStyle;

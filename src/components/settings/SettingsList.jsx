@@ -1,13 +1,12 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View } from "react-native";
-import { listItemHeight } from "../../utils/themes";
-import { BackButton } from "../../components/buttons/BackButton";
-import { PrimaryText } from "../../components/texts/PrimaryText";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { listItemHeight, SCREEN_SIZE } from "../../utils/constants";
+import { BackButton } from "../buttons/BackButton";
+import { PrimaryText } from "../texts/PrimaryText";
 import { SettingsItem } from "./SettingsItem";
 import { FlatList } from "react-native";
 import { settingsList } from "../../utils/maps";
-import { GradientWrapper } from "../../components/themes/GradientWrapper";
+import { GradientWrapper } from "../wrappers/GradientWrapper";
 
 const headerHeight = {
   SMALL: 5,
@@ -69,7 +68,8 @@ export { SettingsList };
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
+    height: "100%",
+    width: "100%",
   },
   backButtonWrapper: {
     width: "90%",

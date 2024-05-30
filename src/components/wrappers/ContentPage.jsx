@@ -1,10 +1,9 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { GradientWrapper } from "../components/themes/GradientWrapper";
-import { View, StyleSheet } from "react-native";
-import { BackButton } from "../components/buttons/BackButton";
-import { PrimaryText } from "../components/texts/PrimaryText";
-import SCREEN_SIZE from "../utils/screenSize";
-import { ScrollView } from "react-native";
+import { GradientWrapper } from "./GradientWrapper";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { BackButton } from "../buttons/BackButton";
+import { PrimaryText } from "../texts/PrimaryText";
+import { SCREEN_SIZE } from "../../utils/constants";
 
 const headerHeight = {
   SMALL: 5,
@@ -24,7 +23,7 @@ function ContentPage({ title, children }) {
         <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
       </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={[styles.wrapper, { height: "80%" }]}>{children}</View>
+        <View style={styles.wrapper}>{children}</View>
       </ScrollView>
     </GradientWrapper>
   );
@@ -42,6 +41,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: "90%",
+    height: "80%",
     left: "5%",
   },
   titleWrapper: {

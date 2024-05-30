@@ -13,12 +13,11 @@ import * as Haptics from "expo-haptics";
 
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { PrimaryText } from "../../components/texts/PrimaryText";
-import { QuantityInputBottle } from "./QuantityInputBottle";
+import { DrinkAmountBottle } from "./DrinkAmountBottle";
 import { BackButton } from "../../components/buttons/BackButton";
 
-import { inputDrinkConfig } from "../../utils/constants";
-import SCREEN_SIZE from "../../utils/screenSize";
-import { GradientWrapper } from "../../components/themes/GradientWrapper";
+import { inputDrinkConfig, SCREEN_SIZE } from "../../utils/constants";
+import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
 
 /**
  * Debounce function to control
@@ -48,7 +47,7 @@ const sensitivity = {
   LARGE: 0.25,
 };
 
-function QuantityInputScreen() {
+function DrinkAmount() {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const route = useRoute();
@@ -160,10 +159,10 @@ function QuantityInputScreen() {
         </Animated.View>
       </View>
       <View style={styles.cupWrapper} {...panResponder.panHandlers}>
-        <QuantityInputBottle
+        <DrinkAmountBottle
           heightVal={heightVal}
           liquidColor={drinkType.color}
-        ></QuantityInputBottle>
+        ></DrinkAmountBottle>
       </View>
       <View style={styles.amountDrank}>
         <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
@@ -179,7 +178,7 @@ function QuantityInputScreen() {
   );
 }
 
-export { QuantityInputScreen };
+export { DrinkAmount };
 
 const styles = StyleSheet.create({
   backButton: {

@@ -1,16 +1,14 @@
 import { useSelector } from "react-redux";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { PrimaryText } from "../components/texts/PrimaryText";
+import { PrimaryText } from "./texts/PrimaryText";
 import { StyleSheet, View } from "react-native";
-import { color, shadow } from "../utils/themes";
-import SCREEN_SIZE from "../utils/screenSize";
+import { color, shadow, SCREEN_SIZE } from "../utils/constants";
 import {
-  metricUnitConversion,
   totalDrinkQuantity,
   totalHydratingDrinkQuantity,
   displayPositivePercent,
-} from "../utils/helpers.js";
+} from "../utils/helpers";
 import { CountUp } from "use-count-up";
 
 const cardSize = {
@@ -86,8 +84,6 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: cardPaddingHorizontal[SCREEN_SIZE],
     paddingVertical: cardPaddingVertical[SCREEN_SIZE],
-    justifyContent: "center",
-    alignItems: "center",
     borderRadius: cardBorderRadius[SCREEN_SIZE],
     color: color.BLUE,
     backgroundColor: color.WHITE,

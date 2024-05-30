@@ -1,16 +1,21 @@
 import { View, StyleSheet, Image, Text } from "react-native";
-import { drinkImageMap } from "../../utils/maps.js";
-import { PrimaryText } from "../../components/texts/PrimaryText.jsx";
-import { SecondaryText } from "../../components/texts/SecondaryText.jsx";
-import { InfoCard } from "../../components/cards/InfoCard.jsx";
-import { color, listItemHeight, cardBorderWidth } from "../../utils/themes.js";
-import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity.js";
+import { drinkImageMap } from "../../utils/maps";
+import { PrimaryText } from "../../components/texts/PrimaryText";
+import { SecondaryText } from "../../components/texts/SecondaryText";
+import { InfoCard } from "../../components/cards/InfoCard";
+import {
+  color,
+  listItemHeight,
+  cardBorderWidth,
+  SCREEN_SIZE,
+  fontFamily,
+} from "../../utils/constants";
+import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity";
 import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
-} from "../../utils/helpers.js";
-import { HistoryDeleteButton } from "./HistoryDeleteButton.jsx";
-import SCREEN_SIZE from "../../utils/screenSize.js";
+} from "../../utils/helpers";
+import { HistoryDeleteButton } from "./HistoryDeleteButton";
 
 const itemBorderRadius = {
   SMALL: 15,
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   cardTotalBottomText: {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     color: color.BLUE,
     marginRight: 5,
     fontSize: infoCardSizeTotalFontSize[SCREEN_SIZE],

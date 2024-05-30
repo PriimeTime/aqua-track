@@ -1,8 +1,7 @@
 import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
-import WaterDropButton from "./WaterDropButton";
-import { color, shadow } from "../utils/themes";
-import SCREEN_SIZE from "../utils/screenSize";
+import WaterDropButton from "../components/navigation/WaterDropButton";
+import { color, shadow, SCREEN_SIZE, fontFamily } from "../utils/constants";
 
 const fontSizes = {
   SMALL: 16,
@@ -48,7 +47,7 @@ function CustomTabBar({ state, navigation }) {
           if (!isFocused && !event.defaultPrevented) {
             if (route.name === "AddDrink") {
               setTimeout(() => {
-                navigation.navigate("TypeInputScreen"); // Update the navigation target for AddDrink
+                navigation.navigate("DrinkSelection"); // Update the navigation target for AddDrink
               }, 100);
             } else {
               navigation.navigate(route.name);
@@ -85,8 +84,6 @@ export { CustomTabBar };
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     padding: navbarPadding[SCREEN_SIZE],
   },
   navigationBar: {
@@ -107,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize: fontSizes[SCREEN_SIZE],
     textTransform: "uppercase",
   },

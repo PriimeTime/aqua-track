@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { color } from "../../utils/themes";
+import { color } from "../../utils/constants";
 
 function GradientWrapper({ children, ...props }) {
   return (

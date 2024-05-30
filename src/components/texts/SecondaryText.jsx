@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import { color } from "../../utils/themes";
+import { color, fontFamily } from "../../utils/constants";
 
 function getTextStyle(size, colorParam) {
   const fontValues = {
@@ -22,7 +22,7 @@ function getTextStyle(size, colorParam) {
   }
 
   const baseStyle = {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize,
     color: colorVal,
   };

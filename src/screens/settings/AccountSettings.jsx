@@ -1,9 +1,8 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import { ContentPage } from "../ContentPage";
+import { ContentPage } from "../../components/wrappers/ContentPage";
 import { CustomTextField } from "../../components/input/CustomTextField";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
-import { color, fontFamily } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, fontFamily, SCREEN_SIZE } from "../../utils/constants";
 import googleLogo from "../../../assets/icons/google-logo.png";
 import { useEffect, useState } from "react";
 import {
@@ -419,7 +418,6 @@ const styles = StyleSheet.create({
   },
   googleButton: {
     wrapper: {
-      width: "100%",
       height: "100%",
       justifyContent: "center",
       alignItems: "center",

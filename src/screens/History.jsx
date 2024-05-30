@@ -3,13 +3,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import { SettingsButton } from "../../components/buttons/SettingsButton";
-import { listItemHeight } from "../../utils/themes";
-import { HistoryItem } from "./HistoryItem";
-import { totalDrinkQuantity } from "../../utils/helpers";
-import SCREEN_SIZE from "../../utils/screenSize";
-import { HistoryBottom } from "./HistoryBottom";
-import { GradientWrapper } from "../../components/themes/GradientWrapper";
+import { SettingsButton } from "../components/buttons/SettingsButton";
+import { listItemHeight, SCREEN_SIZE } from "../utils/constants";
+import { HistoryItem } from "../components/history/HistoryItem";
+import { totalDrinkQuantity } from "../utils/helpers";
+import { HistoryBottom } from "../components/history/HistoryBottom";
+import { GradientWrapper } from "../components/wrappers/GradientWrapper";
 
 function History() {
   const navigation = useNavigation();
@@ -25,7 +24,7 @@ function History() {
   };
 
   return (
-    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <GradientWrapper style={{ paddingTop: insets.top }}>
       <View style={styles.settingsWrapper}>
         <SettingsButton
           onPress={() => navigation.navigate("Settings")}
@@ -75,10 +74,6 @@ function History() {
 export { History };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    width: "100%",
-    height: "100%",
-  },
   settingsWrapper: {
     width: "90%",
     left: "5%",

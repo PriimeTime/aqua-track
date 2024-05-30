@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { metricUnitConversion } from "../../utils/helpers";
-import { color } from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+import { color, fontFamily, SCREEN_SIZE } from "../../utils/constants";
 
 const bottomLineBorderTopWidth = {
   SMALL: 1.5,
@@ -63,12 +62,12 @@ const styles = StyleSheet.create({
   },
   bottomText: {
     left: bottomTextIndent[SCREEN_SIZE],
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize: fontSizes[SCREEN_SIZE],
     color: color.DARK_BLUE,
   },
   bottomValue: {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize: fontSizes[SCREEN_SIZE],
     color: color.DARK_BLUE,
   },

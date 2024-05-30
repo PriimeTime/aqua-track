@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import { VictoryPie } from "victory-native";
-import { shadow } from "../utils/themes";
+import { shadow } from "../utils/constants";
 import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
@@ -110,6 +110,7 @@ function Statistics() {
 
 export { Statistics };
 
+// TODO: refactor to use proper pseudo-flexbox styling
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

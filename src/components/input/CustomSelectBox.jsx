@@ -1,10 +1,11 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import {
+  SCREEN_SIZE,
   color,
+  fontFamily,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/themes";
-import SCREEN_SIZE from "../../utils/screenSize";
+} from "../../utils/constants";
 import { useEffect, useState } from "react";
 import { SecondaryText } from "../texts/SecondaryText";
 
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectBoxText: {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize: inputFontSizeValues[titleSize[SCREEN_SIZE]].fontSize,
   },
 });

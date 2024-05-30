@@ -1,10 +1,9 @@
 import { Pressable, Text, Animated } from "react-native";
 import { useRef } from "react";
-import { color, shadow } from "../../utils/themes";
+import { color, shadow, SCREEN_SIZE, fontFamily } from "../../utils/constants";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import { animateButtonPress } from "../../utils/animations";
-import SCREEN_SIZE from "../../utils/screenSize";
 
 const fontSizes = {
   SMALL: 20,
@@ -32,7 +31,7 @@ const buttonBorderRadius = {
 
 function getTextStyle() {
   const baseStyle = {
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
     fontSize: fontSizes[SCREEN_SIZE],
     textAlign: "center",
     letterSpacing: 1.2,

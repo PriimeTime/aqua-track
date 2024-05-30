@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { color } from "../../utils/themes";
+import { color, fontFamily } from "../../utils/constants";
 
 function getCardStyle(size, secondary) {
   const heightValues = {
@@ -72,7 +72,7 @@ function getTextStyle(size, secondary) {
   const baseStyle = {
     color: textColor,
     fontSize,
-    fontFamily: "Chewy-Regular",
+    fontFamily: fontFamily.DEFAULT,
   };
 
   return baseStyle;

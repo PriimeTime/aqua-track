@@ -1,12 +1,12 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { AppNavigation } from "./navigation/AppNavigation";
+import { AppNavigation } from "../navigation/AppNavigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setHistory } from "./store/drinkHistory";
-import { readAsyncStorage } from "./utils/middleware";
-import { setUserAuth, setUserMetrics } from "./store/userData";
-import { setNetworkStatus } from "./store/general";
-import { useDatabaseSync } from "./hooks/useDatabaseSync";
+import { setHistory } from "../store/drinkHistory";
+import { readAsyncStorage } from "../utils/storage";
+import { setUserAuth, setUserMetrics } from "../store/userData";
+import { setNetworkStatus } from "../store/general";
+import { useDatabaseSync } from "../hooks/useDatabaseSync";
 
 import NetInfo from "@react-native-community/netinfo";
 
@@ -17,7 +17,7 @@ const handleAppStateChange = async (nextAppState) => {
   }
 };
 
-function AppScreen() {
+function MainAppScreen() {
   const dispatch = useDispatch();
 
   const isInternetReachable = useSelector(
@@ -105,4 +105,4 @@ function AppScreen() {
   );
 }
 
-export default AppScreen;
+export default MainAppScreen;
