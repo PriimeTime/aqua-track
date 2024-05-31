@@ -1,18 +1,26 @@
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  DocumentData,
+  DocumentSnapshot,
+} from "firebase/firestore";
 import { firestore } from "../../../firebase";
 
-const loadUserData = async (userId: string) => {
+const loadUserData = async (userId: string): Promise<DocumentData | null> => {
   const userDocRef = doc(firestore, "users", userId);
   try {
-    const docSnap = await getDoc(userDocRef);
+    const docSnap: DocumentSnapshot<DocumentData> = await getDoc(userDocRef);
     if (docSnap.exists()) {
-      console.log("User data:", docSnap.data());
-      return docSnap.data(); // Returns user data as an object
+      const data = docSnap.data();
+      console.log("User data:", data);
+      return data || null; // Return data if it exists, otherwise return null
     } else {
       console.log("No such document!");
+      return null;
     }
   } catch (error) {
     console.error("Error getting document:", error);
+    return null;
   }
 };
 

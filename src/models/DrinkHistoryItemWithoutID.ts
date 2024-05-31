@@ -1,13 +1,11 @@
-import { DrinkImage } from "@/types/DrinkImage";
-import { UID } from "./UID";
+import { DrinkImage } from "@/enums/DrinkImage";
 import { UnixDate } from "./UnixDate";
-import { DrinkType } from "@/types/DrinkType";
+import { DrinkType } from "@/enums/DrinkType";
 
-export interface DrinkHistory {
+export interface DrinkHistoryItemWithoutID {
   color: string;
   drinkType: DrinkType;
   hydrationQuantity: number;
-  id: UID;
   imageSrc: DrinkImage;
   label: string;
   quantity: number;

@@ -1,4 +1,4 @@
-import { DrinkHistory } from "@/models/DrinkHistory";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 /**
  * @param {*} obj - the object to check
@@ -87,7 +87,7 @@ const metricUnitConversion = (totalIntake: number): string => {
  * @param {*} drinkHistory - array of drink history records
  * @returns the total quantity of consumed beverages
  */
-const totalDrinkQuantity = (drinkHistory: DrinkHistory[]) => {
+const totalDrinkQuantity = (drinkHistory: DrinkHistoryItem[]) => {
   return drinkHistory.reduce((acc, val) => acc + val.quantity, 0);
 };
 
@@ -100,7 +100,7 @@ const totalDrinkQuantity = (drinkHistory: DrinkHistory[]) => {
  * Drinking 500ml of beer returns -80ml
  * Drinking 250ml of tea returns 225ml, etc.
  */
-const totalHydratingDrinkQuantity = (drinkHistory: DrinkHistory[]) => {
+const totalHydratingDrinkQuantity = (drinkHistory: DrinkHistoryItem[]) => {
   return drinkHistory.reduce((acc, val) => acc + val.hydrationQuantity, 0);
 };
 

@@ -1,4 +1,4 @@
-import { ScreenSize } from "@/types/ScreenSize";
+import { ScreenSize } from "@/enums/ScreenSize";
 import { Dimensions } from "react-native";
 
 const window = Dimensions.get("window");

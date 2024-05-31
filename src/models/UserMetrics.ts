@@ -1,10 +1,10 @@
-import { ExerciseLevel } from "@/types/ExerciseLevel";
-import { Gender } from "@/types/Gender";
+import { ExerciseLevel } from "@/enums/ExerciseLevel";
+import { Gender } from "@/enums/Gender";
 
-export interface userMetrics {
-  age: number;
-  exerciseLvl: ExerciseLevel;
-  gender: Gender;
-  height: number;
-  weight: number;
+export interface UserMetrics {
+  age: number | null;
+  exerciseLvl: ExerciseLevel | null;
+  gender: Gender | null;
+  height: number | null;
+  weight: number | null;
 }

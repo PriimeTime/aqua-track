@@ -1,11 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { UserAuth } from "@/models/UserAuth";
+import { UserMetrics } from "@/models/UserMetrics";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+type UserDataState = {
+  userMetrics: UserMetrics;
+  userAuth: UserAuth;
+};
+
+const initialState: UserDataState = {
   userMetrics: {
-    age: "",
+    age: null,
     gender: null,
-    height: "",
-    weight: "",
+    height: null,
+    weight: null,
     exerciseLvl: null,
   },
   userAuth: {
@@ -18,19 +25,19 @@ const userDataSlice = createSlice({
   name: "userData",
   initialState,
   reducers: {
-    setUserData: (state, action) => {
+    setUserData: (state, action: PayloadAction<UserMetrics>) => {
       state.userMetrics = action.payload;
     },
-    setUserMetrics: (state, action) => {
+    setUserMetrics: (state, action: PayloadAction<UserMetrics>) => {
       state.userMetrics = { ...state.userMetrics, ...action.payload };
     },
-    setUserAuth: (state, action) => {
+    setUserAuth: (state, action: PayloadAction<UserAuth>) => {
       state.userAuth = { ...state.userAuth, ...action.payload };
     },
-    setUserLoginState: (state, action) => {
+    setUserLoginState: (state, action: PayloadAction<boolean>) => {
       state.userAuth.isLoggedIn = action.payload;
     },
-    setUserUID: (state, action) => {
+    setUserUID: (state, action: PayloadAction<string | null>) => {
       state.userAuth.uid = action.payload;
     },
   },

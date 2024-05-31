@@ -1,8 +1,8 @@
-import { DrinkHistory } from "./DrinkHistory";
-import { userMetrics } from "./UserMetrics";
+import { DrinkHistoryItem } from "./DrinkHistoryItem";
+import { UserMetrics } from "./UserMetrics";
 
 export interface UserData {
-  userMetrics: userMetrics;
-  userDrinkHistory: DrinkHistory[];
+  userMetrics: UserMetrics;
+  userDrinkHistory: DrinkHistoryItem[];
   userUID: string;
 }
