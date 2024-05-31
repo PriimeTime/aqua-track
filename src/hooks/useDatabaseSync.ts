@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { updateUserData } from "../utils/database";
+import { DocumentData } from "firebase/firestore";
 
-function useDatabaseSync(
-  dependencies,
-  data,
-  isLoggedIn,
-  isInternetReachable,
-  userUID
+function useDatabaseSync<T extends DocumentData, D>(
+  dependencies: D[],
+  data: T,
+  isLoggedIn: boolean,
+  isInternetReachable: boolean,
+  userUID: string
 ) {
   useEffect(() => {
     /** If user logged in AND connected to the

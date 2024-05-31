@@ -5,7 +5,7 @@ import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
  * @returns a boolean indicating if the object
  * (and its nested properties) is empty
  */
-function isEmptyObject(obj: any): boolean {
+function isEmptyObject<T extends Record<string, any>>(obj: T): boolean {
   if (obj === null || typeof obj !== "object" || Array.isArray(obj))
     return false;
   if (Object.keys(obj).length === 0) return true;

@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type NetworkStatus = {
+interface NetworkStatus {
   isConnected: boolean;
   isReachable: boolean;
-};
+}
 
-type General = {
+interface General {
   networkStatus: {
     isConnected: boolean;
     isReachable: boolean;
   };
-};
+}
 
 const initialState: General = {
   networkStatus: {
