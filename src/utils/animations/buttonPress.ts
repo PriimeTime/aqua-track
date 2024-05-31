@@ -1,6 +1,9 @@
 import { Animated } from "react-native";
 
-const animateButtonPress = (oldValue, newValue) => {
+const animateButtonPress = (
+  oldValue: Animated.Value | Animated.ValueXY,
+  newValue: Animated.Value | Animated.ValueXY
+) => {
   Animated.timing(oldValue, {
     toValue: newValue,
     duration: 100,

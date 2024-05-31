@@ -1,10 +1,11 @@
 import { doc, setDoc } from "firebase/firestore";
 import { firestore } from "../../../firebase";
+import { UserData } from "@/models/UserData";
 
-const updateUserData = async (userId, data) => {
+const updateUserData = async (userId: string, userData: UserData) => {
   const userDocRef = doc(firestore, "users", userId);
   try {
-    await setDoc(userDocRef, data, { merge: true }); // Merges data with existing document
+    await setDoc(userDocRef, userData, { merge: true }); // Merges data with existing document
     console.log("--------------");
     console.log("Document successfully updated!");
     console.log("--------------");

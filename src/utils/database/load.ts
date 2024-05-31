@@ -1,7 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../../../firebase";
 
-const loadUserData = async (userId) => {
+const loadUserData = async (userId: string) => {
   const userDocRef = doc(firestore, "users", userId);
   try {
     const docSnap = await getDoc(userDocRef);

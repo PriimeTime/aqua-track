@@ -1,7 +1,7 @@
-import { DrinkImage } from "@/components/types/DrinkImage";
+import { DrinkImage } from "@/types/DrinkImage";
 import { UID } from "./UID";
 import { UnixDate } from "./UnixDate";
-import { DrinkType } from "@/components/types/DrinkType";
+import { DrinkType } from "@/types/DrinkType";
 
 export interface DrinkHistory {
   color: string;
