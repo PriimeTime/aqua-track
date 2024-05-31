@@ -1,4 +1,4 @@
-import { UID } from "./UID";
+import { UID } from "../types/UID";
 import { DrinkHistoryItemWithoutID } from "./DrinkHistoryItemWithoutID";
 
 export interface DrinkHistoryItem extends DrinkHistoryItemWithoutID {
