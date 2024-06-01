@@ -1,9 +1,19 @@
-import { Pressable, View, StyleSheet, Animated, Image } from "react-native";
+import {
+  Pressable,
+  View,
+  StyleSheet,
+  Animated,
+  Image,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { useRef } from "react";
 import { color, cardBorderWidth, SCREEN_SIZE } from "../../utils/constants";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
 import { drinkImageMap } from "../../utils/maps";
+import { DrinkImage } from "@/enums/DrinkImage";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
 const cardButtonBorderRadius = {
   SMALL: 24,
@@ -17,18 +27,30 @@ const cardTextSize = {
   LARGE: 7,
 };
 
-function CardButton({ onPress, imageSrc, children, style }) {
-  const scaleValue = useRef(new Animated.Value(1)).current;
-  const shadowOpacity = useRef(new Animated.Value(0)).current;
+const getDynamicCardButtonStyle = () => ({
+  borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
+  borderWidth: cardBorderWidth[SCREEN_SIZE],
+});
+
+interface CardButtonProps {
+  onPress: () => void;
+  imageSrc: DrinkImage;
+  children: React.ReactNode;
+  style: StyleProp<ViewStyle>;
+}
+
+function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
+  const scaleValue = useRef(animatedScaleValue(1)).current;
+  const shadowOpacity = useRef(animatedScaleValue(0)).current;
 
   const handleOnPressIn = () => {
-    animateButtonPress(scaleValue, 0.9);
-    animateButtonPress(shadowOpacity, 0.25);
+    animateButtonPress(scaleValue, animatedScaleValue(0.9));
+    animateButtonPress(shadowOpacity, animatedScaleValue(0.25));
   };
 
   const handleOnPressOut = () => {
-    animateButtonPress(scaleValue, 1);
-    animateButtonPress(shadowOpacity, 0);
+    animateButtonPress(scaleValue, animatedScaleValue(1));
+    animateButtonPress(shadowOpacity, animatedScaleValue(0));
   };
 
   return (
@@ -44,16 +66,13 @@ function CardButton({ onPress, imageSrc, children, style }) {
       ]}
     >
       <Pressable
-        style={styles.cardButton}
+        style={[styles.cardButton, getDynamicCardButtonStyle()]}
         onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
         <View style={styles.cardImageWrapper}>
-          <Image
-            style={styles.cardImage}
-            source={drinkImageMap[imageSrc]}
-          ></Image>
+          <Image style={styles.cardImage} source={drinkImageMap[imageSrc]} />
         </View>
         <View style={styles.cardTextWrapper}>
           <PrimaryText size={cardTextSize[SCREEN_SIZE]}>{children}</PrimaryText>
@@ -62,8 +81,6 @@ function CardButton({ onPress, imageSrc, children, style }) {
     </Animated.View>
   );
 }
-
-export { CardButton };
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -74,8 +91,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
-    borderWidth: cardBorderWidth[SCREEN_SIZE],
     borderColor: color.DARK_BLUE,
     backgroundColor: color.WHITE,
   },
@@ -90,6 +105,8 @@ const styles = StyleSheet.create({
   cardImage: {
     width: "100%",
     height: "100%",
-    objectFit: "contain",
+    resizeMode: "contain",
   },
 });
+
+export { CardButton };
