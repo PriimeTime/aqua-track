@@ -27,7 +27,11 @@ const fontSizes = {
   LARGE: 36,
 };
 
-function HistoryBottom({ totalDrinkQuantityToday }) {
+function HistoryBottom({
+  totalDrinkQuantityToday,
+}: {
+  totalDrinkQuantityToday: number;
+}) {
   return (
     <>
       <LinearGradient

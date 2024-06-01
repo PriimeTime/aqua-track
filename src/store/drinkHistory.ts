@@ -17,8 +17,8 @@ const drinkHistorySlice = createSlice({
       const id: UID = uid(6);
       state.push({ id, ...action.payload });
     },
-    removeFromHistory: (state, action: PayloadAction<DrinkHistoryItem>) => {
-      return state.filter((item) => item.id !== action.payload.id);
+    removeFromHistory: (state, action: PayloadAction<UID>) => {
+      return state.filter((item) => item.id !== action.payload);
     },
   },
 });

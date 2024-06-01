@@ -9,6 +9,6 @@ export interface DrinkHistoryItemWithoutID {
   imageSrc: DrinkImage;
   label: string;
   quantity: number;
-  time: UnixDate;
+  date: UnixDate;
   typeID: number;
 }

@@ -123,12 +123,12 @@ function DrinkAmount() {
 
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      const time = Date.now();
+      const date = Date.now();
 
       const drinkItem = {
         ...drinkType,
         quantity: quantityValue,
-        time,
+        date,
         hydrationQuantity: quantityValue * hydroFactor,
       };
 

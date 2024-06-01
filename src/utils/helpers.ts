@@ -1,4 +1,5 @@
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { type UnixDate } from "@/types/UnixDate";
 
 /**
  * @param {*} obj - the object to check
@@ -106,12 +107,12 @@ const totalHydratingDrinkQuantity = (drinkHistory: DrinkHistoryItem[]) => {
 
 /**
  *
- * @param {*} unixTime - the unix timestamp
+ * @param {*} unixDate - the unix timestamp
  * @returns a string with the hours and minutes
  * in the following format: hh:mm
  */
-const getHoursMinutesFromUnixDate = (unixTime: number): string => {
-  const date = new Date(unixTime);
+const getHoursMinutesFromUnixDate = (unixDate: UnixDate): string => {
+  const date = new Date(unixDate);
 
   const hours = date.getHours();
   const minutes = date.getMinutes().toString().padStart(2, "0"); // Ensure minutes are two digits

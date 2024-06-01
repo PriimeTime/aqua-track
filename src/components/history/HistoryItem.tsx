@@ -1,8 +1,8 @@
 import { View, StyleSheet, Image, Text } from "react-native";
 import { drinkImageMap } from "../../utils/maps";
-import { PrimaryText } from "../../components/texts/PrimaryText";
-import { SecondaryText } from "../../components/texts/SecondaryText";
-import { InfoCard } from "../../components/cards/InfoCard";
+import { PrimaryText } from "../texts/PrimaryText";
+import { SecondaryText } from "../texts/SecondaryText";
+import { InfoCard } from "../cards/InfoCard";
 import {
   color,
   listItemHeight,
@@ -16,6 +16,9 @@ import {
   metricUnitConversion,
 } from "../../utils/helpers";
 import { HistoryDeleteButton } from "./HistoryDeleteButton";
+import { DrinkImage } from "@/enums/DrinkImage";
+import { type UID } from "@/types/UID";
+import { type UnixDate } from "@/types/UnixDate";
 
 const itemBorderRadius = {
   SMALL: 15,
@@ -53,7 +56,23 @@ const drinkTimeSize = {
   LARGE: 6,
 };
 
-function HistoryItem({ imageSrc, itemID, title, time, quantity, typeID }) {
+interface HistoryItemProps {
+  imageSrc: DrinkImage;
+  itemID: UID;
+  title: string;
+  date: UnixDate;
+  quantity: number;
+  typeID: number;
+}
+
+function HistoryItem({
+  imageSrc,
+  itemID,
+  title,
+  date,
+  quantity,
+  typeID,
+}: HistoryItemProps) {
   const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(typeID);
 
   return (
@@ -67,17 +86,17 @@ function HistoryItem({ imageSrc, itemID, title, time, quantity, typeID }) {
       <View style={styles.cardInfoWrapper}>
         <PrimaryText size={drinkTitleSize[SCREEN_SIZE]}>{title}</PrimaryText>
         <SecondaryText size={drinkTimeSize[SCREEN_SIZE]}>
-          {getHoursMinutesFromUnixDate(time)}
+          {getHoursMinutesFromUnixDate(date)}
         </SecondaryText>
       </View>
       <View style={styles.cardTotalWrapper}>
         <View style={styles.cardTotalTop}>
           <InfoCard secondary size={infoCardSizeCurrentAmount[SCREEN_SIZE]}>
-            +{quantity} ml
+            {`+${quantity} ml`}
           </InfoCard>
         </View>
         <View style={styles.cardTotalBottom}>
-          <Text style={styles.cardTotalBottomText}>Total:</Text>
+          <Text style={styles.cardTotalBottomText}>{`Total:`}</Text>
           <InfoCard size={infoCardSizeTotalAmount[SCREEN_SIZE]}>
             {metricUnitConversion(groupedDrinkHistoryQuantity)}
           </InfoCard>

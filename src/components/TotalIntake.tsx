@@ -10,7 +10,7 @@ import {
   displayPositivePercent,
 } from "../utils/helpers";
 import { CountUp } from "use-count-up";
-import { DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 const cardSize = {
   SMALL: 3,

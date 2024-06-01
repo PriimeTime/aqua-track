@@ -5,49 +5,42 @@ import { color, SCREEN_SIZE } from "../../utils/constants";
 import { removeFromHistory } from "../../store/drinkHistory";
 import { useDispatch } from "react-redux";
 import { animateButtonPress } from "../../utils/animations";
+import { type UID } from "@/types/UID";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
-function getButtonStyle(size, pressed) {
-  const buttonBorderRadius = {
-    SMALL: 10,
-    MEDIUM: 15,
-    LARGE: 25,
-  };
+const buttonIconSize = {
+  SMALL: 20,
+  MEDIUM: 25,
+  LARGE: 45,
+};
 
-  const baseStyle = {
-    width: "100%",
-    height: "100%",
-    borderRadius: buttonBorderRadius[SCREEN_SIZE],
-    backgroundColor: color.RED,
-    justifyContent: "center",
-    alignItems: "center",
-  };
+const buttonBorderRadius = {
+  SMALL: 10,
+  MEDIUM: 15,
+  LARGE: 25,
+};
 
-  return baseStyle;
-}
+const getButtonStyle = () => ({
+  ...styles.buttonBase,
+  borderRadius: buttonBorderRadius[SCREEN_SIZE],
+});
 
-function HistoryDeleteButton({ itemID, size }) {
-  const scaleValue = useRef(new Animated.Value(1)).current;
-
+function HistoryDeleteButton({ itemID }: { itemID: UID }) {
+  const scaleValue = useRef(animatedScaleValue(1)).current;
   const dispatch = useDispatch();
 
   const handleOnPress = () => {
     setTimeout(() => {
-      dispatch(removeFromHistory({ id: itemID }));
+      dispatch(removeFromHistory(itemID));
     }, 150);
   };
 
   const handleOnPressIn = () => {
-    animateButtonPress(scaleValue, 0.85);
+    animateButtonPress(scaleValue, animatedScaleValue(0.85));
   };
 
   const handleOnPressOut = () => {
-    animateButtonPress(scaleValue, 1);
-  };
-
-  const buttonIconSize = {
-    SMALL: 20,
-    MEDIUM: 25,
-    LARGE: 45,
+    animateButtonPress(scaleValue, animatedScaleValue(1));
   };
 
   return (
@@ -60,7 +53,7 @@ function HistoryDeleteButton({ itemID, size }) {
       ]}
     >
       <Pressable
-        style={getButtonStyle(size)}
+        style={getButtonStyle}
         onPress={handleOnPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
@@ -83,5 +76,12 @@ const styles = StyleSheet.create({
     top: "10%",
     width: "70%",
     height: "80%",
+  },
+  buttonBase: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: color.RED,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

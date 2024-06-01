@@ -42,7 +42,7 @@ function History() {
             <HistoryItem
               imageSrc={item.imageSrc}
               title={item.label}
-              time={item.time}
+              date={item.date}
               quantity={item.quantity}
               typeID={item.typeID}
               itemID={item.id}
