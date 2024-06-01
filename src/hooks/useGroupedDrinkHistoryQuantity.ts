@@ -1,9 +1,5 @@
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 import { useSelector } from "react-redux";
-
-type DrinkHistoryState = {
-  drinkHistory: DrinkHistoryItem[];
-};
+import { DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 function useGroupedDrinkHistoryQuantity(typeID: number): number {
   const drinkHistory = useSelector(

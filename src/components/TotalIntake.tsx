@@ -5,11 +5,12 @@ import { PrimaryText } from "./texts/PrimaryText";
 import { StyleSheet, View } from "react-native";
 import { color, shadow, SCREEN_SIZE } from "../utils/constants";
 import {
-  totalDrinkQuantity,
+  // totalDrinkQuantity,
   totalHydratingDrinkQuantity,
   displayPositivePercent,
 } from "../utils/helpers";
 import { CountUp } from "use-count-up";
+import { DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 const cardSize = {
   SMALL: 3,
@@ -36,8 +37,10 @@ const cardBorderRadius = {
 };
 
 function TotalIntake() {
-  const drinkHistory = useSelector((state) => state.drinkHistory);
-  const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
+  const drinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
+  // const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
   const hydratingDrinkQuantity = totalHydratingDrinkQuantity(drinkHistory);
 
   const hydrationLevelInPercent = displayPositivePercent(

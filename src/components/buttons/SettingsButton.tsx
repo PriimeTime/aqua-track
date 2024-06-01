@@ -1,9 +1,11 @@
-import { Pressable, Animated, View } from "react-native";
+import { Pressable, Animated, View, StyleSheet } from "react-native";
 import { useRef } from "react";
 import { color, shadow, SCREEN_SIZE } from "../../utils/constants";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { animateButtonPress } from "../../utils/animations";
+import { ScreenSize } from "@/enums/ScreenSize";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
 const buttonSizes = {
   SMALL: 48,
@@ -11,32 +13,30 @@ const buttonSizes = {
   LARGE: 128,
 };
 
-const iconSize = {
+const iconSizes = {
   SMALL: 25,
   MEDIUM: 35,
   LARGE: 70,
 };
 
-// TODO: play spin animation when pressed
-function getButtonStyle(pressed) {
-  const size = buttonSizes[SCREEN_SIZE];
+const getButtonStyle = (screenSize: ScreenSize) => {
+  const size = buttonSizes[screenSize];
   const borderRadius = size / 2; // Create circle
 
-  const baseStyle = {
+  return {
     width: size,
     height: size,
     borderRadius,
-    alignItems: "center",
-    justifyContent: "center",
-    ...shadow,
-    backgroundColor: color.WHITE,
+    ...styles.baseButton,
   };
+};
 
-  return baseStyle;
+interface SettingsButtonProps {
+  onPress: () => void;
 }
 
-function SettingsButton({ onPress, children, buttonSize }) {
-  const scaleValue = useRef(new Animated.Value(1)).current;
+function SettingsButton({ onPress }: SettingsButtonProps) {
+  const scaleValue = useRef(animatedScaleValue(1)).current;
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -44,21 +44,19 @@ function SettingsButton({ onPress, children, buttonSize }) {
   };
 
   const handleOnPressIn = () => {
-    animateButtonPress(scaleValue, 0.8);
+    animateButtonPress(scaleValue, animatedScaleValue(0.8));
   };
 
   const handleOnPressOut = () => {
-    animateButtonPress(scaleValue, 1);
+    animateButtonPress(scaleValue, animatedScaleValue(1));
   };
 
   return (
-    <View style={{ alignItems: "flex-end" }}>
+    <View style={styles.container}>
       <Animated.View
         style={[
-          {
-            transform: [{ scale: scaleValue }],
-          },
-          getButtonStyle(buttonSize),
+          { transform: [{ scale: scaleValue }] },
+          getButtonStyle(SCREEN_SIZE),
         ]}
       >
         <Pressable
@@ -68,7 +66,7 @@ function SettingsButton({ onPress, children, buttonSize }) {
         >
           <Ionicons
             color={color.BLUE}
-            size={iconSize[SCREEN_SIZE]}
+            size={iconSizes[SCREEN_SIZE]}
             name="settings"
           />
         </Pressable>
@@ -78,3 +76,15 @@ function SettingsButton({ onPress, children, buttonSize }) {
 }
 
 export { SettingsButton };
+
+const styles = StyleSheet.create({
+  baseButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    ...shadow,
+    backgroundColor: color.WHITE,
+  },
+  container: {
+    alignItems: "flex-end",
+  },
+});

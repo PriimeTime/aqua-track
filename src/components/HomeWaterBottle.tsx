@@ -1,7 +1,7 @@
-import { Image } from "react-native";
+import { Image, ImageSourcePropType } from "react-native";
 import { StyleSheet } from "react-native";
 
-function HomeWaterBottle({ imgSrc }) {
+function HomeWaterBottle({ imgSrc }: { imgSrc: ImageSourcePropType }) {
   return <Image style={styles.image} source={imgSrc} resizeMode="contain" />;
 }
 

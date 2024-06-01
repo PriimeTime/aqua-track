@@ -5,11 +5,15 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  ColorValue,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
-import { useRef } from "react";
 import { color, fontFamily, shadow, SCREEN_SIZE } from "../../utils/constants";
 import { animateButtonPress } from "../../utils/animations";
 import * as Haptics from "expo-haptics";
+import { useRef } from "react";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
 const textSize = {
   SMALL: 20,
@@ -29,85 +33,59 @@ const buttonWrapperHeight = {
   LARGE: 150,
 };
 
-function getTextStyle(fontSize) {
-  const baseStyle = {
-    fontFamily: fontFamily.DEFAULT,
-    textAlign: "center",
-    fontSize: textSize[SCREEN_SIZE],
-    letterSpacing: 1.2,
-    color: color.WHITE,
-  };
+const getTextStyle = (fontSize?: number) => ({
+  ...styles.text,
+  fontSize: fontSize || textSize[SCREEN_SIZE],
+});
 
-  return baseStyle;
-}
+const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
+  let bgColor = btnColor || (pressed ? color.DARK_BLUE : color.BLUE);
 
-function getButtonStyle(size, pressed, btnColor) {
-  let bgColor = "";
-
-  if (btnColor) {
-    bgColor = btnColor;
-  } else {
-    pressed ? (bgColor = color.DARK_BLUE) : (bgColor = color.BLUE);
-  }
-
-  const baseStyle = {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+  return {
+    ...styles.button,
     borderRadius: buttonBorderRadius[SCREEN_SIZE],
     backgroundColor: bgColor,
-    width: "100%",
-    height: "75%",
-    ...shadow,
   };
-
-  return baseStyle;
-}
+};
 
 /**
  *
- * @param {*} buttonColor
- * @returns the background color of the button
- */
-
-/**
+ * @param {*} custom - controls if text should be customized or not
  *
- * @param {*} textStyle
- * @returns a style object with styles
- * that either expand the style prop inside <Text>
- * or overwrite existing styles inside of it
- */
-
-/**
- *
- * @param {*} custom
- * @returns if the text inside the button should be
- * customized completely freely or not.
- *
- * By default, custom=false and the style is defined meaning
+ * By default, custom == false and the style is defined meaning
  * you should use PrimaryButton wrapped around a string.
  *
- * If custom=true, you can use PrimaryButton wrapped around any component
+ * If custom == true, you can use PrimaryButton wrapped around any component
  * that you could also use wrapped in a regular Button component.
  */
+
+type PrimaryButtonProps = {
+  btnColor?: ColorValue;
+  onPress: () => void;
+  fontSize?: number;
+  children: React.ReactNode;
+  textStyle?: StyleProp<ViewStyle>;
+  custom?: boolean;
+  isLoading?: boolean;
+};
 
 function PrimaryButton({
   btnColor,
   onPress,
   fontSize,
   children,
-  buttonSize,
   textStyle,
   custom,
   isLoading,
-}) {
-  const scaleValue = useRef(new Animated.Value(1)).current;
+}: PrimaryButtonProps) {
+  const scaleValue = useRef(animatedScaleValue(1)).current;
 
   const handleOnPressIn = () => {
-    animateButtonPress(scaleValue, 0.9);
+    animateButtonPress(scaleValue, animatedScaleValue(0.9));
   };
 
   const handleOnPressOut = () => {
-    animateButtonPress(scaleValue, 1);
+    animateButtonPress(scaleValue, animatedScaleValue(1));
   };
 
   const handlePress = () => {
@@ -129,6 +107,16 @@ function PrimaryButton({
     </View>
   );
 
+  const renderContent = (): React.JSX.Element | React.ReactNode => {
+    if (isLoading) {
+      return loadingContent;
+    } else if (custom) {
+      return children;
+    } else {
+      return defaultContent;
+    }
+  };
+
   return (
     <Animated.View
       style={[
@@ -139,13 +127,13 @@ function PrimaryButton({
       ]}
     >
       <Pressable
-        style={({ pressed }) => getButtonStyle(buttonSize, pressed, btnColor)}
+        style={({ pressed }) => getButtonStyle(pressed, btnColor)}
         onPress={handlePress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
         disabled={isLoading}
       >
-        {isLoading ? loadingContent : custom ? children : defaultContent}
+        {renderContent}
       </Pressable>
     </Animated.View>
   );
@@ -164,5 +152,18 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  text: {
+    fontFamily: fontFamily.DEFAULT,
+    textAlign: "center",
+    letterSpacing: 1.2,
+    color: color.WHITE,
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    width: "100%",
+    height: "75%",
+    ...shadow,
   },
 });
