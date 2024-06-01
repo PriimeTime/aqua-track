@@ -11,11 +11,18 @@ const headerHeight = {
   LARGE: 9,
 };
 
-function ContentPage({ title, children }) {
+interface ContentPageProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+function ContentPage({ title, children }: ContentPageProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <GradientWrapper style={[{ flex: 1 }, { paddingTop: insets.top }]}>
+    <GradientWrapper
+      style={[styles.gradientWrapper, { paddingTop: insets.top }]}
+    >
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>
@@ -38,6 +45,10 @@ const styles = StyleSheet.create({
     height: "10%",
     justifyContent: "center",
     alignItems: "flex-start",
+  },
+  gradientWrapper: {
+    width: "100%",
+    height: "100%",
   },
   wrapper: {
     width: "90%",

@@ -62,6 +62,8 @@ function BackButton() {
   );
 }
 
+export { BackButton };
+
 const styles = StyleSheet.create({
   text: {
     fontFamily: fontFamily.DEFAULT,
@@ -76,5 +78,3 @@ const styles = StyleSheet.create({
     backgroundColor: color.WHITE,
   },
 });
-
-export { BackButton };

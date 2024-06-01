@@ -49,11 +49,11 @@ function PrimaryText({ children, size, color }: PrimaryTextProps) {
   );
 }
 
+export { PrimaryText };
+
 const styles = StyleSheet.create({
   text: {
     fontFamily: fontFamily.DEFAULT,
     color: color.DARK_BLUE,
   },
 });
-
-export { PrimaryText };

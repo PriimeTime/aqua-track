@@ -82,6 +82,8 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
   );
 }
 
+export { CardButton };
+
 const styles = StyleSheet.create({
   wrapper: {
     height: "100%",
@@ -108,5 +110,3 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
 });
-
-export { CardButton };

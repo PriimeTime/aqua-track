@@ -48,11 +48,11 @@ function SecondaryText({ children, size, color }: SecondaryTextProps) {
   );
 }
 
+export { SecondaryText };
+
 const styles = StyleSheet.create({
   baseText: {
     fontFamily: fontFamily.DEFAULT,
     color: color.LIGHTBLUE,
   },
 });
-
-export { SecondaryText };
