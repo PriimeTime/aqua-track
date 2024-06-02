@@ -19,10 +19,6 @@ export default function App() {
     }
   }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Provider store={store}>
