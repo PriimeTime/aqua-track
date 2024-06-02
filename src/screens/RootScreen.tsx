@@ -12,18 +12,24 @@ import { Statistics } from "./Statistics";
 import { TotalIntake } from "../components/TotalIntake";
 import { SettingsButton } from "../components/buttons/SettingsButton";
 import { GradientWrapper } from "../components/wrappers/GradientWrapper";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ParamListBase } from "@react-navigation/native";
+import { MainRouteName } from "@/enums/MainRouteName";
 
 function RootScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const insets = useSafeAreaInsets();
-  const drinkHistory = useSelector((state) => state.drinkHistory);
+  const drinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
 
   return (
     <GradientWrapper style={{ paddingTop: insets.top }}>
       <View style={styles.wrapper}>
         <View style={styles.settingsWrapper}>
           <SettingsButton
-            onPress={() => navigation.navigate("Settings")}
+            onPress={() => navigation.navigate(MainRouteName.Settings)}
           ></SettingsButton>
         </View>
         <View style={styles.headerWrapper}>

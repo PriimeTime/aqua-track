@@ -1,13 +1,9 @@
 import { UserAuth } from "@/models/UserAuth";
+import { UserData } from "@/models/UserData";
 import { UserMetrics } from "@/models/UserMetrics";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type UserDataState = {
-  userMetrics: UserMetrics;
-  userAuth: UserAuth;
-};
-
-const initialState: UserDataState = {
+const initialState: UserData = {
   userMetrics: {
     age: null,
     gender: null,

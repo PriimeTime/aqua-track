@@ -1,7 +1,8 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { SettingsButton } from "../components/buttons/SettingsButton";
 import { listItemHeight, SCREEN_SIZE } from "../utils/constants";
@@ -9,11 +10,15 @@ import { HistoryItem } from "../components/history/HistoryItem";
 import { totalDrinkQuantity } from "../utils/helpers";
 import { HistoryBottom } from "../components/history/HistoryBottom";
 import { GradientWrapper } from "../components/wrappers/GradientWrapper";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { MainRouteName } from "@/enums/MainRouteName";
 
 function History() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const insets = useSafeAreaInsets();
-  const drinkHistory = useSelector((state) => state.drinkHistory);
+  const drinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
 
@@ -27,7 +32,7 @@ function History() {
     <GradientWrapper style={{ paddingTop: insets.top }}>
       <View style={styles.settingsWrapper}>
         <SettingsButton
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => navigation.navigate(MainRouteName.Settings)}
         ></SettingsButton>
       </View>
       <View style={styles.tabsWrapper}>
@@ -46,11 +51,11 @@ function History() {
               quantity={item.quantity}
               typeID={item.typeID}
               itemID={item.id}
-              hydrationQuantity={item.hydrationQuantity}
+              // hydrationQuantity={item.hydrationQuantity}
             ></HistoryItem>
           )}
           keyExtractor={(item) => item.id}
-          getItemLayout={(data, index) => ({
+          getItemLayout={(_, index) => ({
             length: listItemHeight[SCREEN_SIZE],
             offset: listItemHeight[SCREEN_SIZE] * index,
             index,

@@ -9,24 +9,38 @@ import { setNetworkStatus } from "../store/general";
 import { useDatabaseSync } from "../hooks/useDatabaseSync";
 
 import NetInfo from "@react-native-community/netinfo";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { type UserDataState } from "@/types/UserDataState";
+import { type GeneralState } from "@/types/GeneralState";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { UserMetrics } from "@/models/UserMetrics";
+import { UserAuth } from "@/models/UserAuth";
 
-const handleAppStateChange = async (nextAppState) => {
-  if (nextAppState === "active") {
-    console.log("App has come to the foreground!");
-    // update firestore with new data!
-  }
-};
+// const handleAppStateChange = async (nextAppState) => {
+//   if (nextAppState === "active") {
+//     console.log("App has come to the foreground!");
+//     // update firestore with new data!
+//   }
+// };
 
 function MainAppScreen() {
   const dispatch = useDispatch();
 
   const isInternetReachable = useSelector(
-    (state) => state.general.networkStatus.isReachable
+    (state: GeneralState) => state.general.networkStatus.isReachable
   );
-  const userDrinkHistory = useSelector((state) => state.drinkHistory);
-  const userMetrics = useSelector((state) => state.userData.userMetrics);
-  const isLoggedIn = useSelector((state) => state.userData.userAuth.isLoggedIn);
-  const userUID = useSelector((state) => state.userData.userAuth.uid);
+  const userDrinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
+  const userMetrics = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
+  const isLoggedIn = useSelector(
+    (state: UserDataState) => state.userData.userAuth.isLoggedIn
+  );
+  const userUID = useSelector(
+    (state: UserDataState) => state.userData.userAuth.uid
+  );
 
   /**
    * Listen to internet connectivity changes
@@ -34,8 +48,8 @@ function MainAppScreen() {
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       const networkInfo = {
-        isConnected: state.isConnected,
-        isReachable: state.isInternetReachable,
+        isConnected: !!state.isConnected,
+        isReachable: !!state.isInternetReachable,
       };
 
       dispatch(setNetworkStatus(networkInfo));
@@ -74,12 +88,20 @@ function MainAppScreen() {
 
   const fetchDataFromAsyncStorage = async () => {
     try {
-      const currentHistory = await readAsyncStorage("currentHistory");
-      const userMetrics = await readAsyncStorage("userMetrics");
-      const userAuth = await readAsyncStorage("userAuth");
+      const currentHistory: DrinkHistoryItem[] | null = await readAsyncStorage(
+        "currentHistory"
+      );
+      const userMetrics: UserMetrics | null = await readAsyncStorage(
+        "userMetrics"
+      );
+      const userAuth: UserAuth | null = await readAsyncStorage("userAuth");
 
-      if (currentHistory?.length > 0) {
+      if (currentHistory && currentHistory.length > 0) {
         dispatch(setHistory(currentHistory));
+      } else {
+        console.warn(
+          "Failed to update drink history, currentHistory was either undefined or its length was 0"
+        );
       }
 
       if (userMetrics) {

@@ -4,21 +4,23 @@ import { shadow } from "../utils/constants";
 import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { totalDrinkQuantity } from "@/utils/helpers";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 function Statistics() {
-  const drinkHistory = useSelector((state) => state.drinkHistory);
-  const totalDrinkQuantity = drinkHistory.reduce(
-    (acc, val) => acc + val.quantity,
-    0
+  const drinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
   );
   const pieDimensions = 250;
 
-  const reducedDrinkHistory = Object.values(
-    drinkHistory.reduce((acc, item) => {
-      if (!acc[item.typeID]) {
+  const reducedDrinkHistory: DrinkHistoryItem[] = Object.values(
+    drinkHistory.reduce<Record<number, DrinkHistoryItem>>((acc, item) => {
+      const existingItem = acc[item.typeID];
+      if (!existingItem) {
         acc[item.typeID] = { ...item };
       } else {
-        acc[item.typeID].quantity += item.quantity;
+        existingItem.quantity += item.quantity;
       }
       return acc;
     }, {})
@@ -36,7 +38,10 @@ function Statistics() {
    */
   const drinkHistoryWithPercentages = reducedDrinkHistory
     .map((item) => {
-      return { ...item, percent: (item.quantity / totalDrinkQuantity) * 100 };
+      return {
+        ...item,
+        percent: (item.quantity / totalDrinkQuantity(drinkHistory)) * 100,
+      };
     })
     .sort((a, b) => b.percent - a.percent);
 
@@ -45,7 +50,7 @@ function Statistics() {
    * values so the pie can animate
    * rising from 0 to 100 values
    */
-  const defaultGraphicData = pieValues.map((item, index) => {
+  const defaultGraphicData = pieValues.map((_, index) => {
     /**
      * Set the y value of the last
      * object in the array to 100,
@@ -158,6 +163,6 @@ const styles = StyleSheet.create({
     width: "80%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "left",
+    alignItems: "flex-start",
   },
 });
