@@ -53,7 +53,7 @@ function SettingsList() {
             ></SettingsItem>
           )}
           keyExtractor={(item) => item.id}
-          getItemLayout={(data, index) => ({
+          getItemLayout={(_, index) => ({
             length: listItemHeight[SCREEN_SIZE],
             offset: listItemHeight[SCREEN_SIZE] * index,
             index,

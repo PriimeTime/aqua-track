@@ -1,7 +1,17 @@
 import React from "react";
-import { View, Pressable, Text, StyleSheet } from "react-native";
-import WaterDropButton from "../components/navigation/WaterDropButton";
+import {
+  View,
+  Pressable,
+  Text,
+  StyleSheet,
+  DimensionValue,
+} from "react-native";
+import { WaterDropButton } from "../components/navigation/WaterDropButton";
 import { color, shadow, SCREEN_SIZE, fontFamily } from "../utils/constants";
+import { DrinkRouteName } from "@/enums/DrinkRouteName";
+import { TabNavigationState, ParamListBase } from "@react-navigation/native";
+import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
+import { NavigationHelpers } from "@react-navigation/native";
 
 const fontSizes = {
   SMALL: 16,
@@ -21,7 +31,12 @@ const navbarPadding = {
   LARGE: "1.5%",
 };
 
-function CustomTabBar({ state, navigation }) {
+interface CustomTabBarProps {
+  state: TabNavigationState<ParamListBase>;
+  navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
+}
+
+function CustomTabBar({ state, navigation }: CustomTabBarProps) {
   return (
     <View style={[{ flexDirection: "row" }, styles.navigationBar]}>
       {state.routes.map((route, index) => {
@@ -38,16 +53,10 @@ function CustomTabBar({ state, navigation }) {
         };
 
         const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            if (route.name === "AddDrink") {
+          if (!isFocused) {
+            if (route.name === DrinkRouteName.DrinkInput) {
               setTimeout(() => {
-                navigation.navigate("DrinkSelection"); // Update the navigation target for AddDrink
+                navigation.navigate(DrinkRouteName.DrinkSelection); // Update the navigation target for AddDrink
               }, 100);
             } else {
               navigation.navigate(route.name);
@@ -56,7 +65,7 @@ function CustomTabBar({ state, navigation }) {
         };
 
         // Render the WaterDropButton for the AddDrink tab
-        if (route.name === "AddDrink") {
+        if (route.name === DrinkRouteName.DrinkInput) {
           return (
             <WaterDropButton
               style={{ bottom: "10%" }}
@@ -84,7 +93,7 @@ export { CustomTabBar };
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    padding: navbarPadding[SCREEN_SIZE],
+    padding: navbarPadding[SCREEN_SIZE] as DimensionValue,
   },
   navigationBar: {
     position: "absolute",

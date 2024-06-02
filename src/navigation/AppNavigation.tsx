@@ -16,6 +16,9 @@ import { ThemeSettings } from "../screens/settings/ThemeSettings";
 import { LanguageSettings } from "../screens/settings/LanguageSettings";
 import { AboutSettings } from "../screens/settings/AboutSettings";
 import { CustomTabBar } from "./CustomTabBar";
+import { SettingsRouteName } from "@/enums/SettingsRouteName";
+import { MainRouteName } from "@/enums/MainRouteName";
+import { DrinkRouteName } from "@/enums/DrinkRouteName";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,22 +27,22 @@ function HomeTabs() {
   return (
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props}></CustomTabBar>}>
       <Tab.Screen
-        name="Home"
+        name={MainRouteName.Home}
         component={RootScreen}
         options={{
           headerShown: false,
         }}
       />
       <Tab.Screen
-        name="AddDrink"
-        component={View} // Dummy component, since we're handling navigation manually
+        name={DrinkRouteName.DrinkInput}
+        component={View} // Dummy component, since navigation is handled manually
         options={{
           headerShown: false,
         }}
       />
 
       <Tab.Screen
-        name="History"
+        name={MainRouteName.History}
         component={History}
         options={{
           headerShown: false,
@@ -54,39 +57,45 @@ function AppNavigation() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen
-          name="HomeTabs"
+          name={MainRouteName.HomeTabs}
           component={HomeTabs}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="DrinkAmount" component={DrinkAmount} />
-        <Stack.Screen name="DrinkSelection" component={DrinkSelection} />
-        <Stack.Screen name="Settings" component={SettingsList} />
         <Stack.Screen
-          name="AccountSettings"
+          name={DrinkRouteName.DrinkAmount}
+          component={DrinkAmount}
+        />
+        <Stack.Screen
+          name={DrinkRouteName.DrinkSelection}
+          component={DrinkSelection}
+        />
+        <Stack.Screen name={MainRouteName.Settings} component={SettingsList} />
+        <Stack.Screen
+          name={SettingsRouteName.AccountSettings}
           component={AccountSettings}
         ></Stack.Screen>
         <Stack.Screen
-          name="ProfileSettings"
+          name={SettingsRouteName.ProfileSettings}
           component={ProfileSettings}
         ></Stack.Screen>
         <Stack.Screen
-          name="NotificationsSettings"
+          name={SettingsRouteName.NotificationsSettings}
           component={NotificationsSettings}
         ></Stack.Screen>
         <Stack.Screen
-          name="StatisticsSettings"
+          name={SettingsRouteName.StatisticsSettings}
           component={StatisticsSettings}
         ></Stack.Screen>
         <Stack.Screen
-          name="ThemeSettings"
+          name={SettingsRouteName.ThemeSettings}
           component={ThemeSettings}
         ></Stack.Screen>
         <Stack.Screen
-          name="LanguageSettings"
+          name={SettingsRouteName.LanguageSettings}
           component={LanguageSettings}
         ></Stack.Screen>
         <Stack.Screen
-          name="AboutSettings"
+          name={SettingsRouteName.AboutSettings}
           component={AboutSettings}
         ></Stack.Screen>
       </Stack.Navigator>

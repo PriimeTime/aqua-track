@@ -17,8 +17,12 @@ import statistics from "../../assets/icons/settings/statistic-cute.png";
 import theme from "../../assets/icons/settings/theme-cute.png";
 import language from "../../assets/icons/settings/language-cute.png";
 import about from "../../assets/icons/settings/about-cute.png";
+import { SettingsRouteName } from "@/enums/SettingsRouteName";
+import { DrinkImage } from "@/enums/DrinkImage";
+import { DrinkType } from "@/enums/DrinkType";
+import { ImageSourcePropType } from "react-native";
 
-const settingsImageMap = {
+const settingsImageMap: { [key: string]: ImageSourcePropType } = {
   user,
   ruler,
   notification,
@@ -30,50 +34,50 @@ const settingsImageMap = {
 
 const settingsList = [
   {
-    id: 1,
+    id: "1",
     title: "Account",
     imageSrc: "user",
-    routeName: "AccountSettings",
+    routeName: SettingsRouteName.AccountSettings,
   },
   {
-    id: 2,
+    id: "2",
     title: "Metrics & Body Measurements",
     imageSrc: "ruler",
-    routeName: "ProfileSettings",
+    routeName: SettingsRouteName.ProfileSettings,
   },
   {
-    id: 3,
+    id: "3",
     title: "Notifications",
     imageSrc: "notification",
-    routeName: "NotificationsSettings",
+    routeName: SettingsRouteName.NotificationsSettings,
   },
   {
-    id: 4,
+    id: "4",
     title: "Statistics & History",
     imageSrc: "statistics",
-    routeName: "StatisticsSettings",
+    routeName: SettingsRouteName.StatisticsSettings,
   },
   {
-    id: 5,
+    id: "5",
     title: "Theme",
     imageSrc: "theme",
-    routeName: "ThemeSettings",
+    routeName: SettingsRouteName.ThemeSettings,
   },
   {
-    id: 6,
+    id: "6",
     title: "Language",
     imageSrc: "language",
-    routeName: "LanguageSettings",
+    routeName: SettingsRouteName.LanguageSettings,
   },
   {
-    id: 7,
+    id: "7",
     title: "About",
     imageSrc: "about",
-    routeName: "AboutSettings",
+    routeName: SettingsRouteName.AboutSettings,
   },
 ];
 
-const drinkImageMap = {
+const drinkImageMap: { [key: string]: ImageSourcePropType } = {
   waterbottle,
   tea,
   can,
@@ -90,79 +94,79 @@ const drinkImageMap = {
 const drinkTypeList = [
   {
     typeID: 1,
-    imageSrc: "waterbottle",
+    imageSrc: DrinkImage.Water,
     label: "Water",
-    drinkType: "normal",
+    drinkType: DrinkType.Normal,
     color: "#3C91E6",
   },
   {
     typeID: 10,
-    imageSrc: "juice",
+    imageSrc: DrinkImage.Juice,
     label: "Juice",
-    drinkType: "normal",
+    drinkType: DrinkType.Normal,
     color: "#F5882A",
   },
   {
     typeID: 3,
-    imageSrc: "can",
+    imageSrc: DrinkImage.Can,
     label: "Soda",
-    drinkType: "soda",
+    drinkType: DrinkType.Soda,
     color: "#120001",
   },
   {
     typeID: 4,
-    imageSrc: "coffeecup",
+    imageSrc: DrinkImage.Coffee,
     label: "Coffee",
-    drinkType: "caffeine",
+    drinkType: DrinkType.Caffeine,
     color: "#634832",
   },
   {
     typeID: 11,
-    imageSrc: "milk",
+    imageSrc: DrinkImage.Milk,
     label: "Dairy",
-    drinkType: "normal",
+    drinkType: DrinkType.Normal,
     color: "#FFFAF5",
   },
   {
     typeID: 2,
-    imageSrc: "tea",
+    imageSrc: DrinkImage.Tea,
     label: "Tea",
-    drinkType: "tea",
+    drinkType: DrinkType.Tea,
     color: "#C98258",
   },
   {
     typeID: 8,
-    imageSrc: "energydrink",
+    imageSrc: DrinkImage.EnergyDrink,
     label: "Energy Drink",
-    drinkType: "caffeine",
+    drinkType: DrinkType.Caffeine,
     color: "#CCDC2A",
   },
   {
     typeID: 5,
-    imageSrc: "beer",
+    imageSrc: DrinkImage.Beer,
     label: "Beer",
-    drinkType: "alcohol_mild",
+    drinkType: DrinkType.MildAlcohol,
     color: "#F5A52A",
   },
   {
     typeID: 9,
-    imageSrc: "cocktail",
+    imageSrc: DrinkImage.Cocktail,
     label: "Cocktail",
-    drinkType: "alcohol_mid",
+    drinkType: DrinkType.MediumAlcohol,
     color: "#2ADBB5",
   },
   {
     typeID: 6,
-    imageSrc: "winebottle",
+    imageSrc: DrinkImage.Wine,
     label: "Wine",
-    drinkType: "alcohol_mid",
+    drinkType: DrinkType.MediumAlcohol,
     color: "#800020",
   },
   {
     typeID: 7,
-    imageSrc: "liquor",
+    imageSrc: DrinkImage.Liquor,
     label: "Spirit",
-    drinkType: "alcohol_heavy",
+    drinkType: DrinkType.HeavyAlcohol,
     color: "#B74322",
   },
 ];

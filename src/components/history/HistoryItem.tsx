@@ -16,7 +16,6 @@ import {
   metricUnitConversion,
 } from "../../utils/helpers";
 import { HistoryDeleteButton } from "./HistoryDeleteButton";
-import { DrinkImage } from "@/enums/DrinkImage";
 import { type UID } from "@/types/UID";
 import { type UnixDate } from "@/types/UnixDate";
 
@@ -57,7 +56,7 @@ const drinkTimeSize = {
 };
 
 interface HistoryItemProps {
-  imageSrc: DrinkImage;
+  imageSrc: string;
   itemID: UID;
   title: string;
   date: UnixDate;

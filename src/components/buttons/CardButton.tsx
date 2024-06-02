@@ -12,7 +12,6 @@ import { color, cardBorderWidth, SCREEN_SIZE } from "../../utils/constants";
 import { PrimaryText } from "../texts/PrimaryText";
 import { animateButtonPress } from "../../utils/animations";
 import { drinkImageMap } from "../../utils/maps";
-import { DrinkImage } from "@/enums/DrinkImage";
 import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
 const cardButtonBorderRadius = {
@@ -34,7 +33,7 @@ const getDynamicCardButtonStyle = () => ({
 
 interface CardButtonProps {
   onPress: () => void;
-  imageSrc: DrinkImage;
+  imageSrc: string;
   children: React.ReactNode;
   style: StyleProp<ViewStyle>;
 }

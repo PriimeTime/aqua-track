@@ -9,7 +9,10 @@ import {
 } from "../../utils/constants";
 import { useRef } from "react";
 import { animateButtonPress } from "../../utils/animations";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { SettingsRouteName } from "@/enums/SettingsRouteName";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const titleSize = {
   SMALL: 1,
@@ -23,20 +26,26 @@ const itemBorderRadius = {
   LARGE: 25,
 };
 
-function SettingsItem({ title, imageSrc, routeName }) {
-  const navigation = useNavigation();
-  const scaleValue = useRef(new Animated.Value(1)).current;
+interface SettingsItemProps {
+  title: string;
+  imageSrc: string;
+  routeName: SettingsRouteName;
+}
+
+function SettingsItem({ title, imageSrc, routeName }: SettingsItemProps) {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const scaleValue = useRef(animatedScaleValue(1)).current;
 
   const handleOnPress = () => {
     navigation.navigate(routeName);
   };
 
   const handleOnPressIn = () => {
-    animateButtonPress(scaleValue, 0.9);
+    animateButtonPress(scaleValue, animatedScaleValue(0.9));
   };
 
   const handleOnPressOut = () => {
-    animateButtonPress(scaleValue, 1);
+    animateButtonPress(scaleValue, animatedScaleValue(1));
   };
 
   return (
@@ -89,7 +98,6 @@ const styles = StyleSheet.create({
   },
   itemTitleWrapper: {
     justifyContent: "center",
-    alignItems: "start",
     width: "80%",
     height: "100%",
   },
