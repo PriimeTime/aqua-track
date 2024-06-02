@@ -27,6 +27,9 @@ import {
 
 import { loadUserData, updateUserData } from "../../utils/database";
 import { setHistory } from "../../store/drinkHistory";
+import { UserDataState } from "@/types/UserDataState";
+import { DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -42,15 +45,15 @@ const errorTextSize = {
   LARGE: 30,
 };
 
-const GoogleButton = ({ children }) => {
+const GoogleButton = ({ children }: { children: React.ReactNode }) => {
   return (
-    <View style={styles.googleButton.wrapper}>
-      <View style={styles.googleButton.flexBoxWrapper}>
-        <View style={styles.googleButton.imageWrapper}>
-          <Image style={styles.googleButton.image} source={googleLogo}></Image>
+    <View style={googleButtonStyles.wrapper}>
+      <View style={googleButtonStyles.flexBoxWrapper}>
+        <View style={googleButtonStyles.imageWrapper}>
+          <Image style={googleButtonStyles.image} source={googleLogo}></Image>
         </View>
-        <View style={styles.googleButton.textWrapper}>
-          <Text style={styles.googleButton.text}>{children}</Text>
+        <View style={googleButtonStyles.textWrapper}>
+          <Text style={googleButtonStyles.text}>{children}</Text>
         </View>
       </View>
     </View>
@@ -61,13 +64,17 @@ function AccountSettings() {
   const dispatch = useDispatch();
   const auth = getAuth();
 
-  const userMetrics = useSelector((state) => state.userData.userMetrics);
-  const userDrinkHistory = useSelector((state) => state.drinkHistory);
+  const userMetrics = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
+  const userDrinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
 
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [title, setTitle] = useState("Login");
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [formState, setFormState] = useState({
     email: "",
     password: "",
@@ -125,12 +132,23 @@ function AccountSettings() {
 
       const userData = await loadUserData(user.uid);
 
-      dispatch(setHistory(userData.userDrinkHistory));
-      dispatch(setUserMetrics(userData.userMetrics));
-      dispatch(setUserLoginState(true));
+      if (userData) {
+        dispatch(setHistory(userData.userDrinkHistory));
+        dispatch(setUserMetrics(userData.userMetrics));
+        dispatch(setUserLoginState(true));
+      } else {
+        console.error("Unable to load user data --> userData falsy");
+      }
       setLoading(false);
     } catch (error) {
-      const errMsg = error.message;
+      let errMsg = "";
+
+      if (error instanceof Error) {
+        errMsg = error.message;
+      }
+
+      // TODO: create an invisible input field below all others and display
+      // general error messages there
 
       if (errMsg.includes("invalid-email")) {
         setFormErrors((prevErrors) => ({
@@ -220,14 +238,14 @@ function AccountSettings() {
     setShowRegisterPage(!showRegisterPage);
   };
 
-  const handleInputChange = (fieldName, value) => {
+  const handleInputChange = (fieldName: string, value: string) => {
     setFormState((prevForm) => ({
       ...prevForm,
       [fieldName]: value,
     }));
   };
 
-  const resetInputValidation = (fieldName) => {
+  const resetInputValidation = (fieldName: string) => {
     if (formErrors[fieldName]) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
@@ -236,11 +254,11 @@ function AccountSettings() {
     }
   };
 
-  const validateForm = (isRegister = false, fieldName) => {
+  const validateForm = (isRegister = false, fieldName?: string) => {
     let newErrors = { ...formErrors }; // Start with current errors
     let isValid = true;
 
-    const validateField = (fieldKey) => {
+    const validateField = (fieldKey: string) => {
       switch (fieldKey) {
         case "email":
           const emailValidation = validateEmail(isRegister, formState.email);
@@ -321,7 +339,7 @@ function AccountSettings() {
             handleOnBlur={() => validateForm(false, "password")}
             handleOnFocus={() => resetInputValidation("password")}
             fullWidth
-            inputType="password"
+            inputType={CustomTextFieldInputType.Password}
             label="Password"
           ></CustomTextField>
           <View style={styles.errorWrapper}>
@@ -337,7 +355,7 @@ function AccountSettings() {
                 handleOnBlur={() => validateForm(true, "confirmPassword")}
                 handleOnFocus={() => resetInputValidation("confirmPassword")}
                 fullWidth
-                inputType="password"
+                inputType={CustomTextFieldInputType.Password}
                 label="Confirm password"
               ></CustomTextField>
               <View style={styles.errorWrapper}>
@@ -416,38 +434,39 @@ const styles = StyleSheet.create({
     fontSize: errorTextSize[SCREEN_SIZE],
     color: color.RED,
   },
-  googleButton: {
-    wrapper: {
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    flexBoxWrapper: {
-      flexDirection: "row",
-    },
-    imageWrapper: {
-      width: "25%",
-      height: "100%",
-      alignItems: "flex-end",
-    },
-    image: {
-      left: "10%",
-      width: "80%",
-      top: "10%",
-      height: "80%",
-      objectFit: "contain",
-    },
-    textWrapper: {
-      width: "75%",
-      justifyContent: "center",
-      alignItems: "flex-start",
-    },
-    text: {
-      fontFamily: fontFamily.GOOGLE,
-      textAlign: "center",
-      fontSize: textSize[SCREEN_SIZE],
-      letterSpacing: 0,
-      color: color.BLACK,
-    },
+});
+
+const googleButtonStyles = StyleSheet.create({
+  wrapper: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  flexBoxWrapper: {
+    flexDirection: "row",
+  },
+  imageWrapper: {
+    width: "25%",
+    height: "100%",
+    alignItems: "flex-end",
+  },
+  image: {
+    left: "10%",
+    width: "80%",
+    top: "10%",
+    height: "80%",
+    objectFit: "contain",
+  },
+  textWrapper: {
+    width: "75%",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  text: {
+    fontFamily: fontFamily.GOOGLE,
+    textAlign: "center",
+    fontSize: textSize[SCREEN_SIZE],
+    letterSpacing: 0,
+    color: color.BLACK,
   },
 });

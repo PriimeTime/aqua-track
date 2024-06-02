@@ -6,8 +6,7 @@ import {
   View,
   ActivityIndicator,
   ColorValue,
-  StyleProp,
-  ViewStyle,
+  TextStyle,
 } from "react-native";
 import { color, fontFamily, shadow, SCREEN_SIZE } from "../../utils/constants";
 import { animateButtonPress } from "../../utils/animations";
@@ -64,7 +63,7 @@ type PrimaryButtonProps = {
   onPress: () => void;
   fontSize?: number;
   children: React.ReactNode;
-  textStyle?: StyleProp<ViewStyle>;
+  textStyle?: TextStyle;
   custom?: boolean;
   isLoading?: boolean;
 };

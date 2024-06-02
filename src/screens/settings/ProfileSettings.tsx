@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserMetrics } from "../../store/userData";
 import { useNavigation, StackActions } from "@react-navigation/native";
 import { InputContentWrapper } from "../../components/input/InputContentWrapper";
+import { UserDataState } from "@/types/UserDataState";
+import { UserMetrics } from "@/models/UserMetrics";
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+import { numToString } from "@/utils/helpers";
 
 const genderSelectBoxItems = [
   { id: 1, title: "Male" },
@@ -25,11 +29,16 @@ function ProfileSettings() {
   const popAction = StackActions.pop(1);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userMetrics = useSelector((state) => state.userData.userMetrics);
+  const userMetrics = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
 
   const [metricObject, setMetricObject] = useState(userMetrics);
 
-  const handleOnChange = (value, name) => {
+  const handleOnChange = <T extends keyof UserMetrics>(
+    value: UserMetrics[T],
+    name: T
+  ) => {
     setMetricObject((prevValue) => {
       const retVal = { ...prevValue };
       retVal[name] = value;
@@ -46,11 +55,11 @@ function ProfileSettings() {
     <ContentPage title="Metrics & Body Measurements">
       <InputContentWrapper>
         <CustomTextField
-          inputType="numeric"
+          inputType={CustomTextFieldInputType.Number}
           maxLength={2}
           label="Age"
-          value={metricObject.age}
-          handleOnChangeText={(value) => handleOnChange(value, "age")}
+          value={numToString(metricObject.age)}
+          handleOnChangeText={(value) => handleOnChange(Number(value), "age")}
         ></CustomTextField>
       </InputContentWrapper>
       <InputContentWrapper>
@@ -64,20 +73,24 @@ function ProfileSettings() {
       <InputContentWrapper>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <CustomTextField
-            inputType="numeric"
+            inputType={CustomTextFieldInputType.Number}
             maxLength={3}
             label="Height"
             append="cm"
-            value={metricObject.height}
-            handleOnChangeText={(value) => handleOnChange(value, "height")}
+            value={numToString(metricObject.height)}
+            handleOnChangeText={(value) =>
+              handleOnChange(Number(value), "height")
+            }
           ></CustomTextField>
           <CustomTextField
-            inputType="numeric"
+            inputType={CustomTextFieldInputType.Number}
             maxLength={3}
             label="Weight"
             append="kg"
-            value={metricObject.weight}
-            handleOnChangeText={(value) => handleOnChange(value, "weight")}
+            value={numToString(metricObject.weight)}
+            handleOnChangeText={(value) =>
+              handleOnChange(Number(value), "weight")
+            }
           ></CustomTextField>
         </View>
       </InputContentWrapper>

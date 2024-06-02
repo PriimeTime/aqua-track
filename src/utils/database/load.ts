@@ -5,6 +5,7 @@ import {
   DocumentSnapshot,
 } from "firebase/firestore";
 import { firestore } from "../../../firebase";
+import { UserData } from "@/models/UserData";
 
 const loadUserData = async (userId: string): Promise<DocumentData | null> => {
   const userDocRef = doc(firestore, "users", userId);
@@ -13,7 +14,7 @@ const loadUserData = async (userId: string): Promise<DocumentData | null> => {
     if (docSnap.exists()) {
       const data = docSnap.data();
       console.log("User data:", data);
-      return data || null; // Return data if it exists, otherwise return null
+      return (data as UserData) || null; // Return data if it exists, otherwise return null
     } else {
       console.log("No such document!");
       return null;

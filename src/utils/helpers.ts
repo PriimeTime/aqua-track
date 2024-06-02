@@ -64,6 +64,22 @@ const formatDecimals = (num: number, decimals: number): number => {
   return parsedNum;
 };
 
+const numToString = (num: number | null) => {
+  let retVal = "";
+
+  if (num === null) {
+    return "0";
+  }
+
+  retVal = String(num);
+
+  if (retVal === "NaN") {
+    return "0";
+  }
+
+  return retVal;
+};
+
 /**
  *
  * @param {*} totalIntake - the total intake in milliliters
@@ -131,4 +147,5 @@ export {
   displayPositivePercent,
   getHoursMinutesFromUnixDate,
   formatDecimals,
+  numToString,
 };

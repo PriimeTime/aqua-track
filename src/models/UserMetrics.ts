@@ -1,10 +1,7 @@
-import { ExerciseLevel } from "@/enums/ExerciseLevel";
-import { Gender } from "@/enums/Gender";
-
 export interface UserMetrics {
   age: number | null;
-  exerciseLvl: ExerciseLevel | null;
-  gender: Gender | null;
+  exerciseLvl: string | null;
+  gender: string | null;
   height: number | null;
   weight: number | null;
 }
