@@ -3,6 +3,7 @@ import {
   SCREEN_SIZE,
   color,
   fontFamily,
+  getFontSizeForScreen,
   inputFieldHeight,
   inputFontSizeValues,
 } from "../../utils/constants";
@@ -15,7 +16,29 @@ const titleSize = {
   LARGE: 8,
 };
 
-function CustomSelectBox({ value, items, label, handleOnSelect }) {
+const getSelectBoxTextStyle = () => ({
+  fontSize: getFontSizeForScreen(inputFontSizeValues, SCREEN_SIZE, titleSize),
+  ...styles.selectBoxText,
+});
+
+interface CustomSelectBoxItem {
+  id: number;
+  title: string;
+}
+
+interface CustomSelectBoxProps<T> {
+  value: T;
+  items: CustomSelectBoxItem[];
+  label: string;
+  handleOnSelect: (value: string) => void;
+}
+
+function CustomSelectBox<T>({
+  value,
+  items,
+  label,
+  handleOnSelect,
+}: CustomSelectBoxProps<T>) {
   const [selectedItemId, setSelectedItemId] = useState(-1);
 
   useEffect(() => {
@@ -27,7 +50,7 @@ function CustomSelectBox({ value, items, label, handleOnSelect }) {
     }
   }, [value, items]);
 
-  const handleOnPress = ({ id, title }) => {
+  const handleOnPress = ({ id, title }: CustomSelectBoxItem) => {
     setSelectedItemId(id);
     handleOnSelect(title);
   };
@@ -57,7 +80,7 @@ function CustomSelectBox({ value, items, label, handleOnSelect }) {
           >
             <Text
               style={[
-                styles.selectBoxText,
+                getSelectBoxTextStyle(),
                 {
                   color:
                     selectedItemId === item.id ? color.WHITE : color.LIGHTBLUE,
@@ -91,6 +114,5 @@ const styles = StyleSheet.create({
   },
   selectBoxText: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: inputFontSizeValues[titleSize[SCREEN_SIZE]].fontSize,
   },
 });

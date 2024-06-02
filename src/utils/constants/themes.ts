@@ -1,3 +1,7 @@
+import { ScreenSize } from "@/enums/ScreenSize";
+import { FontSizeConfig } from "@/models/FontSizeConfig";
+import { ResponsiveSize } from "@/models/ResponsiveSize";
+
 const color = {
   WHITE: "#FFFFFF",
   LIGHTBLUE: "#8FC7FF",
@@ -47,6 +51,23 @@ const inputFontSizeValues = {
   8: { fontSize: 48 },
 };
 
+const getFontSizeForScreen = (
+  fontSizeConfig: FontSizeConfig,
+  screenSize: ScreenSize,
+  sizes: ResponsiveSize
+): number => {
+  const sizeKey = sizes[screenSize];
+  const fontSize = fontSizeConfig[sizeKey]?.fontSize;
+
+  if (fontSize === undefined) {
+    throw new Error(
+      `Font size for key ${sizeKey} is not defined in fontSizeConfig`
+    );
+  }
+
+  return fontSize;
+};
+
 const listItemHeight = {
   SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
   MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
@@ -74,4 +95,5 @@ export {
   cardBorderWidth,
   fontFamily,
   inputFontSizeValues,
+  getFontSizeForScreen,
 };

@@ -1,12 +1,23 @@
-import { StyleSheet, View, TextInput, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+  KeyboardTypeOptions,
+} from "react-native";
 import { SecondaryText } from "../texts/SecondaryText";
 import {
   SCREEN_SIZE,
   color,
   fontFamily,
+  getFontSizeForScreen,
   inputFieldHeight,
   inputFontSizeValues,
 } from "../../utils/constants";
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
 const appendFontValues = {
   1: { fontSize: 9 },
@@ -25,6 +36,28 @@ const titleSize = {
   LARGE: 8,
 };
 
+const getAppendStyle = () => ({
+  fontSize: getFontSizeForScreen(appendFontValues, SCREEN_SIZE, titleSize),
+  ...styles.append,
+});
+
+const getTextInputStyle = () => ({
+  fontSize: getFontSizeForScreen(inputFontSizeValues, SCREEN_SIZE, titleSize),
+  ...styles.textInput,
+});
+
+interface CustomTextFieldProps {
+  value: string;
+  handleOnChangeText?: (input: string) => void;
+  handleOnBlur?: () => void;
+  handleOnFocus?: () => void;
+  label: string;
+  inputType?: CustomTextFieldInputType;
+  maxLength?: number;
+  append?: string;
+  fullWidth?: boolean;
+}
+
 function CustomTextField({
   value,
   handleOnChangeText,
@@ -36,17 +69,17 @@ function CustomTextField({
   append,
   fullWidth,
   ...props
-}) {
-  let keyboardType = "default";
-  let textAlign = "auto";
+}: CustomTextFieldProps) {
+  let keyboardType: KeyboardTypeOptions = CustomTextFieldInputType.Default;
+  let textAlign: TextStyle["textAlign"] = "auto";
   let isPassword = false;
 
   switch (inputType) {
-    case "numeric":
+    case CustomTextFieldInputType.Number:
       textAlign = "center";
       keyboardType = inputType;
       break;
-    case "password":
+    case CustomTextFieldInputType.Password:
       isPassword = true;
       break;
   }
@@ -58,7 +91,7 @@ function CustomTextField({
   }
 
   return (
-    <View style={{ width: textFieldWidth }} {...props}>
+    <View style={{ width: textFieldWidth } as StyleProp<ViewStyle>} {...props}>
       {label && (
         <View style={styles.labelWrapper}>
           <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
@@ -71,12 +104,12 @@ function CustomTextField({
           styles.textInputWrapper,
           {
             width: textFieldWidth,
-          },
+          } as StyleProp<ViewStyle>,
         ]}
       >
         <TextInput
           style={[
-            styles.textInput,
+            getTextInputStyle(),
             {
               textAlign,
               width: append ? "65%" : "90%",
@@ -92,7 +125,7 @@ function CustomTextField({
         ></TextInput>
         {append && (
           <View style={styles.appendWrapper}>
-            <Text style={styles.append}>{append}</Text>
+            <Text style={getAppendStyle()}>{append}</Text>
           </View>
         )}
       </View>
@@ -116,7 +149,6 @@ const styles = StyleSheet.create({
   append: {
     textAlign: "center",
     fontFamily: fontFamily.DEFAULT,
-    fontSize: appendFontValues[titleSize[SCREEN_SIZE]].fontSize,
     color: color.DARK_BLUE,
   },
   textInputWrapper: {
@@ -131,7 +163,6 @@ const styles = StyleSheet.create({
   textInput: {
     height: "100%",
     fontFamily: fontFamily.DEFAULT,
-    fontSize: inputFontSizeValues[titleSize[SCREEN_SIZE]].fontSize,
     color: color.DARK_BLUE,
   },
 });

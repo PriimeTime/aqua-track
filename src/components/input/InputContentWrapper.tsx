@@ -1,6 +1,10 @@
 import { View } from "react-native";
 
-function InputContentWrapper({ children, ...props }) {
+interface InputContentWrapperProps {
+  children: React.ReactNode;
+}
+
+function InputContentWrapper({ children, ...props }: InputContentWrapperProps) {
   return (
     <View style={{ marginBottom: "5%" }} {...props}>
       {children}
