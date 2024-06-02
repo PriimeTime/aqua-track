@@ -5,7 +5,11 @@ import {
   useFocusEffect,
   useNavigation,
   useRoute,
+  RouteProp,
+  ParamListBase,
 } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import { useDispatch } from "react-redux";
 import { addToHistory } from "../../store/drinkHistory";
 import { drinkTypeList } from "../../utils/maps";
@@ -18,19 +22,22 @@ import { BackButton } from "../../components/buttons/BackButton";
 
 import { inputDrinkConfig, SCREEN_SIZE } from "../../utils/constants";
 import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
+import { DrinkItem } from "@/models/DrinkItem";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
+import { MainRouteName } from "@/enums/MainRouteName";
 
 /**
  * Debounce function to control
  * haptic feedback intensity
  */
-const useDebouncedCallback = (callback, delay) => {
+const useDebouncedCallback = (callback: () => void, delay: number) => {
   const lastCall = useRef(0);
 
-  return (...args) => {
+  return () => {
     const now = new Date().getTime();
     if (now - lastCall.current > delay) {
       lastCall.current = now;
-      callback(...args);
+      callback();
     }
   };
 };
@@ -49,21 +56,21 @@ const sensitivity = {
 
 function DrinkAmount() {
   const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
-  const route = useRoute();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const route =
+    useRoute<RouteProp<{ params: { drinkType: DrinkItem } }, "params">>();
   const dispatch = useDispatch();
 
   const { drinkType } = route.params;
-  const scaleValue = useRef(new Animated.Value(1)).current;
+  const scaleValue = useRef(animatedScaleValue(1)).current;
 
   const inputBottleObject = inputDrinkConfig.filter(
     (item) => item.drinkType === drinkType.drinkType
   )[0];
 
-  // Not destructuring this on purpose for better readability
-  const inputBottleSize = inputBottleObject.size;
-  const incrementValue = inputBottleObject.increment;
-  const hydroFactor = inputBottleObject.hydroFactor;
+  const inputBottleSize = inputBottleObject?.size ?? 0;
+  const incrementValue = inputBottleObject?.increment ?? 0;
+  const hydroFactor = inputBottleObject?.hydroFactor ?? 0;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -94,7 +101,7 @@ function DrinkAmount() {
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: (evt, gestureState) => {
+    onPanResponderMove: (_, gestureState) => {
       const dragDistance = gestureState.dy * sensitivity[SCREEN_SIZE];
 
       // Calculate height of water based on drag
@@ -133,7 +140,7 @@ function DrinkAmount() {
       };
 
       dispatch(addToHistory(drinkItem));
-      navigation.navigate("Home");
+      navigation.navigate(MainRouteName.Home);
     } else {
       triggerAnimation();
     }

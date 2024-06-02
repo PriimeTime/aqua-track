@@ -1,7 +1,8 @@
 import { View, StyleSheet, Animated, FlatList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { PrimaryText } from "../../components/texts/PrimaryText";
 import { CardButton } from "../../components/buttons/CardButton";
@@ -10,6 +11,10 @@ import { drinkTypeList } from "../../utils/maps";
 import { dimensions, SCREEN_SIZE } from "../../utils/constants";
 import { BackButton } from "../../components/buttons/BackButton";
 import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
+import { DrinkItem } from "@/models/DrinkItem";
+import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
+import { DrinkRouteName } from "@/enums/DrinkRouteName";
+import { numToString } from "@/utils/helpers";
 
 const cardButtonHeight =
   SCREEN_SIZE === "LARGE"
@@ -23,13 +28,13 @@ const headerSize = {
 };
 
 function DrinkSelection() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const insets = useSafeAreaInsets();
 
-  const scaleValue = useRef(new Animated.Value(1)).current;
+  const scaleValue = useRef(animatedScaleValue(1)).current;
 
-  const handleButtonPress = (drink) => {
-    navigation.navigate("DrinkAmount", { drinkType: drink });
+  const handleButtonPress = (drink: DrinkItem) => {
+    navigation.navigate(DrinkRouteName.DrinkAmount, { drinkType: drink });
   };
 
   return (
@@ -62,8 +67,8 @@ function DrinkSelection() {
             {item.label}
           </CardButton>
         )}
-        keyExtractor={(item) => item.typeID}
-        getItemLayout={(data, index) => ({
+        keyExtractor={(item) => numToString(item.typeID)}
+        getItemLayout={(_, index) => ({
           length: cardButtonHeight,
           offset: cardButtonHeight * index,
           index,

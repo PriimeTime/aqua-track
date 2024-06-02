@@ -25,17 +25,21 @@ const borderRadius = {
   LARGE: 42,
 };
 
-function DrinkAmountBottle({ heightVal, liquidColor }) {
+interface DrinkAmountBottleProps {
+  heightVal: number;
+  liquidColor: string;
+}
+
+function DrinkAmountBottle({ heightVal, liquidColor }: DrinkAmountBottleProps) {
   return (
     <View style={styles.glass}>
       <View
         style={[
-          styles.glass.liquid,
+          styles.liquid,
           { height: `${(heightVal / 100) * 80}%` },
           { backgroundColor: liquidColor },
         ]}
       ></View>
-      <View style={styles.glass.light}></View>
     </View>
   );
 }
@@ -56,12 +60,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: borderWidth[SCREEN_SIZE],
     borderBottomRightRadius: borderRadius[SCREEN_SIZE],
     borderBottomLeftRadius: borderRadius[SCREEN_SIZE],
-    liquid: {
-      position: "absolute",
-      bottom: "2.5%",
-      left: "5%",
-      width: "90%",
-      borderRadius: 8,
-    },
+  },
+  liquid: {
+    position: "absolute",
+    bottom: "2.5%",
+    left: "5%",
+    width: "90%",
+    borderRadius: 8,
   },
 });
