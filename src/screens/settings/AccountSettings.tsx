@@ -1,9 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
 import { ContentPage } from "../../components/wrappers/ContentPage";
-import { CustomTextField } from "../../components/input/CustomTextField";
-import { PrimaryButton } from "../../components/buttons/PrimaryButton";
-import { color, fontFamily, SCREEN_SIZE } from "../../utils/constants";
-import googleLogo from "../../../assets/icons/google-logo.png";
 import { useEffect, useState } from "react";
 import {
   setUserMetrics,
@@ -19,7 +14,7 @@ import {
 } from "../../utils/validation";
 import {
   getAuth,
-  onAuthStateChanged,
+  // onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -27,42 +22,23 @@ import {
 
 import { loadUserData, updateUserData } from "../../utils/database";
 import { setHistory } from "../../store/drinkHistory";
-import { UserDataState } from "@/types/UserDataState";
-import { DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+import { type UserDataState } from "@/types/UserDataState";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { AccountSettingsState } from "@/enums/AccountSettingsState";
+import { LoginForm } from "@/components/settings/account/LoginForm";
+import { RegisterForm } from "@/components/settings/account/RegisterForm";
+import { AccountDetails } from "@/components/settings/account/AccountDetails";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
-const textSize = {
-  SMALL: 20,
-  MEDIUM: 25,
-  LARGE: 60,
-};
-
-const errorTextSize = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 30,
-};
-
-const GoogleButton = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <View style={googleButtonStyles.wrapper}>
-      <View style={googleButtonStyles.flexBoxWrapper}>
-        <View style={googleButtonStyles.imageWrapper}>
-          <Image style={googleButtonStyles.image} source={googleLogo}></Image>
-        </View>
-        <View style={googleButtonStyles.textWrapper}>
-          <Text style={googleButtonStyles.text}>{children}</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 function AccountSettings() {
   const dispatch = useDispatch();
   const auth = getAuth();
+
+  const isLoggedIn = useSelector(
+    (state: UserDataState) => state.userData.userAuth.isLoggedIn
+  );
 
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
@@ -72,8 +48,34 @@ function AccountSettings() {
   );
 
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [title, setTitle] = useState("Login");
+  const [accountSettingsState, setAccountSettingsState] = useState(
+    AccountSettingsState.ShowLogin
+  );
+
+  useEffect(() => {
+    switch (accountSettingsState) {
+      case AccountSettingsState.ShowAccount:
+        setTitle("Account Details");
+        break;
+      case AccountSettingsState.ShowLogin:
+        setTitle("Login");
+        break;
+      case AccountSettingsState.ShowRegister:
+        setTitle("Register");
+        break;
+    }
+
+    if (isLoggedIn) {
+      setAccountSettingsState(AccountSettingsState.ShowAccount);
+    } else if (
+      !isLoggedIn &&
+      accountSettingsState === AccountSettingsState.ShowAccount
+    ) {
+      setAccountSettingsState(AccountSettingsState.ShowLogin);
+    }
+  }, [isLoggedIn, accountSettingsState]);
+
+  const [title, setTitle] = useState("initial title");
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   const [formState, setFormState] = useState({
     email: "",
@@ -81,28 +83,16 @@ function AccountSettings() {
     confirmPassword: "",
   });
 
-  /**
-   * Listen to firebase auth state changes
-   */
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setTitle("Account");
-        setIsLoggedIn(true);
-      } else {
-        setTitle("Login");
-        setIsLoggedIn(false);
-      }
-    });
+  // /**
+  //  * Listen to firebase auth state changes
+  //  */
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setIsLoggedIn(!!user);
+  //   });
 
-    return () => unsubscribe();
-  }, []);
-
-  /**
-   * Handles whether register or login page
-   * should be shown when user is not logged in
-   */
-  const [showRegisterPage, setShowRegisterPage] = useState(false);
+  //   return () => unsubscribe();
+  // }, []);
 
   const resetFormState = () => {
     setFormState({
@@ -110,6 +100,14 @@ function AccountSettings() {
       password: "",
       confirmPassword: "",
     });
+  };
+
+  const redirectToRegister = () => {
+    setAccountSettingsState(AccountSettingsState.ShowRegister);
+  };
+
+  const redirectToLogin = () => {
+    setAccountSettingsState(AccountSettingsState.ShowLogin);
   };
 
   const handleOnLogin = async () => {
@@ -205,8 +203,8 @@ function AccountSettings() {
       // }, 10000);
 
       resetFormState();
-      setTitle("Login"); // TODO: set this to Account instead
-      setShowRegisterPage(false);
+      // setTitle("Login"); // TODO: set this to Account instead
+      // setShowRegisterPage(false);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -223,19 +221,6 @@ function AccountSettings() {
       console.error("Error signing out:", error);
       // Handle errors if sign out fails, such as a network error
     }
-  };
-
-  const handleOnAppleSignIn = () => {
-    // TODO: firebase apple signin
-  };
-  const handleOnGoogleSignIn = () => {
-    // TODO: firebase google signin
-  };
-
-  const handleToggleLogin = () => {
-    showRegisterPage ? setTitle("Login") : setTitle("Register");
-    resetFormState();
-    setShowRegisterPage(!showRegisterPage);
   };
 
   const handleInputChange = (fieldName: string, value: string) => {
@@ -318,155 +303,46 @@ function AccountSettings() {
     return isValid;
   };
 
+  const renderAccountSettings = () => {
+    switch (accountSettingsState) {
+      case AccountSettingsState.ShowLogin:
+        return (
+          <LoginForm
+            handleInputChange={handleInputChange}
+            handleOnLogin={handleOnLogin}
+            redirectToRegister={redirectToRegister}
+            validateForm={validateForm}
+            resetInputValidation={resetInputValidation}
+            formState={formState}
+            formErrors={formErrors}
+            loading={loading}
+          ></LoginForm>
+        );
+      case AccountSettingsState.ShowRegister:
+        return (
+          <RegisterForm
+            handleInputChange={handleInputChange}
+            handleOnRegister={handleOnRegister}
+            redirectToLogin={redirectToLogin}
+            validateForm={validateForm}
+            resetInputValidation={resetInputValidation}
+            formState={formState}
+            formErrors={formErrors}
+            loading={loading}
+          ></RegisterForm>
+        );
+      case AccountSettingsState.ShowAccount:
+        return (
+          <AccountDetails handleOnLogout={handleOnLogout}></AccountDetails>
+        );
+    }
+  };
+
   return (
     <ContentPage key={title} title={title}>
-      {!isLoggedIn && (
-        <>
-          <CustomTextField
-            value={formState.email}
-            handleOnChangeText={(text) => handleInputChange("email", text)}
-            handleOnBlur={() => validateForm(false, "email")}
-            handleOnFocus={() => resetInputValidation("email")}
-            fullWidth
-            label="E-mail"
-          ></CustomTextField>
-          <View style={styles.errorWrapper}>
-            <Text style={styles.errorText}>{formErrors.email}</Text>
-          </View>
-          <CustomTextField
-            value={formState.password}
-            handleOnChangeText={(text) => handleInputChange("password", text)}
-            handleOnBlur={() => validateForm(false, "password")}
-            handleOnFocus={() => resetInputValidation("password")}
-            fullWidth
-            inputType={CustomTextFieldInputType.Password}
-            label="Password"
-          ></CustomTextField>
-          <View style={styles.errorWrapper}>
-            <Text style={styles.errorText}>{formErrors.password}</Text>
-          </View>
-          {showRegisterPage && (
-            <>
-              <CustomTextField
-                value={formState.confirmPassword}
-                handleOnChangeText={(text) =>
-                  handleInputChange("confirmPassword", text)
-                }
-                handleOnBlur={() => validateForm(true, "confirmPassword")}
-                handleOnFocus={() => resetInputValidation("confirmPassword")}
-                fullWidth
-                inputType={CustomTextFieldInputType.Password}
-                label="Confirm password"
-              ></CustomTextField>
-              <View style={styles.errorWrapper}>
-                <Text style={styles.errorText}>
-                  {formErrors.confirmPassword}
-                </Text>
-              </View>
-              <PrimaryButton onPress={handleOnRegister}>
-                {"register".toUpperCase()}
-              </PrimaryButton>
-              <PrimaryButton
-                btnColor={color.WHITE}
-                textStyle={{ color: color.BLUE }}
-                onPress={handleToggleLogin}
-                isLoading={loading}
-              >
-                {"login".toUpperCase()}
-              </PrimaryButton>
-            </>
-          )}
-          {!showRegisterPage && (
-            <>
-              <PrimaryButton isLoading={loading} onPress={handleOnLogin}>
-                {"login".toUpperCase()}
-              </PrimaryButton>
-              <PrimaryButton
-                btnColor={color.WHITE}
-                textStyle={{ color: color.BLUE }}
-                onPress={handleToggleLogin}
-              >
-                {"register".toUpperCase()}
-              </PrimaryButton>
-              <PrimaryButton
-                btnColor={color.WHITE}
-                custom
-                onPress={handleOnGoogleSignIn}
-              >
-                <GoogleButton>{"Sign in with Google"}</GoogleButton>
-              </PrimaryButton>
-              <PrimaryButton
-                btnColor={color.BLACK}
-                onPress={handleOnAppleSignIn}
-                textStyle={{
-                  letterSpacing: 0,
-                  fontWeight: "bold",
-                  fontFamily: fontFamily.SYSTEM,
-                  color: color.WHITE,
-                }}
-              >
-                {" Sign in with Apple"}
-              </PrimaryButton>
-            </>
-          )}
-        </>
-      )}
-      {isLoggedIn && (
-        <>
-          <PrimaryButton onPress={handleOnLogout}>
-            {"log out".toUpperCase()}
-          </PrimaryButton>
-        </>
-      )}
+      {renderAccountSettings()}
     </ContentPage>
   );
 }
 
 export { AccountSettings };
-
-const styles = StyleSheet.create({
-  errorWrapper: {
-    justifyContent: "center",
-    height: errorTextSize[SCREEN_SIZE] * 1.5,
-  },
-  errorText: {
-    fontFamily: fontFamily.DEFAULT,
-    fontSize: errorTextSize[SCREEN_SIZE],
-    color: color.RED,
-  },
-});
-
-const googleButtonStyles = StyleSheet.create({
-  wrapper: {
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  flexBoxWrapper: {
-    flexDirection: "row",
-  },
-  imageWrapper: {
-    width: "25%",
-    height: "100%",
-    alignItems: "flex-end",
-  },
-  image: {
-    left: "10%",
-    width: "80%",
-    top: "10%",
-    height: "80%",
-    objectFit: "contain",
-  },
-  textWrapper: {
-    width: "75%",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  text: {
-    fontFamily: fontFamily.GOOGLE,
-    textAlign: "center",
-    fontSize: textSize[SCREEN_SIZE],
-    letterSpacing: 0,
-    color: color.BLACK,
-  },
-});

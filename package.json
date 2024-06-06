@@ -13,7 +13,8 @@
     "ios-app": "npm run ts:check && watchman watch-del-all && expo start --dev-client",
     "ios-app-no-ts": "watchman watch-del-all && expo start --dev-client",
     "web": "expo start --web",
-    "ts:check": "tsc"
+    "ts:check": "tsc",
+    "ts": "npm run ts:check"
   },
   "dependencies": {
     "@expo/metro-runtime": "^3.1.1",
