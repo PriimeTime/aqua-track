@@ -8,16 +8,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  validateConfirmPassword,
-  validateEmail,
-  validatePassword,
-} from "../../utils/validation";
-import {
   getAuth,
   // onAuthStateChanged,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut,
 } from "firebase/auth";
 
 import { loadUserData, updateUserData } from "../../utils/database";
@@ -28,18 +22,15 @@ import { AccountSettingsState } from "@/enums/AccountSettingsState";
 import { LoginForm } from "@/components/settings/account/LoginForm";
 import { RegisterForm } from "@/components/settings/account/RegisterForm";
 import { AccountDetails } from "@/components/settings/account/AccountDetails";
+import { useFormValidation } from "@/hooks/useFormValidation";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
 
 function AccountSettings() {
-  const dispatch = useDispatch();
-  const auth = getAuth();
-
   const isLoggedIn = useSelector(
     (state: UserDataState) => state.userData.userAuth.isLoggedIn
   );
-
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
@@ -47,10 +38,22 @@ function AccountSettings() {
     (state: DrinkHistoryState) => state.drinkHistory
   );
 
+  const dispatch = useDispatch();
+  const auth = getAuth();
+
   const [loading, setLoading] = useState(false);
   const [accountSettingsState, setAccountSettingsState] = useState(
     AccountSettingsState.ShowLogin
   );
+  const {
+    formState,
+    formErrors,
+    setFormErrors,
+    handleInputChange,
+    resetInputValidation,
+    validateForm,
+    resetFormState,
+  } = useFormValidation();
 
   useEffect(() => {
     switch (accountSettingsState) {
@@ -76,31 +79,6 @@ function AccountSettings() {
   }, [isLoggedIn, accountSettingsState]);
 
   const [title, setTitle] = useState("initial title");
-  const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  // /**
-  //  * Listen to firebase auth state changes
-  //  */
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     setIsLoggedIn(!!user);
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
-  const resetFormState = () => {
-    setFormState({
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-  };
 
   const redirectToRegister = () => {
     setAccountSettingsState(AccountSettingsState.ShowRegister);
@@ -212,97 +190,6 @@ function AccountSettings() {
     }
   };
 
-  const handleOnLogout = async () => {
-    try {
-      await signOut(auth);
-      dispatch(setUserLoginState(false));
-      // TODO reset app state
-    } catch (error) {
-      console.error("Error signing out:", error);
-      // Handle errors if sign out fails, such as a network error
-    }
-  };
-
-  const handleInputChange = (fieldName: string, value: string) => {
-    setFormState((prevForm) => ({
-      ...prevForm,
-      [fieldName]: value,
-    }));
-  };
-
-  const resetInputValidation = (fieldName: string) => {
-    if (formErrors[fieldName]) {
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        [fieldName]: "",
-      }));
-    }
-  };
-
-  const validateForm = (isRegister = false, fieldName?: string) => {
-    let newErrors = { ...formErrors }; // Start with current errors
-    let isValid = true;
-
-    const validateField = (fieldKey: string) => {
-      switch (fieldKey) {
-        case "email":
-          const emailValidation = validateEmail(isRegister, formState.email);
-          console.log(`isRegister: ${isRegister}`);
-          if (!emailValidation.isValid) {
-            newErrors.email = emailValidation.newErrors;
-            isValid = false;
-          } else {
-            delete newErrors.email;
-          }
-          break;
-        case "password":
-          const passwordValidation = validatePassword(
-            isRegister,
-            formState.password
-          );
-          if (!passwordValidation.isValid) {
-            newErrors.password = passwordValidation.newErrors;
-            isValid = false;
-          } else {
-            delete newErrors.password;
-          }
-          break;
-        case "confirmPassword":
-          if (isRegister) {
-            const confirmPasswordValidation = validateConfirmPassword(
-              isRegister,
-              formState.password,
-              formState.confirmPassword
-            );
-            if (!confirmPasswordValidation.isValid) {
-              newErrors.confirmPassword = confirmPasswordValidation.newErrors;
-              isValid = false;
-            } else {
-              delete newErrors.confirmPassword;
-            }
-          }
-          break;
-        default:
-          break;
-      }
-    };
-
-    if (fieldName) {
-      // Validate specific field
-      validateField(fieldName);
-    } else {
-      // Validate all fields
-      validateField("email");
-      validateField("password");
-      if (isRegister) {
-        validateField("confirmPassword");
-      }
-    }
-
-    setFormErrors(newErrors); // Update state with new errors
-    return isValid;
-  };
-
   const renderAccountSettings = () => {
     switch (accountSettingsState) {
       case AccountSettingsState.ShowLogin:
@@ -332,9 +219,7 @@ function AccountSettings() {
           ></RegisterForm>
         );
       case AccountSettingsState.ShowAccount:
-        return (
-          <AccountDetails handleOnLogout={handleOnLogout}></AccountDetails>
-        );
+        return <AccountDetails></AccountDetails>;
     }
   };
 

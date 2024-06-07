@@ -1,10 +1,23 @@
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { useDispatch } from "react-redux";
+import { getAuth, signOut } from "firebase/auth";
+import { setUserLoginState } from "@/store/userData";
 
-interface AccountDetailsProps {
-  handleOnLogout: () => void;
-}
+function AccountDetails() {
+  const dispatch = useDispatch();
+  const auth = getAuth();
 
-function AccountDetails({ handleOnLogout }: AccountDetailsProps) {
+  const handleOnLogout = async () => {
+    try {
+      await signOut(auth);
+      dispatch(setUserLoginState(false));
+      // TODO reset app state or ask user to reset app state
+    } catch (error) {
+      console.error("Error signing out:", error);
+      // Handle errors if sign out fails, such as a network error
+    }
+  };
+
   return (
     <>
       <PrimaryButton onPress={handleOnLogout}>
