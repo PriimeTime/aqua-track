@@ -4,7 +4,17 @@ import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
 import googleLogo from "../../../../assets/icons/google-logo.png";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
-import { LoginFormState } from "@/models/LoginFormState";
+import { useFormValidation } from "@/hooks/useFormValidation";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import {
+  setUserUID,
+  setUserMetrics,
+  setUserLoginState,
+} from "@/store/userData";
+import { loadUserData } from "@/utils/database";
+import { setHistory } from "@/store/drinkHistory";
+import { AccountSettingsState } from "@/enums/AccountSettingsState";
 
 const textSize = {
   SMALL: 20,
@@ -34,31 +44,96 @@ const GoogleButton = ({ children }: { children: React.ReactNode }) => {
 };
 
 interface LoginFormProps {
-  handleInputChange: (fieldName: string, value: string) => void;
-  handleOnLogin: () => Promise<void>;
-  redirectToRegister: () => void;
-  validateForm: (isRegister: boolean, fieldName?: string) => void;
-  resetInputValidation: (fieldName: string) => void;
-  formState: LoginFormState;
-  formErrors: { [key: string]: string };
+  setAccountSettingsState: React.Dispatch<
+    React.SetStateAction<AccountSettingsState>
+  >;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
 }
 
 function LoginForm({
-  handleInputChange,
-  handleOnLogin,
-  redirectToRegister,
-  validateForm,
-  resetInputValidation,
-  formState,
-  formErrors,
+  setAccountSettingsState,
+  setLoading,
   loading,
 }: LoginFormProps) {
+  const dispatch = useDispatch();
+  const auth = getAuth();
+  const {
+    handleInputChange,
+    validateForm,
+    resetInputValidation,
+    formState,
+    formErrors,
+    setFormErrors,
+  } = useFormValidation();
+
+  const redirectToRegister = () => {
+    setAccountSettingsState(AccountSettingsState.ShowRegister);
+  };
+
   const handleOnAppleSignIn = () => {
     // TODO: firebase apple signin
   };
   const handleOnGoogleSignIn = () => {
     // TODO: firebase google signin
+  };
+
+  const handleOnLogin = async () => {
+    setLoading(true);
+
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        formState.email,
+        formState.password
+      );
+
+      const user = userCredentials.user;
+      dispatch(setUserUID(user.uid));
+
+      const userData = await loadUserData(user.uid);
+
+      if (userData) {
+        dispatch(setHistory(userData.userDrinkHistory));
+        dispatch(setUserMetrics(userData.userMetrics));
+        dispatch(setUserLoginState(true));
+      } else {
+        console.error("Unable to load user data --> userData falsy");
+      }
+      setLoading(false);
+    } catch (error) {
+      let errMsg = "";
+
+      if (error instanceof Error) {
+        errMsg = error.message;
+      }
+
+      // TODO: create an invisible input field below all others and display
+      // general error messages there
+
+      if (errMsg.includes("invalid-email")) {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Invalid e-mail",
+        }));
+      } else if (errMsg.includes("invalid-credential")) {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Wrong e-mail or password",
+        }));
+      } else {
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Something went wrong. Please try again.",
+        }));
+      }
+      setLoading(false);
+    }
   };
 
   return (

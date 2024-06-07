@@ -1,9 +1,16 @@
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { CustomTextField } from "@/components/input/CustomTextField";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
-import { RegisterFormState } from "@/models/RegisterFormState";
+import { useFormValidation } from "@/hooks/useFormValidation";
 import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
 import { View, StyleSheet, Text } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { setUserUID, setUserLoginState } from "@/store/userData";
+import { updateUserData } from "@/utils/database";
+import { type UserDataState } from "@/types/UserDataState";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { AccountSettingsState } from "@/enums/AccountSettingsState";
 
 const errorTextSize = {
   SMALL: 15,
@@ -12,26 +19,78 @@ const errorTextSize = {
 };
 
 interface RegisterFormProps {
-  handleInputChange: (fieldName: string, value: string) => void;
-  handleOnRegister: () => Promise<void>;
-  redirectToLogin: () => void;
-  validateForm: (isRegister: boolean, fieldName?: string) => void;
-  resetInputValidation: (fieldName: string) => void;
-  formState: RegisterFormState;
-  formErrors: { [key: string]: string };
+  setAccountSettingsState: React.Dispatch<
+    React.SetStateAction<AccountSettingsState>
+  >;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
 }
 
 function RegisterForm({
-  handleInputChange,
-  handleOnRegister,
-  redirectToLogin,
-  validateForm,
-  resetInputValidation,
-  formState,
-  formErrors,
+  setAccountSettingsState,
+  setLoading,
   loading,
 }: RegisterFormProps) {
+  const userMetrics = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
+  const userDrinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
+
+  const dispatch = useDispatch();
+  const auth = getAuth();
+  const {
+    validateForm,
+    formState,
+    formErrors,
+    resetFormState,
+    handleInputChange,
+    resetInputValidation,
+  } = useFormValidation();
+
+  const redirectToLogin = () => {
+    setAccountSettingsState(AccountSettingsState.ShowLogin);
+  };
+
+  const handleOnRegister = async () => {
+    setLoading(true);
+
+    if (!validateForm(true)) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        formState.email,
+        formState.password
+      );
+
+      // TODO: show alert box here with successful register message
+
+      const user = userCredentials.user;
+      const userUID = user.uid;
+
+      dispatch(setUserUID(userUID));
+
+      // Initialize user data in Firestore after successful registration
+      await updateUserData(userUID, {
+        userMetrics,
+        userDrinkHistory,
+        userUID,
+      });
+
+      dispatch(setUserLoginState(true));
+      resetFormState();
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <CustomTextField
@@ -71,14 +130,13 @@ function RegisterForm({
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.confirmPassword}</Text>
       </View>
-      <PrimaryButton onPress={handleOnRegister}>
+      <PrimaryButton isLoading={loading} onPress={handleOnRegister}>
         {"register".toUpperCase()}
       </PrimaryButton>
       <PrimaryButton
         btnColor={color.WHITE}
         textStyle={{ color: color.BLUE }}
         onPress={redirectToLogin}
-        isLoading={loading}
       >
         {"login".toUpperCase()}
       </PrimaryButton>
