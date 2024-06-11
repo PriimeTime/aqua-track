@@ -5,6 +5,7 @@ import {
   TextStyle,
   ColorValue,
 } from "react-native";
+
 import { color, fontFamily } from "@/utils/constants";
 
 const fontValues = {

@@ -1,6 +1,7 @@
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { NetworkStatus } from "@/models/NetworkStatus";
 import { General } from "@/models/General";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: General = {
   networkStatus: {

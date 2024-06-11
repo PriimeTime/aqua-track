@@ -1,12 +1,12 @@
-import { ContentPage } from "@/components/wrappers/ContentPage";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { type UserDataState } from "@/types/store/UserDataState";
+
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
-import { LoginForm } from "@/components/settings/account/LoginForm";
-import { RegisterForm } from "@/components/settings/account/RegisterForm";
-import { AccountDetails } from "@/components/settings/account/AccountDetails";
+
+import { LoginForm, RegisterForm, AccountDetails } from "@/components/settings";
+import { ContentPage } from "@/components/wrappers";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.

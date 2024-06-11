@@ -1,6 +1,7 @@
 import { LinearGradient, LinearGradientProps } from "expo-linear-gradient";
-import { color } from "@/utils/constants";
 import React from "react";
+
+import { color } from "@/utils/constants";
 
 /**
  * Colors property of the

@@ -1,8 +1,15 @@
 import { View, StyleSheet, Image, Text } from "react-native";
+
+import { PrimaryText, SecondaryText } from "@/components/texts";
+import { InfoCard } from "@/components/cards";
+import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
+
+import { useGroupedDrinkHistoryQuantity } from "@/hooks/useGroupedDrinkHistoryQuantity";
+
+import { type UID } from "@/types/UID";
+import { type UnixDate } from "@/types/UnixDate";
+
 import { drinkImageMap } from "@/utils/maps";
-import { PrimaryText } from "../texts/PrimaryText";
-import { SecondaryText } from "../texts/SecondaryText";
-import { InfoCard } from "../cards/InfoCard";
 import {
   color,
   listItemHeight,
@@ -10,14 +17,10 @@ import {
   SCREEN_SIZE,
   fontFamily,
 } from "@/utils/constants";
-import { useGroupedDrinkHistoryQuantity } from "@/hooks/useGroupedDrinkHistoryQuantity";
 import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
 } from "@/utils/helpers";
-import { HistoryDeleteButton } from "./HistoryDeleteButton";
-import { type UID } from "@/types/UID";
-import { type UnixDate } from "@/types/UnixDate";
 
 const itemBorderRadius = {
   SMALL: 15,

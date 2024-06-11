@@ -4,7 +4,9 @@ import {
   DocumentData,
   DocumentSnapshot,
 } from "firebase/firestore";
+
 import { firestore } from "../../../firebase";
+
 import { UserData } from "@/models/UserData";
 
 const loadUserData = async (userId: string): Promise<DocumentData | null> => {

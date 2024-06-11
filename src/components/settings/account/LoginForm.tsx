@@ -1,20 +1,26 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import { CustomTextField } from "@/components/input/CustomTextField";
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
-import googleLogo from "../../../../assets/icons/google-logo.png";
-import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
-import { useFormValidation } from "@/hooks/useFormValidation";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+
+import googleLogo from "../../../../assets/icons/google-logo.png";
+
+import { useFormValidation } from "@/hooks/useFormValidation";
+
+import { CustomTextField } from "@/components/input";
+import { PrimaryButton } from "@/components/buttons";
+
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+
+import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
+import { loadUserData } from "@/utils/database";
+
 import {
   setUserUID,
   setUserMetrics,
   setUserLoginState,
 } from "@/store/userData";
-import { loadUserData } from "@/utils/database";
 import { setHistory } from "@/store/drinkHistory";
-import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 const textSize = {
   SMALL: 20,

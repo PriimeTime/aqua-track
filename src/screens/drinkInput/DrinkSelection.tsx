@@ -4,17 +4,18 @@ import { useRef } from "react";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { PrimaryText } from "@/components/texts/PrimaryText";
-import { CardButton } from "@/components/buttons/CardButton";
+import { PrimaryText } from "@/components/texts";
+import { CardButton, BackButton } from "@/components/buttons";
+import { GradientWrapper } from "@/components/wrappers";
 
 import { drinkTypeList } from "@/utils/maps";
 import { dimensions, SCREEN_SIZE } from "@/utils/constants";
-import { BackButton } from "@/components/buttons/BackButton";
-import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
-import { DrinkItem } from "@/models/DrinkItem";
-import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
-import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
+import { animatedScaleValue } from "@/utils/animations";
 import { numToString } from "@/utils/helpers";
+
+import { DrinkItem } from "@/models/DrinkItem";
+
+import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 
 const cardButtonHeight =
   SCREEN_SIZE === "LARGE"

@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { PrimaryText } from "./texts/PrimaryText";
 import { StyleSheet, View } from "react-native";
+
+import { PrimaryText } from "@/components/texts";
+
 import { color, shadow, SCREEN_SIZE } from "@/utils/constants";
 import {
   // totalDrinkQuantity,

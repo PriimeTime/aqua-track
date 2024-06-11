@@ -1,11 +1,14 @@
 import { View, StyleSheet, Text } from "react-native";
 import { VictoryPie } from "victory-native";
-import { shadow } from "@/utils/constants";
 import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+
+import { shadow } from "@/utils/constants";
 import { totalDrinkQuantity } from "@/utils/helpers";
+
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 function Statistics() {

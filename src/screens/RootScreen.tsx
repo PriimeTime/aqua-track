@@ -1,20 +1,22 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
 import { MainHeader } from "@/components/MainHeader";
 import { HomeWaterBottle } from "@/components/HomeWaterBottle";
-import { Statistics } from "./Statistics";
 import { TotalIntake } from "@/components/TotalIntake";
-import { SettingsButton } from "@/components/buttons/SettingsButton";
-import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
+import { SettingsButton } from "@/components/buttons";
+import { GradientWrapper } from "@/components/wrappers";
+
+import { Statistics } from "@/screens/Statistics";
+
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native";
+
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 function RootScreen() {

@@ -1,7 +1,8 @@
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import { UserAuth } from "@/models/UserAuth";
 import { UserData } from "@/models/UserData";
 import { UserMetrics } from "@/models/UserMetrics";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: UserData = {
   userMetrics: {

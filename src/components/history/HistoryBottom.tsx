@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+
 import { metricUnitConversion } from "@/utils/helpers";
 import { color, fontFamily, SCREEN_SIZE } from "@/utils/constants";
 

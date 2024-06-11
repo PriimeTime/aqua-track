@@ -8,11 +8,11 @@ import {
   ColorValue,
   TextStyle,
 } from "react-native";
-import { color, fontFamily, shadow, SCREEN_SIZE } from "@/utils/constants";
-import { animateButtonPress } from "@/utils/animations";
 import * as Haptics from "expo-haptics";
 import { useRef } from "react";
-import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
+
+import { color, fontFamily, shadow, SCREEN_SIZE } from "@/utils/constants";
+import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
 const textSize = {
   SMALL: 20,

@@ -1,6 +1,6 @@
 import store from "./src/store/index";
 import { Provider } from "react-redux";
-import MainAppScreen from "./src/screens/MainAppScreen";
+import { MainAppScreen } from "./src/screens/MainAppScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";

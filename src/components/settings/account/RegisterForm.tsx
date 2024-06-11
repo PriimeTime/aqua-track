@@ -1,16 +1,22 @@
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
-import { CustomTextField } from "@/components/input/CustomTextField";
-import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
-import { useFormValidation } from "@/hooks/useFormValidation";
-import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
 import { View, StyleSheet, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { setUserUID, setUserLoginState } from "@/store/userData";
-import { updateUserData } from "@/utils/database";
+
+import { PrimaryButton } from "@/components/buttons";
+import { CustomTextField } from "@/components/input";
+
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+
+import { useFormValidation } from "@/hooks/useFormValidation";
+
+import { setUserUID, setUserLoginState } from "@/store/userData";
+
+import { updateUserData } from "@/utils/database";
+import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
 
 const errorTextSize = {
   SMALL: 15,

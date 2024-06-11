@@ -8,7 +8,11 @@ import {
   TextStyle,
   KeyboardTypeOptions,
 } from "react-native";
-import { SecondaryText } from "../texts/SecondaryText";
+
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+
+import { SecondaryText } from "@/components/texts";
+
 import {
   SCREEN_SIZE,
   color,
@@ -17,7 +21,6 @@ import {
   inputFieldHeight,
   inputFontSizeValues,
 } from "@/utils/constants";
-import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
 const appendFontValues = {
   1: { fontSize: 9 },

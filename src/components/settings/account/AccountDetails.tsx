@@ -1,7 +1,9 @@
-import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { useDispatch } from "react-redux";
 import { getAuth, signOut } from "firebase/auth";
+
 import { setUserLoginState } from "@/store/userData";
+
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 
 function AccountDetails() {
   const dispatch = useDispatch();
