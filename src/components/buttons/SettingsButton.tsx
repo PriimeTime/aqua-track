@@ -1,10 +1,10 @@
 import { Pressable, Animated, View, StyleSheet } from "react-native";
 import { useRef } from "react";
-import { color, shadow, SCREEN_SIZE } from "../../utils/constants";
+import { color, shadow, SCREEN_SIZE } from "@/utils/constants";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { animateButtonPress } from "../../utils/animations";
-import { ScreenSize } from "@/enums/ScreenSize";
+import { animateButtonPress } from "@/utils/animations";
+import { ScreenSize } from "@/enums/maps/ScreenSize";
 import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
 const buttonSizes = {

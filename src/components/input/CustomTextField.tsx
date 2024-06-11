@@ -16,7 +16,7 @@ import {
   getFontSizeForScreen,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/constants";
+} from "@/utils/constants";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
 const appendFontValues = {

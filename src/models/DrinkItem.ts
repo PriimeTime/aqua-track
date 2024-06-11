@@ -1,4 +1,4 @@
-import { DrinkType } from "@/enums/DrinkType";
+import { DrinkType } from "@/enums/maps/DrinkType";
 
 export interface DrinkItem {
   color: string;

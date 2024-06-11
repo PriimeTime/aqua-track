@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { PrimaryText } from "./texts/PrimaryText";
 import { StyleSheet, View } from "react-native";
-import { color, shadow, SCREEN_SIZE } from "../utils/constants";
+import { color, shadow, SCREEN_SIZE } from "@/utils/constants";
 import {
   // totalDrinkQuantity,
   totalHydratingDrinkQuantity,

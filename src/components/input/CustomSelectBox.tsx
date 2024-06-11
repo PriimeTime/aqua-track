@@ -6,7 +6,7 @@ import {
   getFontSizeForScreen,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/constants";
+} from "@/utils/constants";
 import { useEffect, useState } from "react";
 import { SecondaryText } from "../texts/SecondaryText";
 

@@ -11,20 +11,20 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { useDispatch } from "react-redux";
-import { addToHistory } from "../../store/drinkHistory";
-import { drinkTypeList } from "../../utils/maps";
+import { addToHistory } from "@/store/drinkHistory";
+import { drinkTypeList } from "@/utils/maps";
 import * as Haptics from "expo-haptics";
 
-import { PrimaryButton } from "../../components/buttons/PrimaryButton";
-import { PrimaryText } from "../../components/texts/PrimaryText";
+import { PrimaryButton } from "@/components/buttons/PrimaryButton";
+import { PrimaryText } from "@/components/texts/PrimaryText";
 import { DrinkAmountBottle } from "./DrinkAmountBottle";
-import { BackButton } from "../../components/buttons/BackButton";
+import { BackButton } from "@/components/buttons/BackButton";
 
-import { inputDrinkConfig, SCREEN_SIZE } from "../../utils/constants";
-import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
+import { inputDrinkConfig, SCREEN_SIZE } from "@/utils/constants";
+import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
 import { DrinkItem } from "@/models/DrinkItem";
 import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
-import { MainRouteName } from "@/enums/MainRouteName";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 /**
  * Debounce function to control

@@ -4,16 +4,16 @@ import { useRef } from "react";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { PrimaryText } from "../../components/texts/PrimaryText";
-import { CardButton } from "../../components/buttons/CardButton";
+import { PrimaryText } from "@/components/texts/PrimaryText";
+import { CardButton } from "@/components/buttons/CardButton";
 
-import { drinkTypeList } from "../../utils/maps";
-import { dimensions, SCREEN_SIZE } from "../../utils/constants";
-import { BackButton } from "../../components/buttons/BackButton";
-import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
+import { drinkTypeList } from "@/utils/maps";
+import { dimensions, SCREEN_SIZE } from "@/utils/constants";
+import { BackButton } from "@/components/buttons/BackButton";
+import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
 import { DrinkItem } from "@/models/DrinkItem";
 import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
-import { DrinkRouteName } from "@/enums/DrinkRouteName";
+import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { numToString } from "@/utils/helpers";
 
 const cardButtonHeight =

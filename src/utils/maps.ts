@@ -17,9 +17,9 @@ import statistics from "../../assets/icons/settings/statistic-cute.png";
 import theme from "../../assets/icons/settings/theme-cute.png";
 import language from "../../assets/icons/settings/language-cute.png";
 import about from "../../assets/icons/settings/about-cute.png";
-import { SettingsRouteName } from "@/enums/SettingsRouteName";
-import { DrinkImage } from "@/enums/DrinkImage";
-import { DrinkType } from "@/enums/DrinkType";
+import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
+import { DrinkImage } from "@/enums/maps/DrinkImage";
+import { DrinkType } from "@/enums/maps/DrinkType";
 import { ImageSourcePropType } from "react-native";
 
 const settingsImageMap: { [key: string]: ImageSourcePropType } = {

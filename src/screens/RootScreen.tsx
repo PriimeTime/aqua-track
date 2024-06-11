@@ -6,16 +6,16 @@ import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
-import { MainHeader } from "../components/MainHeader";
-import { HomeWaterBottle } from "../components/HomeWaterBottle";
+import { MainHeader } from "@/components/MainHeader";
+import { HomeWaterBottle } from "@/components/HomeWaterBottle";
 import { Statistics } from "./Statistics";
-import { TotalIntake } from "../components/TotalIntake";
-import { SettingsButton } from "../components/buttons/SettingsButton";
-import { GradientWrapper } from "../components/wrappers/GradientWrapper";
+import { TotalIntake } from "@/components/TotalIntake";
+import { SettingsButton } from "@/components/buttons/SettingsButton";
+import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase } from "@react-navigation/native";
-import { MainRouteName } from "@/enums/MainRouteName";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 function RootScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();

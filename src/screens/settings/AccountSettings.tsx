@@ -1,9 +1,9 @@
-import { ContentPage } from "../../components/wrappers/ContentPage";
+import { ContentPage } from "@/components/wrappers/ContentPage";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { type UserDataState } from "@/types/UserDataState";
-import { AccountSettingsState } from "@/enums/AccountSettingsState";
+import { type UserDataState } from "@/types/store/UserDataState";
+import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 import { LoginForm } from "@/components/settings/account/LoginForm";
 import { RegisterForm } from "@/components/settings/account/RegisterForm";
 import { AccountDetails } from "@/components/settings/account/AccountDetails";

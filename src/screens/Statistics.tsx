@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text } from "react-native";
 import { VictoryPie } from "victory-native";
-import { shadow } from "../utils/constants";
+import { shadow } from "@/utils/constants";
 import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";

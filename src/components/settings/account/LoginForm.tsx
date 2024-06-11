@@ -14,7 +14,7 @@ import {
 } from "@/store/userData";
 import { loadUserData } from "@/utils/database";
 import { setHistory } from "@/store/drinkHistory";
-import { AccountSettingsState } from "@/enums/AccountSettingsState";
+import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 const textSize = {
   SMALL: 20,

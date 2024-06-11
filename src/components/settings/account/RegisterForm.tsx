@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { setUserUID, setUserLoginState } from "@/store/userData";
 import { updateUserData } from "@/utils/database";
-import { type UserDataState } from "@/types/UserDataState";
+import { type UserDataState } from "@/types/store/UserDataState";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { AccountSettingsState } from "@/enums/AccountSettingsState";
+import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 const errorTextSize = {
   SMALL: 15,

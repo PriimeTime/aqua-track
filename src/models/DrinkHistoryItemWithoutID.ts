@@ -1,5 +1,5 @@
-import { type UnixDate } from "../types/UnixDate";
-import { DrinkType } from "@/enums/DrinkType";
+import { type UnixDate } from "@/types/UnixDate";
+import { DrinkType } from "@/enums/maps/DrinkType";
 
 export interface DrinkHistoryItemWithoutID {
   color: string;

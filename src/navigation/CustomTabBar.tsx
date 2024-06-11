@@ -6,9 +6,9 @@ import {
   StyleSheet,
   DimensionValue,
 } from "react-native";
-import { WaterDropButton } from "../components/navigation/WaterDropButton";
-import { color, shadow, SCREEN_SIZE, fontFamily } from "../utils/constants";
-import { DrinkRouteName } from "@/enums/DrinkRouteName";
+import { WaterDropButton } from "@/components/navigation/WaterDropButton";
+import { color, shadow, SCREEN_SIZE, fontFamily } from "@/utils/constants";
+import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { TabNavigationState, ParamListBase } from "@react-navigation/native";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers } from "@react-navigation/native";

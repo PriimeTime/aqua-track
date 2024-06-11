@@ -1,5 +1,5 @@
 import { View, StyleSheet, Image, Text } from "react-native";
-import { drinkImageMap } from "../../utils/maps";
+import { drinkImageMap } from "@/utils/maps";
 import { PrimaryText } from "../texts/PrimaryText";
 import { SecondaryText } from "../texts/SecondaryText";
 import { InfoCard } from "../cards/InfoCard";
@@ -9,12 +9,12 @@ import {
   cardBorderWidth,
   SCREEN_SIZE,
   fontFamily,
-} from "../../utils/constants";
-import { useGroupedDrinkHistoryQuantity } from "../../hooks/useGroupedDrinkHistoryQuantity";
+} from "@/utils/constants";
+import { useGroupedDrinkHistoryQuantity } from "@/hooks/useGroupedDrinkHistoryQuantity";
 import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
-} from "../../utils/helpers";
+} from "@/utils/helpers";
 import { HistoryDeleteButton } from "./HistoryDeleteButton";
 import { type UID } from "@/types/UID";
 import { type UnixDate } from "@/types/UnixDate";

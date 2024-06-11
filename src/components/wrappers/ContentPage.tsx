@@ -3,7 +3,7 @@ import { GradientWrapper } from "./GradientWrapper";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { BackButton } from "../buttons/BackButton";
 import { PrimaryText } from "../texts/PrimaryText";
-import { SCREEN_SIZE } from "../../utils/constants";
+import { SCREEN_SIZE } from "@/utils/constants";
 
 const headerHeight = {
   SMALL: 5,

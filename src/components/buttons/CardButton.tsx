@@ -8,10 +8,10 @@ import {
   ViewStyle,
 } from "react-native";
 import { useRef } from "react";
-import { color, cardBorderWidth, SCREEN_SIZE } from "../../utils/constants";
+import { color, cardBorderWidth, SCREEN_SIZE } from "@/utils/constants";
 import { PrimaryText } from "../texts/PrimaryText";
-import { animateButtonPress } from "../../utils/animations";
-import { drinkImageMap } from "../../utils/maps";
+import { animateButtonPress } from "@/utils/animations";
+import { drinkImageMap } from "@/utils/maps";
 import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
 
 const cardButtonBorderRadius = {

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { asyncStorageMiddleware } from "../middleware/asyncStorageMiddleware";
+import { asyncStorageMiddleware } from "@/middleware/asyncStorageMiddleware";
 import drinkHistoryReducer from "./drinkHistory";
 import userDataReducer from "./userData";
 import generalReducer from "./general";

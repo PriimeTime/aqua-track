@@ -10,8 +10,8 @@ import { useDatabaseSync } from "../hooks/useDatabaseSync";
 
 import NetInfo from "@react-native-community/netinfo";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { type UserDataState } from "@/types/UserDataState";
-import { type GeneralState } from "@/types/GeneralState";
+import { type UserDataState } from "@/types/store/UserDataState";
+import { type GeneralState } from "@/types/store/GeneralState";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 import { UserMetrics } from "@/models/UserMetrics";
 import { UserAuth } from "@/models/UserAuth";
