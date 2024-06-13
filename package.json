@@ -26,6 +26,7 @@
     "@reduxjs/toolkit": "^2.1.0",
     "@types/react": "~18.2.45",
     "expo": "~50.0.2",
+    "expo-blur": "^13.0.2",
     "expo-dev-client": "~3.3.8",
     "expo-font": "^11.10.2",
     "expo-haptics": "~12.8.1",

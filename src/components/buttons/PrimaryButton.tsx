@@ -59,13 +59,14 @@ const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
  */
 
 type PrimaryButtonProps = {
-  btnColor?: ColorValue;
   onPress: () => void;
-  fontSize?: number;
   children: React.ReactNode;
+  btnColor?: ColorValue;
+  fontSize?: number;
   textStyle?: TextStyle;
   custom?: boolean;
   isLoading?: boolean;
+  customStyles?: StyleSheet.NamedStyles<unknown>;
 };
 
 function PrimaryButton({
@@ -76,6 +77,7 @@ function PrimaryButton({
   textStyle,
   custom,
   isLoading,
+  customStyles,
 }: PrimaryButtonProps) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
 
@@ -123,6 +125,7 @@ function PrimaryButton({
         {
           transform: [{ scale: scaleValue }],
         },
+        customStyles,
       ]}
     >
       <Pressable

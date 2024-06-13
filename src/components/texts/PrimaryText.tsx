@@ -40,11 +40,17 @@ interface PrimaryTextProps {
   children: React.ReactNode;
   size: number;
   color?: ColorValue;
+  numberOfLines?: number;
 }
 
-function PrimaryText({ children, size, color }: PrimaryTextProps) {
+function PrimaryText({
+  children,
+  size,
+  color,
+  numberOfLines,
+}: PrimaryTextProps) {
   return (
-    <Text numberOfLines={1} style={getTextStyle(size, color)}>
+    <Text numberOfLines={numberOfLines ?? 1} style={getTextStyle(size, color)}>
       {children}
     </Text>
   );
