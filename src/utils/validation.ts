@@ -18,7 +18,7 @@ const hasPasswordLowerCaseChar = (password: string) => {
   return /[a-z]/.test(password);
 };
 
-export const validateEmail = (isRegister: boolean, emailField: string) => {
+const validateEmail = (isRegister: boolean, emailField: string) => {
   if (emailField.length === 0) {
     return {
       isValid: false,
@@ -39,7 +39,22 @@ export const validateEmail = (isRegister: boolean, emailField: string) => {
   return { isValid: true, newErrors: "" };
 };
 
-export const validatePassword = (isRegister: boolean, pwField: string) => {
+const validateUserName = (userNameField: string) => {
+  if (userNameField.length === 0) {
+    return {
+      isValid: false,
+      newErrors: "Please enter your username",
+    };
+  } else if (userNameField.length < 3) {
+    return {
+      isValid: false,
+      newErrors: "Your username must be at least 3 characters long!",
+    };
+  }
+  return { isValid: true, newErrors: "" };
+};
+
+const validatePassword = (isRegister: boolean, pwField: string) => {
   const pwMinLen = 6;
   const pwMaxLen = 30;
 
@@ -90,7 +105,7 @@ export const validatePassword = (isRegister: boolean, pwField: string) => {
   return { isValid: true, newErrors: "" };
 };
 
-export const validateConfirmPassword = (
+const validateConfirmPassword = (
   isRegister: boolean,
   pwField: string,
   confPwField: string
@@ -105,4 +120,11 @@ export const validateConfirmPassword = (
   }
 
   return { isValid: true, newErrors: "" };
+};
+
+export {
+  validateUserName,
+  validateEmail,
+  validatePassword,
+  validateConfirmPassword,
 };

@@ -14,6 +14,8 @@ const initialState: UserData = {
   },
   userAuth: {
     isLoggedIn: false,
+    userName: null,
+    email: null,
     uid: null,
   },
 };

@@ -4,10 +4,12 @@ import {
   validateEmail,
   validatePassword,
   validateConfirmPassword,
+  validateUserName,
 } from "@/utils/validation";
 
 function useFormValidation() {
   const [formState, setFormState] = useState({
+    userName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -32,6 +34,7 @@ function useFormValidation() {
 
   const resetFormState = () => {
     setFormState({
+      userName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -44,6 +47,15 @@ function useFormValidation() {
 
     const validateField = (fieldKey: string) => {
       switch (fieldKey) {
+        case "userName":
+          const userNameValidation = validateUserName(formState.userName);
+          if (!userNameValidation.isValid) {
+            newErrors.userName = userNameValidation.newErrors;
+            isValid = false;
+          } else {
+            delete newErrors.userName;
+          }
+          break;
         case "email":
           const emailValidation = validateEmail(isRegister, formState.email);
           console.log(`isRegister: ${isRegister}`);

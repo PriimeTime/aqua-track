@@ -13,7 +13,7 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 import { useFormValidation } from "@/hooks/useFormValidation";
 
-import { setUserUID, setUserLoginState } from "@/store/userData";
+import { setUserAuth } from "@/store/userData";
 
 import { updateUserData } from "@/utils/database";
 import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
@@ -39,6 +39,9 @@ function RegisterForm({
 }: RegisterFormProps) {
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
+  );
+  const userAuth = useSelector(
+    (state: UserDataState) => state.userData.userAuth
   );
   const userDrinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
@@ -79,16 +82,22 @@ function RegisterForm({
       const user = userCredentials.user;
       const userUID = user.uid;
 
-      dispatch(setUserUID(userUID));
+      dispatch(
+        setUserAuth({
+          isLoggedIn: true,
+          userName: formState.userName,
+          email: formState.email,
+          uid: userUID,
+        })
+      );
 
       // Initialize user data in Firestore after successful registration
       await updateUserData(userUID, {
         userMetrics,
         userDrinkHistory,
-        userUID,
+        userAuth,
       });
 
-      dispatch(setUserLoginState(true));
       resetFormState();
       setLoading(false);
     } catch (error) {
@@ -99,6 +108,17 @@ function RegisterForm({
 
   return (
     <>
+      <CustomTextField
+        value={formState.userName}
+        handleOnChangeText={(text) => handleInputChange("userName", text)}
+        handleOnBlur={() => validateForm(false, "userName")}
+        handleOnFocus={() => resetInputValidation("userName")}
+        fullWidth
+        label="Username"
+      ></CustomTextField>
+      <View style={styles.errorWrapper}>
+        <Text style={styles.errorText}>{formErrors.userName}</Text>
+      </View>
       <CustomTextField
         value={formState.email}
         handleOnChangeText={(text) => handleInputChange("email", text)}
