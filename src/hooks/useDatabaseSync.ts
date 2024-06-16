@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { updateUserData } from "../utils/database";
 import { DocumentData } from "firebase/firestore";
+
+import { updateUserData } from "@/utils/database";
 
 function useDatabaseSync<T extends DocumentData, D>(
   dependencies: D[],

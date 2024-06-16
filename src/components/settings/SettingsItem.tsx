@@ -1,18 +1,20 @@
 import { View, Image, StyleSheet, Animated, Pressable } from "react-native";
-import { PrimaryText } from "../texts/PrimaryText";
-import { settingsImageMap } from "../../utils/maps";
+import { useRef } from "react";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+import { PrimaryText } from "@/components/texts";
+
+import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
+
+import { settingsImageMap } from "@/utils/maps";
 import {
   color,
   listItemHeight,
   cardBorderWidth,
   SCREEN_SIZE,
-} from "../../utils/constants";
-import { useRef } from "react";
-import { animateButtonPress } from "../../utils/animations";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
-import { SettingsRouteName } from "@/enums/SettingsRouteName";
-import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+} from "@/utils/constants";
+import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
 const titleSize = {
   SMALL: 1,

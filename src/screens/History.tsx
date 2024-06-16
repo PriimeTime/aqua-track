@@ -4,14 +4,16 @@ import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { SettingsButton } from "../components/buttons/SettingsButton";
-import { listItemHeight, SCREEN_SIZE } from "../utils/constants";
-import { HistoryItem } from "../components/history/HistoryItem";
-import { totalDrinkQuantity } from "../utils/helpers";
-import { HistoryBottom } from "../components/history/HistoryBottom";
-import { GradientWrapper } from "../components/wrappers/GradientWrapper";
+import { SettingsButton } from "@/components/buttons";
+import { HistoryItem, HistoryBottom } from "@/components/history";
+import { GradientWrapper } from "@/components/wrappers";
+
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { MainRouteName } from "@/enums/MainRouteName";
+
+import { MainRouteName } from "@/enums/routes/MainRouteName";
+
+import { totalDrinkQuantity } from "@/utils/helpers";
+import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();

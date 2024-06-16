@@ -1,4 +1,4 @@
-import { NetworkStatus } from "./NetworkStatus";
+import { NetworkStatus } from "@/models/NetworkStatus";
 
 export interface General {
   networkStatus: NetworkStatus;

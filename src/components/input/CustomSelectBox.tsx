@@ -1,4 +1,6 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
+import { useEffect, useState } from "react";
+
 import {
   SCREEN_SIZE,
   color,
@@ -6,9 +8,9 @@ import {
   getFontSizeForScreen,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/constants";
-import { useEffect, useState } from "react";
-import { SecondaryText } from "../texts/SecondaryText";
+} from "@/utils/constants";
+
+import { SecondaryText } from "@/components/texts";
 
 const titleSize = {
   SMALL: 4,

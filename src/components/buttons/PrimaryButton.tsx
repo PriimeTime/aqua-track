@@ -8,11 +8,11 @@ import {
   ColorValue,
   TextStyle,
 } from "react-native";
-import { color, fontFamily, shadow, SCREEN_SIZE } from "../../utils/constants";
-import { animateButtonPress } from "../../utils/animations";
 import * as Haptics from "expo-haptics";
 import { useRef } from "react";
-import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
+
+import { color, fontFamily, shadow, SCREEN_SIZE } from "@/utils/constants";
+import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
 const textSize = {
   SMALL: 20,
@@ -59,13 +59,14 @@ const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
  */
 
 type PrimaryButtonProps = {
-  btnColor?: ColorValue;
   onPress: () => void;
-  fontSize?: number;
   children: React.ReactNode;
+  btnColor?: ColorValue;
+  fontSize?: number;
   textStyle?: TextStyle;
   custom?: boolean;
   isLoading?: boolean;
+  customStyles?: StyleSheet.NamedStyles<unknown>;
 };
 
 function PrimaryButton({
@@ -76,6 +77,7 @@ function PrimaryButton({
   textStyle,
   custom,
   isLoading,
+  customStyles,
 }: PrimaryButtonProps) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
 
@@ -123,6 +125,7 @@ function PrimaryButton({
         {
           transform: [{ scale: scaleValue }],
         },
+        customStyles,
       ]}
     >
       <Pressable

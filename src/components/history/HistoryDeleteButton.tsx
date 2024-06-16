@@ -1,12 +1,14 @@
 import { Pressable, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { color, SCREEN_SIZE } from "../../utils/constants";
-import { removeFromHistory } from "../../store/drinkHistory";
 import { useDispatch } from "react-redux";
-import { animateButtonPress } from "../../utils/animations";
+
 import { type UID } from "@/types/UID";
-import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
+
+import { removeFromHistory } from "@/store/drinkHistory";
+
+import { color, SCREEN_SIZE } from "@/utils/constants";
+import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
 const buttonIconSize = {
   SMALL: 20,

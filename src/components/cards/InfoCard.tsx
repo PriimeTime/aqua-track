@@ -8,7 +8,8 @@ import {
   TextStyle,
   ColorValue,
 } from "react-native";
-import { color, fontFamily } from "../../utils/constants";
+
+import { color, fontFamily } from "@/utils/constants";
 
 const heightValues = {
   1: 25,

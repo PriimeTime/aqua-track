@@ -1,4 +1,5 @@
-import { ScreenSize } from "@/enums/ScreenSize";
+import { ScreenSize } from "@/enums/maps/ScreenSize";
+
 import { FontSizeConfig } from "@/models/FontSizeConfig";
 import { ResponsiveSize } from "@/models/ResponsiveSize";
 

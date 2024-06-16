@@ -1,6 +1,8 @@
-import { PrimaryText } from "./texts/PrimaryText";
 import { View } from "react-native";
-import { SCREEN_SIZE } from "../utils/constants";
+
+import { PrimaryText } from "@/components/texts";
+
+import { SCREEN_SIZE } from "@/utils/constants";
 
 const textSize = {
   SMALL: 5,

@@ -9,22 +9,24 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
 import { useDispatch } from "react-redux";
-import { addToHistory } from "../../store/drinkHistory";
-import { drinkTypeList } from "../../utils/maps";
 import * as Haptics from "expo-haptics";
 
-import { PrimaryButton } from "../../components/buttons/PrimaryButton";
-import { PrimaryText } from "../../components/texts/PrimaryText";
-import { DrinkAmountBottle } from "./DrinkAmountBottle";
-import { BackButton } from "../../components/buttons/BackButton";
+import { addToHistory } from "@/store/drinkHistory";
 
-import { inputDrinkConfig, SCREEN_SIZE } from "../../utils/constants";
-import { GradientWrapper } from "../../components/wrappers/GradientWrapper";
+import { drinkTypeList } from "@/utils/maps";
+import { inputDrinkConfig, SCREEN_SIZE } from "@/utils/constants";
+import { animatedScaleValue } from "@/utils/animations";
+
+import { PrimaryButton, BackButton } from "@/components/buttons";
+import { PrimaryText } from "@/components/texts";
+import { GradientWrapper } from "@/components/wrappers";
+
+import { DrinkAmountBottle } from "@/screens/drinkInput/DrinkAmountBottle";
+
 import { DrinkItem } from "@/models/DrinkItem";
-import { animatedScaleValue } from "@/utils/animations/animatedScaleValue";
-import { MainRouteName } from "@/enums/MainRouteName";
+
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 /**
  * Debounce function to control

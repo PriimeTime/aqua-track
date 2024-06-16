@@ -1,4 +1,5 @@
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+
 import { type UnixDate } from "@/types/UnixDate";
 
 /**
@@ -138,6 +139,9 @@ const getHoursMinutesFromUnixDate = (unixDate: UnixDate): string => {
   return timeString;
 };
 
+/* Empty function that does nothing */
+const emptyFunc = () => {};
+
 export {
   isEmptyObject,
   sleep,
@@ -148,4 +152,5 @@ export {
   getHoursMinutesFromUnixDate,
   formatDecimals,
   numToString,
+  emptyFunc,
 };

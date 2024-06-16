@@ -1,17 +1,22 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { AppNavigation } from "../navigation/AppNavigation";
+import NetInfo from "@react-native-community/netinfo";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setHistory } from "../store/drinkHistory";
-import { readAsyncStorage } from "../utils/storage";
-import { setUserAuth, setUserMetrics } from "../store/userData";
-import { setNetworkStatus } from "../store/general";
-import { useDatabaseSync } from "../hooks/useDatabaseSync";
 
-import NetInfo from "@react-native-community/netinfo";
+import { AppNavigation } from "@/navigation/AppNavigation";
+
+import { setHistory } from "@/store/drinkHistory";
+import { setUserAuth, setUserMetrics } from "@/store/userData";
+import { setNetworkStatus } from "@/store/general";
+
+import { useDatabaseSync } from "@/hooks/useDatabaseSync";
+
+import { readAsyncStorage } from "@/utils/storage";
+
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { type UserDataState } from "@/types/UserDataState";
-import { type GeneralState } from "@/types/GeneralState";
+import { type UserDataState } from "@/types/store/UserDataState";
+import { type GeneralState } from "@/types/store/GeneralState";
+
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 import { UserMetrics } from "@/models/UserMetrics";
 import { UserAuth } from "@/models/UserAuth";
@@ -127,4 +132,4 @@ function MainAppScreen() {
   );
 }
 
-export default MainAppScreen;
+export { MainAppScreen };

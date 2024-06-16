@@ -5,7 +5,8 @@ import {
   TextStyle,
   ColorValue,
 } from "react-native";
-import { color, fontFamily } from "../../utils/constants";
+
+import { color, fontFamily } from "@/utils/constants";
 
 const fontValues = {
   1: { fontSize: 22 },
@@ -39,11 +40,17 @@ interface PrimaryTextProps {
   children: React.ReactNode;
   size: number;
   color?: ColorValue;
+  numberOfLines?: number;
 }
 
-function PrimaryText({ children, size, color }: PrimaryTextProps) {
+function PrimaryText({
+  children,
+  size,
+  color,
+  numberOfLines,
+}: PrimaryTextProps) {
   return (
-    <Text numberOfLines={1} style={getTextStyle(size, color)}>
+    <Text numberOfLines={numberOfLines ?? 1} style={getTextStyle(size, color)}>
       {children}
     </Text>
   );

@@ -8,7 +8,11 @@ import {
   TextStyle,
   KeyboardTypeOptions,
 } from "react-native";
-import { SecondaryText } from "../texts/SecondaryText";
+
+import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+
+import { SecondaryText } from "@/components/texts";
+
 import {
   SCREEN_SIZE,
   color,
@@ -16,8 +20,7 @@ import {
   getFontSizeForScreen,
   inputFieldHeight,
   inputFontSizeValues,
-} from "../../utils/constants";
-import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+} from "@/utils/constants";
 
 const appendFontValues = {
   1: { fontSize: 9 },
@@ -52,6 +55,8 @@ interface CustomTextFieldProps {
   handleOnBlur?: () => void;
   handleOnFocus?: () => void;
   label: string;
+  customStyles?: StyleProp<ViewStyle>;
+  readOnly?: boolean;
   inputType?: CustomTextFieldInputType;
   maxLength?: number;
   append?: string;
@@ -64,6 +69,8 @@ function CustomTextField({
   handleOnBlur,
   handleOnFocus,
   label,
+  customStyles,
+  readOnly,
   inputType,
   maxLength,
   append,
@@ -91,18 +98,29 @@ function CustomTextField({
   }
 
   return (
-    <View style={{ width: textFieldWidth } as StyleProp<ViewStyle>} {...props}>
-      {label && (
-        <View style={styles.labelWrapper}>
-          <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
-            {label}
-          </SecondaryText>
-        </View>
-      )}
+    <View
+      style={[
+        {
+          width: textFieldWidth,
+        } as StyleProp<ViewStyle>,
+        customStyles,
+      ]}
+      {...props}
+    >
+      <View style={styles.labelWrapper}>
+        <SecondaryText
+          size={titleSize[SCREEN_SIZE]}
+          color={readOnly ? color.BLUE : color.DARK_BLUE}
+        >
+          {label}
+        </SecondaryText>
+      </View>
       <View
         style={[
           styles.textInputWrapper,
           {
+            paddingLeft: readOnly ? "" : "2.5%",
+            backgroundColor: readOnly ? "" : color.WHITE,
             width: textFieldWidth,
           } as StyleProp<ViewStyle>,
         ]}
@@ -115,6 +133,7 @@ function CustomTextField({
               width: append ? "65%" : "90%",
             },
           ]}
+          readOnly={readOnly ?? false}
           keyboardType={keyboardType}
           secureTextEntry={isPassword}
           maxLength={maxLength}
@@ -153,11 +172,9 @@ const styles = StyleSheet.create({
   },
   textInputWrapper: {
     paddingRight: "2.5%",
-    paddingLeft: "2.5%",
     height: inputFieldHeight[SCREEN_SIZE],
     flexDirection: "row",
     borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
-    backgroundColor: color.WHITE,
     justifyContent: "center",
   },
   textInput: {
