@@ -98,7 +98,7 @@ function ActionModal({
             {!hasDecision && (
               <PrimaryButton
                 customStyles={styles.buttonStyles}
-                onPress={onConfirm}
+                onPress={handleOnConfirm}
               >
                 {"Ok"}
               </PrimaryButton>

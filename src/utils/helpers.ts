@@ -139,6 +139,9 @@ const getHoursMinutesFromUnixDate = (unixDate: UnixDate): string => {
   return timeString;
 };
 
+/* Empty function that does nothing */
+const emptyFunc = () => {};
+
 export {
   isEmptyObject,
   sleep,
@@ -149,4 +152,5 @@ export {
   getHoursMinutesFromUnixDate,
   formatDecimals,
   numToString,
+  emptyFunc,
 };
