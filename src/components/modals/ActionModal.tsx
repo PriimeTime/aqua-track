@@ -81,17 +81,17 @@ function ActionModal({
               <>
                 <PrimaryButton
                   customStyles={styles.buttonStyles}
-                  onPress={handleOnConfirm}
-                >
-                  {"Yes"}
-                </PrimaryButton>
-                <PrimaryButton
-                  customStyles={styles.buttonStyles}
                   btnColor={color.WHITE}
                   textStyle={{ color: color.BLUE }}
                   onPress={handleOnCancel}
                 >
                   {"No"}
+                </PrimaryButton>
+                <PrimaryButton
+                  customStyles={styles.buttonStyles}
+                  onPress={handleOnConfirm}
+                >
+                  {"Yes"}
                 </PrimaryButton>
               </>
             )}

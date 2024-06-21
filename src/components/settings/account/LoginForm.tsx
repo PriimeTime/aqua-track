@@ -15,11 +15,7 @@ import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
 import { loadUserData } from "@/utils/database";
 
-import {
-  setUserUID,
-  setUserMetrics,
-  setUserLoginState,
-} from "@/store/userData";
+import { setUserUID, setUserMetrics, setUserAuth } from "@/store/userData";
 import { setHistory } from "@/store/drinkHistory";
 
 const textSize = {
@@ -107,7 +103,14 @@ function LoginForm({
       if (userData) {
         dispatch(setHistory(userData.userDrinkHistory));
         dispatch(setUserMetrics(userData.userMetrics));
-        dispatch(setUserLoginState(true));
+        dispatch(
+          setUserAuth({
+            isLoggedIn: true,
+            userName: userData.userAuth.userName,
+            email: userData.userAuth.email,
+            uid: user.uid,
+          })
+        );
       } else {
         console.error("Unable to load user data --> userData falsy");
       }

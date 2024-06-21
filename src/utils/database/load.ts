@@ -15,7 +15,6 @@ const loadUserData = async (userId: string): Promise<DocumentData | null> => {
     const docSnap: DocumentSnapshot<DocumentData> = await getDoc(userDocRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
-      console.log("User data:", data);
       return (data as UserData) || null; // Return data if it exists, otherwise return null
     } else {
       console.log("No such document!");

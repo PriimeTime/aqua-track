@@ -40,9 +40,6 @@ function RegisterForm({
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
-  const userAuth = useSelector(
-    (state: UserDataState) => state.userData.userAuth
-  );
   const userDrinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
@@ -82,14 +79,14 @@ function RegisterForm({
       const user = userCredentials.user;
       const userUID = user.uid;
 
-      dispatch(
-        setUserAuth({
-          isLoggedIn: true,
-          userName: formState.userName,
-          email: formState.email,
-          uid: userUID,
-        })
-      );
+      const userAuth = {
+        isLoggedIn: true,
+        userName: formState.userName,
+        email: formState.email,
+        uid: userUID,
+      };
+
+      dispatch(setUserAuth(userAuth));
 
       // Initialize user data in Firestore after successful registration
       await updateUserData(userUID, {
