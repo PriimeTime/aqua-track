@@ -6,7 +6,6 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
-  KeyboardTypeOptions,
 } from "react-native";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
@@ -77,13 +76,18 @@ function CustomTextField({
   fullWidth,
   ...props
 }: CustomTextFieldProps) {
-  let keyboardType: KeyboardTypeOptions = CustomTextFieldInputType.Default;
+  let keyboardType: CustomTextFieldInputType = CustomTextFieldInputType.Default;
   let textAlign: TextStyle["textAlign"] = "auto";
   let isPassword = false;
 
   switch (inputType) {
+    case undefined || null:
+      break;
     case CustomTextFieldInputType.Number:
       textAlign = "center";
+      keyboardType = inputType;
+      break;
+    case CustomTextFieldInputType.Email:
       keyboardType = inputType;
       break;
     case CustomTextFieldInputType.Password:
@@ -133,6 +137,11 @@ function CustomTextField({
               width: append ? "65%" : "90%",
             },
           ]}
+          autoCapitalize={
+            keyboardType === CustomTextFieldInputType.Email
+              ? "none"
+              : "sentences"
+          }
           readOnly={readOnly ?? false}
           keyboardType={keyboardType}
           secureTextEntry={isPassword}

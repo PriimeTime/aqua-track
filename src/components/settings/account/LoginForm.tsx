@@ -153,6 +153,7 @@ function LoginForm({
         handleOnBlur={() => validateForm(false, "email")}
         handleOnFocus={() => resetInputValidation("email")}
         fullWidth
+        inputType={CustomTextFieldInputType.Email}
         label="E-mail"
       ></CustomTextField>
       <View style={styles.errorWrapper}>
