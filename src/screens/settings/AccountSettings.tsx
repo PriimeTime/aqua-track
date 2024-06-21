@@ -90,6 +90,7 @@ function AccountSettings() {
     } catch (e) {
       console.error("Failed to reset store", e);
     }
+    setActionModalVisible(false);
     setLoading(false);
   };
 

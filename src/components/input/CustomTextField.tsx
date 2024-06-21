@@ -119,7 +119,7 @@ function CustomTextField({
         style={[
           styles.textInputWrapper,
           {
-            paddingLeft: readOnly ? "" : "2.5%",
+            paddingLeft: readOnly ? "0%" : "2.5%",
             backgroundColor: readOnly ? "" : color.WHITE,
             width: textFieldWidth,
           } as StyleProp<ViewStyle>,
