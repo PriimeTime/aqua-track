@@ -66,19 +66,11 @@ const formatDecimals = (num: number, decimals: number): number => {
 };
 
 const numToString = (num: number | null) => {
-  let retVal = "";
-
-  if (num === null) {
+  if (num === null || isNaN(num)) {
     return "0";
   }
 
-  retVal = String(num);
-
-  if (retVal === "NaN") {
-    return "0";
-  }
-
-  return retVal;
+  return String(num);
 };
 
 /**

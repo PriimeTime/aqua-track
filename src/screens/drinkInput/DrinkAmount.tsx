@@ -1,5 +1,4 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
 import {
   useFocusEffect,
@@ -57,7 +56,6 @@ const sensitivity = {
 };
 
 function DrinkAmount() {
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route =
     useRoute<RouteProp<{ params: { drinkType: DrinkItem } }, "params">>();
@@ -156,7 +154,7 @@ function DrinkAmount() {
     : "";
 
   return (
-    <GradientWrapper style={[{ paddingTop: insets.top }]}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
@@ -190,6 +188,9 @@ function DrinkAmount() {
 export { DrinkAmount };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   backButton: {
     width: "90%",
     left: "5%",

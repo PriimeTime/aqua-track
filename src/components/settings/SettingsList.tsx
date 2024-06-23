@@ -1,13 +1,12 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View, FlatList } from "react-native";
 
 import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
 import { SettingsItem } from "@/components/settings/SettingsItem";
-import { GradientWrapper } from "@/components/wrappers";
 
-import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
+import { SCREEN_SIZE } from "@/utils/constants";
 import { settingsList } from "@/utils/maps";
+import { GradientWrapper } from "../wrappers";
 
 const headerHeight = {
   SMALL: 5,
@@ -28,10 +27,8 @@ const listMarginTop = {
 };
 
 function SettingsList() {
-  const insets = useSafeAreaInsets();
-
   return (
-    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>
@@ -40,6 +37,7 @@ function SettingsList() {
       </View>
       <View style={styles.settingsListWrapper}>
         <FlatList
+          alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             gap: settingsItemGap[SCREEN_SIZE],
@@ -53,12 +51,15 @@ function SettingsList() {
               routeName={item.routeName}
             ></SettingsItem>
           )}
-          keyExtractor={(item) => item.id}
-          getItemLayout={(_, index) => ({
-            length: listItemHeight[SCREEN_SIZE],
-            offset: listItemHeight[SCREEN_SIZE] * index,
-            index,
-          })}
+          // getItemLayout={(_, index) => ({
+          //   length: listItemHeight[SCREEN_SIZE],
+          //   offset: listItemHeight[SCREEN_SIZE] * index,
+          //   index,
+          // })}
+          /* Below line is needed to create
+            an artificial gap to the bottom
+            of the screen */
+          ListFooterComponent={<View />}
         ></FlatList>
       </View>
     </GradientWrapper>
@@ -69,8 +70,7 @@ export { SettingsList };
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: "100%",
-    width: "100%",
+    flex: 1,
   },
   backButtonWrapper: {
     width: "90%",
