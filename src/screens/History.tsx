@@ -1,5 +1,4 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -17,7 +16,6 @@ import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const insets = useSafeAreaInsets();
   const drinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
@@ -31,7 +29,7 @@ function History() {
   };
 
   return (
-    <GradientWrapper style={{ paddingTop: insets.top }}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.settingsWrapper}>
         <SettingsButton
           onPress={() => navigation.navigate(MainRouteName.Settings)}
@@ -81,6 +79,9 @@ function History() {
 export { History };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   settingsWrapper: {
     width: "90%",
     left: "5%",

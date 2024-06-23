@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -21,13 +20,12 @@ import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 function RootScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const insets = useSafeAreaInsets();
   const drinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
 
   return (
-    <GradientWrapper style={{ paddingTop: insets.top }}>
+    <GradientWrapper style={styles.screen}>
       <View style={styles.wrapper}>
         <View style={styles.settingsWrapper}>
           <SettingsButton
@@ -63,6 +61,9 @@ function RootScreen() {
 export { RootScreen };
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   wrapper: {
     width: "90%",
     left: "5%",

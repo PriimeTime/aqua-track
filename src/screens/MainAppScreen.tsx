@@ -1,7 +1,8 @@
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import NetInfo from "@react-native-community/netinfo";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { View } from "react-native";
 
 import { AppNavigation } from "@/navigation/AppNavigation";
 
@@ -30,6 +31,7 @@ import { UserAuth } from "@/models/UserAuth";
 
 function MainAppScreen() {
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
 
   const isInternetReachable = useSelector(
     (state: GeneralState) => state.general.networkStatus.isReachable
@@ -126,9 +128,9 @@ function MainAppScreen() {
   }, []);
 
   return (
-    <SafeAreaProvider>
+    <View style={{ flex: 1, paddingTop: insets.top }}>
       <AppNavigation></AppNavigation>
-    </SafeAreaProvider>
+    </View>
   );
 }
 

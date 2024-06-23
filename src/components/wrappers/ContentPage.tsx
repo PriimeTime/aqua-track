@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, StyleSheet, ScrollView } from "react-native";
 
 import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
@@ -19,12 +18,8 @@ interface ContentPageProps {
 }
 
 function ContentPage({ title, children }: ContentPageProps) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <GradientWrapper
-      style={[styles.gradientWrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={styles.gradientWrapper}>
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>

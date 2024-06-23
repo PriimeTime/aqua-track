@@ -1,5 +1,4 @@
 import { View, StyleSheet, Animated, FlatList } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -30,7 +29,6 @@ const headerSize = {
 
 function DrinkSelection() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const insets = useSafeAreaInsets();
 
   const scaleValue = useRef(animatedScaleValue(1)).current;
 
@@ -39,7 +37,7 @@ function DrinkSelection() {
   };
 
   return (
-    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
@@ -83,8 +81,7 @@ export { DrinkSelection };
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
   },
   backButton: {
     width: "90%",
