@@ -49,6 +49,7 @@ function DrinkSelection() {
         </Animated.View>
       </View>
       <FlatList
+        alwaysBounceVertical={false}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         style={styles.drinkTypeSelectionWrapper}
@@ -67,11 +68,15 @@ function DrinkSelection() {
           </CardButton>
         )}
         keyExtractor={(item) => numToString(item.typeID)}
-        getItemLayout={(_, index) => ({
-          length: cardButtonHeight,
-          offset: cardButtonHeight * index,
-          index,
-        })}
+        // getItemLayout={(_, index) => ({
+        //   length: cardButtonHeight,
+        //   offset: cardButtonHeight * index,
+        //   index,
+        // })}
+        /* Below line is needed to create
+            an artificial gap to the bottom
+            of the screen */
+        ListFooterComponent={<View />}
       ></FlatList>
     </GradientWrapper>
   );
@@ -100,9 +105,6 @@ const styles = StyleSheet.create({
   drinkTypeSelectionWrapper: {
     width: "90%",
     left: "5%",
-  },
-  drinkTypeContentContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    height: "80%",
   },
 });

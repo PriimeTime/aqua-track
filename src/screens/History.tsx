@@ -12,7 +12,7 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
-import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
+import { SCREEN_SIZE } from "@/utils/constants";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -30,7 +30,7 @@ function History() {
 
   return (
     <GradientWrapper style={styles.wrapper}>
-      <View style={styles.settingsWrapper}>
+      <View style={styles.settingsButtonWrapper}>
         <SettingsButton
           onPress={() => navigation.navigate(MainRouteName.Settings)}
         ></SettingsButton>
@@ -40,6 +40,7 @@ function History() {
       </View>
       <View style={styles.listWrapper}>
         <FlatList
+          alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ gap: historyItemGap[SCREEN_SIZE] }}
           data={drinkHistory}
@@ -54,12 +55,11 @@ function History() {
               // hydrationQuantity={item.hydrationQuantity}
             ></HistoryItem>
           )}
-          keyExtractor={(item) => item.id}
-          getItemLayout={(_, index) => ({
-            length: listItemHeight[SCREEN_SIZE],
-            offset: listItemHeight[SCREEN_SIZE] * index,
-            index,
-          })}
+          // getItemLayout={(_, index) => ({
+          //   length: listItemHeight[SCREEN_SIZE],
+          //   offset: listItemHeight[SCREEN_SIZE] * index,
+          //   index,
+          // })}
           /* Below line is needed to create
             an artificial gap between the
             HistoryBottom component and the
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  settingsWrapper: {
+  settingsButtonWrapper: {
     width: "90%",
     left: "5%",
     height: "10%",

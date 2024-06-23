@@ -4,7 +4,7 @@ import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 
-import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
+import { SCREEN_SIZE } from "@/utils/constants";
 import { settingsList } from "@/utils/maps";
 import { GradientWrapper } from "../wrappers";
 
@@ -37,6 +37,7 @@ function SettingsList() {
       </View>
       <View style={styles.settingsListWrapper}>
         <FlatList
+          alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             gap: settingsItemGap[SCREEN_SIZE],
@@ -50,12 +51,15 @@ function SettingsList() {
               routeName={item.routeName}
             ></SettingsItem>
           )}
-          keyExtractor={(item) => item.id}
-          getItemLayout={(_, index) => ({
-            length: listItemHeight[SCREEN_SIZE],
-            offset: listItemHeight[SCREEN_SIZE] * index,
-            index,
-          })}
+          // getItemLayout={(_, index) => ({
+          //   length: listItemHeight[SCREEN_SIZE],
+          //   offset: listItemHeight[SCREEN_SIZE] * index,
+          //   index,
+          // })}
+          /* Below line is needed to create
+            an artificial gap to the bottom
+            of the screen */
+          ListFooterComponent={<View />}
         ></FlatList>
       </View>
     </GradientWrapper>

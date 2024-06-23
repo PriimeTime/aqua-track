@@ -26,7 +26,7 @@ function ContentPage({ title, children }: ContentPageProps) {
       <View style={styles.titleWrapper}>
         <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView alwaysBounceVertical={false}>
         <View style={styles.wrapper}>{children}</View>
       </ScrollView>
     </GradientWrapper>
@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   gradientWrapper: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
   },
   wrapper: {
     width: "90%",
