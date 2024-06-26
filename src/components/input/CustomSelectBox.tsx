@@ -1,27 +1,10 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 
-import {
-  SCREEN_SIZE,
-  color,
-  fontFamily,
-  getFontSizeForScreen,
-  inputFieldHeight,
-  inputFontSizeValues,
-} from "@/utils/constants";
+import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
+import { customSelectBoxLabelFontSize } from "@/utils/constants/components/input";
 
 import { SecondaryText } from "@/components/texts";
-
-const titleSize = {
-  SMALL: 4,
-  MEDIUM: 6,
-  LARGE: 8,
-};
-
-const getSelectBoxTextStyle = () => ({
-  fontSize: getFontSizeForScreen(inputFontSizeValues, SCREEN_SIZE, titleSize),
-  ...styles.selectBoxText,
-});
 
 interface CustomSelectBoxItem {
   id: number;
@@ -61,7 +44,10 @@ function CustomSelectBox<T>({
     <>
       {label && (
         <View style={styles.labelWrapper}>
-          <SecondaryText size={titleSize[SCREEN_SIZE]} color={color.DARK_BLUE}>
+          <SecondaryText
+            fontSize={customSelectBoxLabelFontSize}
+            color={color.DARK_BLUE}
+          >
             {label}
           </SecondaryText>
         </View>
@@ -82,7 +68,7 @@ function CustomSelectBox<T>({
           >
             <Text
               style={[
-                getSelectBoxTextStyle(),
+                styles.selectBoxText,
                 {
                   color:
                     selectedItemId === item.id ? color.WHITE : color.LIGHTBLUE,
@@ -104,17 +90,18 @@ const styles = StyleSheet.create({
   labelWrapper: { width: "100%", marginBottom: "2.5%" },
   selectBoxListWrapper: {
     width: "100%",
-    height: inputFieldHeight[SCREEN_SIZE],
+    height: inputFieldHeight,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   selectBoxItemWrapper: {
     height: "100%",
-    borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
+    borderRadius: inputFieldHeight / 2,
     justifyContent: "center",
     alignItems: "center",
   },
   selectBoxText: {
+    fontSize: customSelectBoxLabelFontSize,
     fontFamily: fontFamily.DEFAULT,
   },
 });

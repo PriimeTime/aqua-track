@@ -12,23 +12,15 @@ import { PrimaryButton } from "@/components/buttons";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
+import { color, fontFamily } from "@/utils/constants";
 import { loadUserData } from "@/utils/database";
+import {
+  loginFormErrorFontSize,
+  loginFormFontSize,
+} from "@/utils/constants/components/forms";
 
 import { setUserUID, setUserMetrics, setUserAuth } from "@/store/userData";
 import { setHistory } from "@/store/drinkHistory";
-
-const textSize = {
-  SMALL: 20,
-  MEDIUM: 25,
-  LARGE: 60,
-};
-
-const errorTextSize = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 30,
-};
 
 const GoogleButton = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -235,7 +227,7 @@ const googleButtonStyles = StyleSheet.create({
   text: {
     fontFamily: fontFamily.GOOGLE,
     textAlign: "center",
-    fontSize: textSize[SCREEN_SIZE],
+    fontSize: loginFormFontSize,
     letterSpacing: 0,
     color: color.BLACK,
   },
@@ -244,11 +236,11 @@ const googleButtonStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   errorWrapper: {
     justifyContent: "center",
-    height: errorTextSize[SCREEN_SIZE] * 1.5,
+    height: loginFormErrorFontSize * 1.5,
   },
   errorText: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: errorTextSize[SCREEN_SIZE],
+    fontSize: loginFormErrorFontSize,
     color: color.RED,
   },
 });

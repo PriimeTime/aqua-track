@@ -12,41 +12,11 @@ import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
 import { SecondaryText } from "@/components/texts";
 
+import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
 import {
-  SCREEN_SIZE,
-  color,
-  fontFamily,
-  getFontSizeForScreen,
-  inputFieldHeight,
-  inputFontSizeValues,
-} from "@/utils/constants";
-
-const appendFontValues = {
-  1: { fontSize: 9 },
-  2: { fontSize: 11 },
-  3: { fontSize: 13 },
-  4: { fontSize: 15 },
-  5: { fontSize: 17 },
-  6: { fontSize: 20 },
-  7: { fontSize: 26 },
-  8: { fontSize: 30 },
-};
-
-const titleSize = {
-  SMALL: 4,
-  MEDIUM: 6,
-  LARGE: 8,
-};
-
-const getAppendStyle = () => ({
-  fontSize: getFontSizeForScreen(appendFontValues, SCREEN_SIZE, titleSize),
-  ...styles.append,
-});
-
-const getTextInputStyle = () => ({
-  fontSize: getFontSizeForScreen(inputFontSizeValues, SCREEN_SIZE, titleSize),
-  ...styles.textInput,
-});
+  customTextFieldFontSize,
+  customTextFieldLabelFontSize,
+} from "@/utils/constants/components/input";
 
 interface CustomTextFieldProps {
   value: string;
@@ -113,7 +83,7 @@ function CustomTextField({
     >
       <View style={styles.labelWrapper}>
         <SecondaryText
-          size={titleSize[SCREEN_SIZE]}
+          fontSize={customTextFieldLabelFontSize}
           color={readOnly ? color.BLUE : color.DARK_BLUE}
         >
           {label}
@@ -131,7 +101,7 @@ function CustomTextField({
       >
         <TextInput
           style={[
-            getTextInputStyle(),
+            styles.textInput,
             {
               textAlign,
               width: append ? "65%" : "90%",
@@ -153,7 +123,7 @@ function CustomTextField({
         ></TextInput>
         {append && (
           <View style={styles.appendWrapper}>
-            <Text style={getAppendStyle()}>{append}</Text>
+            <Text style={styles.append}>{append}</Text>
           </View>
         )}
       </View>
@@ -178,17 +148,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: fontFamily.DEFAULT,
     color: color.DARK_BLUE,
+    fontSize: customTextFieldFontSize,
   },
   textInputWrapper: {
     paddingRight: "2.5%",
-    height: inputFieldHeight[SCREEN_SIZE],
+    height: inputFieldHeight,
     flexDirection: "row",
-    borderRadius: inputFieldHeight[SCREEN_SIZE] / 2,
+    borderRadius: inputFieldHeight / 2,
     justifyContent: "center",
   },
   textInput: {
     height: "100%",
     fontFamily: fontFamily.DEFAULT,
     color: color.DARK_BLUE,
+    fontSize: customTextFieldFontSize,
   },
 });

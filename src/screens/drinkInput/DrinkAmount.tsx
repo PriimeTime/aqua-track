@@ -14,8 +14,12 @@ import * as Haptics from "expo-haptics";
 import { addToHistory } from "@/store/drinkHistory";
 
 import { drinkTypeList } from "@/utils/maps";
-import { inputDrinkConfig, SCREEN_SIZE } from "@/utils/constants";
+import { inputDrinkConfig } from "@/utils/constants";
 import { animatedScaleValue } from "@/utils/animations";
+import {
+  drinkAmountFontSize,
+  drinkAmountSensitivity,
+} from "@/utils/constants/components/drinks";
 
 import { PrimaryButton, BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -41,18 +45,6 @@ const useDebouncedCallback = (callback: () => void, delay: number) => {
       callback();
     }
   };
-};
-
-const headerTextSize = {
-  SMALL: 5,
-  MEDIUM: 5,
-  LARGE: 9,
-};
-
-const sensitivity = {
-  SMALL: 0.75,
-  MEDIUM: 0.45,
-  LARGE: 0.25,
 };
 
 function DrinkAmount() {
@@ -102,7 +94,7 @@ function DrinkAmount() {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (_, gestureState) => {
-      const dragDistance = gestureState.dy * sensitivity[SCREEN_SIZE];
+      const dragDistance = gestureState.dy * drinkAmountSensitivity;
 
       // Calculate height of water based on drag
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
@@ -160,7 +152,7 @@ function DrinkAmount() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+          <PrimaryText fontSize={drinkAmountFontSize}>
             How much {drinkTypeLabel}?
           </PrimaryText>
         </Animated.View>
@@ -172,7 +164,7 @@ function DrinkAmount() {
         ></DrinkAmountBottle>
       </View>
       <View style={styles.amountDrank}>
-        <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+        <PrimaryText fontSize={drinkAmountFontSize}>
           {quantityValue} ml
         </PrimaryText>
       </View>

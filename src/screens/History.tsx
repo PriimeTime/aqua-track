@@ -12,7 +12,7 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
-import { SCREEN_SIZE } from "@/utils/constants";
+import { historyItemGap } from "@/utils/constants/components/history";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -21,12 +21,6 @@ function History() {
   );
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
-
-  const historyItemGap = {
-    SMALL: 8,
-    MEDIUM: 10,
-    LARGE: 20,
-  };
 
   return (
     <GradientWrapper style={styles.wrapper}>
@@ -42,7 +36,7 @@ function History() {
         <FlatList
           alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: historyItemGap[SCREEN_SIZE] }}
+          contentContainerStyle={{ gap: historyItemGap }}
           data={drinkHistory}
           renderItem={({ item }) => (
             <HistoryItem

@@ -5,38 +5,19 @@ import { StyleSheet, View } from "react-native";
 
 import { PrimaryText } from "@/components/texts";
 
-import { color, shadow, SCREEN_SIZE } from "@/utils/constants";
+import { color, shadow } from "@/utils/constants";
+import {
+  totalIntakeFontSize,
+  totalIntakeCardPadding,
+  totalIntakeCardBorderRadius,
+} from "@/utils/constants/components/typography";
 import {
   // totalDrinkQuantity,
   totalHydratingDrinkQuantity,
   displayPositivePercent,
-} from "../utils/helpers";
+} from "@/utils/helpers";
 import { CountUp } from "use-count-up";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-
-const cardSize = {
-  SMALL: 3,
-  MEDIUM: 5,
-  LARGE: 8,
-};
-
-const cardPaddingHorizontal = {
-  SMALL: 20,
-  MEDIUM: 27.5,
-  LARGE: 30,
-};
-
-const cardPaddingVertical = {
-  SMALL: 10,
-  MEDIUM: 12.5,
-  LARGE: 15,
-};
-
-const cardBorderRadius = {
-  SMALL: 30,
-  MEDIUM: 36,
-  LARGE: 72,
-};
 
 function TotalIntake() {
   const drinkHistory = useSelector(
@@ -66,7 +47,7 @@ function TotalIntake() {
 
   return (
     <View style={styles.wrapper}>
-      <PrimaryText size={cardSize[SCREEN_SIZE]} color={color.BLUE}>
+      <PrimaryText fontSize={totalIntakeFontSize} color={color.BLUE}>
         {/* {metricUnitConversion(totalDrinkQuantityToday)} */}
         {/* TODO change hard coded 2500ml to dynamic value */}
         <CountUp
@@ -87,9 +68,9 @@ export { TotalIntake };
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingHorizontal: cardPaddingHorizontal[SCREEN_SIZE],
-    paddingVertical: cardPaddingVertical[SCREEN_SIZE],
-    borderRadius: cardBorderRadius[SCREEN_SIZE],
+    paddingHorizontal: totalIntakeCardPadding.paddingHorizontal,
+    paddingVertical: totalIntakeCardPadding.paddingVertical,
+    borderRadius: totalIntakeCardBorderRadius,
     color: color.BLUE,
     backgroundColor: color.WHITE,
     ...shadow,

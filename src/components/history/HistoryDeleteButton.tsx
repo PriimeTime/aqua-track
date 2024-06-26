@@ -7,25 +7,12 @@ import { type UID } from "@/types/UID";
 
 import { removeFromHistory } from "@/store/drinkHistory";
 
-import { color, SCREEN_SIZE } from "@/utils/constants";
+import { color } from "@/utils/constants";
+import {
+  historyButtonIconSize,
+  historyButtonRadius,
+} from "@/utils/constants/components/history";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-
-const buttonIconSize = {
-  SMALL: 20,
-  MEDIUM: 25,
-  LARGE: 45,
-};
-
-const buttonBorderRadius = {
-  SMALL: 10,
-  MEDIUM: 15,
-  LARGE: 25,
-};
-
-const getButtonStyle = () => ({
-  ...styles.buttonBase,
-  borderRadius: buttonBorderRadius[SCREEN_SIZE],
-});
 
 function HistoryDeleteButton({ itemID }: { itemID: UID }) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
@@ -55,14 +42,14 @@ function HistoryDeleteButton({ itemID }: { itemID: UID }) {
       ]}
     >
       <Pressable
-        style={getButtonStyle}
+        style={styles.buttonBase}
         onPress={handleOnPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
       >
         <Ionicons
           color={color.WHITE}
-          size={buttonIconSize[SCREEN_SIZE]}
+          size={historyButtonIconSize}
           name="trash"
         />
       </Pressable>
@@ -85,5 +72,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.RED,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: historyButtonRadius,
   },
 });

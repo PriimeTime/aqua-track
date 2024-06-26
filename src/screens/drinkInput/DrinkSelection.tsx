@@ -9,23 +9,19 @@ import { GradientWrapper } from "@/components/wrappers";
 
 import { drinkTypeList } from "@/utils/maps";
 import { dimensions, SCREEN_SIZE } from "@/utils/constants";
+import { drinkAmountFontSize } from "@/utils/constants/components/drinks";
 import { animatedScaleValue } from "@/utils/animations";
 import { numToString } from "@/utils/helpers";
 
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
+import { ScreenSize } from "@/enums/maps/ScreenSize";
 
 const cardButtonHeight =
-  SCREEN_SIZE === "LARGE"
+  SCREEN_SIZE === ScreenSize.Large
     ? dimensions.CARD_BUTTON_HEIGHT_TABLET
     : dimensions.CARD_BUTTON_HEIGHT_PHONE;
-
-const headerSize = {
-  SMALL: 5,
-  MEDIUM: 6,
-  LARGE: 9,
-};
 
 function DrinkSelection() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -43,7 +39,7 @@ function DrinkSelection() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={headerSize[SCREEN_SIZE]}>
+          <PrimaryText fontSize={drinkAmountFontSize}>
             What did you drink?
           </PrimaryText>
         </Animated.View>

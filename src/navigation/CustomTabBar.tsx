@@ -12,27 +12,14 @@ import { NavigationHelpers } from "@react-navigation/native";
 
 import { WaterDropButton } from "@/components/navigation";
 
-import { color, shadow, SCREEN_SIZE, fontFamily } from "@/utils/constants";
+import { color, shadow, fontFamily } from "@/utils/constants";
+import {
+  customTabBarPadding,
+  customTabBarRadius,
+  customTabBarFontSize,
+} from "@/utils/constants/components";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
-
-const fontSizes = {
-  SMALL: 16,
-  MEDIUM: 20,
-  LARGE: 28,
-};
-
-const navbarBorderRadius = {
-  SMALL: 26,
-  MEDIUM: 36,
-  LARGE: 72,
-};
-
-const navbarPadding = {
-  SMALL: "2%",
-  MEDIUM: "2.5%",
-  LARGE: "1.5%",
-};
 
 interface CustomTabBarProps {
   state: TabNavigationState<ParamListBase>;
@@ -96,7 +83,7 @@ export { CustomTabBar };
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    padding: navbarPadding[SCREEN_SIZE] as DimensionValue,
+    padding: customTabBarPadding as DimensionValue,
   },
   navigationBar: {
     position: "absolute",
@@ -104,20 +91,20 @@ const styles = StyleSheet.create({
     left: "5%",
     backgroundColor: color.WHITE,
     ...shadow,
-    borderRadius: navbarBorderRadius[SCREEN_SIZE],
+    borderRadius: customTabBarRadius,
     height: "7.5%",
     width: "90%",
   },
   container: {
     width: "100%",
     height: "100%",
-    borderRadius: navbarBorderRadius[SCREEN_SIZE],
+    borderRadius: customTabBarRadius,
     justifyContent: "center",
     alignItems: "center",
   },
   text: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: fontSizes[SCREEN_SIZE],
+    fontSize: customTabBarFontSize,
     textTransform: "uppercase",
   },
 });

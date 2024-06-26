@@ -4,13 +4,7 @@ import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
 import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
 
-import { SCREEN_SIZE } from "@/utils/constants";
-
-const headerHeight = {
-  SMALL: 5,
-  MEDIUM: 6,
-  LARGE: 9,
-};
+import { contentPageFontSize } from "@/utils/constants/components";
 
 interface ContentPageProps {
   title: string;
@@ -24,7 +18,7 @@ function ContentPage({ title, children }: ContentPageProps) {
         <BackButton></BackButton>
       </View>
       <View style={styles.titleWrapper}>
-        <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
+        <PrimaryText fontSize={contentPageFontSize}>{title}</PrimaryText>
       </View>
       <ScrollView alwaysBounceVertical={false}>
         <View style={styles.wrapper}>{children}</View>

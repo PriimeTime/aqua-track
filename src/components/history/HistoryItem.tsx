@@ -18,45 +18,23 @@ import {
   fontFamily,
 } from "@/utils/constants";
 import {
+  infoCardCurrentAmountHeight,
+  infoCardCurrentAmountWidth,
+  infoCardCurrentAmountRadius,
+  infoCardCurrentAmountFontSize,
+  infoCardTotalAmountFontSize,
+  infoCardTotalAmountHeight,
+  infoCardTotalAmountWidth,
+  infoCardTotalAmountRadius,
+  historyItemPrimaryTextFontSize,
+  historyItemSecondaryTextFontSize,
+  historyItemBorderRadius,
+  infoCardSizeTotalFontSize,
+} from "@/utils/constants/components/history";
+import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
 } from "@/utils/helpers";
-
-const itemBorderRadius = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 25,
-};
-
-const infoCardSizeCurrentAmount = {
-  SMALL: 3,
-  MEDIUM: 4,
-  LARGE: 6,
-};
-
-const infoCardSizeTotalAmount = {
-  SMALL: 1,
-  MEDIUM: 2,
-  LARGE: 4,
-};
-
-const infoCardSizeTotalFontSize = {
-  SMALL: 16,
-  MEDIUM: 20,
-  LARGE: 26,
-};
-
-const drinkTitleSize = {
-  SMALL: 1,
-  MEDIUM: 2,
-  LARGE: 7,
-};
-
-const drinkTimeSize = {
-  SMALL: 2,
-  MEDIUM: 3,
-  LARGE: 6,
-};
 
 interface HistoryItemProps {
   imageSrc: string;
@@ -86,20 +64,33 @@ function HistoryItem({
         ></Image>
       </View>
       <View style={styles.cardInfoWrapper}>
-        <PrimaryText size={drinkTitleSize[SCREEN_SIZE]}>{title}</PrimaryText>
-        <SecondaryText size={drinkTimeSize[SCREEN_SIZE]}>
+        <PrimaryText fontSize={historyItemPrimaryTextFontSize}>
+          {title}
+        </PrimaryText>
+        <SecondaryText fontSize={historyItemSecondaryTextFontSize}>
           {getHoursMinutesFromUnixDate(date)}
         </SecondaryText>
       </View>
       <View style={styles.cardTotalWrapper}>
         <View style={styles.cardTotalTop}>
-          <InfoCard secondary size={infoCardSizeCurrentAmount[SCREEN_SIZE]}>
+          <InfoCard
+            secondary
+            height={infoCardCurrentAmountHeight}
+            width={infoCardCurrentAmountWidth}
+            borderRadius={infoCardCurrentAmountRadius}
+            fontSize={infoCardCurrentAmountFontSize}
+          >
             {`+${quantity} ml`}
           </InfoCard>
         </View>
         <View style={styles.cardTotalBottom}>
           <Text style={styles.cardTotalBottomText}>{`Total:`}</Text>
-          <InfoCard size={infoCardSizeTotalAmount[SCREEN_SIZE]}>
+          <InfoCard
+            fontSize={infoCardTotalAmountFontSize}
+            width={infoCardTotalAmountWidth}
+            height={infoCardTotalAmountHeight}
+            borderRadius={infoCardTotalAmountRadius}
+          >
             {metricUnitConversion(groupedDrinkHistoryQuantity)}
           </InfoCard>
         </View>
@@ -117,7 +108,7 @@ const styles = StyleSheet.create({
   cardWrapper: {
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
-    borderRadius: itemBorderRadius[SCREEN_SIZE],
+    borderRadius: historyItemBorderRadius,
     borderWidth: cardBorderWidth[SCREEN_SIZE],
     height: listItemHeight[SCREEN_SIZE],
     width: "100%",
@@ -159,7 +150,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.DEFAULT,
     color: color.BLUE,
     marginRight: 5,
-    fontSize: infoCardSizeTotalFontSize[SCREEN_SIZE],
+    fontSize: infoCardSizeTotalFontSize,
   },
   cardDeleteButtonWrapper: {
     width: "15%",

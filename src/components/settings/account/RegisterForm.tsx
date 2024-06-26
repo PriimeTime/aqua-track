@@ -16,13 +16,8 @@ import { useFormValidation } from "@/hooks/useFormValidation";
 import { setUserAuth } from "@/store/userData";
 
 import { updateUserData } from "@/utils/database";
-import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
-
-const errorTextSize = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 30,
-};
+import { color, fontFamily } from "@/utils/constants";
+import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -173,11 +168,11 @@ export { RegisterForm };
 const styles = StyleSheet.create({
   errorWrapper: {
     justifyContent: "center",
-    height: errorTextSize[SCREEN_SIZE] * 1.5,
+    height: registerFormErrorFontSize * 1.5,
   },
   errorText: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: errorTextSize[SCREEN_SIZE],
+    fontSize: registerFormErrorFontSize,
     color: color.RED,
   },
 });

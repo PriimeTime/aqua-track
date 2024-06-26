@@ -3,28 +3,15 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
 import { SettingsItem } from "@/components/settings/SettingsItem";
+import { GradientWrapper } from "@/components/wrappers";
 
-import { SCREEN_SIZE } from "@/utils/constants";
 import { settingsList } from "@/utils/maps";
-import { GradientWrapper } from "../wrappers";
-
-const headerHeight = {
-  SMALL: 5,
-  MEDIUM: 6,
-  LARGE: 9,
-};
-
-const settingsItemGap = {
-  SMALL: 8,
-  MEDIUM: 10,
-  LARGE: 20,
-};
-
-const listMarginTop = {
-  SMALL: 50,
-  MEDIUM: 50,
-  LARGE: 150,
-};
+import {} from "@/utils/constants";
+import {
+  settingsListFontSize,
+  settingsListItemGap,
+  settingsListMarginTop,
+} from "@/utils/constants/components/settings";
 
 function SettingsList() {
   return (
@@ -33,15 +20,15 @@ function SettingsList() {
         <BackButton></BackButton>
       </View>
       <View style={styles.headerWrapper}>
-        <PrimaryText size={headerHeight[SCREEN_SIZE]}>Settings</PrimaryText>
+        <PrimaryText fontSize={settingsListFontSize}>Settings</PrimaryText>
       </View>
       <View style={styles.settingsListWrapper}>
         <FlatList
           alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            gap: settingsItemGap[SCREEN_SIZE],
-            paddingBottom: listMarginTop[SCREEN_SIZE],
+            gap: settingsListItemGap,
+            paddingBottom: settingsListMarginTop,
           }}
           data={settingsList}
           renderItem={({ item }) => (
@@ -87,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   settingsListWrapper: {
-    marginTop: listMarginTop[SCREEN_SIZE],
+    marginTop: settingsListMarginTop,
     height: "80%",
     width: "90%",
     left: "5%",

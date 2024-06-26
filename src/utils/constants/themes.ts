@@ -3,6 +3,8 @@ import { ScreenSize } from "@/enums/maps/ScreenSize";
 import { FontSizeConfig } from "@/models/FontSizeConfig";
 import { ResponsiveSize } from "@/models/ResponsiveSize";
 
+import { SCREEN_SIZE } from "@/utils/constants/screensize";
+
 const color = {
   WHITE: "#FFFFFF",
   LIGHTBLUE: "#8FC7FF",
@@ -75,11 +77,13 @@ const listItemHeight = {
   LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
 };
 
-const inputFieldHeight = {
+const inputFieldHeightObj = {
   SMALL: 40,
   MEDIUM: 50,
   LARGE: 100,
 };
+
+const inputFieldHeight = inputFieldHeightObj[SCREEN_SIZE];
 
 const cardBorderWidth = {
   SMALL: 1,

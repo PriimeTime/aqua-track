@@ -1,17 +1,10 @@
 import { Animated, Pressable, ViewStyle } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { useRef } from "react";
 
 import WaterDrop from "../../../assets/icons/WaterDrop.svg";
 
-import { SCREEN_SIZE } from "@/utils/constants";
+import { waterDropButtonSize } from "@/utils/constants/components/buttons";
 import { animatedScaleValue } from "@/utils/animations";
-
-const waterDropSizes = {
-  SMALL: hp("12%"),
-  MEDIUM: hp("12%"),
-  LARGE: hp("15%"),
-};
 
 interface WaterDropButtonProps {
   onPress: () => void;
@@ -51,8 +44,8 @@ function WaterDropButton({ onPress, style, ...props }: WaterDropButtonProps) {
         }}
       >
         <WaterDrop
-          width={waterDropSizes[SCREEN_SIZE]}
-          height={waterDropSizes[SCREEN_SIZE]}
+          width={waterDropButtonSize}
+          height={waterDropButtonSize}
         ></WaterDrop>
       </Animated.View>
     </Pressable>

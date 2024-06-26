@@ -3,34 +3,12 @@ import { useRef } from "react";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import { ScreenSize } from "@/enums/maps/ScreenSize";
-
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-import { color, shadow, SCREEN_SIZE } from "@/utils/constants";
-
-const buttonSizes = {
-  SMALL: 48,
-  MEDIUM: 64,
-  LARGE: 128,
-};
-
-const iconSizes = {
-  SMALL: 25,
-  MEDIUM: 35,
-  LARGE: 70,
-};
-
-const getButtonStyle = (screenSize: ScreenSize) => {
-  const size = buttonSizes[screenSize];
-  const borderRadius = size / 2; // Create circle
-
-  return {
-    width: size,
-    height: size,
-    borderRadius,
-    ...styles.baseButton,
-  };
-};
+import { color, shadow } from "@/utils/constants";
+import {
+  settingsButtonSize,
+  settingsIconSize,
+} from "@/utils/constants/components/buttons";
 
 interface SettingsButtonProps {
   onPress: () => void;
@@ -55,10 +33,7 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
   return (
     <View style={styles.container}>
       <Animated.View
-        style={[
-          { transform: [{ scale: scaleValue }] },
-          getButtonStyle(SCREEN_SIZE),
-        ]}
+        style={[{ transform: [{ scale: scaleValue }] }, styles.baseButton]}
       >
         <Pressable
           onPress={handlePress}
@@ -67,7 +42,7 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
         >
           <Ionicons
             color={color.BLUE}
-            size={iconSizes[SCREEN_SIZE]}
+            size={settingsIconSize}
             name="settings"
           />
         </Pressable>
@@ -84,6 +59,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     ...shadow,
     backgroundColor: color.WHITE,
+    width: settingsButtonSize,
+    height: settingsButtonSize,
+    borderRadius: settingsButtonSize / 2,
   },
   container: {
     alignItems: "flex-end",

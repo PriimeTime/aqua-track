@@ -2,31 +2,13 @@ import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { metricUnitConversion } from "@/utils/helpers";
-import { color, fontFamily, SCREEN_SIZE } from "@/utils/constants";
-
-const bottomLineBorderTopWidth = {
-  SMALL: 1.5,
-  MEDIUM: 2,
-  LARGE: 3,
-};
-
-const bottomLineHeight = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 40,
-};
-
-const bottomTextIndent = {
-  SMALL: 20,
-  MEDIUM: 20,
-  LARGE: 50,
-};
-
-const fontSizes = {
-  SMALL: 18,
-  MEDIUM: 24,
-  LARGE: 36,
-};
+import { color, fontFamily } from "@/utils/constants";
+import {
+  historyBottomFontSize,
+  historyBottomLineBorderTopWidth,
+  historyBottomLineHeight,
+  historyBottomTextIndent,
+} from "@/utils/constants/components/history";
 
 function HistoryBottom({
   totalDrinkQuantityToday,
@@ -55,8 +37,8 @@ export { HistoryBottom };
 const styles = StyleSheet.create({
   bottomLine: {
     width: "100%",
-    height: bottomLineHeight[SCREEN_SIZE],
-    borderTopWidth: bottomLineBorderTopWidth[SCREEN_SIZE],
+    height: historyBottomLineHeight,
+    borderTopWidth: historyBottomLineBorderTopWidth,
     borderColor: color.DARK_BLUE,
   },
   bottomSection: {
@@ -66,14 +48,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   bottomText: {
-    left: bottomTextIndent[SCREEN_SIZE],
+    left: historyBottomTextIndent,
     fontFamily: fontFamily.DEFAULT,
-    fontSize: fontSizes[SCREEN_SIZE],
+    fontSize: historyBottomFontSize,
     color: color.DARK_BLUE,
   },
   bottomValue: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: fontSizes[SCREEN_SIZE],
+    fontSize: historyBottomFontSize,
     color: color.DARK_BLUE,
   },
 });
