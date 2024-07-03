@@ -8,24 +8,10 @@ import {
 
 import { color, fontFamily } from "@/utils/constants";
 
-const fontValues = {
-  1: { fontSize: 12 },
-  2: { fontSize: 14 },
-  3: { fontSize: 16 },
-  4: { fontSize: 18 },
-  5: { fontSize: 20 },
-  6: { fontSize: 24 },
-  7: { fontSize: 36 },
-  8: { fontSize: 48 },
-};
-
 function getTextStyle(
-  size: number,
+  fontSize: number,
   colorParam?: ColorValue
 ): StyleProp<TextStyle> {
-  const defaultFontValue = fontValues[1].fontSize;
-  const fontSize =
-    fontValues[size as keyof typeof fontValues].fontSize || defaultFontValue;
   const colorVal = colorParam || color.LIGHTBLUE;
 
   return {
@@ -37,13 +23,13 @@ function getTextStyle(
 
 interface SecondaryTextProps {
   children: React.ReactNode;
-  size: number;
+  fontSize: number;
   color?: ColorValue;
 }
 
-function SecondaryText({ children, size, color }: SecondaryTextProps) {
+function SecondaryText({ children, fontSize, color }: SecondaryTextProps) {
   return (
-    <Text numberOfLines={1} style={getTextStyle(size, color)}>
+    <Text numberOfLines={1} style={getTextStyle(fontSize, color)}>
       {children}
     </Text>
   );

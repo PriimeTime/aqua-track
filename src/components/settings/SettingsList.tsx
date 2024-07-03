@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, View, FlatList } from "react-native";
 
 import { BackButton } from "@/components/buttons";
@@ -6,44 +5,30 @@ import { PrimaryText } from "@/components/texts";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { GradientWrapper } from "@/components/wrappers";
 
-import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
 import { settingsList } from "@/utils/maps";
-
-const headerHeight = {
-  SMALL: 5,
-  MEDIUM: 6,
-  LARGE: 9,
-};
-
-const settingsItemGap = {
-  SMALL: 8,
-  MEDIUM: 10,
-  LARGE: 20,
-};
-
-const listMarginTop = {
-  SMALL: 50,
-  MEDIUM: 50,
-  LARGE: 150,
-};
+import {} from "@/utils/constants";
+import {
+  settingsListFontSize,
+  settingsListItemGap,
+  settingsListMarginTop,
+} from "@/utils/constants/components/settings";
 
 function SettingsList() {
-  const insets = useSafeAreaInsets();
-
   return (
-    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>
       <View style={styles.headerWrapper}>
-        <PrimaryText size={headerHeight[SCREEN_SIZE]}>Settings</PrimaryText>
+        <PrimaryText fontSize={settingsListFontSize}>Settings</PrimaryText>
       </View>
       <View style={styles.settingsListWrapper}>
         <FlatList
+          alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            gap: settingsItemGap[SCREEN_SIZE],
-            paddingBottom: listMarginTop[SCREEN_SIZE],
+            gap: settingsListItemGap,
+            paddingBottom: settingsListMarginTop,
           }}
           data={settingsList}
           renderItem={({ item }) => (
@@ -53,12 +38,15 @@ function SettingsList() {
               routeName={item.routeName}
             ></SettingsItem>
           )}
-          keyExtractor={(item) => item.id}
-          getItemLayout={(_, index) => ({
-            length: listItemHeight[SCREEN_SIZE],
-            offset: listItemHeight[SCREEN_SIZE] * index,
-            index,
-          })}
+          // getItemLayout={(_, index) => ({
+          //   length: listItemHeight[SCREEN_SIZE],
+          //   offset: listItemHeight[SCREEN_SIZE] * index,
+          //   index,
+          // })}
+          /* Below line is needed to create
+            an artificial gap to the bottom
+            of the screen */
+          ListFooterComponent={<View />}
         ></FlatList>
       </View>
     </GradientWrapper>
@@ -69,8 +57,7 @@ export { SettingsList };
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: "100%",
-    width: "100%",
+    flex: 1,
   },
   backButtonWrapper: {
     width: "90%",
@@ -87,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   settingsListWrapper: {
-    marginTop: listMarginTop[SCREEN_SIZE],
+    marginTop: settingsListMarginTop,
     height: "80%",
     width: "90%",
     left: "5%",

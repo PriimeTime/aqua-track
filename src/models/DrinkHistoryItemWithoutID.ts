@@ -10,4 +10,6 @@ export interface DrinkHistoryItemWithoutID {
   quantity: number;
   date: UnixDate;
   typeID: number;
+  abv: number;
+  bac: number;
 }

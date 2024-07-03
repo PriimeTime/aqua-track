@@ -16,13 +16,8 @@ import { useFormValidation } from "@/hooks/useFormValidation";
 import { setUserAuth } from "@/store/userData";
 
 import { updateUserData } from "@/utils/database";
-import { SCREEN_SIZE, color, fontFamily } from "@/utils/constants";
-
-const errorTextSize = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 30,
-};
+import { color, fontFamily } from "@/utils/constants";
+import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -39,9 +34,6 @@ function RegisterForm({
 }: RegisterFormProps) {
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
-  );
-  const userAuth = useSelector(
-    (state: UserDataState) => state.userData.userAuth
   );
   const userDrinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
@@ -82,14 +74,14 @@ function RegisterForm({
       const user = userCredentials.user;
       const userUID = user.uid;
 
-      dispatch(
-        setUserAuth({
-          isLoggedIn: true,
-          userName: formState.userName,
-          email: formState.email,
-          uid: userUID,
-        })
-      );
+      const userAuth = {
+        isLoggedIn: true,
+        userName: formState.userName,
+        email: formState.email,
+        uid: userUID,
+      };
+
+      dispatch(setUserAuth(userAuth));
 
       // Initialize user data in Firestore after successful registration
       await updateUserData(userUID, {
@@ -125,6 +117,7 @@ function RegisterForm({
         handleOnBlur={() => validateForm(false, "email")}
         handleOnFocus={() => resetInputValidation("email")}
         fullWidth
+        inputType={CustomTextFieldInputType.Email}
         label="E-mail"
       ></CustomTextField>
       <View style={styles.errorWrapper}>
@@ -175,11 +168,11 @@ export { RegisterForm };
 const styles = StyleSheet.create({
   errorWrapper: {
     justifyContent: "center",
-    height: errorTextSize[SCREEN_SIZE] * 1.5,
+    height: registerFormErrorFontSize * 1.5,
   },
   errorText: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: errorTextSize[SCREEN_SIZE],
+    fontSize: registerFormErrorFontSize,
     color: color.RED,
   },
 });

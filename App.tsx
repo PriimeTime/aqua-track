@@ -4,7 +4,8 @@ import { MainAppScreen } from "./src/screens/MainAppScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
-import { View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { GradientWrapper } from "@/components/wrappers";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,10 +21,12 @@ export default function App() {
   }, [fontsLoaded, fontError]);
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <Provider store={store}>
-        <MainAppScreen></MainAppScreen>
-      </Provider>
-    </View>
+    <GradientWrapper style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <MainAppScreen></MainAppScreen>
+        </Provider>
+      </SafeAreaProvider>
+    </GradientWrapper>
   );
 }

@@ -15,18 +15,10 @@ import {
   SCREEN_SIZE,
 } from "@/utils/constants";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-
-const titleSize = {
-  SMALL: 1,
-  MEDIUM: 4,
-  LARGE: 7,
-};
-
-const itemBorderRadius = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 25,
-};
+import {
+  settingsItemFontSize,
+  settingsItemRadius,
+} from "@/utils/constants/components/settings";
 
 interface SettingsItemProps {
   title: string;
@@ -66,7 +58,7 @@ function SettingsItem({ title, imageSrc, routeName }: SettingsItemProps) {
           </View>
           <View style={styles.itemTitleWrapper}>
             <View style={{ width: "95%", left: 0 }}>
-              <PrimaryText size={titleSize[SCREEN_SIZE]}>{title}</PrimaryText>
+              <PrimaryText fontSize={settingsItemFontSize}>{title}</PrimaryText>
             </View>
           </View>
         </View>
@@ -84,7 +76,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
-    borderRadius: itemBorderRadius[SCREEN_SIZE],
+    borderRadius: settingsItemRadius,
     borderWidth: cardBorderWidth[SCREEN_SIZE],
   },
   itemIconWrapper: {

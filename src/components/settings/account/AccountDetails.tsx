@@ -33,11 +33,7 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
         fullWidth
         label="E-mail"
       ></CustomTextField>
-      <PrimaryButton
-        customStyles={styles.logoutButton}
-        btnColor={color.RED}
-        onPress={onLogout}
-      >
+      <PrimaryButton btnColor={color.RED} onPress={onLogout}>
         {"log out".toUpperCase()}
       </PrimaryButton>
     </>
@@ -49,9 +45,5 @@ export { AccountDetails };
 const styles = StyleSheet.create({
   textFiled: {
     marginBottom: "2.5%",
-  },
-  logoutButton: {
-    bottom: 0,
-    position: "absolute",
   },
 });

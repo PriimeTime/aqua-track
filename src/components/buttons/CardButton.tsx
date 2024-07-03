@@ -11,26 +11,14 @@ import { useRef } from "react";
 
 import { PrimaryText } from "@/components/texts";
 
-import { color, cardBorderWidth, SCREEN_SIZE } from "@/utils/constants";
+import { color } from "@/utils/constants";
+import {
+  cardButtonBorderRadius,
+  cardButtonBorderWidth,
+  cardButtonFontSize,
+} from "@/utils/constants/components/buttons";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 import { drinkImageMap } from "@/utils/maps";
-
-const cardButtonBorderRadius = {
-  SMALL: 24,
-  MEDIUM: 24,
-  LARGE: 48,
-};
-
-const cardTextSize = {
-  SMALL: 1,
-  MEDIUM: 1,
-  LARGE: 7,
-};
-
-const getDynamicCardButtonStyle = () => ({
-  borderRadius: cardButtonBorderRadius[SCREEN_SIZE],
-  borderWidth: cardBorderWidth[SCREEN_SIZE],
-});
 
 interface CardButtonProps {
   onPress: () => void;
@@ -66,7 +54,7 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
       ]}
     >
       <Pressable
-        style={[styles.cardButton, getDynamicCardButtonStyle()]}
+        style={styles.cardButton}
         onPress={onPress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}
@@ -75,7 +63,7 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
           <Image style={styles.cardImage} source={drinkImageMap[imageSrc]} />
         </View>
         <View style={styles.cardTextWrapper}>
-          <PrimaryText size={cardTextSize[SCREEN_SIZE]}>{children}</PrimaryText>
+          <PrimaryText fontSize={cardButtonFontSize}>{children}</PrimaryText>
         </View>
       </Pressable>
     </Animated.View>
@@ -95,6 +83,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderColor: color.DARK_BLUE,
     backgroundColor: color.WHITE,
+    borderRadius: cardButtonBorderRadius,
+    borderWidth: cardButtonBorderWidth,
   },
   cardTextWrapper: {
     width: "48%",

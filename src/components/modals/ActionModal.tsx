@@ -5,20 +5,12 @@ import { useRef, useEffect, useState } from "react";
 import { PrimaryText } from "@/components/texts";
 import { PrimaryButton } from "@/components/buttons";
 
-import { SCREEN_SIZE, color, shadow } from "@/utils/constants";
+import { color, shadow } from "@/utils/constants";
+import {
+  actionModalFontSize,
+  actionModalRadius,
+} from "@/utils/constants/components";
 import { animatedScaleValue, springAnimation } from "@/utils/animations";
-
-const textSize = {
-  SMALL: 2,
-  MEDIUM: 3,
-  LARGE: 5,
-};
-
-const borderRadius = {
-  SMALL: 25,
-  MEDIUM: 30,
-  LARGE: 60,
-};
 
 interface ActionModalProps {
   modalText: string;
@@ -73,7 +65,7 @@ function ActionModal({
         <Animated.View
           style={[styles.modalView, { transform: [{ scale: scaleValue }] }]}
         >
-          <PrimaryText numberOfLines={2} size={textSize[SCREEN_SIZE]}>
+          <PrimaryText numberOfLines={2} fontSize={actionModalFontSize}>
             {modalText}
           </PrimaryText>
           <View style={styles.actionButtons}>
@@ -81,17 +73,17 @@ function ActionModal({
               <>
                 <PrimaryButton
                   customStyles={styles.buttonStyles}
-                  onPress={handleOnConfirm}
-                >
-                  {"Yes"}
-                </PrimaryButton>
-                <PrimaryButton
-                  customStyles={styles.buttonStyles}
                   btnColor={color.WHITE}
                   textStyle={{ color: color.BLUE }}
                   onPress={handleOnCancel}
                 >
                   {"No"}
+                </PrimaryButton>
+                <PrimaryButton
+                  customStyles={styles.buttonStyles}
+                  onPress={handleOnConfirm}
+                >
+                  {"Yes"}
                 </PrimaryButton>
               </>
             )}
@@ -126,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: borderRadius[SCREEN_SIZE],
+    borderRadius: actionModalRadius,
     padding: "5%",
     ...shadow,
   },

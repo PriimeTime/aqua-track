@@ -1,17 +1,10 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View, StyleSheet, ScrollView } from "react-native";
 
 import { GradientWrapper } from "@/components/wrappers/GradientWrapper";
 import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
 
-import { SCREEN_SIZE } from "@/utils/constants";
-
-const headerHeight = {
-  SMALL: 5,
-  MEDIUM: 6,
-  LARGE: 9,
-};
+import { contentPageFontSize } from "@/utils/constants/components";
 
 interface ContentPageProps {
   title: string;
@@ -19,19 +12,15 @@ interface ContentPageProps {
 }
 
 function ContentPage({ title, children }: ContentPageProps) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <GradientWrapper
-      style={[styles.gradientWrapper, { paddingTop: insets.top }]}
-    >
+    <GradientWrapper style={styles.gradientWrapper}>
       <View style={styles.backButtonWrapper}>
         <BackButton></BackButton>
       </View>
       <View style={styles.titleWrapper}>
-        <PrimaryText size={headerHeight[SCREEN_SIZE]}>{title}</PrimaryText>
+        <PrimaryText fontSize={contentPageFontSize}>{title}</PrimaryText>
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView alwaysBounceVertical={false}>
         <View style={styles.wrapper}>{children}</View>
       </ScrollView>
     </GradientWrapper>
@@ -49,8 +38,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   gradientWrapper: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
   },
   wrapper: {
     width: "90%",

@@ -1,5 +1,4 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -13,26 +12,19 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
-import { listItemHeight, SCREEN_SIZE } from "@/utils/constants";
+import { historyItemGap } from "@/utils/constants/components/history";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const insets = useSafeAreaInsets();
   const drinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
 
-  const historyItemGap = {
-    SMALL: 8,
-    MEDIUM: 10,
-    LARGE: 20,
-  };
-
   return (
-    <GradientWrapper style={{ paddingTop: insets.top }}>
-      <View style={styles.settingsWrapper}>
+    <GradientWrapper style={styles.wrapper}>
+      <View style={styles.settingsButtonWrapper}>
         <SettingsButton
           onPress={() => navigation.navigate(MainRouteName.Settings)}
         ></SettingsButton>
@@ -42,8 +34,9 @@ function History() {
       </View>
       <View style={styles.listWrapper}>
         <FlatList
+          alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: historyItemGap[SCREEN_SIZE] }}
+          contentContainerStyle={{ gap: historyItemGap }}
           data={drinkHistory}
           renderItem={({ item }) => (
             <HistoryItem
@@ -56,12 +49,11 @@ function History() {
               // hydrationQuantity={item.hydrationQuantity}
             ></HistoryItem>
           )}
-          keyExtractor={(item) => item.id}
-          getItemLayout={(_, index) => ({
-            length: listItemHeight[SCREEN_SIZE],
-            offset: listItemHeight[SCREEN_SIZE] * index,
-            index,
-          })}
+          // getItemLayout={(_, index) => ({
+          //   length: listItemHeight[SCREEN_SIZE],
+          //   offset: listItemHeight[SCREEN_SIZE] * index,
+          //   index,
+          // })}
           /* Below line is needed to create
             an artificial gap between the
             HistoryBottom component and the
@@ -81,7 +73,10 @@ function History() {
 export { History };
 
 const styles = StyleSheet.create({
-  settingsWrapper: {
+  wrapper: {
+    flex: 1,
+  },
+  settingsButtonWrapper: {
     width: "90%",
     left: "5%",
     height: "10%",

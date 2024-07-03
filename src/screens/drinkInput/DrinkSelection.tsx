@@ -1,5 +1,4 @@
 import { View, StyleSheet, Animated, FlatList } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRef } from "react";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -10,27 +9,22 @@ import { GradientWrapper } from "@/components/wrappers";
 
 import { drinkTypeList } from "@/utils/maps";
 import { dimensions, SCREEN_SIZE } from "@/utils/constants";
+import { drinkAmountFontSize } from "@/utils/constants/components/drinks";
 import { animatedScaleValue } from "@/utils/animations";
 import { numToString } from "@/utils/helpers";
 
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
+import { ScreenSize } from "@/enums/maps/ScreenSize";
 
 const cardButtonHeight =
-  SCREEN_SIZE === "LARGE"
+  SCREEN_SIZE === ScreenSize.Large
     ? dimensions.CARD_BUTTON_HEIGHT_TABLET
     : dimensions.CARD_BUTTON_HEIGHT_PHONE;
 
-const headerSize = {
-  SMALL: 5,
-  MEDIUM: 6,
-  LARGE: 9,
-};
-
 function DrinkSelection() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const insets = useSafeAreaInsets();
 
   const scaleValue = useRef(animatedScaleValue(1)).current;
 
@@ -39,18 +33,19 @@ function DrinkSelection() {
   };
 
   return (
-    <GradientWrapper style={[styles.wrapper, { paddingTop: insets.top }]}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={headerSize[SCREEN_SIZE]}>
+          <PrimaryText fontSize={drinkAmountFontSize}>
             What did you drink?
           </PrimaryText>
         </Animated.View>
       </View>
       <FlatList
+        alwaysBounceVertical={false}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         style={styles.drinkTypeSelectionWrapper}
@@ -69,11 +64,15 @@ function DrinkSelection() {
           </CardButton>
         )}
         keyExtractor={(item) => numToString(item.typeID)}
-        getItemLayout={(_, index) => ({
-          length: cardButtonHeight,
-          offset: cardButtonHeight * index,
-          index,
-        })}
+        // getItemLayout={(_, index) => ({
+        //   length: cardButtonHeight,
+        //   offset: cardButtonHeight * index,
+        //   index,
+        // })}
+        /* Below line is needed to create
+            an artificial gap to the bottom
+            of the screen */
+        ListFooterComponent={<View />}
       ></FlatList>
     </GradientWrapper>
   );
@@ -83,8 +82,7 @@ export { DrinkSelection };
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
   },
   backButton: {
     width: "90%",
@@ -103,9 +101,6 @@ const styles = StyleSheet.create({
   drinkTypeSelectionWrapper: {
     width: "90%",
     left: "5%",
-  },
-  drinkTypeContentContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    height: "80%",
   },
 });

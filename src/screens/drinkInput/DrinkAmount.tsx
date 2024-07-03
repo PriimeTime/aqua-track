@@ -1,5 +1,4 @@
 import { View, StyleSheet, Animated, PanResponder } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useEffect } from "react";
 import {
   useFocusEffect,
@@ -9,14 +8,19 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Haptics from "expo-haptics";
 
 import { addToHistory } from "@/store/drinkHistory";
 
 import { drinkTypeList } from "@/utils/maps";
-import { inputDrinkConfig, SCREEN_SIZE } from "@/utils/constants";
+import { inputDrinkConfig } from "@/utils/constants";
 import { animatedScaleValue } from "@/utils/animations";
+import {
+  drinkAmountFontSize,
+  drinkAmountSensitivity,
+} from "@/utils/constants/components/drinks";
+import { calculateBacAfterDrink } from "@/utils/helpers";
 
 import { PrimaryButton, BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -27,6 +31,9 @@ import { DrinkAmountBottle } from "@/screens/drinkInput/DrinkAmountBottle";
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
+
+import { type UserDataState } from "@/types/store/UserDataState";
+import { DrinkHistoryItemWithoutID } from "@/models/DrinkHistoryItemWithoutID";
 
 /**
  * Debounce function to control
@@ -44,24 +51,15 @@ const useDebouncedCallback = (callback: () => void, delay: number) => {
   };
 };
 
-const headerTextSize = {
-  SMALL: 5,
-  MEDIUM: 5,
-  LARGE: 9,
-};
-
-const sensitivity = {
-  SMALL: 0.75,
-  MEDIUM: 0.45,
-  LARGE: 0.25,
-};
-
 function DrinkAmount() {
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route =
     useRoute<RouteProp<{ params: { drinkType: DrinkItem } }, "params">>();
   const dispatch = useDispatch();
+
+  const { gender, weight } = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
 
   const { drinkType } = route.params;
   const scaleValue = useRef(animatedScaleValue(1)).current;
@@ -73,6 +71,7 @@ function DrinkAmount() {
   const inputBottleSize = inputBottleObject?.size ?? 0;
   const incrementValue = inputBottleObject?.increment ?? 0;
   const hydroFactor = inputBottleObject?.hydroFactor ?? 0;
+  const abv = inputBottleObject?.abv ?? 0;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -104,7 +103,7 @@ function DrinkAmount() {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (_, gestureState) => {
-      const dragDistance = gestureState.dy * sensitivity[SCREEN_SIZE];
+      const dragDistance = gestureState.dy * drinkAmountSensitivity;
 
       // Calculate height of water based on drag
       const newHeight = Math.max(0, Math.min(100, heightVal - dragDistance));
@@ -133,12 +132,20 @@ function DrinkAmount() {
   const handleContinue = () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
       const date = Date.now();
+      const bacAfterDrink = calculateBacAfterDrink(
+        quantityValue,
+        abv,
+        gender,
+        weight
+      );
 
-      const drinkItem = {
+      const drinkItem: DrinkHistoryItemWithoutID = {
         ...drinkType,
         quantity: quantityValue,
         date,
         hydrationQuantity: quantityValue * hydroFactor,
+        abv,
+        bac: bacAfterDrink,
       };
 
       dispatch(addToHistory(drinkItem));
@@ -156,13 +163,13 @@ function DrinkAmount() {
     : "";
 
   return (
-    <GradientWrapper style={[{ paddingTop: insets.top }]}>
+    <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButton}>
         <BackButton></BackButton>
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+          <PrimaryText fontSize={drinkAmountFontSize}>
             How much {drinkTypeLabel}?
           </PrimaryText>
         </Animated.View>
@@ -174,7 +181,7 @@ function DrinkAmount() {
         ></DrinkAmountBottle>
       </View>
       <View style={styles.amountDrank}>
-        <PrimaryText size={headerTextSize[SCREEN_SIZE]}>
+        <PrimaryText fontSize={drinkAmountFontSize}>
           {quantityValue} ml
         </PrimaryText>
       </View>
@@ -190,6 +197,9 @@ function DrinkAmount() {
 export { DrinkAmount };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+  },
   backButton: {
     width: "90%",
     left: "5%",

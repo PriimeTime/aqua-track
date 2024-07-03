@@ -11,30 +11,17 @@ import {
 import * as Haptics from "expo-haptics";
 import { useRef } from "react";
 
-import { color, fontFamily, shadow, SCREEN_SIZE } from "@/utils/constants";
+import { color, fontFamily, shadow } from "@/utils/constants";
+import {
+  primaryButtonFontSize,
+  primaryButtonRadius,
+  primaryButtonWrapperHeight,
+} from "@/utils/constants/components/buttons";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-
-const textSize = {
-  SMALL: 20,
-  MEDIUM: 25,
-  LARGE: 60,
-};
-
-const buttonBorderRadius = {
-  SMALL: 30,
-  MEDIUM: 30,
-  LARGE: 60,
-};
-
-const buttonWrapperHeight = {
-  SMALL: 60,
-  MEDIUM: 75,
-  LARGE: 150,
-};
 
 const getTextStyle = (fontSize?: number) => ({
   ...styles.text,
-  fontSize: fontSize || textSize[SCREEN_SIZE],
+  fontSize: fontSize || primaryButtonFontSize,
 });
 
 const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
@@ -42,7 +29,7 @@ const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
 
   return {
     ...styles.button,
-    borderRadius: buttonBorderRadius[SCREEN_SIZE],
+    borderRadius: primaryButtonRadius,
     backgroundColor: bgColor,
   };
 };
@@ -146,7 +133,7 @@ export { PrimaryButton };
 const styles = StyleSheet.create({
   buttonWrapper: {
     justifyContent: "center",
-    height: buttonWrapperHeight[SCREEN_SIZE],
+    height: primaryButtonWrapperHeight,
     width: "100%",
   },
   textWrapper: {

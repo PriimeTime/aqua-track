@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -9,7 +8,7 @@ import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
 import { MainHeader } from "@/components/MainHeader";
 import { HomeWaterBottle } from "@/components/HomeWaterBottle";
-import { TotalIntake } from "@/components/TotalIntake";
+import { IntakeInfoCard } from "@/components/intakeCard/IntakeInfoCard";
 import { SettingsButton } from "@/components/buttons";
 import { GradientWrapper } from "@/components/wrappers";
 
@@ -21,13 +20,12 @@ import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 function RootScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const insets = useSafeAreaInsets();
   const drinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
 
   return (
-    <GradientWrapper style={{ paddingTop: insets.top }}>
+    <GradientWrapper style={styles.screen}>
       <View style={styles.wrapper}>
         <View style={styles.settingsWrapper}>
           <SettingsButton
@@ -38,7 +36,7 @@ function RootScreen() {
           <MainHeader></MainHeader>
         </View>
         <View style={styles.totalIntakeWrapper}>
-          <TotalIntake></TotalIntake>
+          <IntakeInfoCard></IntakeInfoCard>
         </View>
         <View
           style={[
@@ -63,6 +61,9 @@ function RootScreen() {
 export { RootScreen };
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   wrapper: {
     width: "90%",
     left: "5%",
