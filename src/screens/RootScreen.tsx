@@ -8,7 +8,7 @@ import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
 
 import { MainHeader } from "@/components/MainHeader";
 import { HomeWaterBottle } from "@/components/HomeWaterBottle";
-import { TotalIntake } from "@/components/TotalIntake";
+import { IntakeInfoCard } from "@/components/intakeCard/IntakeInfoCard";
 import { SettingsButton } from "@/components/buttons";
 import { GradientWrapper } from "@/components/wrappers";
 
@@ -36,7 +36,7 @@ function RootScreen() {
           <MainHeader></MainHeader>
         </View>
         <View style={styles.totalIntakeWrapper}>
-          <TotalIntake></TotalIntake>
+          <IntakeInfoCard></IntakeInfoCard>
         </View>
         <View
           style={[
