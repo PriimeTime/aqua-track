@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 
 import googleLogo from "../../../../assets/icons/google-logo.png";
 
-import { useFormValidation } from "@/hooks/useFormValidation";
+import { useFormValidation } from "@/hooks";
 
 import { CustomTextField } from "@/components/input";
 import { PrimaryButton } from "@/components/buttons";
@@ -18,9 +18,14 @@ import {
   loginFormErrorFontSize,
   loginFormFontSize,
 } from "@/utils/constants/components/forms";
+import { saveAuthData } from "@/utils/auth";
 
-import { setUserUID, setUserMetrics, setUserAuth } from "@/store/userData";
+import { setUserMetrics, setUserAuth } from "@/store/userData";
 import { setHistory } from "@/store/drinkHistory";
+
+import { UserAuth } from "@/models/UserAuth";
+
+import { type UserUID } from "@/types/UserUID";
 
 const GoogleButton = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -88,21 +93,23 @@ function LoginForm({
       );
 
       const user = userCredentials.user;
-      dispatch(setUserUID(user.uid));
+      const userUID: UserUID = user.uid;
 
-      const userData = await loadUserData(user.uid);
+      const userData = await loadUserData(userUID);
+
+      const authData: UserAuth = {
+        isLoggedIn: true,
+        userName: userData?.userAuth.userName,
+        email: userData?.userAuth.email,
+        uid: userUID,
+      };
+
+      saveAuthData(authData);
 
       if (userData) {
         dispatch(setHistory(userData.userDrinkHistory));
         dispatch(setUserMetrics(userData.userMetrics));
-        dispatch(
-          setUserAuth({
-            isLoggedIn: true,
-            userName: userData.userAuth.userName,
-            email: userData.userAuth.email,
-            uid: user.uid,
-          })
-        );
+        dispatch(setUserAuth(authData));
       } else {
         console.error("Unable to load user data --> userData falsy");
       }

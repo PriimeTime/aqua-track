@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AppNavigation } from "@/navigation/AppNavigation";
 
@@ -10,13 +11,14 @@ import { setHistory } from "@/store/drinkHistory";
 import { setUserAuth, setUserMetrics } from "@/store/userData";
 import { setNetworkStatus } from "@/store/general";
 
-import { useDatabaseSync } from "@/hooks/useDatabaseSync";
+import { useDatabaseSync, useAuth } from "@/hooks";
 
 import { readAsyncStorage } from "@/utils/storage";
 
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type GeneralState } from "@/types/store/GeneralState";
+import { type UserUID } from "@/types/UserUID";
 
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 import { UserMetrics } from "@/models/UserMetrics";
@@ -42,12 +44,6 @@ function MainAppScreen() {
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
-  const isLoggedIn = useSelector(
-    (state: UserDataState) => state.userData.userAuth.isLoggedIn
-  );
-  const userUID = useSelector(
-    (state: UserDataState) => state.userData.userAuth.uid
-  );
 
   /**
    * Listen to internet connectivity changes
@@ -67,6 +63,8 @@ function MainAppScreen() {
     };
   }, []);
 
+  useAuth();
+
   /**
    * Sync drinkHistory to database
    * when internet becomes reachable and
@@ -75,9 +73,7 @@ function MainAppScreen() {
   useDatabaseSync(
     [userDrinkHistory],
     { userDrinkHistory },
-    isLoggedIn,
-    isInternetReachable,
-    userUID
+    isInternetReachable
   );
 
   /**
@@ -85,13 +81,7 @@ function MainAppScreen() {
    * when internet becomes reachable and
    * when drinkHistory changes
    */
-  useDatabaseSync(
-    [userMetrics],
-    { userMetrics },
-    isLoggedIn,
-    isInternetReachable,
-    userUID
-  );
+  useDatabaseSync([userMetrics], { userMetrics }, isInternetReachable);
 
   const fetchDataFromAsyncStorage = async () => {
     try {
@@ -101,7 +91,24 @@ function MainAppScreen() {
       const userMetrics: UserMetrics | null = await readAsyncStorage(
         "userMetrics"
       );
-      const userAuth: UserAuth | null = await readAsyncStorage("userAuth");
+
+      const uid = (await AsyncStorage.getItem("userUID")) as UserUID;
+      const email = (await AsyncStorage.getItem("email")) as string | null;
+      const userName = (await AsyncStorage.getItem("userName")) as
+        | string
+        | null;
+      const isLoggedInString = (await AsyncStorage.getItem("isLoggedIn")) as
+        | string
+        | null;
+
+      const isLoggedIn = isLoggedInString === "true";
+
+      const userAuth: UserAuth | null = {
+        uid,
+        userName,
+        email,
+        isLoggedIn,
+      };
 
       if (currentHistory && currentHistory.length > 0) {
         dispatch(setHistory(currentHistory));

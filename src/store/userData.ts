@@ -18,6 +18,10 @@ const initialState: UserData = {
     email: null,
     uid: null,
   },
+  userAuthTokens: {
+    accessToken: null,
+    refreshToken: null,
+  },
 };
 
 const userDataSlice = createSlice({
@@ -33,6 +37,12 @@ const userDataSlice = createSlice({
     setUserAuth: (state, action: PayloadAction<UserAuth>) => {
       state.userAuth = { ...state.userAuth, ...action.payload };
     },
+    setUserAccessToken: (state, action: PayloadAction<string | null>) => {
+      state.userAuthTokens.accessToken = action.payload;
+    },
+    setUserRefreshToken: (state, action: PayloadAction<string | null>) => {
+      state.userAuthTokens.refreshToken = action.payload;
+    },
     setUserLoginState: (state, action: PayloadAction<boolean>) => {
       state.userAuth.isLoggedIn = action.payload;
     },
@@ -42,7 +52,14 @@ const userDataSlice = createSlice({
   },
 });
 
-export const { setUserMetrics, setUserAuth, setUserLoginState, setUserUID } =
-  userDataSlice.actions;
+export const {
+  setUserMetrics,
+  setUserAuth,
+  setUserAccessToken,
+  setUserRefreshToken,
+  setUserLoginState,
+  setUserUID,
+  setUserData,
+} = userDataSlice.actions;
 
 export default userDataSlice.reducer;

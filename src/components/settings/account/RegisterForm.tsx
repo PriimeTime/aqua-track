@@ -10,14 +10,17 @@ import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { type UserUID } from "@/types/UserUID";
 
-import { useFormValidation } from "@/hooks/useFormValidation";
+import { useFormValidation } from "@/hooks";
 
 import { setUserAuth } from "@/store/userData";
 
 import { updateUserData } from "@/utils/database";
 import { color, fontFamily } from "@/utils/constants";
 import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
+import { saveAuthData } from "@/utils/auth";
+import { UserAuth } from "@/models/UserAuth";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -69,25 +72,30 @@ function RegisterForm({
         formState.password
       );
 
-      // TODO: show alert box here with successful register message
-
       const user = userCredentials.user;
-      const userUID = user.uid;
+      const userUID: UserUID = user.uid;
 
-      const userAuth = {
-        isLoggedIn: true,
+      const authData: UserAuth = {
         userName: formState.userName,
         email: formState.email,
         uid: userUID,
+        isLoggedIn: true,
       };
 
-      dispatch(setUserAuth(userAuth));
+      saveAuthData(authData);
+      dispatch(setUserAuth(authData));
+
+      // TODO: show alert box here with successful register message
 
       // Initialize user data in Firestore after successful registration
       await updateUserData(userUID, {
         userMetrics,
         userDrinkHistory,
-        userAuth,
+        userAuth: {
+          userName: formState.userName,
+          email: formState.email,
+          uid: userUID,
+        },
       });
 
       resetFormState();
