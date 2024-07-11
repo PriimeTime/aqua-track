@@ -23,7 +23,14 @@
         "simulator": false
       }
     },
-    "production": {}
+    "production": {
+      "ios": {
+        "distribution": "store"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    }
   },
   "submit": {
     "production": {}
