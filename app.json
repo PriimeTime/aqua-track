@@ -2,7 +2,7 @@
   "expo": {
     "name": "aqua-track",
     "slug": "aqua-track",
-    "version": "1.0.0",
+    "version": "1.1.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,7 +14,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.priimetime.aquatrack"
+      "bundleIdentifier": "com.priimetime.aquatrack",
+      "buildNumber": "1.1.4"
     },
     "android": {
       "adaptiveIcon": {

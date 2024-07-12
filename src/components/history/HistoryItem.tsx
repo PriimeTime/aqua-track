@@ -4,7 +4,7 @@ import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
 import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 
-import { useGroupedDrinkHistoryQuantity } from "@/hooks/useGroupedDrinkHistoryQuantity";
+import { useGroupedDrinkHistoryQuantity } from "@/hooks";
 
 import { type UID } from "@/types/UID";
 import { type UnixDate } from "@/types/UnixDate";

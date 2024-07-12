@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut, getAuth } from "firebase/auth";
 
-import { setUserLoginState } from "@/store/userData";
+import { setUserAuth } from "@/store/userData";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
@@ -16,6 +16,8 @@ import { ActionModal } from "@/components/modals";
 
 import { useResetStore } from "@/utils/store";
 import { emptyFunc } from "@/utils/helpers";
+import { clearAuthData } from "@/utils/auth";
+import { UserAuth } from "@/models/UserAuth";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -75,7 +77,16 @@ function AccountSettings() {
   const handleConfirmLogout = async () => {
     try {
       await signOut(auth);
-      dispatch(setUserLoginState(false));
+
+      const userAuth: UserAuth = {
+        uid: null,
+        userName: null,
+        email: null,
+        isLoggedIn: false,
+      };
+
+      dispatch(setUserAuth(userAuth));
+      await clearAuthData();
       shouldResetLocalData();
     } catch (error) {
       console.error("Error signing out:", error);
