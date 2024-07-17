@@ -6,20 +6,14 @@ import { View } from "react-native";
 
 import { AppNavigation } from "@/navigation/AppNavigation";
 
-import { setHistory } from "@/store/drinkHistory";
-import { setUserAuth, setUserMetrics } from "@/store/userData";
 import { setNetworkStatus } from "@/store/general";
 
-import { useDatabaseSync, useAuth } from "@/hooks";
+import { useDatabaseSync, useAuth, useDataFromAsyncStorage } from "@/hooks";
 
-import { readAsyncStorage } from "@/utils/storage";
 import { syncSavedChangesToDatabase } from "@/utils/database";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
-import { UserMetrics } from "@/models/UserMetrics";
-import { UserAuth } from "@/models/UserAuth";
 import { cleanupOldEntries } from "@/middleware/asyncStorageMiddleware";
 
 function MainAppScreen() {
@@ -31,10 +25,11 @@ function MainAppScreen() {
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
-
   const userUID = useSelector(
     (state: UserDataState) => state.userData.userAuth.uid
   );
+
+  const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
 
   /**
    * Listen to internet connectivity changes
@@ -61,12 +56,16 @@ function MainAppScreen() {
     return () => unsubscribe();
   }, []);
 
+  /**
+   * Sync user drink history to the database
+   */
   useEffect(() => {
     if (userUID && isInternetReachable) {
       syncSavedChangesToDatabase(userUID);
     }
   }, [isInternetReachable, userUID]);
 
+  /** Handle authentication automatically */
   useAuth();
 
   /**
@@ -76,36 +75,9 @@ function MainAppScreen() {
    */
   useDatabaseSync([userMetrics], { userMetrics }, isInternetReachable);
 
-  const fetchDataFromAsyncStorage = async () => {
-    try {
-      const drinkHistory: DrinkHistoryItem[] | null = await readAsyncStorage(
-        "drinkHistory"
-      );
-      const userMetrics: UserMetrics | null = await readAsyncStorage(
-        "userMetrics"
-      );
-      const userAuth: UserAuth | null = await readAsyncStorage("userAuth");
-
-      if (drinkHistory && drinkHistory.length > 0) {
-        dispatch(setHistory(drinkHistory));
-      } else {
-        console.info(
-          "Failed to update drink history, drinkHistory was either undefined or its length was 0"
-        );
-      }
-
-      if (userMetrics) {
-        dispatch(setUserMetrics(userMetrics));
-      }
-
-      if (userAuth) {
-        dispatch(setUserAuth(userAuth));
-      }
-    } catch (error) {
-      console.error("Failed to fetch data from storage:", error);
-    }
-  };
-
+  /** Fetch data from async storage into the Redux store
+   * and clean up entries older than a month
+   */
   useEffect(() => {
     fetchDataFromAsyncStorage();
     cleanupOldEntries();

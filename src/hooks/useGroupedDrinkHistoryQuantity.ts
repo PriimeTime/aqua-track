@@ -1,13 +1,17 @@
-import { useSelector } from "react-redux";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-
-function useGroupedDrinkHistoryQuantity(typeID: number): number {
-  const drinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
-
-  const totalQuantity = drinkHistory
+/**
+ * Custom hook for calculating the total quantity of a specific drink type.
+ *
+ * @param {*} typeID - the ID of the drink type to group by
+ * @param {*} drinkList - the list of drink history items to calculate from
+ * @returns the total quantity of the specified drink type
+ */
+function useGroupedDrinkHistoryQuantity(
+  typeID: number,
+  drinkList: DrinkHistoryItem[]
+): number {
+  const totalQuantity = drinkList
     .filter((item) => item.typeID === typeID)
     .reduce((total, item) => total + item.quantity, 0);
 

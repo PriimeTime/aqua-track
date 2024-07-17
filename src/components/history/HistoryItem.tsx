@@ -4,7 +4,7 @@ import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
 import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 
-import { useGroupedDrinkHistoryQuantity } from "@/hooks";
+import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
 
 import { drinkImageMap } from "@/utils/maps";
 import {
@@ -36,8 +36,12 @@ import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;
+  const todaysDrinks = useTodaysDrinks();
 
-  const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(typeID);
+  const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(
+    typeID,
+    todaysDrinks
+  );
 
   return (
     <View style={styles.cardWrapper}>

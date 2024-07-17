@@ -7,6 +7,14 @@ import {
   validateUserName,
 } from "@/utils/validation";
 
+/**
+ * Custom hook for form validation.
+ *
+ * Manages form state and validation errors, provides functions to handle input changes,
+ * reset validation states, and validate the form.
+ *
+ * @returns an object containing form state, errors, and validation functions
+ */
 function useFormValidation() {
   const [formState, setFormState] = useState({
     userName: "",

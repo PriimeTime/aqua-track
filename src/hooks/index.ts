@@ -6,3 +6,4 @@ export * from "./useTodaysDrinks";
 export * from "./usePeriodicRerender";
 export * from "./useRemoveDrink";
 export * from "./useAddDrink";
+export * from "./useDataFromAsyncStorage";
