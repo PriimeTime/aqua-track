@@ -12,7 +12,7 @@ import { PrimaryButton } from "@/components/buttons";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { color, fontFamily } from "@/utils/constants";
+import { color, fontFamily, ONE_MONTH } from "@/utils/constants";
 import { loadUserData } from "@/utils/database";
 import {
   loginFormErrorFontSize,
@@ -26,6 +26,7 @@ import { setHistory } from "@/store/drinkHistory";
 import { UserAuth } from "@/models/UserAuth";
 
 import { type UserUID } from "@/types/UserUID";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 const GoogleButton = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -107,7 +108,12 @@ function LoginForm({
       saveAuthData(authData);
 
       if (userData) {
-        dispatch(setHistory(userData.userDrinkHistory));
+        const thirtyDaysAgo = Date.now() - ONE_MONTH;
+        const userDrinkHistory = userData.userDrinkHistory.filter(
+          (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
+        );
+
+        dispatch(setHistory(userDrinkHistory));
         dispatch(setUserMetrics(userData.userMetrics));
         dispatch(setUserAuth(authData));
       } else {

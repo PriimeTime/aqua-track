@@ -11,6 +11,16 @@ const defaultUserMetrics: UserMetrics = {
   exerciseLvl: null,
 };
 
+/**
+ * Custom hook to reset the Redux store to its default state.
+ *
+ * This hook provides a function, `resetStore`, that can be called to reset
+ * various parts of the Redux store to their default states. It dispatches
+ * actions to clear the user's drink history, reset user metrics to their
+ * default values, and set the user's login state to logged out.
+ *
+ * @returns {object} An object containing the `resetStore` function
+ */
 export const useResetStore = () => {
   const dispatch = useDispatch();
 

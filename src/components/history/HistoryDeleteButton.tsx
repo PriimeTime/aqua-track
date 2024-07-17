@@ -1,9 +1,11 @@
 import { Pressable, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { type UID } from "@/types/UID";
+import { type UserDataState } from "@/types/store/UserDataState";
+import { type GeneralState } from "@/types/store/GeneralState";
 
 import { removeFromHistory } from "@/store/drinkHistory";
 
@@ -13,14 +15,29 @@ import {
   historyButtonRadius,
 } from "@/utils/constants/components/history";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
+import { removeDrinkFromUserHistory } from "@/utils/database";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
-function HistoryDeleteButton({ itemID }: { itemID: UID }) {
+function HistoryDeleteButton({ item }: { item: DrinkHistoryItem }) {
+  const itemID: UID = item.id;
+
+  const isInternetReachable = useSelector(
+    (state: GeneralState) => state.general.networkStatus.isReachable
+  );
+
+  const userUID = useSelector(
+    (state: UserDataState) => state.userData.userAuth.uid
+  );
+
   const scaleValue = useRef(animatedScaleValue(1)).current;
   const dispatch = useDispatch();
 
   const handleOnPress = () => {
-    setTimeout(() => {
+    setTimeout(async () => {
       dispatch(removeFromHistory(itemID));
+      if (userUID) {
+        await removeDrinkFromUserHistory(userUID, item, isInternetReachable);
+      }
     }, 150);
   };
 

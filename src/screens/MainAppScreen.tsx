@@ -1,9 +1,8 @@
 import NetInfo from "@react-native-community/netinfo";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AppNavigation } from "@/navigation/AppNavigation";
 
@@ -14,67 +13,61 @@ import { setNetworkStatus } from "@/store/general";
 import { useDatabaseSync, useAuth } from "@/hooks";
 
 import { readAsyncStorage } from "@/utils/storage";
+import { syncSavedChangesToDatabase } from "@/utils/database";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { type UserDataState } from "@/types/store/UserDataState";
-import { type GeneralState } from "@/types/store/GeneralState";
-import { type UserUID } from "@/types/UserUID";
 
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 import { UserMetrics } from "@/models/UserMetrics";
 import { UserAuth } from "@/models/UserAuth";
-
-// const handleAppStateChange = async (nextAppState) => {
-//   if (nextAppState === "active") {
-//     console.log("App has come to the foreground!");
-//     // update firestore with new data!
-//   }
-// };
+import { cleanupOldEntries } from "@/middleware/asyncStorageMiddleware";
 
 function MainAppScreen() {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
-  const isInternetReachable = useSelector(
-    (state: GeneralState) => state.general.networkStatus.isReachable
-  );
-  const userDrinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
+  const [isInternetReachable, setIsInternetReachable] = useState(false);
+
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
+  );
+
+  const userUID = useSelector(
+    (state: UserDataState) => state.userData.userAuth.uid
   );
 
   /**
    * Listen to internet connectivity changes
    */
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      const networkInfo = {
-        isConnected: !!state.isConnected,
-        isReachable: !!state.isInternetReachable,
-      };
+    const unsubscribe = NetInfo.addEventListener(
+      ({ isConnected, isInternetReachable }) => {
+        if (isConnected && isInternetReachable) {
+          setIsInternetReachable(true);
+        } else {
+          setIsInternetReachable(false);
+        }
 
-      dispatch(setNetworkStatus(networkInfo));
-    });
+        const networkInfo = {
+          isConnected: !!isConnected,
+          isReachable: !!isInternetReachable,
+        };
 
-    return () => {
-      unsubscribe();
-    };
+        dispatch(setNetworkStatus(networkInfo));
+      }
+    );
+
+    // Cleanup the subscription on component unmount
+    return () => unsubscribe();
   }, []);
 
-  useAuth();
+  useEffect(() => {
+    if (userUID && isInternetReachable) {
+      syncSavedChangesToDatabase(userUID);
+    }
+  }, [isInternetReachable, userUID]);
 
-  /**
-   * Sync drinkHistory to database
-   * when internet becomes reachable and
-   * when drinkHistory changes
-   */
-  useDatabaseSync(
-    [userDrinkHistory],
-    { userDrinkHistory },
-    isInternetReachable
-  );
+  useAuth();
 
   /**
    * Sync userMetrics to database
@@ -85,36 +78,19 @@ function MainAppScreen() {
 
   const fetchDataFromAsyncStorage = async () => {
     try {
-      const currentHistory: DrinkHistoryItem[] | null = await readAsyncStorage(
-        "currentHistory"
+      const drinkHistory: DrinkHistoryItem[] | null = await readAsyncStorage(
+        "drinkHistory"
       );
       const userMetrics: UserMetrics | null = await readAsyncStorage(
         "userMetrics"
       );
+      const userAuth: UserAuth | null = await readAsyncStorage("userAuth");
 
-      const uid = (await AsyncStorage.getItem("userUID")) as UserUID;
-      const email = (await AsyncStorage.getItem("email")) as string | null;
-      const userName = (await AsyncStorage.getItem("userName")) as
-        | string
-        | null;
-      const isLoggedInString = (await AsyncStorage.getItem("isLoggedIn")) as
-        | string
-        | null;
-
-      const isLoggedIn = isLoggedInString === "true";
-
-      const userAuth: UserAuth | null = {
-        uid,
-        userName,
-        email,
-        isLoggedIn,
-      };
-
-      if (currentHistory && currentHistory.length > 0) {
-        dispatch(setHistory(currentHistory));
+      if (drinkHistory && drinkHistory.length > 0) {
+        dispatch(setHistory(drinkHistory));
       } else {
-        console.warn(
-          "Failed to update drink history, currentHistory was either undefined or its length was 0"
+        console.info(
+          "Failed to update drink history, drinkHistory was either undefined or its length was 0"
         );
       }
 
@@ -132,6 +108,7 @@ function MainAppScreen() {
 
   useEffect(() => {
     fetchDataFromAsyncStorage();
+    cleanupOldEntries();
   }, []);
 
   return (

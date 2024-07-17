@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { CountUp } from "use-count-up";
@@ -7,7 +7,7 @@ import { CountUp } from "use-count-up";
 import { PrimaryText } from "@/components/texts";
 import { TimeUntilSober } from "@/components/intakeCard/TimeUntilSober";
 
-import { MS_PER_SEC, SEC_PER_MIN, color, shadow } from "@/utils/constants";
+import { ONE_MIN, color, shadow } from "@/utils/constants";
 import {
   totalIntakeFontSize,
   totalIntakeCardPadding,
@@ -24,12 +24,15 @@ import {
 
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
+import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
+
 function IntakeInfoCard() {
   const drinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
   // const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
-  const hydratingDrinkQuantity = totalHydratingDrinkQuantity(drinkHistory);
+  const todaysDrinks = useTodaysDrinks();
+  const hydratingDrinkQuantity = totalHydratingDrinkQuantity(todaysDrinks);
 
   /**
    * Calculate BAC down to 10 decimals to get
@@ -43,8 +46,6 @@ function IntakeInfoCard() {
     hydratingDrinkQuantity,
     2500
   );
-
-  const [_, setTime] = useState(Date.now());
 
   const [currentHydrationLevel, setCurrentHydrationLevel] = useState(
     hydrationLevelInPercent
@@ -61,7 +62,7 @@ function IntakeInfoCard() {
 
   /**
    * Update hydration level and time until sober
-   * whenever the IntakeInfoCard component comes into focus.
+   * whenever the IntakeInfoCard component comes into focus
    */
   useFocusEffect(
     useCallback(() => {
@@ -83,17 +84,9 @@ function IntakeInfoCard() {
    * rerender component every minute
    * to update time until sober
    */
-  useEffect(() => {
-    if (currentBAC === 0) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setTime(Date.now());
-    }, SEC_PER_MIN * MS_PER_SEC);
-
-    return () => clearInterval(interval);
-  }, []);
+  const condition = currentBAC > 0;
+  const interval = ONE_MIN;
+  usePeriodicRerender(condition, interval);
 
   return (
     <View style={styles.wrapper}>

@@ -129,7 +129,9 @@ const totalDrinkQuantity = (drinkHistory: DrinkHistoryItem[]) => {
  * Drinking 250ml of tea returns 225ml, etc.
  */
 const totalHydratingDrinkQuantity = (drinkHistory: DrinkHistoryItem[]) => {
-  return drinkHistory.reduce((acc, val) => acc + val.hydrationQuantity, 0);
+  return (
+    drinkHistory.reduce((acc, val) => acc + val?.hydrationQuantity, 0) ?? 0
+  );
 };
 
 /**
@@ -176,7 +178,12 @@ const calculateBacAfterDrink = (
     (weightInKg ?? 0) *
     ONE_THOUSAND *
     distributionRatioByGender(convertStringToGender(gender));
-  const bac = (alcoholInGrams / weightHelper) * 100;
+
+  let bac = 0;
+
+  if (alcoholInGrams > 0 && weightHelper > 0) {
+    bac = (alcoholInGrams / weightHelper) * 100;
+  }
 
   const roundedBAC = formatDecimals(bac, 3);
 

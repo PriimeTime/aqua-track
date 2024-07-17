@@ -10,6 +10,7 @@ import {
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch, useSelector } from "react-redux";
 import * as Haptics from "expo-haptics";
+import { uid } from "uid";
 
 import { addToHistory } from "@/store/drinkHistory";
 
@@ -21,6 +22,7 @@ import {
   drinkAmountSensitivity,
 } from "@/utils/constants/components/drinks";
 import { calculateBacAfterDrink } from "@/utils/helpers";
+import { addDrinkToUserHistory } from "@/utils/database";
 
 import { PrimaryButton, BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -33,7 +35,10 @@ import { DrinkItem } from "@/models/DrinkItem";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { type UserDataState } from "@/types/store/UserDataState";
-import { DrinkHistoryItemWithoutID } from "@/models/DrinkHistoryItemWithoutID";
+import { type UID } from "@/types/UID";
+import { type GeneralState } from "@/types/store/GeneralState";
+
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 /**
  * Debounce function to control
@@ -57,8 +62,16 @@ function DrinkAmount() {
     useRoute<RouteProp<{ params: { drinkType: DrinkItem } }, "params">>();
   const dispatch = useDispatch();
 
+  const isInternetReachable = useSelector(
+    (state: GeneralState) => state.general.networkStatus.isReachable
+  );
+
   const { gender, weight } = useSelector(
     (state: UserDataState) => state.userData.userMetrics
+  );
+
+  const userUID = useSelector(
+    (state: UserDataState) => state.userData.userAuth.uid
   );
 
   const { drinkType } = route.params;
@@ -129,9 +142,10 @@ function DrinkAmount() {
     }, [])
   );
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
       const date = Date.now();
+      // TODO: below calc should be done in helpers.ts instead
       const bacAfterDrink = calculateBacAfterDrink(
         quantityValue,
         abv,
@@ -139,16 +153,22 @@ function DrinkAmount() {
         weight
       );
 
-      const drinkItem: DrinkHistoryItemWithoutID = {
+      const id: UID = uid(8);
+
+      const drinkItem: DrinkHistoryItem = {
         ...drinkType,
         quantity: quantityValue,
         date,
         hydrationQuantity: quantityValue * hydroFactor,
         abv,
         bac: bacAfterDrink,
+        id,
       };
 
       dispatch(addToHistory(drinkItem));
+      if (userUID) {
+        await addDrinkToUserHistory(userUID, drinkItem, isInternetReachable);
+      }
       navigation.navigate(MainRouteName.Home);
     } else {
       triggerAnimation();
