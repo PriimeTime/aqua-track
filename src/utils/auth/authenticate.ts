@@ -14,7 +14,7 @@ const AUTH_DATA_KEY = "authData";
  * The function attempts to save this data as a JSON string under a predefined
  * key in async storage, and logs an error if the save operation fails.
  *
- * @param authData - user authentication object
+ * @param {*} authData - user authentication object
  */
 const saveAuthData = async (authData: UserAuth) => {
   if (!authData.uid) {

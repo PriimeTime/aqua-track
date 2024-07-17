@@ -260,7 +260,7 @@ const minsUntilSober = (currentBAC: number) => {
 
 /**
  *
- * @param currentBAC - current BAC level of the user
+ * @param {*} currentBAC - current BAC level of the user
  * @returns minutes left until user is sober EXCLUDING full hours(!!)
  */
 const minsUntilSoberInteger = (currentBAC: number) => {

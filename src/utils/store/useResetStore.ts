@@ -19,7 +19,7 @@ const defaultUserMetrics: UserMetrics = {
  * actions to clear the user's drink history, reset user metrics to their
  * default values, and set the user's login state to logged out.
  *
- * @returns {object} An object containing the `resetStore` function
+ * @returns an object containing the `resetStore` function
  */
 export const useResetStore = () => {
   const dispatch = useDispatch();

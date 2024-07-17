@@ -20,8 +20,8 @@ const LOCAL_DRINKS_TO_REMOVE_KEY = "localDrinksToRemoveSync";
 /**
  * This function syncs data to the Firestore database
  *
- * @param userId - Firestore ID of currently logged in user
- * @param data - data to sync to the database
+ * @param {*} userId - Firestore ID of currently logged in user
+ * @param {*} data - data to sync to the database
  */
 const updateUserData = async <T extends DocumentData>(
   userId: string,
@@ -48,9 +48,9 @@ const updateUserData = async <T extends DocumentData>(
  * the drink will be saved locally and will automatically sync with the
  * database once the internet connection is restored.
  *
- * @param userId - Firestore ID of currently logged in user
- * @param drink - drink object to be saved
- * @param isInternetReachable - flag indicating internet connection
+ * @param {*} userId - Firestore ID of currently logged in user
+ * @param {*} drink - drink object to be saved
+ * @param {*} isInternetReachable - flag indicating internet connection
  */
 const addDrinkToUserHistory = async (
   userId: UID,
@@ -93,9 +93,9 @@ const addDrinkToUserHistory = async (
  * the drink to remove will be saved locally and will automatically sync with the
  * database once the internet connection is restored.
  *
- * @param userId - Firestore ID of currently logged in user
- * @param drink - drink object to be removed
- * @param isInternetReachable - flag indicating internet connection
+ * @param {*} userId - Firestore ID of currently logged in user
+ * @param {*} drink - drink object to be removed
+ * @param {*} isInternetReachable - flag indicating internet connection
  */
 const removeDrinkFromUserHistory = async (
   userId: UID,
@@ -178,7 +178,7 @@ const removeDrinkFromUserHistory = async (
  * After successfully updating the Firestore document, the local storage keys
  * are cleared.
  *
- * @param userId - Firestore ID of currently logged in user
+ * @param {*} userId - Firestore ID of currently logged in user
  */
 const syncSavedChangesToDatabase = async (userId: string) => {
   let drinksToAdd: DrinkHistoryItem[] | null = await readAsyncStorage(

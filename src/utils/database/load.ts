@@ -17,7 +17,7 @@ import { UserData } from "@/models/UserData";
  * If the document does not exist or an error occurs, it logs an appropriate
  * message and returns null.
  *
- * @param userId - Firestore ID of currently logged in user
+ * @param {*} userId - Firestore ID of currently logged in user
  */
 const loadUserData = async (userId: string): Promise<DocumentData | null> => {
   const userDocRef = doc(firestore, "users", userId);
