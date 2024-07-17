@@ -191,13 +191,19 @@ const calculateBacAfterDrink = (
 };
 
 /**
+ * Calculates the current Blood Alcohol Concentration (BAC) level of the user.
  *
- * @param {*} drinkHistory - array of DrinkHistoryItems
- * over which the function will iterate to determine current BAC level of the user
- * @returns current BAC level of user down to 3 decimals
+ * @param {*} drinkHistory - array of DrinkHistoryItems representing the user's drinking history
+ * @param {*} gender - gender of the user, used to calculate BAC
+ * @param {*} weight - weight of the user in kilograms, used to calculate BAC
+ * @param {*} decimals - number of decimal places for the BAC calculation
+ *
+ * @returns the current BAC level of the user, accurate to the specified number of decimal places
  */
 const calculateCurrentBAC = (
   drinkHistory: DrinkHistoryItem[],
+  gender: string | null,
+  weight: number | null,
   decimals: number = 3
 ) => {
   const currentDate = new Date();
@@ -206,7 +212,12 @@ const calculateCurrentBAC = (
 
   drinkHistory.forEach((historyItem) => {
     const drinkDate = historyItem.date;
-    const initialBAC = historyItem.bac;
+    const initialBAC = calculateBacAfterDrink(
+      historyItem.quantity,
+      historyItem.abv,
+      gender,
+      weight
+    );
 
     if (previousDrinkTimestamp) {
       const elapsedTimeHours =

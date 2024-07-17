@@ -11,7 +11,6 @@ import { type UserDataState } from "@/types/store/UserDataState";
 import { type GeneralState } from "@/types/store/GeneralState";
 
 import { addDrinkToUserHistory } from "@/utils/database";
-import { calculateBacAfterDrink } from "@/utils/helpers";
 import { inputDrinkConfig } from "@/utils/constants";
 
 /**
@@ -31,9 +30,6 @@ function useAddDrink(drinkType: DrinkItem, quantityValue: number) {
   const isInternetReachable = useSelector(
     (state: GeneralState) => state.general.networkStatus.isReachable
   );
-  const { gender, weight } = useSelector(
-    (state: UserDataState) => state.userData.userMetrics
-  );
   const userUID = useSelector(
     (state: UserDataState) => state.userData.userAuth.uid
   );
@@ -47,14 +43,6 @@ function useAddDrink(drinkType: DrinkItem, quantityValue: number) {
 
   const addDrink = async () => {
     const date = Date.now();
-    // TODO: below calc should be done in helpers.ts instead
-    const bacAfterDrink = calculateBacAfterDrink(
-      quantityValue,
-      abv,
-      gender,
-      weight
-    );
-
     const id: UID = uid(8);
 
     const drinkItem: DrinkHistoryItem = {
@@ -63,7 +51,6 @@ function useAddDrink(drinkType: DrinkItem, quantityValue: number) {
       date,
       hydrationQuantity: quantityValue * hydroFactor,
       abv,
-      bac: bacAfterDrink,
       id,
     };
 

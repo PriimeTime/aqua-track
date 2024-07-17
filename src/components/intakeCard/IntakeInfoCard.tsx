@@ -23,6 +23,7 @@ import {
 } from "@/utils/helpers";
 
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { type UserDataState } from "@/types/store/UserDataState";
 
 import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
@@ -34,12 +35,16 @@ function IntakeInfoCard() {
   const todaysDrinks = useTodaysDrinks();
   const hydratingDrinkQuantity = totalHydratingDrinkQuantity(todaysDrinks);
 
+  const { gender, weight } = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
+
   /**
    * Calculate BAC down to 10 decimals to get
    * as accurately as possible to be able to
    * update minutes left until sober more frequently
    */
-  const currentBAC = calculateCurrentBAC(drinkHistory, 10);
+  const currentBAC = calculateCurrentBAC(drinkHistory, gender, weight, 10);
   const hrsUntilSober = hoursUntilSoberInteger(currentBAC);
   const minsUntilSober = minsUntilSoberInteger(currentBAC);
   const hydrationLevelInPercent = displayPositivePercent(

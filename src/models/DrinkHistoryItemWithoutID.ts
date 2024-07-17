@@ -11,5 +11,4 @@ export interface DrinkHistoryItemWithoutID {
   date: UnixDate;
   typeID: number;
   abv: number;
-  bac: number;
 }
