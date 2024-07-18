@@ -11,10 +11,12 @@ import { setNetworkStatus } from "@/store/general";
 import { useDatabaseSync, useAuth, useDataFromAsyncStorage } from "@/hooks";
 
 import { syncSavedChangesToDatabase } from "@/utils/database";
+import { cleanupOldEntries } from "@/utils/storage";
 
 import { type UserDataState } from "@/types/store/UserDataState";
+import { type ModalState } from "@/types/ModalState";
 
-import { cleanupOldEntries } from "@/middleware/asyncStorageMiddleware";
+import { ActionModal } from "@/components/modals";
 
 function MainAppScreen() {
   const dispatch = useDispatch();
@@ -28,6 +30,8 @@ function MainAppScreen() {
   const userUID = useSelector(
     (state: UserDataState) => state.userData.userAuth.uid
   );
+
+  const modal = useSelector((state: ModalState) => state.modal);
 
   const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
 
@@ -85,6 +89,12 @@ function MainAppScreen() {
 
   return (
     <View style={{ flex: 1, paddingTop: insets.top }}>
+      {modal.visible && (
+        <ActionModal
+          modalText={modal.modalContent.modalText}
+          hasDecision={modal.modalContent.hasDecision ?? false}
+        ></ActionModal>
+      )}
       <AppNavigation></AppNavigation>
     </View>
   );

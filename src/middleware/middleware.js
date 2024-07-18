@@ -1,6 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getDrinkHistory, readAsyncStorage } from "@/utils/storage";
-import { ONE_MONTH } from "@/utils/constants";
+
+import { getDrinkHistory } from "@/utils/storage";
+
+const storeModalHandlers = (onConfirm, onCancel) => {
+  window.modalHandlers = {
+    onConfirm: onConfirm || (() => {}),
+    onCancel: onCancel || (() => {}),
+  };
+};
 
 const addDrink = async (newDrink) => {
   try {
@@ -10,19 +17,6 @@ const addDrink = async (newDrink) => {
   } catch (error) {
     console.error("Error in addDrink:", error);
   }
-};
-
-/**
- * Remove entries older than
- * one month from the AsyncStorage
- */
-const cleanupOldEntries = async () => {
-  const history = await getDrinkHistory();
-  const oneMonthAgo = Date.now() - ONE_MONTH;
-  const filteredHistory = history.filter(
-    (drink) => new Date(drink.date).getTime() >= oneMonthAgo
-  );
-  await AsyncStorage.setItem("drinkHistory", JSON.stringify(filteredHistory));
 };
 
 const removeDrink = async (drinkId) => {
@@ -36,7 +30,7 @@ const removeDrink = async (drinkId) => {
   await AsyncStorage.setItem("drinkHistory", JSON.stringify(history));
 };
 
-const asyncStorageMiddleware = (store) => (next) => async (action) => {
+const middleware = (store) => (next) => async (action) => {
   const result = next(action); // Call the next dispatch method in the middleware chain.
   const newState = store.getState(); // Get the new state after the action is processed.
 
@@ -46,6 +40,8 @@ const asyncStorageMiddleware = (store) => (next) => async (action) => {
   const userAuthAction = actionType.startsWith("userData/setUserAuth");
   const userMetricsAction = actionType.startsWith("userData/setUserMetrics");
   const drinkHistoryAction = actionType.startsWith("drinkHistory");
+  const modalAction = actionType.startsWith("modal/setModal");
+  const modalContentAction = actionType.startsWith("modal/setModalContent");
 
   // Update AsyncStorage based on specific actions or state changes.
   if (drinkHistoryAction) {
@@ -75,7 +71,20 @@ const asyncStorageMiddleware = (store) => (next) => async (action) => {
     );
   }
 
+  if (
+    (modalContentAction &&
+      typeof actionPayload.onConfirm === "function" &&
+      typeof actionPayload.onCancel === "function") ||
+    (modalAction &&
+      typeof actionPayload.modalContent?.onConfirm === "function" &&
+      typeof actionPayload.modalContent?.onCancel === "function")
+  ) {
+    const { onConfirm, onCancel } = actionPayload.modalContent || actionPayload;
+    storeModalHandlers(onConfirm, onCancel);
+    return next({ ...action });
+  }
+
   return result;
 };
 
-export { asyncStorageMiddleware, cleanupOldEntries };
+export { middleware };
