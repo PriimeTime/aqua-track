@@ -27,7 +27,7 @@ import { DrinkAmountBottle } from "@/screens/drinkInput/DrinkAmountBottle";
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
-import { useAddDrink } from "@/hooks";
+import { useDrinkManager } from "@/hooks";
 
 /**
  * Debounce function to control
@@ -83,7 +83,7 @@ function DrinkAmount() {
   const [heightVal, setHeightVal] = useState(0);
   const [hasQuantityValueChanged, setHasQuantityValueChanged] = useState(false);
 
-  const { addDrink } = useAddDrink(drinkType, quantityValue);
+  const [addDrink] = useDrinkManager();
 
   useEffect(() => {
     debouncedHapticFeedback();
@@ -118,12 +118,12 @@ function DrinkAmount() {
     }, [])
   );
 
-  const handleContinue = async () => {
+  const handleContinue = () => {
     /** Only let user save the drink if they gave a quantity greater than 0
      * otherwise trigger an animation
      */
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      addDrink();
+      addDrink(drinkType, quantityValue);
       navigation.navigate(MainRouteName.Home);
     } else {
       triggerAnimation();

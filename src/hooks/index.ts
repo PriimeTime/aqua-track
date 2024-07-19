@@ -4,6 +4,5 @@ export * from "./useFormValidation";
 export * from "./useGroupedDrinkHistoryQuantity";
 export * from "./useTodaysDrinks";
 export * from "./usePeriodicRerender";
-export * from "./useRemoveDrink";
-export * from "./useAddDrink";
+export * from "./useDrinkManager";
 export * from "./useDataFromAsyncStorage";
