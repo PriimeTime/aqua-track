@@ -1,27 +1,16 @@
 import { View, StyleSheet, Text } from "react-native";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  sendEmailVerification,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { firestore } from "../../../../firebase";
-import { useNavigation, ParamListBase } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { PrimaryButton } from "@/components/buttons";
 import { CustomTextField } from "@/components/input";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
-import { MainRouteName } from "@/enums/routes/MainRouteName";
 
-import { type UserUID } from "@/types/UserUID";
-
-import { useFormValidation, useModal } from "@/hooks";
+import { useFormValidation } from "@/hooks";
 
 import { color, fontFamily } from "@/utils/constants";
 import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -36,8 +25,6 @@ function RegisterForm({
   setLoading,
   loading,
 }: RegisterFormProps) {
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const auth = getAuth();
   const {
     validateForm,
     formState,
@@ -47,67 +34,21 @@ function RegisterForm({
     resetInputValidation,
   } = useFormValidation();
 
-  const [openModal] = useModal();
+  const [_, register] = useFirebaseAuth();
 
   const redirectToLogin = () => {
     setAccountSettingsState(AccountSettingsState.ShowLogin);
   };
 
   const handleOnRegister = async () => {
-    setLoading(true);
-
-    if (!validateForm(true)) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        formState.email,
-        formState.password
-      );
-
-      const user = userCredentials.user;
-      const userUID: UserUID = user.uid;
-
-      try {
-        const userDocRef = doc(firestore, "users", userUID);
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: {
-              email: formState.email,
-              uid: userUID,
-              userName: formState.userName,
-              firstLogin: true,
-            },
-          },
-          { merge: true }
-        ); // Merges data with existing document
-        await sendEmailVerification(user);
-        setLoading(false);
-        openModal({
-          modalText:
-            "Verification Email Sent! Please check your email to verify your account!",
-          onConfirm: () => {
-            navigation.navigate(MainRouteName.Home);
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        console.error("Error during registration:", error);
-        openModal({
-          modalText: "Something went wrong. Please try again later.",
-        });
-      }
-
-      resetFormState();
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
+    await register(
+      formState.email,
+      formState.password,
+      formState.userName,
+      resetFormState,
+      setLoading,
+      validateForm
+    );
   };
 
   return (

@@ -1,29 +1,23 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { signOut, getAuth } from "firebase/auth";
-
-import { setUserAuth } from "@/store/userData";
+import { useSelector } from "react-redux";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { UserAuth } from "@/models/UserAuth";
-
 import { LoginForm, RegisterForm, AccountDetails } from "@/components/settings";
 import { ContentPage } from "@/components/wrappers";
 
 import { useResetStore } from "@/utils/store";
-import { clearAuthData } from "@/utils/auth";
 
 import { useModal } from "@/hooks/useModal";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
 
 function AccountSettings() {
-  const dispatch = useDispatch();
-  const auth = getAuth();
+  const [, , logout] = useFirebaseAuth();
 
   const { resetStore } = useResetStore();
 
@@ -64,24 +58,8 @@ function AccountSettings() {
 
   const [title, setTitle] = useState("initial title");
 
-  const handleConfirmLogout = async () => {
-    try {
-      await signOut(auth);
-
-      const userAuth: UserAuth = {
-        uid: null,
-        userName: null,
-        email: null,
-        isLoggedIn: false,
-      };
-
-      dispatch(setUserAuth(userAuth));
-      await clearAuthData();
-      shouldResetLocalData();
-    } catch (error) {
-      console.error("Error signing out:", error);
-      // Handle errors if sign out fails, such as a network error
-    }
+  const handleConfirmLogout = () => {
+    logout(shouldResetLocalData);
   };
 
   const handleResetLocalData = async () => {
