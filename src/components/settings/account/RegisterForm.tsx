@@ -1,26 +1,27 @@
 import { View, StyleSheet, Text } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  sendEmailVerification,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { firestore } from "../../../../firebase";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { PrimaryButton } from "@/components/buttons";
 import { CustomTextField } from "@/components/input";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
-import { type UserDataState } from "@/types/store/UserDataState";
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { type UserUID } from "@/types/UserUID";
 
-import { useFormValidation } from "@/hooks";
+import { useFormValidation, useModal } from "@/hooks";
 
-import { setUserAuth } from "@/store/userData";
-
-import { updateUserData } from "@/utils/database";
 import { color, fontFamily } from "@/utils/constants";
 import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
-import { saveAuthData } from "@/utils/auth";
-import { UserAuth } from "@/models/UserAuth";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -35,14 +36,7 @@ function RegisterForm({
   setLoading,
   loading,
 }: RegisterFormProps) {
-  const userMetrics = useSelector(
-    (state: UserDataState) => state.userData.userMetrics
-  );
-  const userDrinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
-
-  const dispatch = useDispatch();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const auth = getAuth();
   const {
     validateForm,
@@ -52,6 +46,8 @@ function RegisterForm({
     handleInputChange,
     resetInputValidation,
   } = useFormValidation();
+
+  const [openModal] = useModal();
 
   const redirectToLogin = () => {
     setAccountSettingsState(AccountSettingsState.ShowLogin);
@@ -75,28 +71,36 @@ function RegisterForm({
       const user = userCredentials.user;
       const userUID: UserUID = user.uid;
 
-      const authData: UserAuth = {
-        userName: formState.userName,
-        email: formState.email,
-        uid: userUID,
-        isLoggedIn: true,
-      };
-
-      saveAuthData(authData);
-      dispatch(setUserAuth(authData));
-
-      // TODO: show alert box here with successful register message
-
-      // Initialize user data in Firestore after successful registration
-      await updateUserData(userUID, {
-        userMetrics,
-        userDrinkHistory,
-        userAuth: {
-          userName: formState.userName,
-          email: formState.email,
-          uid: userUID,
-        },
-      });
+      try {
+        const userDocRef = doc(firestore, "users", userUID);
+        await setDoc(
+          userDocRef,
+          {
+            userAuth: {
+              email: formState.email,
+              uid: userUID,
+              userName: formState.userName,
+              firstLogin: true,
+            },
+          },
+          { merge: true }
+        ); // Merges data with existing document
+        await sendEmailVerification(user);
+        setLoading(false);
+        openModal({
+          modalText:
+            "Verification Email Sent! Please check your email to verify your account!",
+          onConfirm: () => {
+            navigation.navigate(MainRouteName.Home);
+          },
+        });
+      } catch (error) {
+        setLoading(false);
+        console.error("Error during registration:", error);
+        openModal({
+          modalText: "Something went wrong. Please try again later.",
+        });
+      }
 
       resetFormState();
       setLoading(false);

@@ -16,25 +16,6 @@ import {
 } from "@/utils/constants";
 
 /**
- * @param {*} obj - the object to check
- * @returns a boolean indicating if the object
- * (and its nested properties) is empty
- */
-function isEmptyObject<T extends Record<string, any>>(obj: T): boolean {
-  if (obj === null || typeof obj !== "object" || Array.isArray(obj))
-    return false;
-  if (Object.keys(obj).length === 0) return true;
-
-  return Object.keys(obj).every((key) => {
-    const value = obj[key];
-    if (Array.isArray(value)) return value.length === 0;
-    if (typeof value === "object" && value !== null)
-      return isEmptyObject(value);
-    return false;
-  });
-}
-
-/**
  * @param {*} timeMs - time in milliseconds to wait
  * @returns a promise that resolves in the given time
  */
@@ -315,7 +296,6 @@ const distributionRatioByGender = (gender: Gender): number => {
 const emptyFunc = () => {};
 
 export {
-  isEmptyObject,
   sleep,
   metricUnitConversion,
   totalDrinkQuantity,

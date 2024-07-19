@@ -1,10 +1,13 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import { useDispatch } from "react-redux";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { signInWithEmailAndPassword, getAuth, signOut } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { firestore } from "../../../../firebase";
 
 import googleLogo from "../../../../assets/icons/google-logo.png";
 
 import { useFormValidation } from "@/hooks";
+import { useModal } from "@/hooks";
 
 import { CustomTextField } from "@/components/input";
 import { PrimaryButton } from "@/components/buttons";
@@ -13,7 +16,7 @@ import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 import { color, fontFamily, ONE_MONTH } from "@/utils/constants";
-import { loadUserData } from "@/utils/database";
+import { loadUserData, updateUserData } from "@/utils/database";
 import {
   loginFormErrorFontSize,
   loginFormFontSize,
@@ -24,9 +27,11 @@ import { setUserMetrics, setUserAuth } from "@/store/userData";
 import { setHistory } from "@/store/drinkHistory";
 
 import { UserAuth } from "@/models/UserAuth";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 import { type UserUID } from "@/types/UserUID";
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { type UserDataState } from "@/types/store/UserDataState";
+import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 const GoogleButton = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -58,6 +63,7 @@ function LoginForm({
 }: LoginFormProps) {
   const dispatch = useDispatch();
   const auth = getAuth();
+
   const {
     handleInputChange,
     validateForm,
@@ -66,6 +72,15 @@ function LoginForm({
     formErrors,
     setFormErrors,
   } = useFormValidation();
+
+  const userMetrics = useSelector(
+    (state: UserDataState) => state.userData.userMetrics
+  );
+  const userDrinkHistory = useSelector(
+    (state: DrinkHistoryState) => state.drinkHistory
+  );
+
+  const [openModal] = useModal();
 
   const redirectToRegister = () => {
     setAccountSettingsState(AccountSettingsState.ShowRegister);
@@ -96,6 +111,15 @@ function LoginForm({
       const user = userCredentials.user;
       const userUID: UserUID = user.uid;
 
+      if (!user.emailVerified) {
+        await signOut(auth);
+        setLoading(false);
+        openModal({
+          modalText: "Email address not verified! Please check your inbox!",
+        });
+        return;
+      }
+
       const userData = await loadUserData(userUID);
 
       const authData: UserAuth = {
@@ -103,15 +127,44 @@ function LoginForm({
         userName: userData?.userAuth.userName,
         email: userData?.userAuth.email,
         uid: userUID,
+        firstLogin: userData?.userAuth.firstLogin,
       };
 
       saveAuthData(authData);
 
+      if (authData.firstLogin) {
+        authData.firstLogin = false;
+
+        const userDocRef = doc(firestore, "users", userUID);
+        await setDoc(
+          userDocRef,
+          {
+            userAuth: { ...authData },
+          },
+          { merge: true }
+        ); // Merges data with existing document
+
+        dispatch(setUserAuth(authData));
+
+        // Initialize user data in Firestore after successful registration
+        await updateUserData(userUID, {
+          userMetrics,
+          userDrinkHistory,
+          userAuth: {
+            userName: authData.userName,
+            email: authData.email,
+            uid: userUID,
+          },
+        });
+        return;
+      }
+
       if (userData) {
         const thirtyDaysAgo = Date.now() - ONE_MONTH;
-        const userDrinkHistory = userData.userDrinkHistory.filter(
-          (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
-        );
+        const userDrinkHistory =
+          userData.userDrinkHistory?.filter(
+            (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
+          ) || [];
 
         dispatch(setHistory(userDrinkHistory));
         dispatch(setUserMetrics(userData.userMetrics));
@@ -141,11 +194,11 @@ function LoginForm({
           email: "Wrong e-mail or password",
         }));
       } else {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          email: "Something went wrong. Please try again.",
-        }));
+        openModal({
+          modalText: "Something went wrong. Please try again.",
+        });
       }
+      console.error(errMsg);
       setLoading(false);
     }
   };

@@ -73,11 +73,15 @@ const middleware = (store) => (next) => async (action) => {
 
   if (
     (modalContentAction &&
-      typeof actionPayload.onConfirm === "function" &&
-      typeof actionPayload.onCancel === "function") ||
+      ((actionPayload.onConfirm &&
+        typeof actionPayload.onConfirm === "function") ||
+        (actionPayload.onCancel &&
+          typeof actionPayload.onCancel === "function"))) ||
     (modalAction &&
-      typeof actionPayload.modalContent?.onConfirm === "function" &&
-      typeof actionPayload.modalContent?.onCancel === "function")
+      ((actionPayload.modalContent?.onConfirm &&
+        typeof actionPayload.modalContent?.onConfirm === "function") ||
+        (actionPayload.modalContent?.onCancel &&
+          typeof actionPayload.modalContent?.onCancel === "function")))
   ) {
     const { onConfirm, onCancel } = actionPayload.modalContent || actionPayload;
     storeModalHandlers(onConfirm, onCancel);

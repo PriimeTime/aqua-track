@@ -31,7 +31,7 @@ function AccountSettings() {
     (state: UserDataState) => state.userData.userAuth.isLoggedIn
   );
 
-  const [openModal, closeModal] = useModal();
+  const [openModal] = useModal();
 
   const [loading, setLoading] = useState(false);
   const [accountSettingsState, setAccountSettingsState] = useState(
@@ -64,13 +64,8 @@ function AccountSettings() {
 
   const [title, setTitle] = useState("initial title");
 
-  const handleCloseDialog = () => {
-    closeModal();
-  };
-
   const handleConfirmLogout = async () => {
     try {
-      closeModal();
       await signOut(auth);
 
       const userAuth: UserAuth = {
@@ -91,12 +86,13 @@ function AccountSettings() {
 
   const handleResetLocalData = async () => {
     setLoading(true);
+
     try {
       await resetStore();
     } catch (e) {
       console.error("Failed to reset store", e);
     }
-    closeModal();
+
     setLoading(false);
   };
 
@@ -104,7 +100,6 @@ function AccountSettings() {
     openModal({
       modalText: "Are you sure you want to log out?",
       onConfirm: handleConfirmLogout,
-      onCancel: handleCloseDialog,
       hasDecision: true,
     });
   };
@@ -113,7 +108,6 @@ function AccountSettings() {
     openModal({
       modalText: "Reset local data?",
       onConfirm: handleResetLocalData,
-      onCancel: handleCloseDialog,
       hasDecision: true,
     });
   };
