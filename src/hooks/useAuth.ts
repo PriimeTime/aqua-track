@@ -8,6 +8,12 @@ import { setUserAccessToken, setUserRefreshToken } from "@/store/userData";
 
 const TOKEN_KEY = "authTokens";
 
+/**
+ * Custom hook to manage user authentication state with Firebase.
+ *
+ * Listens for auth state changes, updates Redux store with user tokens,
+ * and stores tokens in async storage. Clears tokens on sign-out.
+ */
 const useAuth = () => {
   const [user, setUser] = useState<unknown>(null);
   const dispatch = useDispatch();

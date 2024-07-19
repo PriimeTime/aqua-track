@@ -4,10 +4,7 @@ import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
 import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 
-import { useGroupedDrinkHistoryQuantity } from "@/hooks";
-
-import { type UID } from "@/types/UID";
-import { type UnixDate } from "@/types/UnixDate";
+import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
 
 import { drinkImageMap } from "@/utils/maps";
 import {
@@ -35,25 +32,16 @@ import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
 } from "@/utils/helpers";
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
-interface HistoryItemProps {
-  imageSrc: string;
-  itemID: UID;
-  title: string;
-  date: UnixDate;
-  quantity: number;
-  typeID: number;
-}
+function HistoryItem({ item }: { item: DrinkHistoryItem }) {
+  const { imageSrc, label: title, date, quantity, typeID } = item;
+  const todaysDrinks = useTodaysDrinks();
 
-function HistoryItem({
-  imageSrc,
-  itemID,
-  title,
-  date,
-  quantity,
-  typeID,
-}: HistoryItemProps) {
-  const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(typeID);
+  const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(
+    typeID,
+    todaysDrinks
+  );
 
   return (
     <View style={styles.cardWrapper}>
@@ -96,7 +84,7 @@ function HistoryItem({
         </View>
       </View>
       <View style={styles.cardDeleteButtonWrapper}>
-        <HistoryDeleteButton itemID={itemID}></HistoryDeleteButton>
+        <HistoryDeleteButton item={item}></HistoryDeleteButton>
       </View>
     </View>
   );

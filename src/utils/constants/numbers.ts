@@ -1,9 +1,17 @@
 const ONE_THOUSAND = 1_000;
+
 const MS_PER_SEC = ONE_THOUSAND;
 const SEC_PER_MIN = 60;
 const SEC_PER_HOUR = SEC_PER_MIN * 60;
 const MS_PER_HOUR = MS_PER_SEC * SEC_PER_HOUR;
 const MIN_PER_HOUR = 60;
+const HOURS_PER_DAY = 24;
+const DAYS_PER_MONTH = 30;
+
+const ONE_MIN = MS_PER_SEC * SEC_PER_MIN;
+const ONE_HOUR = ONE_MIN * MIN_PER_HOUR;
+const ONE_DAY = ONE_HOUR * HOURS_PER_DAY;
+const ONE_MONTH = ONE_DAY * DAYS_PER_MONTH;
 
 export {
   ONE_THOUSAND,
@@ -12,4 +20,7 @@ export {
   SEC_PER_MIN,
   MS_PER_HOUR,
   MIN_PER_HOUR,
+  ONE_MIN,
+  ONE_HOUR,
+  ONE_MONTH,
 };

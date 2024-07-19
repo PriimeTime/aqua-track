@@ -14,21 +14,17 @@ import { animatedScaleValue, springAnimation } from "@/utils/animations";
 
 interface ActionModalProps {
   modalText: string;
-  onConfirm: () => void;
-  onCancel?: () => void;
   hasDecision?: boolean;
 }
 
-function ActionModal({
-  modalText,
-  hasDecision,
-  onConfirm,
-  onCancel = () => {},
-}: ActionModalProps) {
+function ActionModal({ modalText, hasDecision }: ActionModalProps) {
   const scaleValue = useRef(animatedScaleValue(0)).current;
 
   const [modalVisible, setModalVisible] = useState(true);
   const [blurVisible, setBlurVisible] = useState(true);
+
+  const onConfirm = window.modalHandlers?.onConfirm || (() => {});
+  const onCancel = window.modalHandlers?.onCancel || (() => {});
 
   const handleOnConfirm = () => {
     const configObject = { toValue: 0 };

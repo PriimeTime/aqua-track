@@ -8,16 +8,15 @@ import { type UserDataState } from "@/types/store/UserDataState";
 
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { ModalContent } from "@/models/ModalContent";
+import { UserAuth } from "@/models/UserAuth";
 
 import { LoginForm, RegisterForm, AccountDetails } from "@/components/settings";
 import { ContentPage } from "@/components/wrappers";
-import { ActionModal } from "@/components/modals";
 
 import { useResetStore } from "@/utils/store";
-import { emptyFunc } from "@/utils/helpers";
 import { clearAuthData } from "@/utils/auth";
-import { UserAuth } from "@/models/UserAuth";
+
+import { useModal } from "@/hooks/useModal";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -32,17 +31,12 @@ function AccountSettings() {
     (state: UserDataState) => state.userData.userAuth.isLoggedIn
   );
 
+  const [openModal, closeModal] = useModal();
+
   const [loading, setLoading] = useState(false);
   const [accountSettingsState, setAccountSettingsState] = useState(
     AccountSettingsState.ShowLogin
   );
-  const [actionModalVisible, setActionModalVisible] = useState(false);
-  const [actionModalContent, setActionModalContent] = useState<ModalContent>({
-    modalText: "",
-    onConfirm: () => {},
-    onCancel: () => {},
-    hasDecision: true,
-  });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -71,11 +65,12 @@ function AccountSettings() {
   const [title, setTitle] = useState("initial title");
 
   const handleCloseDialog = () => {
-    setActionModalVisible(false);
+    closeModal();
   };
 
   const handleConfirmLogout = async () => {
     try {
+      closeModal();
       await signOut(auth);
 
       const userAuth: UserAuth = {
@@ -101,32 +96,26 @@ function AccountSettings() {
     } catch (e) {
       console.error("Failed to reset store", e);
     }
-    setActionModalVisible(false);
+    closeModal();
     setLoading(false);
   };
 
   const handleLogout = () => {
-    const modalContent: ModalContent = {
+    openModal({
       modalText: "Are you sure you want to log out?",
       onConfirm: handleConfirmLogout,
       onCancel: handleCloseDialog,
       hasDecision: true,
-    };
-
-    setActionModalContent(modalContent);
-    setActionModalVisible(true);
+    });
   };
 
   const shouldResetLocalData = () => {
-    const modalContent: ModalContent = {
+    openModal({
       modalText: "Reset local data?",
       onConfirm: handleResetLocalData,
       onCancel: handleCloseDialog,
       hasDecision: true,
-    };
-
-    setActionModalContent(modalContent);
-    setActionModalVisible(true);
+    });
   };
 
   const renderAccountSettings = () => {
@@ -154,14 +143,6 @@ function AccountSettings() {
 
   return (
     <ContentPage key={title} title={title}>
-      {actionModalVisible && (
-        <ActionModal
-          modalText={actionModalContent.modalText}
-          onConfirm={actionModalContent.onConfirm}
-          onCancel={actionModalContent.onCancel ?? emptyFunc}
-          hasDecision={actionModalContent.hasDecision ?? false}
-        ></ActionModal>
-      )}
       {renderAccountSettings()}
     </ContentPage>
   );

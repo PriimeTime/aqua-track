@@ -1,11 +1,6 @@
 import { Pressable, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useDispatch } from "react-redux";
-
-import { type UID } from "@/types/UID";
-
-import { removeFromHistory } from "@/store/drinkHistory";
 
 import { color } from "@/utils/constants";
 import {
@@ -14,14 +9,17 @@ import {
 } from "@/utils/constants/components/history";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
-function HistoryDeleteButton({ itemID }: { itemID: UID }) {
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+
+import { useDrinkManager } from "@/hooks";
+
+function HistoryDeleteButton({ item }: { item: DrinkHistoryItem }) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
-  const dispatch = useDispatch();
+
+  const [_, removeDrink] = useDrinkManager();
 
   const handleOnPress = () => {
-    setTimeout(() => {
-      dispatch(removeFromHistory(itemID));
-    }, 150);
+    removeDrink(item);
   };
 
   const handleOnPressIn = () => {

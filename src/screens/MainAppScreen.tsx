@@ -1,80 +1,76 @@
 import NetInfo from "@react-native-community/netinfo";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AppNavigation } from "@/navigation/AppNavigation";
 
-import { setHistory } from "@/store/drinkHistory";
-import { setUserAuth, setUserMetrics } from "@/store/userData";
 import { setNetworkStatus } from "@/store/general";
 
-import { useDatabaseSync, useAuth } from "@/hooks";
+import { useDatabaseSync, useAuth, useDataFromAsyncStorage } from "@/hooks";
 
-import { readAsyncStorage } from "@/utils/storage";
+import { syncSavedChangesToDatabase } from "@/utils/database";
+import { cleanupOldEntries } from "@/utils/storage";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { type UserDataState } from "@/types/store/UserDataState";
-import { type GeneralState } from "@/types/store/GeneralState";
-import { type UserUID } from "@/types/UserUID";
+import { type ModalState } from "@/types/ModalState";
 
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
-import { UserMetrics } from "@/models/UserMetrics";
-import { UserAuth } from "@/models/UserAuth";
-
-// const handleAppStateChange = async (nextAppState) => {
-//   if (nextAppState === "active") {
-//     console.log("App has come to the foreground!");
-//     // update firestore with new data!
-//   }
-// };
+import { ActionModal } from "@/components/modals";
 
 function MainAppScreen() {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
-  const isInternetReachable = useSelector(
-    (state: GeneralState) => state.general.networkStatus.isReachable
-  );
-  const userDrinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
+  const [isInternetReachable, setIsInternetReachable] = useState(false);
+
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
+  const userUID = useSelector(
+    (state: UserDataState) => state.userData.userAuth.uid
+  );
+
+  const modal = useSelector((state: ModalState) => state.modal);
+
+  const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
 
   /**
    * Listen to internet connectivity changes
    */
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      const networkInfo = {
-        isConnected: !!state.isConnected,
-        isReachable: !!state.isInternetReachable,
-      };
+    const unsubscribe = NetInfo.addEventListener(
+      ({ isConnected, isInternetReachable }) => {
+        if (isConnected && isInternetReachable) {
+          setIsInternetReachable(true);
+        } else {
+          setIsInternetReachable(false);
+        }
 
-      dispatch(setNetworkStatus(networkInfo));
-    });
+        const networkInfo = {
+          isConnected: !!isConnected,
+          isReachable: !!isInternetReachable,
+        };
 
-    return () => {
-      unsubscribe();
-    };
+        dispatch(setNetworkStatus(networkInfo));
+      }
+    );
+
+    // Cleanup the subscription on component unmount
+    return () => unsubscribe();
   }, []);
 
-  useAuth();
-
   /**
-   * Sync drinkHistory to database
-   * when internet becomes reachable and
-   * when drinkHistory changes
+   * Sync user drink history to the database
    */
-  useDatabaseSync(
-    [userDrinkHistory],
-    { userDrinkHistory },
-    isInternetReachable
-  );
+  useEffect(() => {
+    if (userUID && isInternetReachable) {
+      syncSavedChangesToDatabase(userUID);
+    }
+  }, [isInternetReachable, userUID]);
+
+  /** Handle authentication automatically */
+  useAuth();
 
   /**
    * Sync userMetrics to database
@@ -83,59 +79,22 @@ function MainAppScreen() {
    */
   useDatabaseSync([userMetrics], { userMetrics }, isInternetReachable);
 
-  const fetchDataFromAsyncStorage = async () => {
-    try {
-      const currentHistory: DrinkHistoryItem[] | null = await readAsyncStorage(
-        "currentHistory"
-      );
-      const userMetrics: UserMetrics | null = await readAsyncStorage(
-        "userMetrics"
-      );
-
-      const uid = (await AsyncStorage.getItem("userUID")) as UserUID;
-      const email = (await AsyncStorage.getItem("email")) as string | null;
-      const userName = (await AsyncStorage.getItem("userName")) as
-        | string
-        | null;
-      const isLoggedInString = (await AsyncStorage.getItem("isLoggedIn")) as
-        | string
-        | null;
-
-      const isLoggedIn = isLoggedInString === "true";
-
-      const userAuth: UserAuth | null = {
-        uid,
-        userName,
-        email,
-        isLoggedIn,
-      };
-
-      if (currentHistory && currentHistory.length > 0) {
-        dispatch(setHistory(currentHistory));
-      } else {
-        console.warn(
-          "Failed to update drink history, currentHistory was either undefined or its length was 0"
-        );
-      }
-
-      if (userMetrics) {
-        dispatch(setUserMetrics(userMetrics));
-      }
-
-      if (userAuth) {
-        dispatch(setUserAuth(userAuth));
-      }
-    } catch (error) {
-      console.error("Failed to fetch data from storage:", error);
-    }
-  };
-
+  /** Fetch data from async storage into the Redux store
+   * and clean up entries older than a month
+   */
   useEffect(() => {
     fetchDataFromAsyncStorage();
+    cleanupOldEntries();
   }, []);
 
   return (
     <View style={{ flex: 1, paddingTop: insets.top }}>
+      {modal.visible && (
+        <ActionModal
+          modalText={modal.modalContent.modalText}
+          hasDecision={modal.modalContent.hasDecision ?? false}
+        ></ActionModal>
+      )}
       <AppNavigation></AppNavigation>
     </View>
   );

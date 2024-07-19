@@ -1,5 +1,4 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -7,20 +6,23 @@ import { SettingsButton } from "@/components/buttons";
 import { HistoryItem, HistoryBottom } from "@/components/history";
 import { GradientWrapper } from "@/components/wrappers";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
 import { historyItemGap } from "@/utils/constants/components/history";
+import { ONE_MIN } from "@/utils/constants";
+
+import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const drinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
+  const drinkHistory = useTodaysDrinks();
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
+
+  const condition = drinkHistory.length > 0;
+  const interval = ONE_MIN;
+  usePeriodicRerender(condition, interval);
 
   return (
     <GradientWrapper style={styles.wrapper}>
@@ -40,12 +42,7 @@ function History() {
           data={drinkHistory}
           renderItem={({ item }) => (
             <HistoryItem
-              imageSrc={item.imageSrc}
-              title={item.label}
-              date={item.date}
-              quantity={item.quantity}
-              typeID={item.typeID}
-              itemID={item.id}
+              item={item}
               // hydrationQuantity={item.hydrationQuantity}
             ></HistoryItem>
           )}

@@ -7,10 +7,17 @@ import { type UserUID } from "@/types/UserUID";
 
 import { updateUserData } from "@/utils/database";
 
+/**
+ * Syncs data to the database when the user is logged in and internet is reachable.
+ *
+ * @param {*} dependencies - array of dependencies that trigger the effect
+ * @param {*} data - Data to be synced to the database
+ * @param {*} isInternetReachable - flag indicating internet connectivity status
+ */
 function useDatabaseSync<T extends DocumentData, D>(
   dependencies: D[],
   data: T,
-  isInternetReachable: boolean | null
+  isInternetReachable: boolean
 ) {
   const userAuth = useSelector(
     (state: UserDataState) => state.userData.userAuth
@@ -18,8 +25,6 @@ function useDatabaseSync<T extends DocumentData, D>(
 
   const isLoggedIn = userAuth.isLoggedIn;
   const userUID: UserUID = userAuth.uid;
-
-  // TODO: automatically log in user if not logged in (maybe save login state in async storage?)
 
   useEffect(() => {
     /** If user logged in AND connected to the

@@ -8,10 +8,7 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useDispatch, useSelector } from "react-redux";
 import * as Haptics from "expo-haptics";
-
-import { addToHistory } from "@/store/drinkHistory";
 
 import { drinkTypeList } from "@/utils/maps";
 import { inputDrinkConfig } from "@/utils/constants";
@@ -20,7 +17,6 @@ import {
   drinkAmountFontSize,
   drinkAmountSensitivity,
 } from "@/utils/constants/components/drinks";
-import { calculateBacAfterDrink } from "@/utils/helpers";
 
 import { PrimaryButton, BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -31,9 +27,7 @@ import { DrinkAmountBottle } from "@/screens/drinkInput/DrinkAmountBottle";
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
-
-import { type UserDataState } from "@/types/store/UserDataState";
-import { DrinkHistoryItemWithoutID } from "@/models/DrinkHistoryItemWithoutID";
+import { useDrinkManager } from "@/hooks";
 
 /**
  * Debounce function to control
@@ -55,11 +49,6 @@ function DrinkAmount() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route =
     useRoute<RouteProp<{ params: { drinkType: DrinkItem } }, "params">>();
-  const dispatch = useDispatch();
-
-  const { gender, weight } = useSelector(
-    (state: UserDataState) => state.userData.userMetrics
-  );
 
   const { drinkType } = route.params;
   const scaleValue = useRef(animatedScaleValue(1)).current;
@@ -70,8 +59,6 @@ function DrinkAmount() {
 
   const inputBottleSize = inputBottleObject?.size ?? 0;
   const incrementValue = inputBottleObject?.increment ?? 0;
-  const hydroFactor = inputBottleObject?.hydroFactor ?? 0;
-  const abv = inputBottleObject?.abv ?? 0;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -95,6 +82,8 @@ function DrinkAmount() {
   const [quantityValue, setQuantityValue] = useState(0);
   const [heightVal, setHeightVal] = useState(0);
   const [hasQuantityValueChanged, setHasQuantityValueChanged] = useState(false);
+
+  const [addDrink] = useDrinkManager();
 
   useEffect(() => {
     debouncedHapticFeedback();
@@ -130,25 +119,11 @@ function DrinkAmount() {
   );
 
   const handleContinue = () => {
+    /** Only let user save the drink if they gave a quantity greater than 0
+     * otherwise trigger an animation
+     */
     if ((hasQuantityValueChanged && quantityValue !== 0) || quantityValue > 0) {
-      const date = Date.now();
-      const bacAfterDrink = calculateBacAfterDrink(
-        quantityValue,
-        abv,
-        gender,
-        weight
-      );
-
-      const drinkItem: DrinkHistoryItemWithoutID = {
-        ...drinkType,
-        quantity: quantityValue,
-        date,
-        hydrationQuantity: quantityValue * hydroFactor,
-        abv,
-        bac: bacAfterDrink,
-      };
-
-      dispatch(addToHistory(drinkItem));
+      addDrink(drinkType, quantityValue);
       navigation.navigate(MainRouteName.Home);
     } else {
       triggerAnimation();
