@@ -6,7 +6,7 @@
     "start": "expo start",
     "build-test-flight": "eas build -p ios --auto-submit",
     "build-simulator": "eas build --profile development-simulator --platform ios",
-    "build-device-expo": "eas build --profile development --platform ios",
+    "build-device": "eas build --profile development --platform ios",
     "build-device-standalone": "eas build --profile preview --platform ios",
     "build-production-release": "eas build --profile production --platform ios",
     "dev": "expo start --dev-client",
@@ -50,7 +50,8 @@
     "typescript": "^5.3.0",
     "uid": "^2.0.2",
     "use-count-up": "^3.0.1",
-    "victory-native": "^36.8.4"
+    "victory-native": "^36.8.4",
+    "expo-apple-authentication": "~6.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

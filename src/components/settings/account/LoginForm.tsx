@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 
 import googleLogo from "../../../../assets/icons/google-logo.png";
 
-import { useFormValidation } from "@/hooks";
+import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
 import { CustomTextField } from "@/components/input";
 import { PrimaryButton } from "@/components/buttons";
@@ -15,8 +15,6 @@ import {
   loginFormErrorFontSize,
   loginFormFontSize,
 } from "@/utils/constants/components/forms";
-
-import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
 
 const GoogleButton = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -46,7 +44,7 @@ function LoginForm({
   setLoading,
   loading,
 }: LoginFormProps) {
-  const [login] = useFirebaseAuth();
+  const { firebaseLogin, firebaseSignInWithApple } = useFirebaseAuth();
 
   const {
     handleInputChange,
@@ -61,15 +59,16 @@ function LoginForm({
     setAccountSettingsState(AccountSettingsState.ShowRegister);
   };
 
-  const handleOnAppleSignIn = () => {
-    // TODO: firebase apple signin
+  const handleOnAppleSignIn = async () => {
+    firebaseSignInWithApple();
   };
+
   const handleOnGoogleSignIn = () => {
     // TODO: firebase google signin
   };
 
   const handleOnLogin = async () => {
-    await login(
+    await firebaseLogin(
       formState.email,
       formState.password,
       setFormErrors,

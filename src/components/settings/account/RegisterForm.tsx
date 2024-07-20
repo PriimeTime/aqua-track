@@ -34,14 +34,14 @@ function RegisterForm({
     resetInputValidation,
   } = useFormValidation();
 
-  const [_, register] = useFirebaseAuth();
+  const { firebaseRegister } = useFirebaseAuth();
 
   const redirectToLogin = () => {
     setAccountSettingsState(AccountSettingsState.ShowLogin);
   };
 
   const handleOnRegister = async () => {
-    await register(
+    await firebaseRegister(
       formState.email,
       formState.password,
       formState.userName,

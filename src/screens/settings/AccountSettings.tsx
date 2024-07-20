@@ -17,7 +17,7 @@ import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
 
 function AccountSettings() {
-  const [, , logout] = useFirebaseAuth();
+  const { firebaseLogout } = useFirebaseAuth();
 
   const { resetStore } = useResetStore();
 
@@ -59,7 +59,7 @@ function AccountSettings() {
   const [title, setTitle] = useState("initial title");
 
   const handleConfirmLogout = () => {
-    logout(shouldResetLocalData);
+    firebaseLogout(shouldResetLocalData);
   };
 
   const handleResetLocalData = async () => {

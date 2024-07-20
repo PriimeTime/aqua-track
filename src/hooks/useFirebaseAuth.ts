@@ -1,7 +1,10 @@
 import {
   createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
   getAuth,
+  OAuthProvider,
   sendEmailVerification,
+  signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -10,6 +13,10 @@ import { firestore } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  AppleAuthenticationScope,
+  signInAsync,
+} from "expo-apple-authentication";
 
 import { useModal } from "@/hooks/useModal";
 
@@ -19,7 +26,7 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 import { loadUserData, updateUserData } from "@/utils/database";
 import { clearAuthData, saveAuthData } from "@/utils/auth";
-import { ONE_MONTH } from "@/utils/constants";
+import { ONE_MONTH, signInWithAppleCanceled } from "@/utils/constants";
 
 import { UserAuth } from "@/models/UserAuth";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
@@ -50,14 +57,18 @@ type FirebaseRegister = (
   validateForm: (isRegister: boolean) => boolean
 ) => Promise<void>;
 
+type FirebaseSignInWithApple = () => void;
+
 type FirebaseLogout = (shouldResetLocalData: () => void) => void;
 
 /**
- * A custom hook for Firebase authentication, including user registration, login, and logout functionalities.
+ * A custom hook for Firebase authentication
+ * including user registration, login, signin with apple and logout functionalities.
  *
  * This hook provides three main functions:
  * - `firebaseLogin`: Log in a user with email and password.
  * - `firebaseRegister`: Register a new user with email, password, and username.
+ * - `firebaseSignInWithApple`: Sign in user with Apple
  * - `firebaseLogout`: Log out the currently authenticated user.
  *
  * Note: When using functions as parameters in a hook,
@@ -71,11 +82,12 @@ type FirebaseLogout = (shouldResetLocalData: () => void) => void;
  *
  * @returns an array containing the three authentication functions
  */
-function useFirebaseAuth(): [
-  firebaseLogin: FirebaseLogin,
-  firebaseRegister: FirebaseRegister,
-  firebaseLogout: FirebaseLogout
-] {
+function useFirebaseAuth(): {
+  firebaseLogin: FirebaseLogin;
+  firebaseRegister: FirebaseRegister;
+  firebaseLogout: FirebaseLogout;
+  firebaseSignInWithApple: FirebaseSignInWithApple;
+} {
   const dispatch = useDispatch();
   const auth = getAuth();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -180,9 +192,15 @@ function useFirebaseAuth(): [
         dispatch(setUserMetrics(userData.userMetrics));
         dispatch(setUserAuth(authData));
       } else {
+        openModal({
+          modalText: "We were unable to fetch your data :(",
+        });
         console.error("Unable to load user data --> userData falsy");
       }
       setLoading(false);
+
+      // Navigate to home screen after successful login
+      navigation.navigate(MainRouteName.Home);
     } catch (error) {
       let errMsg = "";
 
@@ -281,6 +299,130 @@ function useFirebaseAuth(): [
     }
   };
 
+  const firebaseSignInWithApple = async () => {
+    try {
+      // Get credentials from Apple
+      const appleCredentials = await signInAsync({
+        requestedScopes: [
+          AppleAuthenticationScope.FULL_NAME,
+          AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      if (!appleCredentials.identityToken) {
+        console.error("Couldn't fetch identityToken from appleCredentials");
+        openModal({
+          modalText: "Something went wrong. Please try again later.",
+        });
+        return;
+      }
+
+      // Create an OAuth credentials using the Apple ID token
+      const appleProvider = new OAuthProvider("apple.com");
+      const credentials = appleProvider.credential({
+        idToken: appleCredentials.identityToken,
+      });
+
+      // Sign in with Firebase using the Apple credentials
+      const userCredential = await signInWithCredential(auth, credentials);
+      const user = userCredential.user;
+      const userUID = user.uid;
+
+      // In rare cases apple could return a nil email
+      if (!user.email) {
+        console.error("Apple returned nil email");
+        openModal({
+          modalText: "Something went wrong.",
+        });
+        return;
+      }
+
+      const additionalUserInfo = getAdditionalUserInfo(userCredential);
+
+      if (!additionalUserInfo) {
+        console.error("Additional user info is null");
+        openModal({
+          modalText: "Something went wrong. Please try again later.",
+        });
+        return;
+      }
+
+      // Handle (register) new user
+      if (additionalUserInfo.isNewUser) {
+        const userDocRef = doc(firestore, "users", userUID);
+
+        const authData: UserAuth = {
+          isLoggedIn: true,
+          userName: user.displayName || "Apple user :)",
+          email: user.email,
+          uid: userUID,
+        };
+
+        // Create entry for new user in Firestore
+        await setDoc(
+          userDocRef,
+          {
+            userAuth: {
+              email: authData.email,
+              uid: authData.uid,
+              userName: authData.userName,
+            },
+          },
+          { merge: true }
+        );
+
+        // Set user auth object in redux store
+        dispatch(setUserAuth(authData));
+
+        // Upload user data stored in AsyncStorage to Firestore
+        await updateUserData(userUID, {
+          userMetrics,
+          userDrinkHistory,
+          userAuth: {
+            userName: authData.userName,
+            email: authData.email,
+            uid: authData.uid,
+          },
+        });
+
+        // Handle (login) already registered user
+      } else {
+        // load user data from Firestore
+        const userData = await loadUserData(userUID);
+
+        const authData: UserAuth = {
+          isLoggedIn: true,
+          userName: userData?.userAuth.userName,
+          email: userData?.userAuth.email,
+          uid: userUID,
+          firstLogin: userData?.userAuth.firstLogin,
+        };
+
+        // Load one month worth of drink history
+        const thirtyDaysAgo = Date.now() - ONE_MONTH;
+        const userDrinkHistory =
+          userData?.userDrinkHistory?.filter(
+            (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
+          ) || [];
+
+        // Hydrate redux store with fetched data
+        dispatch(setHistory(userDrinkHistory));
+        dispatch(setUserMetrics(userData?.userMetrics));
+        dispatch(setUserAuth(authData));
+      }
+
+      // Navigate to home screen after successful signin
+      navigation.navigate(MainRouteName.Home);
+    } catch (e) {
+      if (e instanceof Error && e.message !== signInWithAppleCanceled) {
+        openModal({
+          modalText: "Something went wrong. Please try again later.",
+        });
+      }
+      console.error(e);
+    }
+  };
+
   const firebaseLogout: FirebaseLogout = async (shouldResetLocalData) => {
     try {
       // Sign out user
@@ -308,7 +450,12 @@ function useFirebaseAuth(): [
     }
   };
 
-  return [firebaseLogin, firebaseRegister, firebaseLogout];
+  return {
+    firebaseLogin,
+    firebaseRegister,
+    firebaseSignInWithApple,
+    firebaseLogout,
+  };
 }
 
 export { useFirebaseAuth };
