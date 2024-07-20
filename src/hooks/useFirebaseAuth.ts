@@ -85,8 +85,8 @@ type FirebaseLogout = (shouldResetLocalData: () => void) => void;
 function useFirebaseAuth(): {
   firebaseLogin: FirebaseLogin;
   firebaseRegister: FirebaseRegister;
-  firebaseLogout: FirebaseLogout;
   firebaseSignInWithApple: FirebaseSignInWithApple;
+  firebaseLogout: FirebaseLogout;
 } {
   const dispatch = useDispatch();
   const auth = getAuth();

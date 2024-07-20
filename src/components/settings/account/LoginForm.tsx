@@ -1,6 +1,4 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-
-import googleLogo from "../../../../assets/icons/google-logo.png";
+import { View, Text, StyleSheet } from "react-native";
 
 import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
@@ -11,25 +9,7 @@ import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 import { color, fontFamily } from "@/utils/constants";
-import {
-  loginFormErrorFontSize,
-  loginFormFontSize,
-} from "@/utils/constants/components/forms";
-
-const GoogleButton = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <View style={googleButtonStyles.wrapper}>
-      <View style={googleButtonStyles.flexBoxWrapper}>
-        <View style={googleButtonStyles.imageWrapper}>
-          <Image style={googleButtonStyles.image} source={googleLogo}></Image>
-        </View>
-        <View style={googleButtonStyles.textWrapper}>
-          <Text style={googleButtonStyles.text}>{children}</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
+import { loginFormErrorFontSize } from "@/utils/constants/components/forms";
 
 interface LoginFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -61,10 +41,6 @@ function LoginForm({
 
   const handleOnAppleSignIn = async () => {
     firebaseSignInWithApple();
-  };
-
-  const handleOnGoogleSignIn = () => {
-    // TODO: firebase google signin
   };
 
   const handleOnLogin = async () => {
@@ -114,13 +90,6 @@ function LoginForm({
         {"register".toUpperCase()}
       </PrimaryButton>
       <PrimaryButton
-        btnColor={color.WHITE}
-        custom
-        onPress={handleOnGoogleSignIn}
-      >
-        <GoogleButton>{"Sign in with Google"}</GoogleButton>
-      </PrimaryButton>
-      <PrimaryButton
         btnColor={color.BLACK}
         onPress={handleOnAppleSignIn}
         textStyle={{
@@ -137,41 +106,6 @@ function LoginForm({
 }
 
 export { LoginForm };
-
-const googleButtonStyles = StyleSheet.create({
-  wrapper: {
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  flexBoxWrapper: {
-    flexDirection: "row",
-  },
-  imageWrapper: {
-    width: "25%",
-    height: "100%",
-    alignItems: "flex-end",
-  },
-  image: {
-    left: "10%",
-    width: "80%",
-    top: "10%",
-    height: "80%",
-    objectFit: "contain",
-  },
-  textWrapper: {
-    width: "75%",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  text: {
-    fontFamily: fontFamily.GOOGLE,
-    textAlign: "center",
-    fontSize: loginFormFontSize,
-    letterSpacing: 0,
-    color: color.BLACK,
-  },
-});
 
 const styles = StyleSheet.create({
   errorWrapper: {
