@@ -1,10 +1,6 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import { useDispatch } from "react-redux";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { View, Text, StyleSheet } from "react-native";
 
-import googleLogo from "../../../../assets/icons/google-logo.png";
-
-import { useFormValidation } from "@/hooks";
+import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
 import { CustomTextField } from "@/components/input";
 import { PrimaryButton } from "@/components/buttons";
@@ -12,36 +8,8 @@ import { PrimaryButton } from "@/components/buttons";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { color, fontFamily, ONE_MONTH } from "@/utils/constants";
-import { loadUserData } from "@/utils/database";
-import {
-  loginFormErrorFontSize,
-  loginFormFontSize,
-} from "@/utils/constants/components/forms";
-import { saveAuthData } from "@/utils/auth";
-
-import { setUserMetrics, setUserAuth } from "@/store/userData";
-import { setHistory } from "@/store/drinkHistory";
-
-import { UserAuth } from "@/models/UserAuth";
-
-import { type UserUID } from "@/types/UserUID";
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
-
-const GoogleButton = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <View style={googleButtonStyles.wrapper}>
-      <View style={googleButtonStyles.flexBoxWrapper}>
-        <View style={googleButtonStyles.imageWrapper}>
-          <Image style={googleButtonStyles.image} source={googleLogo}></Image>
-        </View>
-        <View style={googleButtonStyles.textWrapper}>
-          <Text style={googleButtonStyles.text}>{children}</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
+import { color, fontFamily } from "@/utils/constants";
+import { loginFormErrorFontSize } from "@/utils/constants/components/forms";
 
 interface LoginFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -56,8 +24,8 @@ function LoginForm({
   setLoading,
   loading,
 }: LoginFormProps) {
-  const dispatch = useDispatch();
-  const auth = getAuth();
+  const { firebaseLogin, firebaseSignInWithApple } = useFirebaseAuth();
+
   const {
     handleInputChange,
     validateForm,
@@ -71,83 +39,22 @@ function LoginForm({
     setAccountSettingsState(AccountSettingsState.ShowRegister);
   };
 
-  const handleOnAppleSignIn = () => {
-    // TODO: firebase apple signin
+  const handleOnAppleSignIn = async () => {
+    firebaseSignInWithApple();
   };
-  const handleOnGoogleSignIn = () => {
-    // TODO: firebase google signin
+
+  const redirectToForgotPassword = () => {
+    setAccountSettingsState(AccountSettingsState.ShowForgotPassword);
   };
 
   const handleOnLogin = async () => {
-    setLoading(true);
-
-    if (!validateForm()) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        formState.email,
-        formState.password
-      );
-
-      const user = userCredentials.user;
-      const userUID: UserUID = user.uid;
-
-      const userData = await loadUserData(userUID);
-
-      const authData: UserAuth = {
-        isLoggedIn: true,
-        userName: userData?.userAuth.userName,
-        email: userData?.userAuth.email,
-        uid: userUID,
-      };
-
-      saveAuthData(authData);
-
-      if (userData) {
-        const thirtyDaysAgo = Date.now() - ONE_MONTH;
-        const userDrinkHistory = userData.userDrinkHistory.filter(
-          (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
-        );
-
-        dispatch(setHistory(userDrinkHistory));
-        dispatch(setUserMetrics(userData.userMetrics));
-        dispatch(setUserAuth(authData));
-      } else {
-        console.error("Unable to load user data --> userData falsy");
-      }
-      setLoading(false);
-    } catch (error) {
-      let errMsg = "";
-
-      if (error instanceof Error) {
-        errMsg = error.message;
-      }
-
-      // TODO: create an invisible input field below all others and display
-      // general error messages there
-
-      if (errMsg.includes("invalid-email")) {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          email: "Invalid e-mail",
-        }));
-      } else if (errMsg.includes("invalid-credential")) {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          email: "Wrong e-mail or password",
-        }));
-      } else {
-        setFormErrors((prevErrors) => ({
-          ...prevErrors,
-          email: "Something went wrong. Please try again.",
-        }));
-      }
-      setLoading(false);
-    }
+    await firebaseLogin(
+      formState.email,
+      formState.password,
+      setFormErrors,
+      setLoading,
+      validateForm()
+    );
   };
 
   return (
@@ -176,6 +83,9 @@ function LoginForm({
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.password}</Text>
       </View>
+      <PrimaryButton flat onPress={redirectToForgotPassword}>
+        {"forgot password".toUpperCase()}
+      </PrimaryButton>
       <PrimaryButton isLoading={loading} onPress={handleOnLogin}>
         {"login".toUpperCase()}
       </PrimaryButton>
@@ -185,13 +95,6 @@ function LoginForm({
         onPress={redirectToRegister}
       >
         {"register".toUpperCase()}
-      </PrimaryButton>
-      <PrimaryButton
-        btnColor={color.WHITE}
-        custom
-        onPress={handleOnGoogleSignIn}
-      >
-        <GoogleButton>{"Sign in with Google"}</GoogleButton>
       </PrimaryButton>
       <PrimaryButton
         btnColor={color.BLACK}
@@ -210,41 +113,6 @@ function LoginForm({
 }
 
 export { LoginForm };
-
-const googleButtonStyles = StyleSheet.create({
-  wrapper: {
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  flexBoxWrapper: {
-    flexDirection: "row",
-  },
-  imageWrapper: {
-    width: "25%",
-    height: "100%",
-    alignItems: "flex-end",
-  },
-  image: {
-    left: "10%",
-    width: "80%",
-    top: "10%",
-    height: "80%",
-    objectFit: "contain",
-  },
-  textWrapper: {
-    width: "75%",
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  text: {
-    fontFamily: fontFamily.GOOGLE,
-    textAlign: "center",
-    fontSize: loginFormFontSize,
-    letterSpacing: 0,
-    color: color.BLACK,
-  },
-});
 
 const styles = StyleSheet.create({
   errorWrapper: {

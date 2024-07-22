@@ -23,7 +23,8 @@ interface CustomTextFieldProps {
   handleOnChangeText?: (input: string) => void;
   handleOnBlur?: () => void;
   handleOnFocus?: () => void;
-  label: string;
+  label?: string;
+  placeholder?: string;
   customStyles?: StyleProp<ViewStyle>;
   readOnly?: boolean;
   inputType?: CustomTextFieldInputType;
@@ -32,12 +33,51 @@ interface CustomTextFieldProps {
   fullWidth?: boolean;
 }
 
+/**
+ * CustomTextField Component
+ *
+ * A customizable text field component for React Native that supports various input types,
+ * labels, and additional appended text. This component can handle input changes, focus, and
+ * blur events, and can be styled according to the provided custom styles.
+ *
+ * @param {*} props.value - value of the text input
+ * @param props.handleOnChangeText - function to call when the text input value changes
+ * @param props.handleOnBlur - function to call when the text input loses focus
+ * @param props.handleOnFocus - function to call when the text input gains focus
+ * @param props.label - label text to display above the text input
+ * @param props.placeholder - placeholder text to display inside the textfield
+ * @param props.customStyles - custom styles to apply to the text field wrapper
+ * @param props.readOnly - indicates if the text input should be read-only
+ * @param props.inputType - type of the text input (e.g., number, email, password)
+ * @param props.maxLength - maximum length of the text input
+ * @param props.append - additional text to display at the end of the text input
+ * @param props.fullWidth - indicates if the text input should take the full width of its container
+ *
+ * @returns the rendered CustomTextField component.
+ *
+ * @example
+ * Usage:
+ * <CustomTextField
+ *   value={inputValue}
+ *   handleOnChangeText={handleInputChange}
+ *   handleOnBlur={handleInputBlur}
+ *   handleOnFocus={handleInputFocus}
+ *   label="Email"
+ *   customStyles={{ marginVertical: 10 }}
+ *   readOnly={false}
+ *   inputType={CustomTextFieldInputType.Email}
+ *   maxLength={50}
+ *   append="@example.com"
+ *   fullWidth={true}
+ * />
+ */
 function CustomTextField({
   value,
   handleOnChangeText,
   handleOnBlur,
   handleOnFocus,
   label,
+  placeholder,
   customStyles,
   readOnly,
   inputType,
@@ -117,6 +157,7 @@ function CustomTextField({
           secureTextEntry={isPassword}
           maxLength={maxLength}
           value={value}
+          placeholder={placeholder}
           onChangeText={handleOnChangeText}
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}

@@ -1,6 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { View, Text } from "react-native";
 
 import { PrimaryButton } from "@/components/buttons";
 import { CustomTextField } from "@/components/input";
@@ -8,19 +6,10 @@ import { CustomTextField } from "@/components/input";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { type UserDataState } from "@/types/store/UserDataState";
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-import { type UserUID } from "@/types/UserUID";
+import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
-import { useFormValidation } from "@/hooks";
-
-import { setUserAuth } from "@/store/userData";
-
-import { updateUserData } from "@/utils/database";
-import { color, fontFamily } from "@/utils/constants";
-import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
-import { saveAuthData } from "@/utils/auth";
-import { UserAuth } from "@/models/UserAuth";
+import { color } from "@/utils/constants";
+import { formErrorStyles } from "@/utils/styles";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -35,15 +24,6 @@ function RegisterForm({
   setLoading,
   loading,
 }: RegisterFormProps) {
-  const userMetrics = useSelector(
-    (state: UserDataState) => state.userData.userMetrics
-  );
-  const userDrinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
-
-  const dispatch = useDispatch();
-  const auth = getAuth();
   const {
     validateForm,
     formState,
@@ -53,57 +33,21 @@ function RegisterForm({
     resetInputValidation,
   } = useFormValidation();
 
+  const { firebaseRegister } = useFirebaseAuth();
+
   const redirectToLogin = () => {
     setAccountSettingsState(AccountSettingsState.ShowLogin);
   };
 
   const handleOnRegister = async () => {
-    setLoading(true);
-
-    if (!validateForm(true)) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        formState.email,
-        formState.password
-      );
-
-      const user = userCredentials.user;
-      const userUID: UserUID = user.uid;
-
-      const authData: UserAuth = {
-        userName: formState.userName,
-        email: formState.email,
-        uid: userUID,
-        isLoggedIn: true,
-      };
-
-      saveAuthData(authData);
-      dispatch(setUserAuth(authData));
-
-      // TODO: show alert box here with successful register message
-
-      // Initialize user data in Firestore after successful registration
-      await updateUserData(userUID, {
-        userMetrics,
-        userDrinkHistory,
-        userAuth: {
-          userName: formState.userName,
-          email: formState.email,
-          uid: userUID,
-        },
-      });
-
-      resetFormState();
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
+    await firebaseRegister(
+      formState.email,
+      formState.password,
+      formState.userName,
+      resetFormState,
+      setLoading,
+      validateForm
+    );
   };
 
   return (
@@ -173,14 +117,4 @@ function RegisterForm({
 
 export { RegisterForm };
 
-const styles = StyleSheet.create({
-  errorWrapper: {
-    justifyContent: "center",
-    height: registerFormErrorFontSize * 1.5,
-  },
-  errorText: {
-    fontFamily: fontFamily.DEFAULT,
-    fontSize: registerFormErrorFontSize,
-    color: color.RED,
-  },
-});
+const styles = formErrorStyles;

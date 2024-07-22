@@ -155,7 +155,9 @@ const removeDrinkFromUserHistory = async (
   }
 
   const drinkHistory = userDoc.data()?.userDrinkHistory || [];
-  const drinkToRemove = drinkHistory.find((drink: any) => drink.id === drinkId);
+  const drinkToRemove = drinkHistory.find(
+    (drink: DrinkHistoryItem) => drink.id === drinkId
+  );
 
   if (drinkToRemove) {
     try {
@@ -195,15 +197,17 @@ const syncSavedChangesToDatabase = async (userId: string) => {
   const userDocRef = doc(firestore, "users", userId);
 
   if (drinksToAdd && drinksToAdd.length > 0) {
-    const updates: any = {};
-    updates.userDrinkHistory = arrayUnion(...drinksToAdd);
+    const updates = {
+      userDrinkHistory: arrayUnion(...drinksToAdd),
+    };
     await updateDoc(userDocRef, updates);
     await AsyncStorage.removeItem(LOCAL_DRINKS_TO_ADD_KEY);
   }
 
   if (drinksToRemove && drinksToRemove.length > 0) {
-    const updates: any = {};
-    updates.userDrinkHistory = arrayRemove(...drinksToRemove);
+    const updates = {
+      userDrinkHistory: arrayRemove(...drinksToRemove),
+    };
     await updateDoc(userDocRef, updates);
     await AsyncStorage.removeItem(LOCAL_DRINKS_TO_REMOVE_KEY);
   }

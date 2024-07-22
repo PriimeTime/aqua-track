@@ -6,3 +6,5 @@ export * from "./useTodaysDrinks";
 export * from "./usePeriodicRerender";
 export * from "./useDrinkManager";
 export * from "./useDataFromAsyncStorage";
+export * from "./useModal";
+export * from "./useFirebaseAuth";

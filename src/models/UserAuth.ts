@@ -5,4 +5,5 @@ export interface UserAuth {
   userName: string | null;
   email: string | null;
   uid: UserUID;
+  firstLogin?: boolean;
 }

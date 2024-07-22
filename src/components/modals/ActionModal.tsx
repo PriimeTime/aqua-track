@@ -1,6 +1,7 @@
 import { Modal, StyleSheet, View, Animated } from "react-native";
 import { BlurView } from "expo-blur";
 import { useRef, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { PrimaryText } from "@/components/texts";
 import { PrimaryButton } from "@/components/buttons";
@@ -11,6 +12,7 @@ import {
   actionModalRadius,
 } from "@/utils/constants/components";
 import { animatedScaleValue, springAnimation } from "@/utils/animations";
+import { setModalActive } from "@/store/modal";
 
 interface ActionModalProps {
   modalText: string;
@@ -20,18 +22,25 @@ interface ActionModalProps {
 function ActionModal({ modalText, hasDecision }: ActionModalProps) {
   const scaleValue = useRef(animatedScaleValue(0)).current;
 
+  const dispatch = useDispatch();
+
   const [modalVisible, setModalVisible] = useState(true);
   const [blurVisible, setBlurVisible] = useState(true);
 
   const onConfirm = window.modalHandlers?.onConfirm || (() => {});
   const onCancel = window.modalHandlers?.onCancel || (() => {});
 
+  const closeModal = () => {
+    setModalVisible(false);
+    dispatch(setModalActive(false));
+  };
+
   const handleOnConfirm = () => {
     const configObject = { toValue: 0 };
 
     setBlurVisible(false);
     springAnimation(scaleValue, configObject, () => {
-      setModalVisible(false);
+      closeModal();
       onConfirm();
     });
   };
@@ -41,7 +50,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
 
     setBlurVisible(false);
     springAnimation(scaleValue, configObject, () => {
-      setModalVisible(false);
+      closeModal();
       onCancel();
     });
   };

@@ -19,13 +19,24 @@ import {
 } from "@/utils/constants/components/buttons";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
-const getTextStyle = (fontSize?: number) => ({
+const getTextStyle = (flat = false, fontSize = primaryButtonFontSize) => ({
   ...styles.text,
-  fontSize: fontSize || primaryButtonFontSize,
+  ...(flat && { color: color.BLUE }),
+  fontSize,
 });
 
-const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
-  let bgColor = btnColor || (pressed ? color.DARK_BLUE : color.BLUE);
+const getButtonStyle = (
+  flat?: boolean,
+  pressed?: boolean,
+  btnColor?: ColorValue
+) => {
+  let bgColor;
+
+  if (flat) {
+    bgColor = color.TRANSPARENT;
+  } else {
+    bgColor = btnColor || (pressed ? color.DARK_BLUE : color.BLUE);
+  }
 
   return {
     ...styles.button,
@@ -34,28 +45,50 @@ const getButtonStyle = (pressed?: boolean, btnColor?: ColorValue) => {
   };
 };
 
-/**
- *
- * @param {*} custom - controls if text should be customized or not
- *
- * By default, custom == false and the style is defined meaning
- * you should use PrimaryButton wrapped around a string.
- *
- * If custom == true, you can use PrimaryButton wrapped around any component
- * that you could also use wrapped in a regular Button component.
- */
-
 type PrimaryButtonProps = {
   onPress: () => void;
   children: React.ReactNode;
   btnColor?: ColorValue;
   fontSize?: number;
   textStyle?: TextStyle;
+  flat?: boolean;
   custom?: boolean;
   isLoading?: boolean;
   customStyles?: StyleSheet.NamedStyles<unknown>;
 };
 
+/**
+ * PrimaryButton Component
+ *
+ * A customizable button component for React Native that supports custom styles,
+ * loading states, and haptic feedback on press. The button can be used with text
+ * or custom components as its children.
+ *
+ * @param {*} props.onPress - function to call when the button is pressed
+ * @param props.btnColor - background color of the button
+ * @param props.fontSize - font size of the button text. Defaults to primaryButtonFontSize
+ * @param props.textStyle - custom text styles to apply to the button text
+ * @param props.custom - controls if the button should render custom content -- if false, the button will render text content
+ * @param props.flat - controls if the button style should be flat
+ * @param props.isLoading - indicates if the button should show a loading indicator
+ * @param props.customStyles - custom styles to apply to the button wrapper
+ *
+ * @returns the rendered PrimaryButton component.
+ *
+ * @example
+ * Usage:
+ * <PrimaryButton
+ *   onPress={handlePress}
+ *   btnColor="#4CAF50"
+ *   fontSize={16}
+ *   textStyle={{ fontWeight: 'bold' }}
+ *   custom={false}
+ *   isLoading={false}
+ *   customStyles={{ marginVertical: 10 }}
+ * >
+ *   Click Me
+ * </PrimaryButton>
+ */
 function PrimaryButton({
   btnColor,
   onPress,
@@ -63,6 +96,7 @@ function PrimaryButton({
   children,
   textStyle,
   custom,
+  flat,
   isLoading,
   customStyles,
 }: PrimaryButtonProps) {
@@ -85,7 +119,7 @@ function PrimaryButton({
 
   const defaultContent = (
     <View style={styles.textWrapper}>
-      <Text style={[getTextStyle(fontSize), textStyle]}>{children}</Text>
+      <Text style={[getTextStyle(flat, fontSize), textStyle]}>{children}</Text>
     </View>
   );
 
@@ -116,7 +150,7 @@ function PrimaryButton({
       ]}
     >
       <Pressable
-        style={({ pressed }) => getButtonStyle(pressed, btnColor)}
+        style={({ pressed }) => getButtonStyle(flat, pressed, btnColor)}
         onPress={handlePress}
         onPressIn={handleOnPressIn}
         onPressOut={handleOnPressOut}

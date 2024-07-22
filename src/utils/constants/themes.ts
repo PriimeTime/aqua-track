@@ -6,6 +6,7 @@ import { ResponsiveSize } from "@/models/ResponsiveSize";
 import { SCREEN_SIZE } from "@/utils/constants/screensize";
 
 const color = {
+  TRANSPARENT: "transparent",
   WHITE: "#FFFFFF",
   LIGHTBLUE: "#8FC7FF",
   LIGHTBLUE_OPACITY_0_2: "rgba(143, 199, 255, 0.2)",
