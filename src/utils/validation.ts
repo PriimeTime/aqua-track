@@ -18,7 +18,7 @@ const hasPasswordLowerCaseChar = (password: string) => {
   return /[a-z]/.test(password);
 };
 
-const validateEmail = (isRegister: boolean, emailField: string) => {
+const validateEmail = (emailField: string) => {
   if (emailField.length === 0) {
     return {
       isValid: false,
@@ -26,14 +26,11 @@ const validateEmail = (isRegister: boolean, emailField: string) => {
     };
   }
 
-  // Only show this error message if user is registering
-  if (isRegister) {
-    if (!isEmailValid(emailField)) {
-      return {
-        isValid: false,
-        newErrors: "Invalid e-mail.",
-      };
-    }
+  if (!isEmailValid(emailField)) {
+    return {
+      isValid: false,
+      newErrors: "Invalid e-mail.",
+    };
   }
 
   return { isValid: true, newErrors: "" };

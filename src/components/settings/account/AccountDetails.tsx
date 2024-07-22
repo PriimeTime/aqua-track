@@ -20,14 +20,14 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
   return (
     <>
       <CustomTextField
-        customStyles={styles.textFiled}
+        customStyles={styles.textField}
         readOnly
         value={userAuth.userName ?? ""}
         fullWidth
         label="Username"
       ></CustomTextField>
       <CustomTextField
-        customStyles={styles.textFiled}
+        customStyles={styles.textField}
         readOnly
         value={userAuth.email ?? ""}
         fullWidth
@@ -43,7 +43,7 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
 export { AccountDetails };
 
 const styles = StyleSheet.create({
-  textFiled: {
+  textField: {
     marginBottom: "2.5%",
   },
 });

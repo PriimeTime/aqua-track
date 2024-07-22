@@ -43,6 +43,10 @@ function LoginForm({
     firebaseSignInWithApple();
   };
 
+  const redirectToForgotPassword = () => {
+    setAccountSettingsState(AccountSettingsState.ShowForgotPassword);
+  };
+
   const handleOnLogin = async () => {
     await firebaseLogin(
       formState.email,
@@ -79,6 +83,9 @@ function LoginForm({
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.password}</Text>
       </View>
+      <PrimaryButton flat onPress={redirectToForgotPassword}>
+        {"forgot password".toUpperCase()}
+      </PrimaryButton>
       <PrimaryButton isLoading={loading} onPress={handleOnLogin}>
         {"login".toUpperCase()}
       </PrimaryButton>

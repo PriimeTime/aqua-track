@@ -65,7 +65,7 @@ function useFormValidation() {
           }
           break;
         case "email":
-          const emailValidation = validateEmail(isRegister, formState.email);
+          const emailValidation = validateEmail(formState.email);
           if (!emailValidation.isValid) {
             newErrors.email = emailValidation.newErrors;
             isValid = false;

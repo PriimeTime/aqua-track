@@ -5,13 +5,17 @@ import { type UserDataState } from "@/types/store/UserDataState";
 
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { LoginForm, RegisterForm, AccountDetails } from "@/components/settings";
+import {
+  LoginForm,
+  RegisterForm,
+  AccountDetails,
+  ForgotPassword,
+} from "@/components/settings";
 import { ContentPage } from "@/components/wrappers";
 
 import { useResetStore } from "@/utils/store";
 
-import { useModal } from "@/hooks/useModal";
-import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
+import { useModal, useFirebaseAuth } from "@/hooks";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -49,6 +53,8 @@ function AccountSettings() {
           return "Login";
         case AccountSettingsState.ShowRegister:
           return "Register";
+        case AccountSettingsState.ShowForgotPassword:
+          return "Forgot Password";
         default:
           return "Account Settings";
       }
@@ -107,6 +113,12 @@ function AccountSettings() {
             setLoading={setLoading}
             loading={loading}
           ></RegisterForm>
+        );
+      case AccountSettingsState.ShowForgotPassword:
+        return (
+          <ForgotPassword
+            setAccountSettingsState={setAccountSettingsState}
+          ></ForgotPassword>
         );
       case AccountSettingsState.ShowAccount:
         return <AccountDetails onLogout={handleLogout}></AccountDetails>;

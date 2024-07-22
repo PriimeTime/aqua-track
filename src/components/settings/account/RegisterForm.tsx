@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, Text } from "react-native";
 
 import { PrimaryButton } from "@/components/buttons";
 import { CustomTextField } from "@/components/input";
@@ -6,11 +6,10 @@ import { CustomTextField } from "@/components/input";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
-import { useFormValidation } from "@/hooks";
+import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
-import { color, fontFamily } from "@/utils/constants";
-import { registerFormErrorFontSize } from "@/utils/constants/components/forms";
-import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
+import { color } from "@/utils/constants";
+import { formErrorStyles } from "@/utils/styles";
 
 interface RegisterFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -118,14 +117,4 @@ function RegisterForm({
 
 export { RegisterForm };
 
-const styles = StyleSheet.create({
-  errorWrapper: {
-    justifyContent: "center",
-    height: registerFormErrorFontSize * 1.5,
-  },
-  errorText: {
-    fontFamily: fontFamily.DEFAULT,
-    fontSize: registerFormErrorFontSize,
-    color: color.RED,
-  },
-});
+const styles = formErrorStyles;
