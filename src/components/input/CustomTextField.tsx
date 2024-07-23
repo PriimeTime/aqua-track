@@ -13,10 +13,7 @@ import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { SecondaryText } from "@/components/texts";
 
 import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
-import {
-  customTextFieldFontSize,
-  customTextFieldLabelFontSize,
-} from "@/utils/constants/components/input";
+import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 
 interface CustomTextFieldProps {
   value: string;
@@ -123,7 +120,7 @@ function CustomTextField({
     >
       <View style={styles.labelWrapper}>
         <SecondaryText
-          fontSize={customTextFieldLabelFontSize}
+          fontSize={paragraphMediumFontSize}
           color={readOnly ? color.BLUE : color.DARK_BLUE}
         >
           {label}
@@ -189,7 +186,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: fontFamily.DEFAULT,
     color: color.DARK_BLUE,
-    fontSize: customTextFieldFontSize,
+    fontSize: paragraphMediumFontSize,
   },
   textInputWrapper: {
     paddingRight: "2.5%",
@@ -202,6 +199,6 @@ const styles = StyleSheet.create({
     height: "100%",
     fontFamily: fontFamily.DEFAULT,
     color: color.DARK_BLUE,
-    fontSize: customTextFieldFontSize,
+    fontSize: paragraphMediumFontSize,
   },
 });

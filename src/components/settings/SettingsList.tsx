@@ -6,7 +6,6 @@ import { SettingsItem } from "@/components/settings/SettingsItem";
 import { GradientWrapper } from "@/components/wrappers";
 
 import { settingsList } from "@/utils/maps";
-import {} from "@/utils/constants";
 import {
   settingsListItemGap,
   settingsListMarginTop,
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   settingsListWrapper: {
-    marginTop: settingsListMarginTop,
     height: "80%",
     width: "90%",
     left: "5%",

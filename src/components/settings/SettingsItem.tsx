@@ -15,10 +15,8 @@ import {
   SCREEN_SIZE,
 } from "@/utils/constants";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-import {
-  settingsItemFontSize,
-  settingsItemRadius,
-} from "@/utils/constants/components/settings";
+import { settingsItemRadius } from "@/utils/constants/components/settings";
+import { paragraphLargeFontSize } from "@/utils/constants/components/typography";
 
 interface SettingsItemProps {
   title: string;
@@ -58,7 +56,9 @@ function SettingsItem({ title, imageSrc, routeName }: SettingsItemProps) {
           </View>
           <View style={styles.itemTitleWrapper}>
             <View style={{ width: "95%", left: 0 }}>
-              <PrimaryText fontSize={settingsItemFontSize}>{title}</PrimaryText>
+              <PrimaryText fontSize={paragraphLargeFontSize}>
+                {title}
+              </PrimaryText>
             </View>
           </View>
         </View>
