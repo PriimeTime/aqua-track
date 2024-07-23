@@ -1,14 +1,22 @@
 import {
+  FONT_SIZE_15,
+  FONT_SIZE_17,
   FONT_SIZE_20,
-  FONT_SIZE_24,
-  FONT_SIZE_60,
+  FONT_SIZE_22,
+  FONT_SIZE_48,
   SCREEN_SIZE,
 } from "@/utils/constants";
 
 const primaryButtonFontSizeObj = {
-  SMALL: FONT_SIZE_20,
-  MEDIUM: FONT_SIZE_24,
-  LARGE: FONT_SIZE_60,
+  SMALL: FONT_SIZE_17,
+  MEDIUM: FONT_SIZE_22,
+  LARGE: FONT_SIZE_48,
+};
+
+const modalPrimaryButtonFontSizeObj = {
+  SMALL: FONT_SIZE_15,
+  MEDIUM: FONT_SIZE_20,
+  LARGE: FONT_SIZE_48,
 };
 
 const primaryButtonRadiusObj = {
@@ -24,11 +32,13 @@ const primaryButtonWrapperHeightObj = {
 };
 
 const primaryButtonFontSize = primaryButtonFontSizeObj[SCREEN_SIZE];
+const modalPrimaryButtonFontSize = modalPrimaryButtonFontSizeObj[SCREEN_SIZE];
 const primaryButtonRadius = primaryButtonRadiusObj[SCREEN_SIZE];
 const primaryButtonWrapperHeight = primaryButtonWrapperHeightObj[SCREEN_SIZE];
 
 export {
   primaryButtonFontSize,
+  modalPrimaryButtonFontSize,
   primaryButtonRadius,
   primaryButtonWrapperHeight,
 };

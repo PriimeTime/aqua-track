@@ -2,8 +2,6 @@ import { View, StyleSheet } from "react-native";
 
 import { shadow, color } from "@/utils/constants";
 import {
-  drinkAmountBottleWidth,
-  drinkAmountBottleHeight,
   drinkAmountBorderWidth,
   drinkAmountRadius,
 } from "@/utils/constants/components/drinks";
@@ -32,9 +30,9 @@ export { DrinkAmountBottle };
 const styles = StyleSheet.create({
   glass: {
     ...shadow,
-    top: 10,
-    width: drinkAmountBottleWidth,
-    height: drinkAmountBottleHeight,
+    width: "60%",
+    maxWidth: 400,
+    height: "90%",
     borderColor: color.DARK_BLUE,
     borderBottomWidth: drinkAmountBorderWidth,
     borderLeftWidth: drinkAmountBorderWidth,

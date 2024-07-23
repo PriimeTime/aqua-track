@@ -8,10 +8,10 @@ import { GradientWrapper } from "@/components/wrappers";
 import { settingsList } from "@/utils/maps";
 import {} from "@/utils/constants";
 import {
-  settingsListFontSize,
   settingsListItemGap,
   settingsListMarginTop,
 } from "@/utils/constants/components/settings";
+import { headerFontSize } from "@/utils/constants/components/typography";
 
 function SettingsList() {
   return (
@@ -20,7 +20,7 @@ function SettingsList() {
         <BackButton></BackButton>
       </View>
       <View style={styles.headerWrapper}>
-        <PrimaryText fontSize={settingsListFontSize}>Settings</PrimaryText>
+        <PrimaryText fontSize={headerFontSize}>{"Settings"}</PrimaryText>
       </View>
       <View style={styles.settingsListWrapper}>
         <FlatList

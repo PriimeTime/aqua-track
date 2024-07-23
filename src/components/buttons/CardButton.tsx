@@ -15,10 +15,10 @@ import { color } from "@/utils/constants";
 import {
   cardButtonBorderRadius,
   cardButtonBorderWidth,
-  cardButtonFontSize,
 } from "@/utils/constants/components/buttons";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 import { drinkImageMap } from "@/utils/maps";
+import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 
 interface CardButtonProps {
   onPress: () => void;
@@ -63,7 +63,9 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
           <Image style={styles.cardImage} source={drinkImageMap[imageSrc]} />
         </View>
         <View style={styles.cardTextWrapper}>
-          <PrimaryText fontSize={cardButtonFontSize}>{children}</PrimaryText>
+          <PrimaryText fontSize={paragraphMediumFontSize}>
+            {children}
+          </PrimaryText>
         </View>
       </Pressable>
     </Animated.View>
@@ -85,6 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: color.WHITE,
     borderRadius: cardButtonBorderRadius,
     borderWidth: cardButtonBorderWidth,
+    width: "100%",
+    height: "100%",
   },
   cardTextWrapper: {
     width: "48%",
@@ -93,10 +97,13 @@ const styles = StyleSheet.create({
   },
   cardImageWrapper: {
     width: "48%",
+    height: "100%",
   },
   cardImage: {
-    width: "100%",
-    height: "100%",
+    top: "10%",
+    left: "10%",
+    width: "80%",
+    height: "80%",
     resizeMode: "contain",
   },
 });

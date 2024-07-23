@@ -13,10 +13,7 @@ import * as Haptics from "expo-haptics";
 import { drinkTypeList } from "@/utils/maps";
 import { inputDrinkConfig } from "@/utils/constants";
 import { animatedScaleValue } from "@/utils/animations";
-import {
-  drinkAmountFontSize,
-  drinkAmountSensitivity,
-} from "@/utils/constants/components/drinks";
+import { drinkAmountSensitivity } from "@/utils/constants/components/drinks";
 
 import { PrimaryButton, BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -28,6 +25,7 @@ import { DrinkItem } from "@/models/DrinkItem";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 import { useDrinkManager } from "@/hooks";
+import { headerFontSize } from "@/utils/constants/components/typography";
 
 /**
  * Debounce function to control
@@ -144,7 +142,7 @@ function DrinkAmount() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText fontSize={drinkAmountFontSize}>
+          <PrimaryText fontSize={headerFontSize}>
             How much {drinkTypeLabel}?
           </PrimaryText>
         </Animated.View>
@@ -156,9 +154,7 @@ function DrinkAmount() {
         ></DrinkAmountBottle>
       </View>
       <View style={styles.amountDrank}>
-        <PrimaryText fontSize={drinkAmountFontSize}>
-          {quantityValue} ml
-        </PrimaryText>
+        <PrimaryText fontSize={headerFontSize}>{quantityValue} ml</PrimaryText>
       </View>
       <View style={styles.buttonWrapper}>
         <PrimaryButton onPress={handleContinue}>
@@ -190,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   amountDrank: {
-    height: "10%",
+    height: "5%",
     width: "90%",
     left: "5%",
     justifyContent: "center",
@@ -199,7 +195,7 @@ const styles = StyleSheet.create({
   cupWrapper: {
     justifyContent: "center",
     alignItems: "center",
-    height: "55%",
+    height: "60%",
     width: "90%",
     left: "5%",
   },

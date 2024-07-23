@@ -1,16 +1,26 @@
 import {
+  FONT_SIZE_12,
   FONT_SIZE_13,
-  FONT_SIZE_16,
+  FONT_SIZE_17,
+  FONT_SIZE_20,
+  FONT_SIZE_24,
   FONT_SIZE_34,
   SCREEN_SIZE,
 } from "@/utils/constants";
 
-const paragraphFontSizeObj = {
-  SMALL: FONT_SIZE_13,
-  MEDIUM: FONT_SIZE_16,
+const paragraphSmallFontSizeObj = {
+  SMALL: FONT_SIZE_12,
+  MEDIUM: FONT_SIZE_13,
+  LARGE: FONT_SIZE_24,
+};
+
+const paragraphMediumFontSizeObj = {
+  SMALL: FONT_SIZE_17,
+  MEDIUM: FONT_SIZE_20,
   LARGE: FONT_SIZE_34,
 };
 
-const paragraphFontSize = paragraphFontSizeObj[SCREEN_SIZE];
+const paragraphSmallFontSize = paragraphSmallFontSizeObj[SCREEN_SIZE];
+const paragraphMediumFontSize = paragraphMediumFontSizeObj[SCREEN_SIZE];
 
-export { paragraphFontSize };
+export { paragraphSmallFontSize, paragraphMediumFontSize };

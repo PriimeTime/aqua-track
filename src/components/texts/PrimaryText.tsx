@@ -36,7 +36,7 @@ function PrimaryText({
 }: PrimaryTextProps) {
   return (
     <Text
-      numberOfLines={numberOfLines ?? 1}
+      numberOfLines={numberOfLines ?? undefined}
       style={getTextStyle(fontSize, color)}
     >
       {children}

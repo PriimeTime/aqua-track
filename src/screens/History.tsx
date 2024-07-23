@@ -13,6 +13,8 @@ import { historyItemGap } from "@/utils/constants/components/history";
 import { ONE_MIN } from "@/utils/constants";
 
 import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
+import { PrimaryText } from "@/components/texts";
+import { headerFontSize } from "@/utils/constants/components/typography";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -32,7 +34,7 @@ function History() {
         ></SettingsButton>
       </View>
       <View style={styles.tabsWrapper}>
-        {/* TODO <Text>placeholder tab bar for history</Text> */}
+        <PrimaryText fontSize={headerFontSize}>{"History"}</PrimaryText>
       </View>
       <View style={styles.listWrapper}>
         <FlatList
@@ -88,6 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tabsWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
     height: "10%",
   },
   listWrapper: {

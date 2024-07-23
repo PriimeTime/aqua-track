@@ -16,7 +16,7 @@ import {
   primaryButtonFontSize,
   primaryButtonRadius,
   primaryButtonWrapperHeight,
-} from "@/utils/constants/components/buttons";
+} from "@/utils/constants/components/typography/button";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
 const getTextStyle = (flat = false, fontSize = primaryButtonFontSize) => ({
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
     color: color.WHITE,
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     width: "100%",
     height: "75%",
     ...shadow,
