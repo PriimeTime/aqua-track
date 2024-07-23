@@ -59,7 +59,7 @@ const settingsList = [
   },
   {
     id: "5",
-    title: "Theme",
+    title: "Themes",
     imageSrc: "theme",
     routeName: SettingsRouteName.ThemeSettings,
   },

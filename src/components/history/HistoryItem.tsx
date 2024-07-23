@@ -23,8 +23,6 @@ import {
   infoCardTotalAmountHeight,
   infoCardTotalAmountWidth,
   infoCardTotalAmountRadius,
-  historyItemPrimaryTextFontSize,
-  historyItemSecondaryTextFontSize,
   historyItemBorderRadius,
   infoCardSizeTotalFontSize,
 } from "@/utils/constants/components/history";
@@ -33,6 +31,10 @@ import {
   metricUnitConversion,
 } from "@/utils/helpers";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import {
+  paragraphLargeFontSize,
+  paragraphMediumFontSize,
+} from "@/utils/constants/components/typography";
 
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;
@@ -52,10 +54,8 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
         ></Image>
       </View>
       <View style={styles.cardInfoWrapper}>
-        <PrimaryText fontSize={historyItemPrimaryTextFontSize}>
-          {title}
-        </PrimaryText>
-        <SecondaryText fontSize={historyItemSecondaryTextFontSize}>
+        <PrimaryText fontSize={paragraphLargeFontSize}>{title}</PrimaryText>
+        <SecondaryText fontSize={paragraphMediumFontSize}>
           {getHoursMinutesFromUnixDate(date)}
         </SecondaryText>
       </View>

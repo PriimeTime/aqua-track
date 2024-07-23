@@ -6,7 +6,6 @@ import {
   FONT_SIZE_22,
   FONT_SIZE_24,
   FONT_SIZE_28,
-  FONT_SIZE_48,
   SCREEN_SIZE,
 } from "@/utils/constants";
 
@@ -64,18 +63,6 @@ const infoCardTotalAmountRadiusObj = {
   LARGE: 12.5,
 };
 
-const historyItemPrimaryTextFontSizeObj = {
-  SMALL: FONT_SIZE_22,
-  MEDIUM: FONT_SIZE_24,
-  LARGE: FONT_SIZE_48,
-};
-
-const historyItemSecondaryTextFontSizeObj = {
-  SMALL: FONT_SIZE_16,
-  MEDIUM: FONT_SIZE_17,
-  LARGE: FONT_SIZE_28,
-};
-
 const infoCardSizeTotalFontSizeObj = {
   SMALL: FONT_SIZE_16,
   MEDIUM: FONT_SIZE_20,
@@ -91,10 +78,6 @@ const infoCardTotalAmountFontSize = infoCardTotalAmountFontSizeObj[SCREEN_SIZE];
 const infoCardTotalAmountWidth = infoCardTotalAmountWidthObj[SCREEN_SIZE];
 const infoCardTotalAmountHeight = infoCardTotalAmountHeightObj[SCREEN_SIZE];
 const infoCardTotalAmountRadius = infoCardTotalAmountRadiusObj[SCREEN_SIZE];
-const historyItemPrimaryTextFontSize =
-  historyItemPrimaryTextFontSizeObj[SCREEN_SIZE];
-const historyItemSecondaryTextFontSize =
-  historyItemSecondaryTextFontSizeObj[SCREEN_SIZE];
 const historyItemBorderRadius = historyItemBorderRadiusObj[SCREEN_SIZE];
 const infoCardSizeTotalFontSize = infoCardSizeTotalFontSizeObj[SCREEN_SIZE];
 
@@ -107,8 +90,6 @@ export {
   infoCardTotalAmountWidth,
   infoCardTotalAmountHeight,
   infoCardTotalAmountRadius,
-  historyItemPrimaryTextFontSize,
-  historyItemSecondaryTextFontSize,
   historyItemBorderRadius,
   infoCardSizeTotalFontSize,
 };

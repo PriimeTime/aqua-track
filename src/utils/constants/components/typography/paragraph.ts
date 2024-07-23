@@ -5,6 +5,7 @@ import {
   FONT_SIZE_20,
   FONT_SIZE_24,
   FONT_SIZE_34,
+  FONT_SIZE_40,
   SCREEN_SIZE,
 } from "@/utils/constants";
 
@@ -23,7 +24,7 @@ const paragraphMediumFontSizeObj = {
 const paragraphLargeFontSizeObj = {
   SMALL: FONT_SIZE_20,
   MEDIUM: FONT_SIZE_24,
-  LARGE: FONT_SIZE_34,
+  LARGE: FONT_SIZE_40,
 };
 
 const paragraphSmallFontSize = paragraphSmallFontSizeObj[SCREEN_SIZE];
