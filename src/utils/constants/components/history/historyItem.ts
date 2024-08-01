@@ -9,12 +9,6 @@ import {
   SCREEN_SIZE,
 } from "@/utils/constants";
 
-const historyItemBorderRadiusObj = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 25,
-};
-
 const infoCardCurrentAmountHeightObj = {
   SMALL: 30,
   MEDIUM: 40,
@@ -78,7 +72,6 @@ const infoCardTotalAmountFontSize = infoCardTotalAmountFontSizeObj[SCREEN_SIZE];
 const infoCardTotalAmountWidth = infoCardTotalAmountWidthObj[SCREEN_SIZE];
 const infoCardTotalAmountHeight = infoCardTotalAmountHeightObj[SCREEN_SIZE];
 const infoCardTotalAmountRadius = infoCardTotalAmountRadiusObj[SCREEN_SIZE];
-const historyItemBorderRadius = historyItemBorderRadiusObj[SCREEN_SIZE];
 const infoCardSizeTotalFontSize = infoCardSizeTotalFontSizeObj[SCREEN_SIZE];
 
 export {
@@ -90,6 +83,5 @@ export {
   infoCardTotalAmountWidth,
   infoCardTotalAmountHeight,
   infoCardTotalAmountRadius,
-  historyItemBorderRadius,
   infoCardSizeTotalFontSize,
 };

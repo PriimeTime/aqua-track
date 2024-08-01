@@ -1,18 +1,11 @@
 import { SCREEN_SIZE } from "@/utils/constants";
 
-const cardButtonBorderRadiusObj = {
-  SMALL: 24,
-  MEDIUM: 24,
+const cardBorderRadiusObj = {
+  SMALL: 20,
+  MEDIUM: 20,
   LARGE: 48,
 };
 
-const cardButtonBorderWidthObj = {
-  SMALL: 1,
-  MEDIUM: 1.5,
-  LARGE: 3,
-};
+const cardBorderRadius = cardBorderRadiusObj[SCREEN_SIZE];
 
-const cardButtonBorderRadius = cardButtonBorderRadiusObj[SCREEN_SIZE];
-const cardButtonBorderWidth = cardButtonBorderWidthObj[SCREEN_SIZE];
-
-export { cardButtonBorderRadius, cardButtonBorderWidth };
+export { cardBorderRadius };

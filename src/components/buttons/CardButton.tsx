@@ -11,11 +11,8 @@ import { useRef } from "react";
 
 import { PrimaryText } from "@/components/texts";
 
-import { color } from "@/utils/constants";
-import {
-  cardButtonBorderRadius,
-  cardButtonBorderWidth,
-} from "@/utils/constants/components/buttons";
+import { cardBorderWidth, color } from "@/utils/constants";
+import { cardBorderRadius } from "@/utils/constants/components/buttons";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 import { drinkImageMap } from "@/utils/maps";
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
@@ -83,10 +80,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    borderColor: color.DARK_BLUE,
+    borderColor: color.LIGHTBLUE,
     backgroundColor: color.WHITE,
-    borderRadius: cardButtonBorderRadius,
-    borderWidth: cardButtonBorderWidth,
+    borderRadius: cardBorderRadius,
+    borderWidth: cardBorderWidth,
     width: "100%",
     height: "100%",
   },

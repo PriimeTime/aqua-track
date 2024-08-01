@@ -16,6 +16,8 @@ import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 import { PrimaryText } from "@/components/texts";
 import { headerFontSize } from "@/utils/constants/components/typography";
 
+const rowsOfListItemsOnScreen = 4;
+
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const drinkHistory = useTodaysDrinks();
@@ -53,7 +55,7 @@ function History() {
             <View
               style={[
                 {
-                  height: flatListHeight * 0.25,
+                  height: flatListHeight * (1 / rowsOfListItemsOnScreen),
                 },
               ]}
             >
@@ -63,11 +65,6 @@ function History() {
               ></HistoryItem>
             </View>
           )}
-          // getItemLayout={(_, index) => ({
-          //   length: listItemHeight[SCREEN_SIZE],
-          //   offset: listItemHeight[SCREEN_SIZE] * index,
-          //   index,
-          // })}
         ></FlatList>
       </View>
       <View style={styles.bottomWrapper}>

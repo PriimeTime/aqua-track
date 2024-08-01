@@ -8,15 +8,10 @@ import { PrimaryText } from "@/components/texts";
 import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
 
 import { settingsImageMap } from "@/utils/maps";
-import {
-  color,
-  listItemHeight,
-  cardBorderWidth,
-  SCREEN_SIZE,
-} from "@/utils/constants";
+import { color, cardBorderWidth } from "@/utils/constants";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-import { settingsItemRadius } from "@/utils/constants/components/settings";
 import { paragraphLargeFontSize } from "@/utils/constants/components/typography";
+import { cardBorderRadius } from "@/utils/constants/components/buttons";
 
 interface SettingsItemProps {
   title: string;
@@ -71,13 +66,13 @@ export { SettingsItem };
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: listItemHeight[SCREEN_SIZE] * 0.75,
+    height: "95%",
     width: "100%",
     flexDirection: "row",
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
-    borderRadius: settingsItemRadius,
-    borderWidth: cardBorderWidth[SCREEN_SIZE],
+    borderRadius: cardBorderRadius,
+    borderWidth: cardBorderWidth,
   },
   itemIconWrapper: {
     width: "20%",

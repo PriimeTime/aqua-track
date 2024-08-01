@@ -88,7 +88,13 @@ function MainAppScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1, paddingTop: insets.top }}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top,
+        marginBottom: insets.bottom / 2,
+      }}
+    >
       {modal.visible && (
         <ActionModal
           modalText={modal.modalContent.modalText}

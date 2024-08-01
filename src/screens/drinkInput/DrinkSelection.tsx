@@ -18,7 +18,9 @@ import { DrinkItem } from "@/models/DrinkItem";
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 
 const numColumns = 2;
+const rowsOfListItemsOnScreen = 5;
 const spacing = 16;
+
 const itemWidth = (screenWidth - spacing * (numColumns + 1)) / numColumns;
 
 function DrinkSelection() {
@@ -62,7 +64,8 @@ function DrinkSelection() {
               style={[
                 styles.cardContainer,
                 {
-                  height: flatListHeight * 0.2 - spacing,
+                  height:
+                    flatListHeight * (1 / rowsOfListItemsOnScreen) - spacing,
                   width: itemWidth,
                 },
               ]}

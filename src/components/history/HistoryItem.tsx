@@ -7,12 +7,7 @@ import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
 
 import { drinkImageMap } from "@/utils/maps";
-import {
-  color,
-  cardBorderWidth,
-  SCREEN_SIZE,
-  fontFamily,
-} from "@/utils/constants";
+import { color, cardBorderWidth, fontFamily } from "@/utils/constants";
 import {
   infoCardCurrentAmountHeight,
   infoCardCurrentAmountWidth,
@@ -22,7 +17,6 @@ import {
   infoCardTotalAmountHeight,
   infoCardTotalAmountWidth,
   infoCardTotalAmountRadius,
-  historyItemBorderRadius,
   infoCardSizeTotalFontSize,
 } from "@/utils/constants/components/history";
 import {
@@ -34,6 +28,7 @@ import {
   paragraphLargeFontSize,
   paragraphMediumFontSize,
 } from "@/utils/constants/components/typography";
+import { cardBorderRadius } from "@/utils/constants/components/buttons";
 
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;
@@ -95,8 +90,8 @@ const styles = StyleSheet.create({
   cardWrapper: {
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
-    borderRadius: historyItemBorderRadius,
-    borderWidth: cardBorderWidth[SCREEN_SIZE],
+    borderRadius: cardBorderRadius,
+    borderWidth: cardBorderWidth,
     height: "90%",
     width: "100%",
     flexDirection: "row",

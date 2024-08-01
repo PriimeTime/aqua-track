@@ -11,13 +11,6 @@ const settingsItemFontSizeObj = {
   LARGE: FONT_SIZE_48,
 };
 
-const settingsItemRadiusObj = {
-  SMALL: 15,
-  MEDIUM: 20,
-  LARGE: 25,
-};
-
 const settingsItemFontSize = settingsItemFontSizeObj[SCREEN_SIZE];
-const settingsItemRadius = settingsItemRadiusObj[SCREEN_SIZE];
 
-export { settingsItemFontSize, settingsItemRadius };
+export { settingsItemFontSize };
