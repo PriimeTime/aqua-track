@@ -1,5 +1,4 @@
-import { StyleSheet, View, FlatList } from "react-native";
-import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -8,12 +7,9 @@ import { GradientWrapper } from "@/components/wrappers";
 
 import { settingsList } from "@/utils/maps";
 import { headerFontSize } from "@/utils/constants/components/typography";
-
-const rowsOfListItemsOnScreen = 8;
+import { CustomFlatList } from "@/components/lists";
 
 function SettingsList() {
-  const [flatListHeight, setFlatListHeight] = useState(0);
-
   return (
     <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButtonWrapper}>
@@ -22,32 +18,18 @@ function SettingsList() {
       <View style={styles.headerWrapper}>
         <PrimaryText fontSize={headerFontSize}>{"Settings"}</PrimaryText>
       </View>
-      <View
-        style={styles.settingsListWrapper}
-        onLayout={(event) => {
-          const { height } = event.nativeEvent.layout;
-          setFlatListHeight(height);
-        }}
-      >
-        <FlatList
-          alwaysBounceVertical={false}
-          showsVerticalScrollIndicator={false}
-          data={settingsList}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                height: flatListHeight * (1 / rowsOfListItemsOnScreen),
-              }}
-            >
-              <SettingsItem
-                imageSrc={item.imageSrc}
-                title={item.title}
-                routeName={item.routeName}
-              />
-            </View>
-          )}
-        />
-      </View>
+      <CustomFlatList
+        data={settingsList}
+        rowsOfListItemsOnScreen={8}
+        wrapperStyles={styles.settingsListWrapper}
+        renderItem={({ item }) => (
+          <SettingsItem
+            imageSrc={item.imageSrc}
+            title={item.title}
+            routeName={item.routeName}
+          />
+        )}
+      ></CustomFlatList>
     </GradientWrapper>
   );
 }

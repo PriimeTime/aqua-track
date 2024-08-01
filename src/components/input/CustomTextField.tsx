@@ -37,18 +37,18 @@ interface CustomTextFieldProps {
  * labels, and additional appended text. This component can handle input changes, focus, and
  * blur events, and can be styled according to the provided custom styles.
  *
- * @param {*} props.value - value of the text input
- * @param props.handleOnChangeText - function to call when the text input value changes
- * @param props.handleOnBlur - function to call when the text input loses focus
- * @param props.handleOnFocus - function to call when the text input gains focus
- * @param props.label - label text to display above the text input
- * @param props.placeholder - placeholder text to display inside the textfield
- * @param props.customStyles - custom styles to apply to the text field wrapper
- * @param props.readOnly - indicates if the text input should be read-only
- * @param props.inputType - type of the text input (e.g., number, email, password)
- * @param props.maxLength - maximum length of the text input
- * @param props.append - additional text to display at the end of the text input
- * @param props.fullWidth - indicates if the text input should take the full width of its container
+ * @param {*} value - value of the text input
+ * @param handleOnChangeText - function to call when the text input value changes
+ * @param handleOnBlur - function to call when the text input loses focus
+ * @param handleOnFocus - function to call when the text input gains focus
+ * @param label - label text to display above the text input
+ * @param placeholder - placeholder text to display inside the textfield
+ * @param customStyles - custom styles to apply to the text field wrapper
+ * @param readOnly - indicates if the text input should be read-only
+ * @param inputType - type of the text input (e.g., number, email, password)
+ * @param maxLength - maximum length of the text input
+ * @param append - additional text to display at the end of the text input
+ * @param fullWidth - indicates if the text input should take the full width of its container
  *
  * @returns the rendered CustomTextField component.
  *

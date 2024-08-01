@@ -1,28 +1,24 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useState } from "react";
 
 import { SettingsButton } from "@/components/buttons";
 import { HistoryItem, HistoryBottom } from "@/components/history";
 import { GradientWrapper } from "@/components/wrappers";
+import { PrimaryText } from "@/components/texts";
+import { CustomFlatList } from "@/components/lists";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
 import { ONE_MIN } from "@/utils/constants";
-
-import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
-import { PrimaryText } from "@/components/texts";
 import { headerFontSize } from "@/utils/constants/components/typography";
 
-const rowsOfListItemsOnScreen = 4;
+import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const drinkHistory = useTodaysDrinks();
-
-  const [flatListHeight, setFlatListHeight] = useState(0);
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
 
@@ -40,33 +36,17 @@ function History() {
       <View style={styles.tabsWrapper}>
         <PrimaryText fontSize={headerFontSize}>{"History"}</PrimaryText>
       </View>
-      <View
-        style={styles.listWrapper}
-        onLayout={(event) => {
-          const { height } = event.nativeEvent.layout;
-          setFlatListHeight(height);
-        }}
-      >
-        <FlatList
-          alwaysBounceVertical={false}
-          showsVerticalScrollIndicator={false}
-          data={drinkHistory}
-          renderItem={({ item }) => (
-            <View
-              style={[
-                {
-                  height: flatListHeight * (1 / rowsOfListItemsOnScreen),
-                },
-              ]}
-            >
-              <HistoryItem
-                item={item}
-                // hydrationQuantity={item.hydrationQuantity}
-              ></HistoryItem>
-            </View>
-          )}
-        ></FlatList>
-      </View>
+      <CustomFlatList
+        data={drinkHistory}
+        rowsOfListItemsOnScreen={4}
+        wrapperStyles={styles.listWrapper}
+        renderItem={({ item }) => (
+          <HistoryItem
+            item={item}
+            // hydrationQuantity={item.hydrationQuantity}
+          ></HistoryItem>
+        )}
+      ></CustomFlatList>
       <View style={styles.bottomWrapper}>
         <HistoryBottom
           totalDrinkQuantityToday={totalDrinkQuantityToday}
