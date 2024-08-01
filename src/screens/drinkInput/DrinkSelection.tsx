@@ -10,13 +10,16 @@ import { GradientWrapper } from "@/components/wrappers";
 import { drinkTypeList } from "@/utils/maps";
 import { animatedScaleValue } from "@/utils/animations";
 import { numToString } from "@/utils/helpers";
+import { headerFontSize } from "@/utils/constants/components/typography";
+import { screenWidth } from "@/utils/constants";
 
 import { DrinkItem } from "@/models/DrinkItem";
+
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
-import { headerFontSize } from "@/utils/constants/components/typography";
 
 const numColumns = 2;
-const spacing = 16; // Adjust as needed
+const spacing = 16;
+const itemWidth = (screenWidth - spacing * (numColumns + 1)) / numColumns;
 
 function DrinkSelection() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -52,9 +55,7 @@ function DrinkSelection() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.flatListContent}
           numColumns={numColumns}
-          columnWrapperStyle={{
-            justifyContent: "space-between",
-          }}
+          columnWrapperStyle={styles.columnWrapper}
           data={drinkTypeList}
           renderItem={({ item }) => (
             <View
@@ -62,6 +63,7 @@ function DrinkSelection() {
                 styles.cardContainer,
                 {
                   height: flatListHeight * 0.2 - spacing,
+                  width: itemWidth,
                 },
               ]}
             >
@@ -110,8 +112,11 @@ const styles = StyleSheet.create({
   flatListContent: {
     paddingHorizontal: spacing / 2,
   },
+  columnWrapper: {
+    justifyContent: "space-between",
+    paddingHorizontal: spacing / 2,
+  },
   cardContainer: {
-    flex: 1,
     margin: spacing / 2,
   },
   cardButton: {
