@@ -2,9 +2,9 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 
 import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
+import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 
 import { SecondaryText } from "@/components/texts";
-import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 
 interface CustomSelectBoxItem {
   id: number;

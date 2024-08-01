@@ -9,11 +9,12 @@ import { PrimaryButton } from "@/components/buttons";
 import { color, shadow } from "@/utils/constants";
 import { actionModalRadius } from "@/utils/constants/components";
 import { animatedScaleValue, springAnimation } from "@/utils/animations";
-import { setModalActive } from "@/store/modal";
 import {
   modalPrimaryButtonFontSize,
   paragraphMediumFontSize,
 } from "@/utils/constants/components/typography";
+
+import { setModalActive } from "@/store/modal";
 
 interface ActionModalProps {
   modalText: string;

@@ -4,10 +4,10 @@ import { BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { GradientWrapper } from "@/components/wrappers";
+import { CustomFlatList } from "@/components/lists";
 
 import { settingsList } from "@/utils/maps";
 import { headerFontSize } from "@/utils/constants/components/typography";
-import { CustomFlatList } from "@/components/lists";
 
 function SettingsList() {
   return (

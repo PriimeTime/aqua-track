@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { FlatList, StyleProp, View, ViewStyle } from "react-native";
 
-interface CustomFlatListProps {
-  data: any[];
+interface CustomFlatListProps<T> {
+  data: T[];
   rowsOfListItemsOnScreen: number;
   wrapperStyles: StyleProp<ViewStyle>;
-  renderItem: (item: any) => JSX.Element;
+  renderItem: ({ item }: { item: T }) => JSX.Element;
   listItemStyles?: StyleProp<ViewStyle>;
   columnWrapperStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
@@ -49,7 +49,7 @@ interface CustomFlatListProps {
  * ></CustomFlatList>
  */
 
-function CustomFlatList({
+function CustomFlatList<T>({
   data,
   rowsOfListItemsOnScreen,
   wrapperStyles,
@@ -59,7 +59,7 @@ function CustomFlatList({
   contentContainerStyle,
   numColumns = 1,
   verticalSpacingOffset = 0,
-}: CustomFlatListProps) {
+}: CustomFlatListProps<T>) {
   const [flatListHeight, setFlatListHeight] = useState(0);
 
   return (

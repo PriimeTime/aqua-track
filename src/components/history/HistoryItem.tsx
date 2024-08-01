@@ -4,6 +4,8 @@ import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
 import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+
 import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
 
 import { drinkImageMap } from "@/utils/maps";
@@ -23,12 +25,11 @@ import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
 } from "@/utils/helpers";
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { cardBorderRadius } from "@/utils/constants/components/buttons";
 import {
   paragraphLargeFontSize,
   paragraphMediumFontSize,
 } from "@/utils/constants/components/typography";
-import { cardBorderRadius } from "@/utils/constants/components/buttons";
 
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;

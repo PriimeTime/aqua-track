@@ -14,6 +14,7 @@ import { drinkTypeList } from "@/utils/maps";
 import { inputDrinkConfig } from "@/utils/constants";
 import { animatedScaleValue } from "@/utils/animations";
 import { drinkAmountSensitivity } from "@/utils/constants/components/drinks";
+import { headerFontSize } from "@/utils/constants/components/typography";
 
 import { PrimaryButton, BackButton } from "@/components/buttons";
 import { PrimaryText } from "@/components/texts";
@@ -24,8 +25,8 @@ import { DrinkAmountBottle } from "@/screens/drinkInput/DrinkAmountBottle";
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
+
 import { useDrinkManager } from "@/hooks";
-import { headerFontSize } from "@/utils/constants/components/typography";
 
 /**
  * Debounce function to control
