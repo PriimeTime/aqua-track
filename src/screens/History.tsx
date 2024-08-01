@@ -1,6 +1,7 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useState } from "react";
 
 import { SettingsButton } from "@/components/buttons";
 import { HistoryItem, HistoryBottom } from "@/components/history";
@@ -9,7 +10,6 @@ import { GradientWrapper } from "@/components/wrappers";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
-import { historyItemGap } from "@/utils/constants/components/history";
 import { ONE_MIN } from "@/utils/constants";
 
 import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
@@ -19,6 +19,8 @@ import { headerFontSize } from "@/utils/constants/components/typography";
 function History() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const drinkHistory = useTodaysDrinks();
+
+  const [flatListHeight, setFlatListHeight] = useState(0);
 
   const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
 
@@ -36,28 +38,36 @@ function History() {
       <View style={styles.tabsWrapper}>
         <PrimaryText fontSize={headerFontSize}>{"History"}</PrimaryText>
       </View>
-      <View style={styles.listWrapper}>
+      <View
+        style={styles.listWrapper}
+        onLayout={(event) => {
+          const { height } = event.nativeEvent.layout;
+          setFlatListHeight(height);
+        }}
+      >
         <FlatList
           alwaysBounceVertical={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: historyItemGap }}
           data={drinkHistory}
           renderItem={({ item }) => (
-            <HistoryItem
-              item={item}
-              // hydrationQuantity={item.hydrationQuantity}
-            ></HistoryItem>
+            <View
+              style={[
+                {
+                  height: flatListHeight * 0.25,
+                },
+              ]}
+            >
+              <HistoryItem
+                item={item}
+                // hydrationQuantity={item.hydrationQuantity}
+              ></HistoryItem>
+            </View>
           )}
           // getItemLayout={(_, index) => ({
           //   length: listItemHeight[SCREEN_SIZE],
           //   offset: listItemHeight[SCREEN_SIZE] * index,
           //   index,
           // })}
-          /* Below line is needed to create
-            an artificial gap between the
-            HistoryBottom component and the
-            bottom of the FlatList */
-          ListFooterComponent={<View />}
         ></FlatList>
       </View>
       <View style={styles.bottomWrapper}>
@@ -98,8 +108,13 @@ const styles = StyleSheet.create({
     width: "90%",
     left: "5%",
     height: "55%",
+    bottom: "25%",
+    position: "absolute",
   },
   bottomWrapper: {
+    position: "absolute",
+    width: "100%",
     height: "25%",
+    bottom: 0,
   },
 });

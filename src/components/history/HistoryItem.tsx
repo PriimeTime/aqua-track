@@ -9,7 +9,6 @@ import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
 import { drinkImageMap } from "@/utils/maps";
 import {
   color,
-  listItemHeight,
   cardBorderWidth,
   SCREEN_SIZE,
   fontFamily,
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
     borderColor: color.LIGHTBLUE,
     borderRadius: historyItemBorderRadius,
     borderWidth: cardBorderWidth[SCREEN_SIZE],
-    height: listItemHeight[SCREEN_SIZE],
+    height: "90%",
     width: "100%",
     flexDirection: "row",
   },
