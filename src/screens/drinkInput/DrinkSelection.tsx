@@ -1,27 +1,26 @@
-import { View, StyleSheet, Animated, FlatList } from "react-native";
 import { useRef } from "react";
+import { View, StyleSheet, Animated } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { PrimaryText } from "@/components/texts";
 import { CardButton, BackButton } from "@/components/buttons";
 import { GradientWrapper } from "@/components/wrappers";
+import { CustomFlatList } from "@/components/lists";
 
 import { drinkTypeList } from "@/utils/maps";
-import { dimensions, SCREEN_SIZE } from "@/utils/constants";
-import { drinkAmountFontSize } from "@/utils/constants/components/drinks";
 import { animatedScaleValue } from "@/utils/animations";
-import { numToString } from "@/utils/helpers";
+import { headerFontSize } from "@/utils/constants/components/typography";
+import { screenWidth } from "@/utils/constants";
 
 import { DrinkItem } from "@/models/DrinkItem";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
-import { ScreenSize } from "@/enums/maps/ScreenSize";
 
-const cardButtonHeight =
-  SCREEN_SIZE === ScreenSize.Large
-    ? dimensions.CARD_BUTTON_HEIGHT_TABLET
-    : dimensions.CARD_BUTTON_HEIGHT_PHONE;
+const numColumns = 2; // Number of columns for the flatlist
+const spacing = 16; // Spacing for the flatlist items in pixels
+
+const itemWidth = (screenWidth - spacing * (numColumns + 1)) / numColumns;
 
 function DrinkSelection() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -35,45 +34,34 @@ function DrinkSelection() {
   return (
     <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButton}>
-        <BackButton></BackButton>
+        <BackButton />
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText fontSize={drinkAmountFontSize}>
-            What did you drink?
+          <PrimaryText fontSize={headerFontSize}>
+            {"What did you drink?"}
           </PrimaryText>
         </Animated.View>
       </View>
-      <FlatList
-        alwaysBounceVertical={false}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        style={styles.drinkTypeSelectionWrapper}
+      <CustomFlatList
         data={drinkTypeList}
+        rowsOfListItemsOnScreen={5}
+        wrapperStyles={styles.flatListWrapper}
+        listItemStyles={{ width: itemWidth, marginVertical: spacing / 2 }}
+        verticalSpacingOffset={spacing}
+        columnWrapperStyle={styles.columnWrapper}
+        contentContainerStyle={styles.flatListContent}
+        numColumns={numColumns}
         renderItem={({ item }) => (
           <CardButton
-            style={{
-              width: "46%",
-              margin: "2%",
-              height: cardButtonHeight,
-            }}
+            style={styles.cardButton}
             imageSrc={item.imageSrc}
             onPress={() => handleButtonPress(item)}
           >
             {item.label}
           </CardButton>
         )}
-        keyExtractor={(item) => numToString(item.typeID)}
-        // getItemLayout={(_, index) => ({
-        //   length: cardButtonHeight,
-        //   offset: cardButtonHeight * index,
-        //   index,
-        // })}
-        /* Below line is needed to create
-            an artificial gap to the bottom
-            of the screen */
-        ListFooterComponent={<View />}
-      ></FlatList>
+      ></CustomFlatList>
     </GradientWrapper>
   );
 }
@@ -94,13 +82,25 @@ const styles = StyleSheet.create({
   header: {
     width: "90%",
     left: "5%",
-    height: "10%",
+    height: "12.5%",
     justifyContent: "center",
     alignItems: "center",
   },
-  drinkTypeSelectionWrapper: {
-    width: "90%",
-    left: "5%",
-    height: "80%",
+  flatListWrapper: {
+    height: "75%",
+    bottom: "2.5%",
+    width: "100%",
+    position: "absolute",
+  },
+  flatListContent: {
+    paddingHorizontal: spacing / 2,
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
+    paddingHorizontal: spacing / 2,
+  },
+  cardButton: {
+    width: "100%",
+    height: "100%",
   },
 });

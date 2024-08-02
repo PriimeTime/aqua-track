@@ -16,7 +16,7 @@ import {
   primaryButtonFontSize,
   primaryButtonRadius,
   primaryButtonWrapperHeight,
-} from "@/utils/constants/components/buttons";
+} from "@/utils/constants/components/typography/button";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
 const getTextStyle = (flat = false, fontSize = primaryButtonFontSize) => ({
@@ -45,7 +45,7 @@ const getButtonStyle = (
   };
 };
 
-type PrimaryButtonProps = {
+interface PrimaryButtonProps {
   onPress: () => void;
   children: React.ReactNode;
   btnColor?: ColorValue;
@@ -55,7 +55,7 @@ type PrimaryButtonProps = {
   custom?: boolean;
   isLoading?: boolean;
   customStyles?: StyleSheet.NamedStyles<unknown>;
-};
+}
 
 /**
  * PrimaryButton Component
@@ -64,14 +64,14 @@ type PrimaryButtonProps = {
  * loading states, and haptic feedback on press. The button can be used with text
  * or custom components as its children.
  *
- * @param {*} props.onPress - function to call when the button is pressed
- * @param props.btnColor - background color of the button
- * @param props.fontSize - font size of the button text. Defaults to primaryButtonFontSize
- * @param props.textStyle - custom text styles to apply to the button text
- * @param props.custom - controls if the button should render custom content -- if false, the button will render text content
- * @param props.flat - controls if the button style should be flat
- * @param props.isLoading - indicates if the button should show a loading indicator
- * @param props.customStyles - custom styles to apply to the button wrapper
+ * @param {*} onPress - function to call when the button is pressed
+ * @param btnColor - background color of the button
+ * @param fontSize - font size of the button text. Defaults to primaryButtonFontSize
+ * @param textStyle - custom text styles to apply to the button text
+ * @param custom - controls if the button should render custom content -- if false, the button will render text content
+ * @param flat - controls if the button style should be flat
+ * @param isLoading - indicates if the button should show a loading indicator
+ * @param customStyles - custom styles to apply to the button wrapper
  *
  * @returns the rendered PrimaryButton component.
  *
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
     color: color.WHITE,
   },
   button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     width: "100%",
     height: "75%",
     ...shadow,

@@ -21,6 +21,7 @@ import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
 import { DrinkImage } from "@/enums/maps/DrinkImage";
 import { DrinkType } from "@/enums/maps/DrinkType";
 import { ImageSourcePropType } from "react-native";
+import { color } from "@/utils/constants";
 
 const settingsImageMap: { [key: string]: ImageSourcePropType } = {
   user,
@@ -59,7 +60,7 @@ const settingsList = [
   },
   {
     id: "5",
-    title: "Theme",
+    title: "Themes",
     imageSrc: "theme",
     routeName: SettingsRouteName.ThemeSettings,
   },
@@ -97,77 +98,77 @@ const drinkTypeList = [
     imageSrc: DrinkImage.Water,
     label: "Water",
     drinkType: DrinkType.Normal,
-    color: "#3C91E6",
+    color: color.LIGHTBLUE,
   },
   {
     typeID: 10,
     imageSrc: DrinkImage.Juice,
     label: "Juice",
     drinkType: DrinkType.Normal,
-    color: "#F5882A",
+    color: "#F9DC8E",
   },
   {
     typeID: 3,
     imageSrc: DrinkImage.Can,
     label: "Soda",
     drinkType: DrinkType.Soda,
-    color: "#120001",
+    color: "#EEC88F",
   },
   {
     typeID: 4,
     imageSrc: DrinkImage.Coffee,
     label: "Coffee",
     drinkType: DrinkType.Caffeine,
-    color: "#634832",
+    color: "#CDA1A7",
   },
   {
     typeID: 11,
     imageSrc: DrinkImage.Milk,
     label: "Dairy",
     drinkType: DrinkType.Normal,
-    color: "#FFFAF5",
+    color: "#FEF7F1",
   },
   {
     typeID: 2,
     imageSrc: DrinkImage.Tea,
     label: "Tea",
     drinkType: DrinkType.Tea,
-    color: "#C98258",
+    color: "#F4C972",
   },
   {
     typeID: 8,
     imageSrc: DrinkImage.EnergyDrink,
     label: "Energy Drink",
     drinkType: DrinkType.Caffeine,
-    color: "#CCDC2A",
+    color: "#B6B7EE",
   },
   {
     typeID: 5,
     imageSrc: DrinkImage.Beer,
     label: "Beer",
     drinkType: DrinkType.MildAlcohol,
-    color: "#F5A52A",
+    color: "#F3CD79",
   },
   {
     typeID: 9,
     imageSrc: DrinkImage.Cocktail,
     label: "Cocktail",
     drinkType: DrinkType.MediumAlcohol,
-    color: "#2ADBB5",
+    color: "#68BDA1",
   },
   {
     typeID: 6,
     imageSrc: DrinkImage.Wine,
     label: "Wine",
     drinkType: DrinkType.MediumAlcohol,
-    color: "#800020",
+    color: "#EC7999",
   },
   {
     typeID: 7,
     imageSrc: DrinkImage.Liquor,
     label: "Spirit",
     drinkType: DrinkType.HeavyAlcohol,
-    color: "#B74322",
+    color: "#DCD4DC",
   },
 ];
 

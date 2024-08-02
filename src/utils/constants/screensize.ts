@@ -15,4 +15,4 @@ if (width < 400 && height < 700) {
   SCREEN_SIZE = ScreenSize.Large;
 }
 
-export { SCREEN_SIZE };
+export { SCREEN_SIZE, height as screenHeight, width as screenWidth };

@@ -1,16 +1,18 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { SettingsButton } from "@/components/buttons";
 import { HistoryItem, HistoryBottom } from "@/components/history";
 import { GradientWrapper } from "@/components/wrappers";
+import { PrimaryText } from "@/components/texts";
+import { CustomFlatList } from "@/components/lists";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { totalDrinkQuantity } from "@/utils/helpers";
-import { historyItemGap } from "@/utils/constants/components/history";
 import { ONE_MIN } from "@/utils/constants";
+import { headerFontSize } from "@/utils/constants/components/typography";
 
 import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
@@ -32,32 +34,19 @@ function History() {
         ></SettingsButton>
       </View>
       <View style={styles.tabsWrapper}>
-        {/* TODO <Text>placeholder tab bar for history</Text> */}
+        <PrimaryText fontSize={headerFontSize}>{"History"}</PrimaryText>
       </View>
-      <View style={styles.listWrapper}>
-        <FlatList
-          alwaysBounceVertical={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: historyItemGap }}
-          data={drinkHistory}
-          renderItem={({ item }) => (
-            <HistoryItem
-              item={item}
-              // hydrationQuantity={item.hydrationQuantity}
-            ></HistoryItem>
-          )}
-          // getItemLayout={(_, index) => ({
-          //   length: listItemHeight[SCREEN_SIZE],
-          //   offset: listItemHeight[SCREEN_SIZE] * index,
-          //   index,
-          // })}
-          /* Below line is needed to create
-            an artificial gap between the
-            HistoryBottom component and the
-            bottom of the FlatList */
-          ListFooterComponent={<View />}
-        ></FlatList>
-      </View>
+      <CustomFlatList
+        data={drinkHistory}
+        rowsOfListItemsOnScreen={4}
+        wrapperStyles={styles.listWrapper}
+        renderItem={({ item }) => (
+          <HistoryItem
+            item={item}
+            // hydrationQuantity={item.hydrationQuantity}
+          ></HistoryItem>
+        )}
+      ></CustomFlatList>
       <View style={styles.bottomWrapper}>
         <HistoryBottom
           totalDrinkQuantityToday={totalDrinkQuantityToday}
@@ -88,14 +77,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tabsWrapper: {
+    justifyContent: "center",
+    alignItems: "center",
     height: "10%",
   },
   listWrapper: {
     width: "90%",
     left: "5%",
     height: "55%",
+    bottom: "25%",
+    position: "absolute",
   },
   bottomWrapper: {
+    position: "absolute",
+    width: "100%",
     height: "25%",
+    bottom: 0,
   },
 });

@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 
 import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
-import { customSelectBoxLabelFontSize } from "@/utils/constants/components/input";
+import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 
 import { SecondaryText } from "@/components/texts";
 
@@ -45,7 +45,7 @@ function CustomSelectBox<T>({
       {label && (
         <View style={styles.labelWrapper}>
           <SecondaryText
-            fontSize={customSelectBoxLabelFontSize}
+            fontSize={paragraphMediumFontSize}
             color={color.DARK_BLUE}
           >
             {label}
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectBoxText: {
-    fontSize: customSelectBoxLabelFontSize,
+    fontSize: paragraphMediumFontSize,
     fontFamily: fontFamily.DEFAULT,
   },
 });

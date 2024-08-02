@@ -7,11 +7,13 @@ import { PrimaryText } from "@/components/texts";
 import { PrimaryButton } from "@/components/buttons";
 
 import { color, shadow } from "@/utils/constants";
-import {
-  actionModalFontSize,
-  actionModalRadius,
-} from "@/utils/constants/components";
+import { actionModalRadius } from "@/utils/constants/components";
 import { animatedScaleValue, springAnimation } from "@/utils/animations";
+import {
+  modalPrimaryButtonFontSize,
+  paragraphMediumFontSize,
+} from "@/utils/constants/components/typography";
+
 import { setModalActive } from "@/store/modal";
 
 interface ActionModalProps {
@@ -70,7 +72,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
         <Animated.View
           style={[styles.modalView, { transform: [{ scale: scaleValue }] }]}
         >
-          <PrimaryText numberOfLines={2} fontSize={actionModalFontSize}>
+          <PrimaryText fontSize={paragraphMediumFontSize}>
             {modalText}
           </PrimaryText>
           <View style={styles.actionButtons}>
@@ -78,6 +80,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
               <>
                 <PrimaryButton
                   customStyles={styles.buttonStyles}
+                  fontSize={modalPrimaryButtonFontSize}
                   btnColor={color.WHITE}
                   textStyle={{ color: color.BLUE }}
                   onPress={handleOnCancel}
@@ -86,6 +89,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
                 </PrimaryButton>
                 <PrimaryButton
                   customStyles={styles.buttonStyles}
+                  fontSize={modalPrimaryButtonFontSize}
                   onPress={handleOnConfirm}
                 >
                   {"Yes"}
@@ -95,6 +99,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
             {!hasDecision && (
               <PrimaryButton
                 customStyles={styles.buttonStyles}
+                fontSize={modalPrimaryButtonFontSize}
                 onPress={handleOnConfirm}
               >
                 {"Ok"}

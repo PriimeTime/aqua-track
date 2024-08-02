@@ -1,10 +1,4 @@
-import { FONT_SIZE_34, FONT_SIZE_72, SCREEN_SIZE } from "@/utils/constants";
-
-const drinkAmountFontSizeObj = {
-  SMALL: FONT_SIZE_34,
-  MEDIUM: FONT_SIZE_34,
-  LARGE: FONT_SIZE_72,
-};
+import { SCREEN_SIZE } from "@/utils/constants";
 
 const drinkAmountSensitivityObj = {
   SMALL: 0.75,
@@ -12,7 +6,6 @@ const drinkAmountSensitivityObj = {
   LARGE: 0.25,
 };
 
-const drinkAmountFontSize = drinkAmountFontSizeObj[SCREEN_SIZE];
 const drinkAmountSensitivity = drinkAmountSensitivityObj[SCREEN_SIZE];
 
-export { drinkAmountFontSize, drinkAmountSensitivity };
+export { drinkAmountSensitivity };

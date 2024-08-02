@@ -4,16 +4,12 @@ import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
 import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 
+import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+
 import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
 
 import { drinkImageMap } from "@/utils/maps";
-import {
-  color,
-  listItemHeight,
-  cardBorderWidth,
-  SCREEN_SIZE,
-  fontFamily,
-} from "@/utils/constants";
+import { color, cardBorderWidth, fontFamily } from "@/utils/constants";
 import {
   infoCardCurrentAmountHeight,
   infoCardCurrentAmountWidth,
@@ -23,16 +19,17 @@ import {
   infoCardTotalAmountHeight,
   infoCardTotalAmountWidth,
   infoCardTotalAmountRadius,
-  historyItemPrimaryTextFontSize,
-  historyItemSecondaryTextFontSize,
-  historyItemBorderRadius,
   infoCardSizeTotalFontSize,
 } from "@/utils/constants/components/history";
 import {
   getHoursMinutesFromUnixDate,
   metricUnitConversion,
 } from "@/utils/helpers";
-import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { cardBorderRadius } from "@/utils/constants/components/buttons";
+import {
+  paragraphLargeFontSize,
+  paragraphMediumFontSize,
+} from "@/utils/constants/components/typography";
 
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;
@@ -52,10 +49,8 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
         ></Image>
       </View>
       <View style={styles.cardInfoWrapper}>
-        <PrimaryText fontSize={historyItemPrimaryTextFontSize}>
-          {title}
-        </PrimaryText>
-        <SecondaryText fontSize={historyItemSecondaryTextFontSize}>
+        <PrimaryText fontSize={paragraphLargeFontSize}>{title}</PrimaryText>
+        <SecondaryText fontSize={paragraphMediumFontSize}>
           {getHoursMinutesFromUnixDate(date)}
         </SecondaryText>
       </View>
@@ -96,9 +91,9 @@ const styles = StyleSheet.create({
   cardWrapper: {
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
-    borderRadius: historyItemBorderRadius,
-    borderWidth: cardBorderWidth[SCREEN_SIZE],
-    height: listItemHeight[SCREEN_SIZE],
+    borderRadius: cardBorderRadius,
+    borderWidth: cardBorderWidth,
+    height: "90%",
     width: "100%",
     flexDirection: "row",
   },

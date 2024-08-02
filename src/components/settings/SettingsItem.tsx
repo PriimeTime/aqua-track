@@ -8,17 +8,10 @@ import { PrimaryText } from "@/components/texts";
 import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
 
 import { settingsImageMap } from "@/utils/maps";
-import {
-  color,
-  listItemHeight,
-  cardBorderWidth,
-  SCREEN_SIZE,
-} from "@/utils/constants";
+import { color, cardBorderWidth } from "@/utils/constants";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
-import {
-  settingsItemFontSize,
-  settingsItemRadius,
-} from "@/utils/constants/components/settings";
+import { paragraphLargeFontSize } from "@/utils/constants/components/typography";
+import { cardBorderRadius } from "@/utils/constants/components/buttons";
 
 interface SettingsItemProps {
   title: string;
@@ -58,7 +51,9 @@ function SettingsItem({ title, imageSrc, routeName }: SettingsItemProps) {
           </View>
           <View style={styles.itemTitleWrapper}>
             <View style={{ width: "95%", left: 0 }}>
-              <PrimaryText fontSize={settingsItemFontSize}>{title}</PrimaryText>
+              <PrimaryText fontSize={paragraphLargeFontSize}>
+                {title}
+              </PrimaryText>
             </View>
           </View>
         </View>
@@ -71,13 +66,13 @@ export { SettingsItem };
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: listItemHeight[SCREEN_SIZE] * 0.75,
+    height: "95%",
     width: "100%",
     flexDirection: "row",
     backgroundColor: color.WHITE,
     borderColor: color.LIGHTBLUE,
-    borderRadius: settingsItemRadius,
-    borderWidth: cardBorderWidth[SCREEN_SIZE],
+    borderRadius: cardBorderRadius,
+    borderWidth: cardBorderWidth,
   },
   itemIconWrapper: {
     width: "20%",

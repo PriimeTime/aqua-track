@@ -72,12 +72,6 @@ const getFontSizeForScreen = (
   return fontSize;
 };
 
-const listItemHeight = {
-  SMALL: dimensions.LIST_ITEM_HEIGHT_SMALL,
-  MEDIUM: dimensions.LIST_ITEM_HEIGHT_MEDIUM,
-  LARGE: dimensions.LIST_ITEM_HEIGHT_LARGE,
-};
-
 const inputFieldHeightObj = {
   SMALL: 40,
   MEDIUM: 50,
@@ -86,17 +80,18 @@ const inputFieldHeightObj = {
 
 const inputFieldHeight = inputFieldHeightObj[SCREEN_SIZE];
 
-const cardBorderWidth = {
+const cardBorderWidthObj = {
   SMALL: 1,
   MEDIUM: 1.5,
   LARGE: 3,
 };
 
+const cardBorderWidth = cardBorderWidthObj[SCREEN_SIZE];
+
 export {
   color,
   shadow,
   dimensions,
-  listItemHeight,
   inputFieldHeight,
   cardBorderWidth,
   fontFamily,
