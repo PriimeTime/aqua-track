@@ -11,7 +11,7 @@ import { GradientWrapper } from "@/components/wrappers";
 
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 import { numToString } from "@/utils/helpers";
-import { wsStyles } from "@/utils/constants/welcomescreen";
+import { startupStyles } from "@/utils/constants";
 
 import { setWeight } from "@/store/userData";
 
@@ -30,7 +30,7 @@ function AskWeight() {
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
-      <View style={wsStyles.wrapper}>
+      <View style={startupStyles.wrapper}>
         <PrimaryText fontSize={paragraphMediumFontSize}>
           {"How much do you weight?"}
         </PrimaryText>

@@ -12,7 +12,13 @@ import {
   LanguageSettings,
   AboutSettings,
 } from "@/screens/settings";
-import { AskUserName } from "@/screens/startup";
+import {
+  AskExercise,
+  AskGender,
+  AskUserName,
+  AskWeight,
+  WelcomeScreen,
+} from "@/screens/startup";
 
 import { SettingsList } from "@/components/settings/SettingsList";
 
@@ -22,9 +28,7 @@ import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
-import { AskGender } from "@/screens/startup/AskGender";
-import { AskWeight } from "@/screens/startup/AskWeight";
-import { AskExercise } from "@/screens/startup/AskExercise";
+import { CalculateDailyIntake } from "@/screens/startup/CalculateDailyIntake";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,6 +70,10 @@ function StartupNavigation({
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
+        name={StartupRouteName.Welcome}
+        component={WelcomeScreen}
+      ></Stack.Screen>
+      <Stack.Screen
         name={StartupRouteName.UserName}
         component={AskUserName}
       ></Stack.Screen>
@@ -77,9 +85,16 @@ function StartupNavigation({
         name={StartupRouteName.Weight}
         component={AskWeight}
       ></Stack.Screen>
-      <Stack.Screen name={StartupRouteName.Exercise}>
+      <Stack.Screen
+        name={StartupRouteName.Exercise}
+        component={AskExercise}
+      ></Stack.Screen>
+      <Stack.Screen name={StartupRouteName.CalcIntake}>
         {(props) => (
-          <AskExercise {...props} onCompleteStartup={onCompleteStartup} />
+          <CalculateDailyIntake
+            {...props}
+            onCompleteStartup={onCompleteStartup}
+          />
         )}
       </Stack.Screen>
     </Stack.Navigator>

@@ -11,7 +11,7 @@ import { GradientWrapper } from "@/components/wrappers";
 
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 import { genderSelectBoxItems } from "@/utils/constants/components/inputs";
-import { wsStyles } from "@/utils/constants/welcomescreen";
+import { startupStyles } from "@/utils/constants";
 
 import { setGender } from "@/store/userData";
 
@@ -29,7 +29,7 @@ function AskGender() {
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
-      <View style={wsStyles.wrapper}>
+      <View style={startupStyles.wrapper}>
         <PrimaryText fontSize={paragraphMediumFontSize}>
           {"What is your gender?"}
         </PrimaryText>

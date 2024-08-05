@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const wsStyles = StyleSheet.create({
+const startupStyles = StyleSheet.create({
   wrapper: {
     alignItems: "center",
     justifyContent: "space-around",
@@ -11,4 +11,4 @@ const wsStyles = StyleSheet.create({
   },
 });
 
-export { wsStyles };
+export { startupStyles };
