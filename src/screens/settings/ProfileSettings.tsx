@@ -17,18 +17,10 @@ import { UserMetrics } from "@/models/UserMetrics";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
 import { numToString } from "@/utils/helpers";
-
-const genderSelectBoxItems = [
-  { id: 1, title: "Male" },
-  { id: 2, title: "Female" },
-  { id: 3, title: "Other" },
-];
-
-const exerciseLevelSelectBoxItems = [
-  { id: 1, title: "Low" },
-  { id: 2, title: "Medium" },
-  { id: 3, title: "High" },
-];
+import {
+  exerciseLevelSelectBoxItems,
+  genderSelectBoxItems,
+} from "@/utils/constants/components/inputs";
 
 function ProfileSettings() {
   const popAction = StackActions.pop(1);
@@ -102,7 +94,7 @@ function ProfileSettings() {
       <InputContentWrapper>
         <CustomSelectBox
           items={exerciseLevelSelectBoxItems}
-          label="Exercise Level"
+          label={"Do you do exercise?"}
           handleOnSelect={(value) => handleOnChange(value, "exerciseLvl")}
           value={metricObject.exerciseLvl}
         ></CustomSelectBox>

@@ -43,7 +43,6 @@ function RegisterForm({
     await firebaseRegister(
       formState.email,
       formState.password,
-      formState.userName,
       resetFormState,
       setLoading,
       validateForm
@@ -52,14 +51,6 @@ function RegisterForm({
 
   return (
     <>
-      <CustomTextField
-        value={formState.userName}
-        handleOnChangeText={(text) => handleInputChange("userName", text)}
-        handleOnBlur={() => validateForm(false, "userName")}
-        handleOnFocus={() => resetInputValidation("userName")}
-        fullWidth
-        label="Username"
-      ></CustomTextField>
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.userName}</Text>
       </View>

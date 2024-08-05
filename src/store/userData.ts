@@ -13,8 +13,8 @@ const initialState: UserData = {
     exerciseLvl: null,
   },
   userAuth: {
-    isLoggedIn: false,
     userName: null,
+    isLoggedIn: false,
     email: null,
     uid: null,
   },
@@ -33,6 +33,18 @@ const userDataSlice = createSlice({
     },
     setUserMetrics: (state, action: PayloadAction<UserMetrics>) => {
       state.userMetrics = { ...state.userMetrics, ...action.payload };
+    },
+    setUsername: (state, action: PayloadAction<string>) => {
+      state.userAuth.userName = action.payload;
+    },
+    setGender: (state, action: PayloadAction<string>) => {
+      state.userMetrics.gender = action.payload;
+    },
+    setWeight: (state, action: PayloadAction<number>) => {
+      state.userMetrics.weight = action.payload;
+    },
+    setExerciseLvl: (state, action: PayloadAction<string>) => {
+      state.userMetrics.exerciseLvl = action.payload;
     },
     setUserAuth: (state, action: PayloadAction<UserAuth>) => {
       state.userAuth = { ...state.userAuth, ...action.payload };
@@ -54,6 +66,10 @@ const userDataSlice = createSlice({
 
 export const {
   setUserMetrics,
+  setUsername,
+  setGender,
+  setWeight,
+  setExerciseLvl,
   setUserAuth,
   setUserAccessToken,
   setUserRefreshToken,
