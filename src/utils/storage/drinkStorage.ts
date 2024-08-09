@@ -1,9 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
 import { readAsyncStorage } from "@/utils/storage/readAsyncStorage";
 import { ONE_MONTH } from "@/utils/constants";
+import { writeAsyncStorage } from "./writeAsyncStorage";
 
 /**
  * @returns drink history of user saved locally in
@@ -36,7 +35,7 @@ const cleanupOldEntries = async () => {
   const filteredHistory = history.filter(
     (drink) => new Date(drink.date).getTime() >= oneMonthAgo
   );
-  await AsyncStorage.setItem("drinkHistory", JSON.stringify(filteredHistory));
+  await writeAsyncStorage("drinkHistory", filteredHistory);
 };
 
 export { getDrinkHistory, cleanupOldEntries };

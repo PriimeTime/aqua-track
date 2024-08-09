@@ -51,7 +51,6 @@ type FirebaseLogin = (
 type FirebaseRegister = (
   email: string,
   password: string,
-  userName: string,
   resetFormState: () => void,
   setLoading: (isLoading: boolean) => void,
   validateForm: (isRegister: boolean) => boolean
@@ -99,6 +98,9 @@ function useFirebaseAuth(): {
   );
   const userDrinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
+  );
+  const userAuth = useSelector(
+    (state: UserDataState) => state.userData.userAuth
   );
 
   const firebaseLogin: FirebaseLogin = async (
@@ -231,7 +233,6 @@ function useFirebaseAuth(): {
   const firebaseRegister: FirebaseRegister = async (
     email,
     password,
-    userName,
     resetFormState,
     setLoading,
     validateForm
@@ -264,7 +265,7 @@ function useFirebaseAuth(): {
             userAuth: {
               email: email,
               uid: userUID,
-              userName: userName,
+              userName: userAuth.userName,
               firstLogin: true,
             },
           },

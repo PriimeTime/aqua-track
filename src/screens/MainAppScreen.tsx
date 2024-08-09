@@ -3,15 +3,20 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
-import { AppNavigation } from "@/navigation/AppNavigation";
+import { MainNavigation, StartupNavigation } from "@/navigation/AppNavigation";
 
 import { setNetworkStatus } from "@/store/general";
 
 import { useDatabaseSync, useAuth, useDataFromAsyncStorage } from "@/hooks";
 
 import { syncSavedChangesToDatabase } from "@/utils/database";
-import { cleanupOldEntries } from "@/utils/storage";
+import {
+  cleanupOldEntries,
+  readAsyncStorage,
+  writeAsyncStorage,
+} from "@/utils/storage";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type ModalState } from "@/types/ModalState";
@@ -23,6 +28,7 @@ function MainAppScreen() {
   const insets = useSafeAreaInsets();
 
   const [isInternetReachable, setIsInternetReachable] = useState(false);
+  const [showStartup, setShowStartup] = useState(false);
 
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
@@ -34,6 +40,27 @@ function MainAppScreen() {
   const modal = useSelector((state: ModalState) => state.modal);
 
   const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
+
+  /** Check if first startup */
+  useEffect(() => {
+    const checkAppStarted = async () => {
+      try {
+        const hasBeenStarted = await readAsyncStorage<boolean>(
+          "hasBeenStarted"
+        );
+        setShowStartup(!hasBeenStarted);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    checkAppStarted();
+  }, []);
+
+  const handleCompleteStartup = async () => {
+    await writeAsyncStorage("hasBeenStarted", true);
+    setShowStartup(false);
+  };
 
   /**
    * Listen to internet connectivity changes
@@ -101,7 +128,15 @@ function MainAppScreen() {
           hasDecision={modal.modalContent.hasDecision ?? false}
         ></ActionModal>
       )}
-      <AppNavigation></AppNavigation>
+      <NavigationContainer>
+        {showStartup ? (
+          <StartupNavigation
+            onCompleteStartup={handleCompleteStartup}
+          ></StartupNavigation>
+        ) : (
+          <MainNavigation></MainNavigation>
+        )}
+      </NavigationContainer>
     </View>
   );
 }

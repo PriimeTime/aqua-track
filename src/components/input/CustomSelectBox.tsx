@@ -14,15 +14,45 @@ interface CustomSelectBoxItem {
 interface CustomSelectBoxProps<T> {
   value: T;
   items: CustomSelectBoxItem[];
-  label: string;
   handleOnSelect: (value: string) => void;
+  label?: string;
 }
+
+/**
+ * A reusable component that renders a list of selectable items (select boxes).
+ * It allows the user to select one item from a list, with the selected item visually highlighted.
+ * The component is fully customizable and supports dynamic data and styling.
+ *
+ * @template T - The type of the value prop.
+ *
+ * @param {*} value - currently selected value -> this should match the `title` of one of the items
+ * @param {*} items - array of objects representing the selectable items -> each item should have a unique `id` and a `title` string
+ * @param {*} handleOnSelect - callback function that is triggered when an item is selected -> function receives the `title` of the selected item as an argument
+ * @param - label to display above the selection box list
+ *
+ * @returns a JSX element that renders the custom select box component
+ *
+ * @example
+ *
+ * <CustomSelectBox
+ *   value={selectedItem}
+ *   items={[
+ *     { id: 1, title: "Option 1" },
+ *     { id: 2, title: "Option 2" },
+ *     { id: 3, title: "Option 3" },
+ *   ]}
+ *   handleOnSelect={(selectedValue) => {
+ *     console.log("Selected:", selectedValue);
+ *   }}
+ *   label="Choose an Option"
+ * />
+ */
 
 function CustomSelectBox<T>({
   value,
   items,
-  label,
   handleOnSelect,
+  label,
 }: CustomSelectBoxProps<T>) {
   const [selectedItemId, setSelectedItemId] = useState(-1);
 

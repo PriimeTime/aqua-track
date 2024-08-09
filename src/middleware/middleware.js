@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { getDrinkHistory } from "@/utils/storage";
+import { getDrinkHistory, writeAsyncStorage } from "@/utils/storage";
 
 const storeModalHandlers = (onConfirm, onCancel) => {
   window.modalHandlers = {
@@ -13,7 +13,7 @@ const addDrink = async (newDrink) => {
   try {
     const history = await getDrinkHistory();
     history.push(newDrink);
-    await AsyncStorage.setItem("drinkHistory", JSON.stringify(history));
+    await writeAsyncStorage("drinkHistory", history);
   } catch (error) {
     console.error("Error in addDrink:", error);
   }
@@ -27,7 +27,7 @@ const removeDrink = async (drinkId) => {
     history = [];
   }
 
-  await AsyncStorage.setItem("drinkHistory", JSON.stringify(history));
+  await writeAsyncStorage("drinkHistory", history);
 };
 
 const middleware = (store) => (next) => async (action) => {
@@ -58,17 +58,11 @@ const middleware = (store) => (next) => async (action) => {
   }
 
   if (userMetricsAction) {
-    await AsyncStorage.setItem(
-      "userMetrics",
-      JSON.stringify(newState.userData.userMetrics)
-    );
+    await writeAsyncStorage("userMetrics", newState.userData.userMetrics);
   }
 
   if (userAuthAction) {
-    await AsyncStorage.setItem(
-      "userAuth",
-      JSON.stringify(newState.userData.userAuth)
-    );
+    await writeAsyncStorage("userAuth", newState.userData.userAuth);
   }
 
   if (
