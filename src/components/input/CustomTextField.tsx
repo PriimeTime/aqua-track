@@ -53,7 +53,7 @@ interface CustomTextFieldProps {
  * @returns the rendered CustomTextField component.
  *
  * @example
- * Usage:
+ *
  * <CustomTextField
  *   value={inputValue}
  *   handleOnChangeText={handleInputChange}

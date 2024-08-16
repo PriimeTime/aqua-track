@@ -5,6 +5,7 @@ import { CustomTextField } from "@/components/input";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+import { FormInputType } from "@/enums/input/FormInputType";
 
 import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
@@ -56,9 +57,11 @@ function RegisterForm({
       </View>
       <CustomTextField
         value={formState.email}
-        handleOnChangeText={(text) => handleInputChange("email", text)}
-        handleOnBlur={() => validateForm(false, "email")}
-        handleOnFocus={() => resetInputValidation("email")}
+        handleOnChangeText={(text) =>
+          handleInputChange(FormInputType.Email, text)
+        }
+        handleOnBlur={() => validateForm(false, FormInputType.Email)}
+        handleOnFocus={() => resetInputValidation(FormInputType.Email)}
         fullWidth
         inputType={CustomTextFieldInputType.Email}
         label="E-mail"
@@ -68,9 +71,11 @@ function RegisterForm({
       </View>
       <CustomTextField
         value={formState.password}
-        handleOnChangeText={(text) => handleInputChange("password", text)}
-        handleOnBlur={() => validateForm(false, "password")}
-        handleOnFocus={() => resetInputValidation("password")}
+        handleOnChangeText={(text) =>
+          handleInputChange(FormInputType.Password, text)
+        }
+        handleOnBlur={() => validateForm(false, FormInputType.Password)}
+        handleOnFocus={() => resetInputValidation(FormInputType.Password)}
         fullWidth
         inputType={CustomTextFieldInputType.Password}
         label="Password"
@@ -81,10 +86,12 @@ function RegisterForm({
       <CustomTextField
         value={formState.confirmPassword}
         handleOnChangeText={(text) =>
-          handleInputChange("confirmPassword", text)
+          handleInputChange(FormInputType.ConfirmPassword, text)
         }
-        handleOnBlur={() => validateForm(true, "confirmPassword")}
-        handleOnFocus={() => resetInputValidation("confirmPassword")}
+        handleOnBlur={() => validateForm(true, FormInputType.ConfirmPassword)}
+        handleOnFocus={() =>
+          resetInputValidation(FormInputType.ConfirmPassword)
+        }
         fullWidth
         inputType={CustomTextFieldInputType.Password}
         label="Confirm password"

@@ -11,6 +11,7 @@ import { formErrorStyles } from "@/utils/styles";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+import { FormInputType } from "@/enums/input/FormInputType";
 
 import { useFormValidation, useModal } from "@/hooks";
 
@@ -32,7 +33,7 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
   const auth = getAuth();
 
   const handleSendPasswordResetEmail = async () => {
-    if (!validateForm(false, "email")) return;
+    if (!validateForm(false, FormInputType.Email)) return;
 
     try {
       setIsLoading(true);
@@ -62,8 +63,10 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
       <CustomTextField
         customStyles={styles.textField}
         value={formState.email}
-        handleOnChangeText={(text) => handleInputChange("email", text)}
-        handleOnFocus={() => resetInputValidation("email")}
+        handleOnChangeText={(text) =>
+          handleInputChange(FormInputType.Email, text)
+        }
+        handleOnFocus={() => resetInputValidation(FormInputType.Email)}
         inputType={CustomTextFieldInputType.Email}
         placeholder={"E-mail"}
         fullWidth

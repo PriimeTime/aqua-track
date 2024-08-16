@@ -5,7 +5,18 @@ import {
   validatePassword,
   validateConfirmPassword,
   validateUserName,
+  validateWeight,
 } from "@/utils/validation";
+
+import { FormInputType } from "@/enums/input/FormInputType";
+
+const initialFormState = {
+  userName: "",
+  weight: 0,
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 /**
  * Custom hook for form validation.
@@ -16,22 +27,17 @@ import {
  * @returns an object containing form state, errors, and validation functions
  */
 function useFormValidation() {
-  const [formState, setFormState] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
-  const handleInputChange = (fieldName: string, value: string) => {
+  const handleInputChange = (fieldName: FormInputType, value: string) => {
     setFormState((prevForm) => ({
       ...prevForm,
       [fieldName]: value,
     }));
   };
 
-  const resetInputValidation = (fieldName: string) => {
+  const resetInputValidation = (fieldName: FormInputType) => {
     if (formErrors[fieldName]) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
@@ -41,21 +47,16 @@ function useFormValidation() {
   };
 
   const resetFormState = () => {
-    setFormState({
-      userName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+    setFormState(initialFormState);
   };
 
-  const validateForm = (isRegister = false, fieldName?: string) => {
+  const validateForm = (isRegister = false, fieldName?: FormInputType) => {
     let newErrors = { ...formErrors }; // Start with current errors
     let isValid = true;
 
-    const validateField = (fieldKey: string) => {
+    const validateField = (fieldKey: FormInputType) => {
       switch (fieldKey) {
-        case "userName":
+        case FormInputType.Username:
           const userNameValidation = validateUserName(formState.userName);
           if (!userNameValidation.isValid) {
             newErrors.userName = userNameValidation.newErrors;
@@ -64,7 +65,16 @@ function useFormValidation() {
             delete newErrors.userName;
           }
           break;
-        case "email":
+        case FormInputType.Weight:
+          const weightValidation = validateWeight(formState.weight);
+          if (!weightValidation.isValid) {
+            newErrors.weight = weightValidation.newErrors;
+            isValid = false;
+          } else {
+            delete newErrors.weight;
+          }
+          break;
+        case FormInputType.Email:
           const emailValidation = validateEmail(formState.email);
           if (!emailValidation.isValid) {
             newErrors.email = emailValidation.newErrors;
@@ -73,7 +83,7 @@ function useFormValidation() {
             delete newErrors.email;
           }
           break;
-        case "password":
+        case FormInputType.Password:
           const passwordValidation = validatePassword(
             isRegister,
             formState.password
@@ -85,7 +95,7 @@ function useFormValidation() {
             delete newErrors.password;
           }
           break;
-        case "confirmPassword":
+        case FormInputType.ConfirmPassword:
           if (isRegister) {
             const confirmPasswordValidation = validateConfirmPassword(
               isRegister,
@@ -110,10 +120,10 @@ function useFormValidation() {
       validateField(fieldName);
     } else {
       // Validate all fields
-      validateField("email");
-      validateField("password");
+      validateField(FormInputType.Email);
+      validateField(FormInputType.Password);
       if (isRegister) {
-        validateField("confirmPassword");
+        validateField(FormInputType.ConfirmPassword);
       }
     }
 

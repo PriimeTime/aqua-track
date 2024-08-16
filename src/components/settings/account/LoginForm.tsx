@@ -10,6 +10,7 @@ import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
 
 import { color, fontFamily } from "@/utils/constants";
 import { loginFormErrorFontSize } from "@/utils/constants/components/forms";
+import { FormInputType } from "@/enums/input/FormInputType";
 
 interface LoginFormProps {
   setAccountSettingsState: React.Dispatch<
@@ -61,9 +62,11 @@ function LoginForm({
     <>
       <CustomTextField
         value={formState.email}
-        handleOnChangeText={(text) => handleInputChange("email", text)}
-        handleOnBlur={() => validateForm(false, "email")}
-        handleOnFocus={() => resetInputValidation("email")}
+        handleOnChangeText={(text) =>
+          handleInputChange(FormInputType.Email, text)
+        }
+        handleOnBlur={() => validateForm(false, FormInputType.Email)}
+        handleOnFocus={() => resetInputValidation(FormInputType.Email)}
         fullWidth
         inputType={CustomTextFieldInputType.Email}
         label="E-mail"
@@ -73,9 +76,11 @@ function LoginForm({
       </View>
       <CustomTextField
         value={formState.password}
-        handleOnChangeText={(text) => handleInputChange("password", text)}
-        handleOnBlur={() => validateForm(false, "password")}
-        handleOnFocus={() => resetInputValidation("password")}
+        handleOnChangeText={(text) =>
+          handleInputChange(FormInputType.Password, text)
+        }
+        handleOnBlur={() => validateForm(false, FormInputType.Password)}
+        handleOnFocus={() => resetInputValidation(FormInputType.Password)}
         fullWidth
         inputType={CustomTextFieldInputType.Password}
         label="Password"

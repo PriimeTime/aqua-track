@@ -51,6 +51,15 @@ const validateUserName = (userNameField: string) => {
   return { isValid: true, newErrors: "" };
 };
 
+const validateWeight = (weightField: number) => {
+  if (weightField < 10 || weightField > 800)
+    return {
+      isValid: false,
+      newErrors: "Please enter a meaningful weight",
+    };
+  return { isValid: true, newErrors: "" };
+};
+
 const validatePassword = (isRegister: boolean, pwField: string) => {
   const pwMinLen = 6;
   const pwMaxLen = 30;
@@ -121,6 +130,7 @@ const validateConfirmPassword = (
 
 export {
   validateUserName,
+  validateWeight,
   validateEmail,
   validatePassword,
   validateConfirmPassword,

@@ -28,10 +28,18 @@ const userDataSlice = createSlice({
   name: "userData",
   initialState,
   reducers: {
-    setUserData: (state, action: PayloadAction<UserMetrics>) => {
-      state.userMetrics = action.payload;
+    setUserData: (state, action: PayloadAction<UserData>) => {
+      state.userMetrics = {
+        ...state.userMetrics,
+        ...action.payload.userMetrics,
+      };
+      state.userAuth = { ...state.userAuth, ...action.payload.userAuth };
+      state.userAuthTokens = {
+        ...state.userAuthTokens,
+        ...action.payload.userAuthTokens,
+      };
     },
-    setUserMetrics: (state, action: PayloadAction<UserMetrics>) => {
+    setUserMetrics: (state, action: PayloadAction<Partial<UserMetrics>>) => {
       state.userMetrics = { ...state.userMetrics, ...action.payload };
     },
     setUsername: (state, action: PayloadAction<string>) => {
