@@ -26,7 +26,11 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 import { loadUserData, updateUserData } from "@/utils/database";
 import { clearAuthData, saveAuthData } from "@/utils/auth";
-import { ONE_MONTH, signInWithAppleCanceled } from "@/utils/constants";
+import {
+  initialUserAuth,
+  ONE_MONTH,
+  signInWithAppleCanceled,
+} from "@/utils/constants";
 
 import { UserAuth } from "@/models/UserAuth";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
@@ -429,15 +433,8 @@ function useFirebaseAuth(): {
       // Sign out user
       await signOut(auth);
 
-      const userAuth: UserAuth = {
-        uid: null,
-        userName: null,
-        email: null,
-        isLoggedIn: false,
-      };
-
       // Reset userAuth object in store and clear user data
-      dispatch(setUserAuth(userAuth));
+      dispatch(setUserAuth(initialUserAuth));
       await clearAuthData();
 
       // Prompt user a choice between clearing or keeping local data

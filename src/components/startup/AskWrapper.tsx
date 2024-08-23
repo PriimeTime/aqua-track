@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GradientWrapper } from "@/components/wrappers";
 import { PrimaryText } from "@/components/texts";
@@ -84,6 +84,13 @@ function AskWrapper({
     resetInputValidation,
   } = useFormValidation();
 
+  /** Set default input value on component mount */
+  useEffect(() => {
+    if (selectBoxItems && !input) {
+      setInput(selectBoxItems[0]!.title);
+    }
+  }, [selectBoxItems]);
+
   /**
    * Render a selectbox or a textfield dynamically
    */
@@ -107,9 +114,10 @@ function AskWrapper({
           maxLength={3}
           append={"kg"}
           value={numToString(formState.weight)}
-          handleOnChangeText={(value) =>
-            handleInputChange(FormInputType.Weight, value)
-          }
+          handleOnChangeText={(value) => {
+            setInput(value);
+            handleInputChange(FormInputType.Weight, value);
+          }}
           handleOnFocus={() => resetInputValidation(FormInputType.Weight)}
         />
       );

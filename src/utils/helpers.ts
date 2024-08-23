@@ -43,7 +43,7 @@ const formatNumber = (num: number): number => {
  * @returns the positive percentage
  */
 const displayPositivePercent = (num: number, denom: number): number => {
-  return formatNumber((num / denom) * 100);
+  return denom === 0 ? 0 : Math.max(0, formatNumber((num / denom) * 100));
 };
 
 /**
@@ -292,6 +292,31 @@ const distributionRatioByGender = (gender: Gender): number => {
   }
 };
 
+/**
+ *
+ * @param {*} weightInKg - weight of user in kg
+ * @param {*} exerciseLvl - exercise level of user
+ * @returns the daily hydration goal of the user in ml
+ */
+const calculateDailyHydrationGoalInMl = (
+  weightInKg: number,
+  exerciseLvl: string
+) => {
+  /** Round daily hydration goal to nearest hundred milliliters */
+  let dailyHydrationGoalInMl = Math.round((weightInKg * 33.33) / 100) * 100;
+
+  switch (exerciseLvl) {
+    case "Sometimes":
+      dailyHydrationGoalInMl += 500;
+      break;
+    case "Often":
+      dailyHydrationGoalInMl += 1000;
+      break;
+  }
+
+  return dailyHydrationGoalInMl;
+};
+
 /* Empty function that does nothing */
 const emptyFunc = () => {};
 
@@ -310,5 +335,6 @@ export {
   minsUntilSoberInteger,
   hoursUntilSober,
   hoursUntilSoberInteger,
+  calculateDailyHydrationGoalInMl,
   emptyFunc,
 };

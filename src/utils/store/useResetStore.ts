@@ -1,15 +1,9 @@
 import { useDispatch } from "react-redux";
+
 import { setHistory } from "@/store/drinkHistory";
 import { setUserMetrics, setUserLoginState } from "@/store/userData";
-import { UserMetrics } from "@/models/UserMetrics";
 
-const defaultUserMetrics: UserMetrics = {
-  age: null,
-  gender: null,
-  height: null,
-  weight: null,
-  exerciseLvl: null,
-};
+import { initialUserMetrics } from "@/utils/constants";
 
 /**
  * Custom hook to reset the Redux store to its default state.
@@ -26,7 +20,7 @@ export const useResetStore = () => {
 
   const resetStore = async () => {
     dispatch(setHistory([]));
-    dispatch(setUserMetrics(defaultUserMetrics));
+    dispatch(setUserMetrics(initialUserMetrics));
     dispatch(setUserLoginState(false));
   };
 

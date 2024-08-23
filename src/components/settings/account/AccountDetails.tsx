@@ -25,6 +25,7 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
         value={userAuth.userName ?? ""}
         fullWidth
         label="Username"
+        labelColor={color.BLUE}
       ></CustomTextField>
       <CustomTextField
         customStyles={styles.textField}
@@ -32,6 +33,7 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
         value={userAuth.email ?? ""}
         fullWidth
         label="E-mail"
+        labelColor={color.BLUE}
       ></CustomTextField>
       <PrimaryButton btnColor={color.RED} onPress={onLogout}>
         {"log out".toUpperCase()}

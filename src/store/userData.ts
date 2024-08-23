@@ -4,20 +4,11 @@ import { UserAuth } from "@/models/UserAuth";
 import { UserData } from "@/models/UserData";
 import { UserMetrics } from "@/models/UserMetrics";
 
+import { initialUserAuth, initialUserMetrics } from "@/utils/constants";
+
 const initialState: UserData = {
-  userMetrics: {
-    age: null,
-    gender: null,
-    height: null,
-    weight: null,
-    exerciseLvl: null,
-  },
-  userAuth: {
-    userName: null,
-    isLoggedIn: false,
-    email: null,
-    uid: null,
-  },
+  userMetrics: initialUserMetrics,
+  userAuth: initialUserAuth,
   userAuthTokens: {
     accessToken: null,
     refreshToken: null,
@@ -41,6 +32,9 @@ const userDataSlice = createSlice({
     },
     setUserMetrics: (state, action: PayloadAction<Partial<UserMetrics>>) => {
       state.userMetrics = { ...state.userMetrics, ...action.payload };
+    },
+    setDailyHydrationGoal: (state, action: PayloadAction<number>) => {
+      state.userMetrics.dailyHydrationGoal = action.payload;
     },
     setUsername: (state, action: PayloadAction<string>) => {
       state.userAuth.userName = action.payload;
@@ -74,6 +68,7 @@ const userDataSlice = createSlice({
 
 export const {
   setUserMetrics,
+  setDailyHydrationGoal,
   setUsername,
   setGender,
   setWeight,

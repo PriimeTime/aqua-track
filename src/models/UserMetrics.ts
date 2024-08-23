@@ -4,4 +4,5 @@ export interface UserMetrics {
   gender: string | null;
   height: number | null;
   weight: number | null;
+  dailyHydrationGoal: number;
 }

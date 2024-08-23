@@ -55,7 +55,7 @@ const validateWeight = (weightField: number) => {
   if (weightField < 10 || weightField > 800)
     return {
       isValid: false,
-      newErrors: "Please enter a meaningful weight",
+      newErrors: "Please enter a meaningful weight!",
     };
   return { isValid: true, newErrors: "" };
 };
