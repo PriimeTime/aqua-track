@@ -15,6 +15,7 @@ interface CustomSelectBoxProps<T> {
   value: T;
   items: CustomSelectBoxItem[];
   handleOnSelect: (value: string) => void;
+  isVertical?: boolean;
   label?: string;
 }
 
@@ -28,7 +29,8 @@ interface CustomSelectBoxProps<T> {
  * @param {*} value - currently selected value -> this should match the `title` of one of the items
  * @param {*} items - array of objects representing the selectable items -> each item should have a unique `id` and a `title` string
  * @param {*} handleOnSelect - callback function that is triggered when an item is selected -> function receives the `title` of the selected item as an argument
- * @param - label to display above the selection box list
+ * @param isVertical - if true, the selection box will be displayed vertically
+ * @param label - label to display above the selection box list
  *
  * @returns a JSX element that renders the custom select box component
  *
@@ -44,6 +46,7 @@ interface CustomSelectBoxProps<T> {
  *   handleOnSelect={(selectedValue) => {
  *     console.log("Selected:", selectedValue);
  *   }}
+ *   isVertical
  *   label="Choose an Option"
  * />
  */
@@ -52,6 +55,7 @@ function CustomSelectBox<T>({
   value,
   items,
   handleOnSelect,
+  isVertical,
   label,
 }: CustomSelectBoxProps<T>) {
   const [selectedItemId, setSelectedItemId] = useState(-1);
@@ -82,14 +86,22 @@ function CustomSelectBox<T>({
           </SecondaryText>
         </View>
       )}
-      <View style={styles.selectBoxListWrapper}>
+      <View
+        style={[
+          styles.selectBoxListWrapper,
+          { flexDirection: isVertical ? "column" : "row" },
+        ]}
+      >
         {items.map((item) => (
           <Pressable
             key={item.id}
             style={[
               styles.selectBoxItemWrapper,
               {
-                width: `${(100 / items.length) * 0.95}%`,
+                left: isVertical ? "10%" : "0%",
+                width: isVertical ? "80%" : `${(100 / items.length) * 0.95}%`,
+                height: isVertical ? "90%" : "100%",
+                marginBottom: isVertical ? "5%" : "0%",
                 backgroundColor:
                   selectedItemId === item.id ? color.BLUE : color.WHITE,
               },
@@ -121,11 +133,9 @@ const styles = StyleSheet.create({
   selectBoxListWrapper: {
     width: "100%",
     height: inputFieldHeight,
-    flexDirection: "row",
     justifyContent: "space-between",
   },
   selectBoxItemWrapper: {
-    height: "100%",
     borderRadius: inputFieldHeight / 2,
     justifyContent: "center",
     alignItems: "center",

@@ -91,9 +91,10 @@ function AskWrapper({
     if (selectBoxItems) {
       return (
         <CustomSelectBox
+          isVertical
           items={selectBoxItems}
           handleOnSelect={(value) => setInput(value)}
-          value={input}
+          value={input || selectBoxItems[0]!.title} // value should be the input. If there is no input yet, take first object of select array
         ></CustomSelectBox>
       );
     }
@@ -177,7 +178,8 @@ const styles = StyleSheet.create({
   },
   inputFieldWrapper: {
     height: "25%",
-    justifyContent: "center",
+    width: "100%",
+    justifyContent: "space-between",
   },
   errorTextWrapper: {
     height: "20%",
