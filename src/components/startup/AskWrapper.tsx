@@ -3,6 +3,7 @@ import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { GradientWrapper } from "@/components/wrappers";
 import { PrimaryText } from "@/components/texts";
@@ -71,6 +72,8 @@ function AskWrapper({
   nextRoute,
   selectBoxItems,
 }: AskWrapperProps) {
+  const { t } = useTranslation();
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const dispatch = useDispatch();
 
@@ -169,7 +172,9 @@ function AskWrapper({
           <Text style={styles.errorText}>{formErrors[inputType]}</Text>
         </View>
         <View style={styles.continueButtonWrapper}>
-          <PrimaryButton onPress={handleSaveInput}>{"Continue"}</PrimaryButton>
+          <PrimaryButton onPress={handleSaveInput}>
+            {t("button.continue")}
+          </PrimaryButton>
         </View>
       </View>
     </GradientWrapper>

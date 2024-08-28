@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { CountUp } from "use-count-up";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts/PrimaryText";
 
@@ -21,6 +22,8 @@ function TimeUntilSober({
   currentMinsUntilSober,
   prevMinsUntilSober,
 }: TimeUntilSoberProps) {
+  const { t } = useTranslation();
+
   return (
     <View>
       <PrimaryText fontSize={timeUntilSoberFontSize}>
@@ -34,7 +37,7 @@ function TimeUntilSober({
               duration={2} // Duration in seconds
               easing={"easeOutCubic"}
             />
-            {currentHrsUntilSober > 0 && "h "}
+            {currentHrsUntilSober > 0 && `${t("unit.hoursAbbrv")} `}
           </>
         )}
         {currentMinsUntilSober > 0 && (
@@ -47,13 +50,13 @@ function TimeUntilSober({
               duration={2} // Duration in seconds
               easing={"easeOutCubic"}
             />
-            {currentMinsUntilSober > 0 && "m"}
+            {currentMinsUntilSober > 0 && `${t("unit.minutesAbbrv")} `}
           </>
         )}
       </PrimaryText>
       <View>
         <PrimaryText fontSize={timeUntilSoberTextFontSize}>
-          until sober
+          {t("drinks.untilSober")}
         </PrimaryText>
       </View>
     </View>

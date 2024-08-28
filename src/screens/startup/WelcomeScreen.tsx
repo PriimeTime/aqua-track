@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts";
 import { GradientWrapper } from "@/components/wrappers";
@@ -11,6 +12,8 @@ import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 import { useEffect } from "react";
 
 function WelcomeScreen() {
+  const { t } = useTranslation();
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const toNextScreen = () => {
@@ -29,7 +32,7 @@ function WelcomeScreen() {
     <GradientWrapper style={{ flex: 1 }}>
       <View style={startupStyles.wrapper}>
         <PrimaryText fontSize={paragraphMediumFontSize}>
-          {"Welcome to Drinky!"}
+          {t("home.welcome")}
         </PrimaryText>
       </View>
     </GradientWrapper>

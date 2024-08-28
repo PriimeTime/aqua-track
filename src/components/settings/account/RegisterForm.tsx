@@ -1,4 +1,5 @@
 import { View, Text } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryButton } from "@/components/buttons";
 import { CustomTextField } from "@/components/input";
@@ -25,6 +26,7 @@ function RegisterForm({
   setLoading,
   loading,
 }: RegisterFormProps) {
+  const { t } = useTranslation();
   const {
     validateForm,
     formState,
@@ -64,7 +66,7 @@ function RegisterForm({
         handleOnFocus={() => resetInputValidation(FormInputType.Email)}
         fullWidth
         inputType={CustomTextFieldInputType.Email}
-        label="E-mail"
+        label={t("settings.account.email")}
       ></CustomTextField>
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.email}</Text>
@@ -78,7 +80,7 @@ function RegisterForm({
         handleOnFocus={() => resetInputValidation(FormInputType.Password)}
         fullWidth
         inputType={CustomTextFieldInputType.Password}
-        label="Password"
+        label={t("settings.account.password")}
       ></CustomTextField>
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.password}</Text>
@@ -94,20 +96,20 @@ function RegisterForm({
         }
         fullWidth
         inputType={CustomTextFieldInputType.Password}
-        label="Confirm password"
+        label={t("settings.account.confPassword")}
       ></CustomTextField>
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.confirmPassword}</Text>
       </View>
       <PrimaryButton isLoading={loading} onPress={handleOnRegister}>
-        {"register".toUpperCase()}
+        {t("settings.account.register").toUpperCase()}
       </PrimaryButton>
       <PrimaryButton
         btnColor={color.WHITE}
         textStyle={{ color: color.BLUE }}
         onPress={redirectToLogin}
       >
-        {"login".toUpperCase()}
+        {t("settings.account.login").toUpperCase()}
       </PrimaryButton>
     </>
   );

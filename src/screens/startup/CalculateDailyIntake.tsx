@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts";
 import { GradientWrapper } from "@/components/wrappers";
@@ -22,6 +23,8 @@ interface CalculateDailyIntakeProps {
 function CalculateDailyIntake({
   onCompleteStartup,
 }: CalculateDailyIntakeProps) {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
@@ -50,7 +53,7 @@ function CalculateDailyIntake({
     <GradientWrapper style={{ flex: 1 }}>
       <View style={startupStyles.wrapper}>
         <PrimaryText fontSize={paragraphMediumFontSize}>
-          {"Calculating daily intake..."}
+          {t("settings.profile.calcDailyIntake")}
         </PrimaryText>
       </View>
     </GradientWrapper>

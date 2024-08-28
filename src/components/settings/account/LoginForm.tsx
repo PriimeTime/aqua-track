@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { useFormValidation, useFirebaseAuth } from "@/hooks";
 
@@ -26,6 +27,7 @@ function LoginForm({
   loading,
 }: LoginFormProps) {
   const { firebaseLogin, firebaseSignInWithApple } = useFirebaseAuth();
+  const { t } = useTranslation();
 
   const {
     handleInputChange,
@@ -69,7 +71,7 @@ function LoginForm({
         handleOnFocus={() => resetInputValidation(FormInputType.Email)}
         fullWidth
         inputType={CustomTextFieldInputType.Email}
-        label="E-mail"
+        label={t("settings.account.email")}
       ></CustomTextField>
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.email}</Text>
@@ -83,23 +85,23 @@ function LoginForm({
         handleOnFocus={() => resetInputValidation(FormInputType.Password)}
         fullWidth
         inputType={CustomTextFieldInputType.Password}
-        label="Password"
+        label={t("settings.account.password")}
       ></CustomTextField>
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.password}</Text>
       </View>
       <PrimaryButton flat onPress={redirectToForgotPassword}>
-        {"forgot password".toUpperCase()}
+        {t("settings.account.forgotPwText").toUpperCase()}
       </PrimaryButton>
       <PrimaryButton isLoading={loading} onPress={handleOnLogin}>
-        {"login".toUpperCase()}
+        {t("settings.account.login").toUpperCase()}
       </PrimaryButton>
       <PrimaryButton
         btnColor={color.WHITE}
         textStyle={{ color: color.BLUE }}
         onPress={redirectToRegister}
       >
-        {"register".toUpperCase()}
+        {t("settings.account.register").toUpperCase()}
       </PrimaryButton>
       <PrimaryButton
         btnColor={color.BLACK}
@@ -111,7 +113,7 @@ function LoginForm({
           color: color.WHITE,
         }}
       >
-        {" Sign in with Apple"}
+        {` ${t("settings.account.loginApple")}`}
       </PrimaryButton>
     </>
   );

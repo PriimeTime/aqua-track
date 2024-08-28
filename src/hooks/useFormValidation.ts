@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   validateEmail,
@@ -27,6 +28,8 @@ const initialFormState = {
  * @returns an object containing form state, errors, and validation functions
  */
 function useFormValidation() {
+  const { t } = useTranslation();
+
   const [formState, setFormState] = useState(initialFormState);
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
@@ -59,7 +62,7 @@ function useFormValidation() {
         case FormInputType.Username:
           const userNameValidation = validateUserName(formState.userName);
           if (!userNameValidation.isValid) {
-            newErrors.userName = userNameValidation.newErrors;
+            newErrors.userName = t(userNameValidation.newErrors);
             isValid = false;
           } else {
             delete newErrors.userName;
@@ -68,7 +71,7 @@ function useFormValidation() {
         case FormInputType.Weight:
           const weightValidation = validateWeight(formState.weight);
           if (!weightValidation.isValid) {
-            newErrors.weight = weightValidation.newErrors;
+            newErrors.weight = t(weightValidation.newErrors);
             isValid = false;
           } else {
             delete newErrors.weight;
@@ -77,7 +80,7 @@ function useFormValidation() {
         case FormInputType.Email:
           const emailValidation = validateEmail(formState.email);
           if (!emailValidation.isValid) {
-            newErrors.email = emailValidation.newErrors;
+            newErrors.email = t(emailValidation.newErrors);
             isValid = false;
           } else {
             delete newErrors.email;
@@ -89,7 +92,14 @@ function useFormValidation() {
             formState.password
           );
           if (!passwordValidation.isValid) {
-            newErrors.password = passwordValidation.newErrors;
+            if (passwordValidation.params) {
+              newErrors.password = t(
+                passwordValidation.newErrors,
+                passwordValidation.params
+              );
+            } else {
+              newErrors.password = t(passwordValidation.newErrors);
+            }
             isValid = false;
           } else {
             delete newErrors.password;
@@ -103,7 +113,9 @@ function useFormValidation() {
               formState.confirmPassword
             );
             if (!confirmPasswordValidation.isValid) {
-              newErrors.confirmPassword = confirmPasswordValidation.newErrors;
+              newErrors.confirmPassword = t(
+                confirmPasswordValidation.newErrors
+              );
               isValid = false;
             } else {
               delete newErrors.confirmPassword;

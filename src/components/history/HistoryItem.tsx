@@ -1,4 +1,5 @@
 import { View, StyleSheet, Image, Text } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
@@ -34,6 +35,7 @@ import {
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;
   const todaysDrinks = useTodaysDrinks();
+  const { t } = useTranslation();
 
   const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(
     typeID,
@@ -63,11 +65,13 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
             borderRadius={infoCardCurrentAmountRadius}
             fontSize={infoCardCurrentAmountFontSize}
           >
-            {`+${quantity} ml`}
+            {`+${quantity} ${t("unit.millilitersAbbrv")}`}
           </InfoCard>
         </View>
         <View style={styles.cardTotalBottom}>
-          <Text style={styles.cardTotalBottomText}>{`Total:`}</Text>
+          <Text style={styles.cardTotalBottomText}>{`${t(
+            "history.total"
+          )}:`}</Text>
           <InfoCard
             fontSize={infoCardTotalAmountFontSize}
             width={infoCardTotalAmountWidth}

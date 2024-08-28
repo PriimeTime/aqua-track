@@ -2,6 +2,7 @@ import { Modal, StyleSheet, View, Animated } from "react-native";
 import { BlurView } from "expo-blur";
 import { useRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts";
 import { PrimaryButton } from "@/components/buttons";
@@ -22,6 +23,8 @@ interface ActionModalProps {
 }
 
 function ActionModal({ modalText, hasDecision }: ActionModalProps) {
+  const { t } = useTranslation();
+
   const scaleValue = useRef(animatedScaleValue(0)).current;
 
   const dispatch = useDispatch();
@@ -85,14 +88,14 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
                   textStyle={{ color: color.BLUE }}
                   onPress={handleOnCancel}
                 >
-                  {"No"}
+                  {t("modal.no")}
                 </PrimaryButton>
                 <PrimaryButton
                   customStyles={styles.buttonStyles}
                   fontSize={modalPrimaryButtonFontSize}
                   onPress={handleOnConfirm}
                 >
-                  {"Yes"}
+                  {t("modal.yes")}
                 </PrimaryButton>
               </>
             )}
@@ -102,7 +105,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
                 fontSize={modalPrimaryButtonFontSize}
                 onPress={handleOnConfirm}
               >
-                {"Ok"}
+                {t("modal.ok")}
               </PrimaryButton>
             )}
           </View>

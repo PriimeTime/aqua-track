@@ -2,6 +2,7 @@ import { Pressable, Text, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
+import { useTranslation } from "react-i18next";
 
 import { color, shadow, fontFamily } from "@/utils/constants";
 import { animateButtonPress } from "@/utils/animations";
@@ -12,6 +13,7 @@ import {
 } from "@/utils/constants/components/buttons";
 
 function BackButton() {
+  const { t } = useTranslation();
   const scaleValue = useRef(animatedScaleValue(1)).current;
   const navigation = useNavigation();
   const popAction = StackActions.pop(1);
@@ -38,7 +40,7 @@ function BackButton() {
         onPressOut={handleOnPressOut}
       >
         <Text style={backButtonTextStyle(styles.text)}>
-          {"Back".toUpperCase()}
+          {t("button.back").toUpperCase()}
         </Text>
       </Pressable>
     </Animated.View>

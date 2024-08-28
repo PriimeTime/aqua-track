@@ -1,7 +1,119 @@
 {
-  "welcome": "Welcome",
   "home": {
-    "title": "Home1",
-    "description": "This is the home page"
+    "header": "Your hydration today",
+    "welcome": "Welcome to Drinky!"
+  },
+  "tabBar": {
+    "home": "Home",
+    "history": "History"
+  },
+  "button": {
+    "back": "Back",
+    "continue": "Continue"
+  },
+  "history": {
+    "header": "History",
+    "todayTotal": "Today's total",
+    "total": "Total"
+  },
+  "unit": {
+    "millilitersAbbrv": "ml",
+    "hoursAbbrv": "h",
+    "minutesAbbrv": "m",
+    "kilogramAbbrv": "kg"
+  },
+  "drinks": {
+    "untilSober": "until sober",
+    "quantityPrompt": "How much",
+    "drinkTypePrompt": "What did you drink?"
+  },
+  "modal": {
+    "yes": "Yes",
+    "no": "No",
+    "ok": "Ok"
+  },
+  "settings": {
+    "header": "Settings",
+    "account": {
+      "accountHeader": "Account",
+      "loginHeader": "Login",
+      "registerHeader": "Register",
+      "forgotPwHeader": "Forgot Password",
+      "accountSettingsHeader": "Account Settings",
+      "loginApple": "Sign in with Apple",
+      "login": "Login",
+      "register": "Register",
+      "username": "Username",
+      "email": "E-mail",
+      "verifyEmail": "Verification Email Sent! Please check your email to verify your account!",
+      "password": "Password",
+      "confPassword": "Confirm Password",
+      "forgotPwText": "Forgot Password",
+      "logout": "Log out",
+      "logoutPrompt": "Are you sure you want to log out?",
+      "resetLocalData": "Reset local data?",
+      "forgotPw": {
+        "infoText1": "Don't worry! Just enter the email address of your account.",
+        "infoText2": "We will send you a link to reset your password :)",
+        "sendConfEmail": "Send E-mail",
+        "confEmailSentSucc": "We've sent out an email to your address. Please check your inbox!",
+        "confEmailSentFail": "Couldn't send email. Please try again later"
+      }
+    },
+    "about": {
+      "header": "About"
+    },
+    "language": {
+      "header": "Language"
+    },
+    "notifications": {
+      "header": "Notifications"
+    },
+    "profile": {
+      "header": "Metrics & Body Measurements",
+      "gender": "Gender",
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "genderPrompt": "What is your gender?",
+      "namePrompt": "What is your name?",
+      "weight": "Weight",
+      "weightPrompt": "How much do you weigh?",
+      "exercisePrompt": "Do you do exercise?",
+      "exerciseLow": "No",
+      "exerciseMid": "Sometimes",
+      "exerciseHigh": "Often",
+      "calcDailyIntake": "Calculating daily intake...",
+      "dailyIntake": "Calculated daily water intake",
+      "save": "Save changes"
+    },
+    "statistics": {
+      "header": "Statistics & History"
+    },
+    "themes": {
+      "header": "Themes"
+    },
+    "comingSoon": "Coming soon..."
+  },
+  "error": {
+    "general": "Something went wrong. Please try again.",
+    "unverifiedEmailErr": "Email address not verified! Please check your inbox!",
+    "dataFetchFailedErr": "We were unable to fetch your data :(",
+    "logoutErr": "An error occured while trying to sign out. Please try again."
+  },
+  "validation": {
+    "emptyEmail": "Please enter your e-mail",
+    "invalidEmail": "Invalid e-mail",
+    "wrongEmailOrPw": "Wrong e-mail or password",
+    "invalidWeight": "Please enter a meaningful weight!",
+    "emptyUsername": "Please enter your username",
+    "invalidUsername": "Your username must be at least 3 characters long!",
+    "emptyPassword": "Please enter your password",
+    "passwordDigitRule": "Password must contain at least one digit",
+    "passwordMinLenRule": "Password must be at least {{pwMinLen}} characters long",
+    "passwordMaxLenRule": "Password must be maximum {{pwMaxLen}} characters long",
+    "passwordLowercaseCharRule": "Password must contain at least one lower case character",
+    "passwordUppercaseRule": "Password must contain at least one upper case character",
+    "invalidConfPassword": "Passwords do not match"
   }
 }

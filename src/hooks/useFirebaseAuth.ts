@@ -17,6 +17,7 @@ import {
   AppleAuthenticationScope,
   signInAsync,
 } from "expo-apple-authentication";
+import { useTranslation } from "react-i18next";
 
 import { useModal } from "@/hooks/useModal";
 
@@ -91,6 +92,7 @@ function useFirebaseAuth(): {
   firebaseSignInWithApple: FirebaseSignInWithApple;
   firebaseLogout: FirebaseLogout;
 } {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const auth = getAuth();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -138,7 +140,7 @@ function useFirebaseAuth(): {
         await signOut(auth);
         setLoading(false);
         openModal({
-          modalText: "Email address not verified! Please check your inbox!",
+          modalText: t("error.unverifiedEmailErr"),
         });
         return;
       }
@@ -199,7 +201,7 @@ function useFirebaseAuth(): {
         dispatch(setUserAuth(authData));
       } else {
         openModal({
-          modalText: "We were unable to fetch your data :(",
+          modalText: t("error.dataFetchFailedErr"),
         });
         console.error("Unable to load user data --> userData falsy");
       }
@@ -217,16 +219,16 @@ function useFirebaseAuth(): {
       if (errMsg.includes("invalid-email")) {
         setFormErrors((prevErrors) => ({
           ...prevErrors,
-          email: "Invalid e-mail",
+          email: t("validation.invalidEmail"),
         }));
       } else if (errMsg.includes("invalid-credential")) {
         setFormErrors((prevErrors) => ({
           ...prevErrors,
-          email: "Wrong e-mail or password",
+          email: t("validation.wrongEmailOrPw"),
         }));
       } else {
         openModal({
-          modalText: "Something went wrong. Please try again.",
+          modalText: t("error.general"),
         });
       }
       console.error(errMsg);
@@ -282,8 +284,7 @@ function useFirebaseAuth(): {
         setLoading(false);
 
         openModal({
-          modalText:
-            "Verification Email Sent! Please check your email to verify your account!",
+          modalText: t("settings.account.verifyEmail"),
           onConfirm: () => {
             navigation.navigate(MainRouteName.Home);
           },
@@ -292,7 +293,7 @@ function useFirebaseAuth(): {
         setLoading(false);
         console.error("Error during registration:", error);
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: "error.general",
         });
       }
 
@@ -317,7 +318,7 @@ function useFirebaseAuth(): {
       if (!appleCredentials.identityToken) {
         console.error("Couldn't fetch identityToken from appleCredentials");
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: t("error.general"),
         });
         return;
       }
@@ -337,7 +338,7 @@ function useFirebaseAuth(): {
       if (!user.email) {
         console.error("Apple returned nil email");
         openModal({
-          modalText: "Something went wrong.",
+          modalText: t("error.general"),
         });
         return;
       }
@@ -347,7 +348,7 @@ function useFirebaseAuth(): {
       if (!additionalUserInfo) {
         console.error("Additional user info is null");
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: t("error.general"),
         });
         return;
       }
@@ -421,7 +422,7 @@ function useFirebaseAuth(): {
     } catch (e) {
       if (e instanceof Error && e.message !== signInWithAppleCanceled) {
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: t("error.general"),
         });
       }
       console.error(e);
@@ -442,8 +443,7 @@ function useFirebaseAuth(): {
     } catch (error) {
       console.error("Error signing out:", error);
       openModal({
-        modalText:
-          "An error occured while trying to sign out. Please try again.",
+        modalText: t("error.logoutErr"),
       });
     }
   };

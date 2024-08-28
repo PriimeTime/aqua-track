@@ -5,18 +5,23 @@ import { PrimaryText } from "@/components/texts";
 import { SettingsItem } from "@/components/settings/SettingsItem";
 import { GradientWrapper } from "@/components/wrappers";
 import { CustomFlatList } from "@/components/lists";
+import { useTranslation } from "react-i18next";
 
 import { settingsList } from "@/utils/maps";
 import { headerFontSize } from "@/utils/constants/components/typography";
 
 function SettingsList() {
+  const { t } = useTranslation();
+
   return (
     <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButtonWrapper}>
         <BackButton />
       </View>
       <View style={styles.headerWrapper}>
-        <PrimaryText fontSize={headerFontSize}>{"Settings"}</PrimaryText>
+        <PrimaryText fontSize={headerFontSize}>
+          {t("settings.header")}
+        </PrimaryText>
       </View>
       <CustomFlatList
         data={settingsList}

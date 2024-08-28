@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { CustomTextField } from "@/components/input";
@@ -13,6 +14,8 @@ interface AccountDetailsProps {
 }
 
 function AccountDetails({ onLogout }: AccountDetailsProps) {
+  const { t } = useTranslation();
+
   const userAuth = useSelector(
     (state: UserDataState) => state.userData.userAuth
   );
@@ -24,7 +27,7 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
         readOnly
         value={userAuth.userName ?? ""}
         fullWidth
-        label="Username"
+        label={t("settings.account.username")}
         labelColor={color.BLUE}
       ></CustomTextField>
       <CustomTextField
@@ -32,11 +35,11 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
         readOnly
         value={userAuth.email ?? ""}
         fullWidth
-        label="E-mail"
+        label={t("settings.account.email")}
         labelColor={color.BLUE}
       ></CustomTextField>
       <PrimaryButton btnColor={color.RED} onPress={onLogout}>
-        {"log out".toUpperCase()}
+        {t("settings.account.logout").toUpperCase()}
       </PrimaryButton>
     </>
   );

@@ -41,6 +41,7 @@ const useAuth = () => {
             writeAsyncStorage(TOKEN_KEY, tokens);
           });
         } catch (error) {
+          // TODO: implement force user logout here too
           console.error("Failed to get ID token or save tokens:", error);
         }
       } else {
