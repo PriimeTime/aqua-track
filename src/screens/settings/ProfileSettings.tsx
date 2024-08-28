@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, StackActions } from "@react-navigation/native";
+import { Text } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { ContentPage } from "@/components/wrappers";
 import { CustomTextField, CustomSelectBox } from "@/components/input";
@@ -25,6 +27,7 @@ import { color, initialUserMetrics } from "@/utils/constants";
 import { useModal } from "@/hooks";
 
 function ProfileSettings() {
+  const { t } = useTranslation();
   const popAction = StackActions.pop(1);
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -75,6 +78,8 @@ function ProfileSettings() {
 
   return (
     <ContentPage title="Metrics & Body Measurements">
+      <Text>asdf</Text>
+      <Text>{t("home.title")}</Text>
       {/* <InputContentWrapper>
         <CustomTextField
           inputType={CustomTextFieldInputType.Number}

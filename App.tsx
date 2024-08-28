@@ -6,6 +6,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GradientWrapper } from "@/components/wrappers";
+import { I18nextProvider } from "react-i18next";
+import i18n from "@/i18n/config";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -24,7 +26,9 @@ export default function App() {
     <GradientWrapper style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <SafeAreaProvider>
         <Provider store={store}>
-          <MainAppScreen></MainAppScreen>
+          <I18nextProvider i18n={i18n}>
+            <MainAppScreen></MainAppScreen>
+          </I18nextProvider>
         </Provider>
       </SafeAreaProvider>
     </GradientWrapper>
