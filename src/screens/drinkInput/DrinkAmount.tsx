@@ -135,9 +135,7 @@ function DrinkAmount() {
   const drinkTypeObject = drinkTypeList.find(
     (item) => item.typeID === drinkType.typeID
   );
-  const drinkTypeLabel = drinkTypeObject
-    ? drinkTypeObject.label.toLowerCase() + " "
-    : "";
+  const drinkTypeLabel = drinkTypeObject ? t(drinkTypeObject.label) + " " : "";
 
   return (
     <GradientWrapper style={styles.wrapper}>

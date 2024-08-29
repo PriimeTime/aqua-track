@@ -1,4 +1,4 @@
 export interface SelectBoxItem {
-  id: number;
-  title: string;
+  id: string;
+  label: string;
 }

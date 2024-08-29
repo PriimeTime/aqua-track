@@ -59,9 +59,9 @@ interface AskWrapperProps {
  *  inputType={FormInputType.ExerciseLvl}
  *  nextRoute={StartupRouteName.CalcIntake}
  *  selectBoxItems={[
- *      { id: 1, title: "No" },
- *      { id: 2, title: "Sometimes" },
- *      { id: 3, title: "Often" },
+ *      { id: "no", label: "No" },
+ *      { id: "sometimes", label: "Sometimes" },
+ *      { id: "often", label: "Often" },
  *  ]}
  * />
  */
@@ -90,7 +90,7 @@ function AskWrapper({
   /** Set default input value on component mount */
   useEffect(() => {
     if (selectBoxItems && !input) {
-      setInput(selectBoxItems[0]!.title);
+      setInput(selectBoxItems[0]!.id);
     }
   }, [selectBoxItems]);
 
@@ -104,7 +104,7 @@ function AskWrapper({
           isVertical
           items={selectBoxItems}
           handleOnSelect={(value) => setInput(value)}
-          value={input || selectBoxItems[0]!.title} // value should be the input. If there is no input yet, take first object of select array
+          value={input || t(selectBoxItems[0]!.id)} // If there is no input yet, take first object of select array
         ></CustomSelectBox>
       );
     }

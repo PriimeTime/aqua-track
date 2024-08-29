@@ -65,7 +65,7 @@ function AccountSettings() {
     setTitle(getTitle(accountSettingsState));
   }, [accountSettingsState]);
 
-  const [title, setTitle] = useState("initial title");
+  const [title, setTitle] = useState(t("settings.account.accountHeader"));
 
   const handleConfirmLogout = () => {
     firebaseLogout(shouldResetLocalData);

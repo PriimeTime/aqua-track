@@ -3,14 +3,19 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "react-native-localize";
 import en from "./locales/en.json";
+import de from "./locales/de.json";
+import hu from "./locales/hu.json";
 
 const resources = {
   en: {
     translation: en,
   },
-  // fr: {
-  //   translation: fr,
-  // },
+  de: {
+    translation: de,
+  },
+  hu: {
+    translation: hu,
+  },
 };
 
 const languageDetector = {
@@ -31,7 +36,7 @@ i18n
     compatibilityJSON: "v3",
     resources,
     fallbackLng: "en",
-    debug: true,
+    debug: false,
     interpolation: {
       escapeValue: false, // React already escapes content
     },

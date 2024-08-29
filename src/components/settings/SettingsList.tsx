@@ -30,7 +30,7 @@ function SettingsList() {
         renderItem={({ item }) => (
           <SettingsItem
             imageSrc={item.imageSrc}
-            title={item.title}
+            title={t(item.title)}
             routeName={item.routeName}
           />
         )}

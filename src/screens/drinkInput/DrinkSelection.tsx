@@ -61,7 +61,7 @@ function DrinkSelection() {
             imageSrc={item.imageSrc}
             onPress={() => handleButtonPress(item)}
           >
-            {item.label}
+            {t(item.label)}
           </CardButton>
         )}
       ></CustomFlatList>

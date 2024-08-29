@@ -25,7 +25,18 @@
   "drinks": {
     "untilSober": "until sober",
     "quantityPrompt": "How much",
-    "drinkTypePrompt": "What did you drink?"
+    "drinkTypePrompt": "What did you drink?",
+    "water": "Water",
+    "juice": "Juice",
+    "soda": "Soda",
+    "coffee": "Coffee",
+    "dairy": "Dairy",
+    "tea": "Tea",
+    "energyDrink": "Energy Drink",
+    "beer": "Beer",
+    "cocktail": "Cocktail",
+    "wine": "Wine",
+    "spirit": "Spirit"
   },
   "modal": {
     "yes": "Yes",
@@ -45,7 +56,7 @@
       "register": "Register",
       "username": "Username",
       "email": "E-mail",
-      "verifyEmail": "Verification Email Sent! Please check your email to verify your account!",
+      "verifyEmail": "Verification e-mail Sent! Please check your e-mail to verify your account!",
       "password": "Password",
       "confPassword": "Confirm Password",
       "forgotPwText": "Forgot Password",
@@ -53,11 +64,11 @@
       "logoutPrompt": "Are you sure you want to log out?",
       "resetLocalData": "Reset local data?",
       "forgotPw": {
-        "infoText1": "Don't worry! Just enter the email address of your account.",
+        "infoText1": "Don't worry! Just enter the e-mail address of your account.",
         "infoText2": "We will send you a link to reset your password :)",
-        "sendConfEmail": "Send E-mail",
-        "confEmailSentSucc": "We've sent out an email to your address. Please check your inbox!",
-        "confEmailSentFail": "Couldn't send email. Please try again later"
+        "sendConfEmail": "Send e-mail",
+        "confEmailSentSucc": "We've sent out an e-mail to your address. Please check your inbox!",
+        "confEmailSentFail": "Couldn't send e-mail. Please try again later"
       }
     },
     "about": {
@@ -83,8 +94,8 @@
       "exerciseLow": "No",
       "exerciseMid": "Sometimes",
       "exerciseHigh": "Often",
-      "calcDailyIntake": "Calculating daily intake...",
-      "dailyIntake": "Calculated daily water intake",
+      "calcDailyIntake": "Calculating recommended daily intake...",
+      "dailyIntake": "Recommended daily water intake",
       "save": "Save changes"
     },
     "statistics": {
@@ -97,7 +108,8 @@
   },
   "error": {
     "general": "Something went wrong. Please try again.",
-    "unverifiedEmailErr": "Email address not verified! Please check your inbox!",
+    "unverifiedEmailErr": "E-mail address not verified! Please check your inbox!",
+    "emailAlreadyInUse": "This E-mail address is already in use!",
     "dataFetchFailedErr": "We were unable to fetch your data :(",
     "logoutErr": "An error occured while trying to sign out. Please try again."
   },

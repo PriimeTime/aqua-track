@@ -1,0 +1,131 @@
+{
+  "home": {
+    "header": "A mai hidratációd",
+    "welcome": "Üdv a Drinky-ben!"
+  },
+  "tabBar": {
+    "home": "Kezdőlap",
+    "history": "Előzmények"
+  },
+  "button": {
+    "back": "Vissza",
+    "continue": "Folytatás"
+  },
+  "history": {
+    "header": "Előzmények",
+    "todayTotal": "Mai összes",
+    "total": "Összesen"
+  },
+  "unit": {
+    "millilitersAbbrv": "ml",
+    "hoursAbbrv": "ó",
+    "minutesAbbrv": "p",
+    "kilogramAbbrv": "kg"
+  },
+  "drinks": {
+    "untilSober": "józanodásig",
+    "quantityPrompt": "Mennyit ittál?",
+    "drinkTypePrompt": "Mit ittál?",
+    "water": "Víz",
+    "juice": "Gyümölcslé",
+    "soda": "Szóda",
+    "coffee": "Kávé",
+    "dairy": "Tej",
+    "tea": "Tea",
+    "energyDrink": "Energiaital",
+    "beer": "Sör",
+    "cocktail": "Koktél",
+    "wine": "Bor",
+    "spirit": "Szesz"
+  },
+  "modal": {
+    "yes": "Igen",
+    "no": "Nem",
+    "ok": "Oké"
+  },
+  "settings": {
+    "header": "Beállítások",
+    "account": {
+      "accountHeader": "Fiók",
+      "loginHeader": "Bejelentkezés",
+      "registerHeader": "Regisztráció",
+      "forgotPwHeader": "Elfelejtett jelszó",
+      "accountSettingsHeader": "Fiókbeállítások",
+      "loginApple": "Bejelentkezés Apple-lel",
+      "login": "Bejelentkezés",
+      "register": "Regisztráció",
+      "username": "Felhasználónév",
+      "email": "E-mail",
+      "verifyEmail": "Ellenőrző e-mail elküldve! Nézd meg az e-mail fiókodat, és erősítsd meg a fiókodat!",
+      "password": "Jelszó",
+      "confPassword": "Jelszó megerősítése",
+      "forgotPwText": "Elfelejtett jelszó",
+      "logout": "Kijelentkezés",
+      "logoutPrompt": "Biztos ki akarsz jelentkezni?",
+      "resetLocalData": "Helyi adatok visszaállítása?",
+      "forgotPw": {
+        "infoText1": "Ne aggódj! Csak add meg a fiókod e-mail címét.",
+        "infoText2": "Küldünk egy linket, amivel visszaállíthatod a jelszavad :)",
+        "sendConfEmail": "E-mail küldése",
+        "confEmailSentSucc": "Küldtünk egy e-mailt. Nézd meg a beérkezettek között!",
+        "confEmailSentFail": "Nem sikerült elküldeni az e-mailt. Próbáld újra később!"
+      }
+    },
+    "about": {
+      "header": "Rólunk"
+    },
+    "language": {
+      "header": "Nyelv"
+    },
+    "notifications": {
+      "header": "Értesítések"
+    },
+    "profile": {
+      "header": "Testméretek és adatok",
+      "gender": "Nem",
+      "male": "Férfi",
+      "female": "Nő",
+      "other": "Egyéb",
+      "genderPrompt": "Mi a nemed?",
+      "namePrompt": "Hogy hívnak?",
+      "weight": "Súly",
+      "weightPrompt": "Mennyi a súlyod?",
+      "exercisePrompt": "Szoktál sportolni?",
+      "exerciseLow": "Nem",
+      "exerciseMid": "Néha",
+      "exerciseHigh": "Gyakran",
+      "calcDailyIntake": "Ajánlott napi vízbevitel kiszámítása...",
+      "dailyIntake": "Ajánlott napi vízbevitel",
+      "save": "Változások mentése"
+    },
+    "statistics": {
+      "header": "Statisztikák és előzmények"
+    },
+    "themes": {
+      "header": "Témák"
+    },
+    "comingSoon": "Hamarosan elérhető..."
+  },
+  "error": {
+    "general": "Valami hiba történt. Próbáld újra!",
+    "unverifiedEmailErr": "Az e-mail címed nincs megerősítve! Nézd meg a beérkezett üzeneteket!",
+    "dataFetchFailedErr": "Nem sikerült letölteni az adatokat :(",
+    "emailAlreadyInUse": "Ezzel az e-mail címmel már regisztráltak!",
+    "logoutErr": "Hiba történt a kijelentkezés során. Próbáld újra!"
+  },
+  "validation": {
+    "emptyEmail": "Kérlek, add meg az e-mail címedet!",
+    "invalidEmail": "Érvénytelen e-mail cím",
+    "wrongEmailOrPw": "Helytelen e-mail vagy jelszó",
+    "invalidWeight": "Kérlek, adj meg egy érvényes súlyt!",
+    "emptyUsername": "Kérlek, add meg a felhasználónevedet!",
+    "invalidUsername": "A felhasználónévnek legalább 3 karakter hosszúnak kell lennie!",
+    "emptyPassword": "Kérlek, add meg a jelszavadat!",
+    "passwordDigitRule": "A jelszónak tartalmaznia kell legalább egy számjegyet",
+    "passwordMinLenRule": "A jelszónak legalább {{pwMinLen}} karakter hosszúnak kell lennie",
+    "passwordMaxLenRule": "A jelszónak legfeljebb {{pwMaxLen}} karakter hosszúnak kell lennie",
+    "passwordLowercaseCharRule": "A jelszónak tartalmaznia kell legalább egy kisbetűt",
+    "passwordUppercaseRule": "A jelszónak tartalmaznia kell legalább egy nagybetűt",
+    "invalidConfPassword": "A jelszavak nem egyeznek"
+  }
+}

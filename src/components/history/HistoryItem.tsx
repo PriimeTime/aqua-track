@@ -51,7 +51,7 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
         ></Image>
       </View>
       <View style={styles.cardInfoWrapper}>
-        <PrimaryText fontSize={paragraphLargeFontSize}>{title}</PrimaryText>
+        <PrimaryText fontSize={paragraphLargeFontSize}>{t(title)}</PrimaryText>
         <SecondaryText fontSize={paragraphMediumFontSize}>
           {getHoursMinutesFromUnixDate(date)}
         </SecondaryText>

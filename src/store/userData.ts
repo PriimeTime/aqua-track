@@ -6,6 +6,9 @@ import { UserMetrics } from "@/models/UserMetrics";
 
 import { initialUserAuth, initialUserMetrics } from "@/utils/constants";
 
+import { Gender } from "@/enums/settings/Gender";
+import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
+
 const initialState: UserData = {
   userMetrics: initialUserMetrics,
   userAuth: initialUserAuth,
@@ -39,13 +42,13 @@ const userDataSlice = createSlice({
     setUsername: (state, action: PayloadAction<string>) => {
       state.userAuth.userName = action.payload;
     },
-    setGender: (state, action: PayloadAction<string>) => {
+    setGender: (state, action: PayloadAction<Gender>) => {
       state.userMetrics.gender = action.payload;
     },
     setWeight: (state, action: PayloadAction<number>) => {
       state.userMetrics.weight = action.payload;
     },
-    setExerciseLvl: (state, action: PayloadAction<string>) => {
+    setExerciseLvl: (state, action: PayloadAction<ExerciseLevel>) => {
       state.userMetrics.exerciseLvl = action.payload;
     },
     setUserAuth: (state, action: PayloadAction<UserAuth>) => {

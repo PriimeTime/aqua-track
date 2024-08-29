@@ -7,6 +7,7 @@ import {
   signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
+  UserCredential,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
@@ -28,9 +29,10 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { loadUserData, updateUserData } from "@/utils/database";
 import { clearAuthData, saveAuthData } from "@/utils/auth";
 import {
+  ERROR_EMAIL_ALREADY_IN_USE,
   initialUserAuth,
   ONE_MONTH,
-  signInWithAppleCanceled,
+  ERROR_APPLE_SIGNIN_CANCELLED,
 } from "@/utils/constants";
 
 import { UserAuth } from "@/models/UserAuth";
@@ -253,55 +255,65 @@ function useFirebaseAuth(): {
 
     try {
       // Create user in firebase
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      let userCredentials: UserCredential | null = null;
+      try {
+        userCredentials = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+      } catch (err) {
+        const error = new Error(ERROR_EMAIL_ALREADY_IN_USE);
+        throw error.message;
+      }
 
       const user = userCredentials.user;
       const userUID: UserUID = user.uid;
 
-      try {
-        // Write user with userAuth object into users document in Firestore
-        const userDocRef = doc(firestore, "users", userUID);
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: {
-              email: email,
-              uid: userUID,
-              userName: userAuth.userName,
-              firstLogin: true,
-            },
+      // Write user with userAuth object into users document in Firestore
+      const userDocRef = doc(firestore, "users", userUID);
+      await setDoc(
+        userDocRef,
+        {
+          userAuth: {
+            email: email,
+            uid: userUID,
+            userName: userAuth.userName,
+            firstLogin: true,
           },
-          { merge: true }
-        ); // Merges data with existing document
+        },
+        { merge: true }
+      ); // Merges data with existing document
 
-        // Send the email verification to the email the user input in the form
-        await sendEmailVerification(user);
+      // Send the email verification to the email the user input in the form
+      await sendEmailVerification(user);
 
-        setLoading(false);
+      setLoading(false);
 
-        openModal({
-          modalText: t("settings.account.verifyEmail"),
-          onConfirm: () => {
-            navigation.navigate(MainRouteName.Home);
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        console.error("Error during registration:", error);
-        openModal({
-          modalText: "error.general",
-        });
-      }
+      openModal({
+        modalText: t("settings.account.verifyEmail"),
+        onConfirm: () => {
+          navigation.navigate(MainRouteName.Home);
+        },
+      });
 
       resetFormState();
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setLoading(false);
+
+      /* Handle errors */
+      switch (error) {
+        case ERROR_EMAIL_ALREADY_IN_USE:
+          openModal({
+            modalText: t("error.emailAlreadyInUse"),
+          });
+          return;
+      }
+
+      openModal({
+        modalText: t("error.general"),
+      });
     }
   };
 
@@ -420,7 +432,7 @@ function useFirebaseAuth(): {
       // Navigate to home screen after successful signin
       navigation.navigate(MainRouteName.Home);
     } catch (e) {
-      if (e instanceof Error && e.message !== signInWithAppleCanceled) {
+      if (e instanceof Error && e.message !== ERROR_APPLE_SIGNIN_CANCELLED) {
         openModal({
           modalText: t("error.general"),
         });

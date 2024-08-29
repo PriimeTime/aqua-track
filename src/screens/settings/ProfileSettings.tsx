@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, StackActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,8 @@ import { type UserDataState } from "@/types/store/UserDataState";
 import { UserMetrics } from "@/models/UserMetrics";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+import { Gender } from "@/enums/settings/Gender";
+import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
 
 import { calculateDailyHydrationGoalInMl, numToString } from "@/utils/helpers";
 
@@ -37,6 +39,13 @@ function ProfileSettings() {
 
   const { genderSelectBoxItems, exerciseLevelSelectBoxItems } =
     useSelectBoxItems();
+
+  useEffect(() => {
+    /* Recalculate daily water intake on render
+      to make sure it is always up to date
+      (Could be out of sync when i.e. changing language) */
+    recalculateDailyWaterIntakeInMl();
+  }, []);
 
   const recalculateDailyWaterIntakeInMl = () => {
     let dailyHydrationGoalInMl = initialUserMetrics.dailyHydrationGoal;
@@ -91,7 +100,7 @@ function ProfileSettings() {
         <CustomSelectBox
           items={genderSelectBoxItems}
           label={t("settings.profile.gender")}
-          handleOnSelect={(value) => handleOnChange(value, "gender")}
+          handleOnSelect={(value) => handleOnChange(value as Gender, "gender")}
           value={metricObject.gender}
         ></CustomSelectBox>
       </InputContentWrapper>
@@ -123,7 +132,9 @@ function ProfileSettings() {
         <CustomSelectBox
           items={exerciseLevelSelectBoxItems}
           label={t("settings.profile.exercisePrompt")}
-          handleOnSelect={(value) => handleOnChange(value, "exerciseLvl")}
+          handleOnSelect={(value) =>
+            handleOnChange(value as ExerciseLevel, "exerciseLvl")
+          }
           value={metricObject.exerciseLvl}
         ></CustomSelectBox>
       </InputContentWrapper>

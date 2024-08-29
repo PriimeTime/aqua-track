@@ -21,6 +21,7 @@ import {
 } from "@/utils/constants/components";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 interface CustomTabBarProps {
   state: TabNavigationState<ParamListBase>;
@@ -36,10 +37,10 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
         let label = "";
 
         switch (route.name) {
-          case "Home":
+          case MainRouteName.Home:
             label = t("tabBar.home");
             break;
-          case "History":
+          case MainRouteName.History:
             label = t("tabBar.history");
             break;
         }

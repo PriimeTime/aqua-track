@@ -4,16 +4,13 @@ import { useEffect, useState } from "react";
 import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 
-import { SecondaryText } from "@/components/texts";
+import { SelectBoxItem } from "@/models/SelectBoxItem";
 
-interface CustomSelectBoxItem {
-  id: number;
-  title: string;
-}
+import { SecondaryText } from "@/components/texts";
 
 interface CustomSelectBoxProps<T> {
   value: T;
-  items: CustomSelectBoxItem[];
+  items: SelectBoxItem[];
   handleOnSelect: (value: string) => void;
   isVertical?: boolean;
   label?: string;
@@ -26,9 +23,9 @@ interface CustomSelectBoxProps<T> {
  *
  * @template T - The type of the value prop.
  *
- * @param {*} value - currently selected value -> this should match the `title` of one of the items
- * @param {*} items - array of objects representing the selectable items -> each item should have a unique `id` and a `title` string
- * @param {*} handleOnSelect - callback function that is triggered when an item is selected -> function receives the `title` of the selected item as an argument
+ * @param {*} value - currently selected value
+ * @param {*} items - array of objects representing the selectable items -> each item should have a unique `id` and a `label` string
+ * @param {*} handleOnSelect - callback function that is triggered when an item is selected -> function receives the `id` of the selected item as an argument
  * @param isVertical - if true, the selection box will be displayed vertically
  * @param label - label to display above the selection box list
  *
@@ -39,9 +36,9 @@ interface CustomSelectBoxProps<T> {
  * <CustomSelectBox
  *   value={selectedItem}
  *   items={[
- *     { id: 1, title: "Option 1" },
- *     { id: 2, title: "Option 2" },
- *     { id: 3, title: "Option 3" },
+ *     { id: "op1", label: "Option 1" },
+ *     { id: "op2", label: "Option 2" },
+ *     { id: "op3", label: "Option 3" },
  *   ]}
  *   handleOnSelect={(selectedValue) => {
  *     console.log("Selected:", selectedValue);
@@ -58,20 +55,20 @@ function CustomSelectBox<T>({
   isVertical,
   label,
 }: CustomSelectBoxProps<T>) {
-  const [selectedItemId, setSelectedItemId] = useState(-1);
+  const [selectedItemId, setSelectedItemId] = useState("-1");
 
   useEffect(() => {
     if (value) {
-      const selectedItem = items.find((item) => item.title === value);
+      const selectedItem = items.find((item) => item.id === value);
       if (selectedItem) {
         setSelectedItemId(selectedItem.id);
       }
     }
   }, [value, items]);
 
-  const handleOnPress = ({ id, title }: CustomSelectBoxItem) => {
-    setSelectedItemId(id);
-    handleOnSelect(title);
+  const handleOnPress = (itemId: string) => {
+    setSelectedItemId(itemId);
+    handleOnSelect(itemId);
   };
 
   return (
@@ -106,7 +103,7 @@ function CustomSelectBox<T>({
                   selectedItemId === item.id ? color.BLUE : color.WHITE,
               },
             ]}
-            onPress={() => handleOnPress(item)}
+            onPress={() => handleOnPress(item.id)}
           >
             <Text
               style={[
@@ -117,7 +114,7 @@ function CustomSelectBox<T>({
                 },
               ]}
             >
-              {item.title}
+              {item.label}
             </Text>
           </Pressable>
         ))}
