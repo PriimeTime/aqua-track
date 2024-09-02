@@ -1,10 +1,10 @@
-import { Animated, Pressable, ViewStyle } from "react-native";
-import { useRef } from "react";
+import { Pressable, ViewStyle } from "react-native";
+import { useState } from "react";
 
 import WaterDrop from "../../../assets/icons/WaterDrop.svg";
+import WaterDropPressed from "../../../assets/icons/WaterDropPressed.svg"; // TODO: replace this with a pressed state .svg
 
 import { waterDropButtonSize } from "@/utils/constants/components/buttons";
-import { animatedScaleValue } from "@/utils/animations";
 
 interface WaterDropButtonProps {
   onPress: () => void;
@@ -12,42 +12,32 @@ interface WaterDropButtonProps {
 }
 
 function WaterDropButton({ onPress, style, ...props }: WaterDropButtonProps) {
-  const scale = useRef(animatedScaleValue(1)).current;
+  const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
-    Animated.spring(scale, {
-      toValue: 1.2,
-      useNativeDriver: true,
-    }).start();
+    setIsPressed(true);
   };
 
   const handlePressOut = () => {
-    Animated.spring(scale, {
-      toValue: 1,
-      friction: 30,
-      tension: 70,
-      useNativeDriver: true,
-    }).start();
+    setIsPressed(false);
+    onPress();
   };
 
   return (
     <Pressable
       {...props}
       style={style}
-      onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
-      <Animated.View
-        style={{
-          transform: [{ scale }],
-        }}
-      >
-        <WaterDrop
+      {isPressed ? (
+        <WaterDropPressed
           width={waterDropButtonSize}
           height={waterDropButtonSize}
-        ></WaterDrop>
-      </Animated.View>
+        />
+      ) : (
+        <WaterDrop width={waterDropButtonSize} height={waterDropButtonSize} />
+      )}
     </Pressable>
   );
 }

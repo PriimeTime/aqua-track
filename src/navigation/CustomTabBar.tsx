@@ -58,9 +58,7 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
         const onPress = () => {
           if (!isFocused) {
             if (route.name === DrinkRouteName.DrinkInput) {
-              setTimeout(() => {
-                navigation.navigate(DrinkRouteName.DrinkSelection); // Update the navigation target for AddDrink
-              }, 100);
+              navigation.navigate(DrinkRouteName.DrinkSelection); // Update the navigation target for AddDrink
             } else {
               navigation.navigate(route.name);
             }
