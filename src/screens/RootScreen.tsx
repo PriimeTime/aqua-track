@@ -33,7 +33,7 @@ function RootScreen() {
           ></SettingsButton>
         </View>
         <View style={styles.headerWrapper}>
-          <MainHeader></MainHeader>
+          <MainHeader />
         </View>
         <View style={styles.totalIntakeWrapper}>
           <IntakeInfoCard></IntakeInfoCard>

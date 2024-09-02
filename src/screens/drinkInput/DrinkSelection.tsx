@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts";
 import { CardButton, BackButton } from "@/components/buttons";
@@ -23,6 +24,8 @@ const spacing = 16; // Spacing for the flatlist items in pixels
 const itemWidth = (screenWidth - spacing * (numColumns + 1)) / numColumns;
 
 function DrinkSelection() {
+  const { t } = useTranslation();
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const scaleValue = useRef(animatedScaleValue(1)).current;
@@ -39,7 +42,7 @@ function DrinkSelection() {
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText fontSize={headerFontSize}>
-            {"What did you drink?"}
+            {t("drinks.drinkTypePrompt")}
           </PrimaryText>
         </Animated.View>
       </View>
@@ -58,7 +61,7 @@ function DrinkSelection() {
             imageSrc={item.imageSrc}
             onPress={() => handleButtonPress(item)}
           >
-            {item.label}
+            {t(item.label)}
           </CardButton>
         )}
       ></CustomFlatList>

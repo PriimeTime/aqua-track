@@ -21,6 +21,8 @@ interface CustomTextFieldProps {
   handleOnBlur?: () => void;
   handleOnFocus?: () => void;
   label?: string;
+  labelColor?: string;
+  inputColor?: string;
   placeholder?: string;
   customStyles?: StyleProp<ViewStyle>;
   readOnly?: boolean;
@@ -42,6 +44,7 @@ interface CustomTextFieldProps {
  * @param handleOnBlur - function to call when the text input loses focus
  * @param handleOnFocus - function to call when the text input gains focus
  * @param label - label text to display above the text input
+ * @param labelColor - color of label text to display above the text input
  * @param placeholder - placeholder text to display inside the textfield
  * @param customStyles - custom styles to apply to the text field wrapper
  * @param readOnly - indicates if the text input should be read-only
@@ -53,7 +56,7 @@ interface CustomTextFieldProps {
  * @returns the rendered CustomTextField component.
  *
  * @example
- * Usage:
+ *
  * <CustomTextField
  *   value={inputValue}
  *   handleOnChangeText={handleInputChange}
@@ -74,6 +77,8 @@ function CustomTextField({
   handleOnBlur,
   handleOnFocus,
   label,
+  labelColor,
+  inputColor,
   placeholder,
   customStyles,
   readOnly,
@@ -118,10 +123,12 @@ function CustomTextField({
       ]}
       {...props}
     >
-      <View style={styles.labelWrapper}>
+      <View
+        style={[styles.labelWrapper, { width: fullWidth ? "100%" : "50%" }]}
+      >
         <SecondaryText
           fontSize={paragraphMediumFontSize}
-          color={readOnly ? color.BLUE : color.DARK_BLUE}
+          color={labelColor ?? color.DARK_BLUE}
         >
           {label}
         </SecondaryText>
@@ -142,6 +149,7 @@ function CustomTextField({
             {
               textAlign,
               width: append ? "65%" : "90%",
+              color: inputColor ?? color.DARK_BLUE,
             },
           ]}
           autoCapitalize={
@@ -173,7 +181,6 @@ export { CustomTextField };
 
 const styles = StyleSheet.create({
   labelWrapper: {
-    width: "50%",
     marginBottom: "2.5%",
   },
   appendWrapper: {

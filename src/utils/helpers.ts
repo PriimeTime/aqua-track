@@ -1,3 +1,4 @@
+import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
 import { Gender } from "@/enums/settings/Gender";
 
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
@@ -43,7 +44,7 @@ const formatNumber = (num: number): number => {
  * @returns the positive percentage
  */
 const displayPositivePercent = (num: number, denom: number): number => {
-  return formatNumber((num / denom) * 100);
+  return denom === 0 ? 0 : Math.max(0, formatNumber((num / denom) * 100));
 };
 
 /**
@@ -149,16 +150,14 @@ const getHoursMinutesFromUnixDate = (unixDate: UnixDate): string => {
 const calculateBacAfterDrink = (
   drinkVolumeInMilliLitres: number,
   abv: number | undefined,
-  gender: string | null,
+  gender: Gender | null,
   weightInKg: number | null
 ) => {
   const alcoholInGrams =
     drinkVolumeInMilliLitres * (abv ?? 0) * ALCOHOL_DENSITY;
 
   const weightHelper =
-    (weightInKg ?? 0) *
-    ONE_THOUSAND *
-    distributionRatioByGender(convertStringToGender(gender));
+    (weightInKg ?? 0) * ONE_THOUSAND * distributionRatioByGender(gender);
 
   let bac = 0;
 
@@ -183,7 +182,7 @@ const calculateBacAfterDrink = (
  */
 const calculateCurrentBAC = (
   drinkHistory: DrinkHistoryItem[],
-  gender: string | null,
+  gender: Gender | null,
   weight: number | null,
   decimals: number = 3
 ) => {
@@ -261,27 +260,12 @@ const minsUntilSoberInteger = (currentBAC: number) => {
 
 /**
  *
- * @param {*} genderString - gender of user as a string
- * @returns gender of user as a Gender enum object
- *
- */
-const convertStringToGender = (genderString: string | null): Gender => {
-  switch (genderString?.toLowerCase() ?? "") {
-    case "female":
-      return Gender.Female;
-    case "male":
-      return Gender.Male;
-    default:
-      return Gender.Other;
-  }
-};
-
-/**
- *
  * @param {*} gender - gender of user
  * @returns the distribution ratio based on gender - needed for the Widmark Equation
  */
-const distributionRatioByGender = (gender: Gender): number => {
+const distributionRatioByGender = (gender: Gender | null): number => {
+  if (!gender) return DISTRIBUTION_RATIO_OTHER;
+
   switch (gender) {
     case Gender.Female:
       return DISTRIBUTION_RATIO_FEMALE;
@@ -290,6 +274,31 @@ const distributionRatioByGender = (gender: Gender): number => {
     default:
       return DISTRIBUTION_RATIO_OTHER;
   }
+};
+
+/**
+ *
+ * @param {*} weightInKg - weight of user in kg
+ * @param {*} exerciseLvl - exercise level of user
+ * @returns the daily hydration goal of the user in ml
+ */
+const calculateDailyHydrationGoalInMl = (
+  weightInKg: number,
+  exerciseLvl: ExerciseLevel
+) => {
+  /** Round daily hydration goal to nearest hundred milliliters */
+  let dailyHydrationGoalInMl = Math.round((weightInKg * 33.33) / 100) * 100;
+
+  switch (exerciseLvl) {
+    case ExerciseLevel.Sometimes:
+      dailyHydrationGoalInMl += 500;
+      break;
+    case ExerciseLevel.Often:
+      dailyHydrationGoalInMl += 1000;
+      break;
+  }
+
+  return dailyHydrationGoalInMl;
 };
 
 /* Empty function that does nothing */
@@ -310,5 +319,6 @@ export {
   minsUntilSoberInteger,
   hoursUntilSober,
   hoursUntilSoberInteger,
+  calculateDailyHydrationGoalInMl,
   emptyFunc,
 };

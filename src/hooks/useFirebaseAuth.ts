@@ -7,6 +7,7 @@ import {
   signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
+  UserCredential,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
@@ -17,6 +18,7 @@ import {
   AppleAuthenticationScope,
   signInAsync,
 } from "expo-apple-authentication";
+import { useTranslation } from "react-i18next";
 
 import { useModal } from "@/hooks/useModal";
 
@@ -26,7 +28,12 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 import { loadUserData, updateUserData } from "@/utils/database";
 import { clearAuthData, saveAuthData } from "@/utils/auth";
-import { ONE_MONTH, signInWithAppleCanceled } from "@/utils/constants";
+import {
+  ERROR_EMAIL_ALREADY_IN_USE,
+  initialUserAuth,
+  ONE_MONTH,
+  ERROR_APPLE_SIGNIN_CANCELLED,
+} from "@/utils/constants";
 
 import { UserAuth } from "@/models/UserAuth";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
@@ -51,7 +58,6 @@ type FirebaseLogin = (
 type FirebaseRegister = (
   email: string,
   password: string,
-  userName: string,
   resetFormState: () => void,
   setLoading: (isLoading: boolean) => void,
   validateForm: (isRegister: boolean) => boolean
@@ -88,6 +94,7 @@ function useFirebaseAuth(): {
   firebaseSignInWithApple: FirebaseSignInWithApple;
   firebaseLogout: FirebaseLogout;
 } {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const auth = getAuth();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -99,6 +106,9 @@ function useFirebaseAuth(): {
   );
   const userDrinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
+  );
+  const userAuth = useSelector(
+    (state: UserDataState) => state.userData.userAuth
   );
 
   const firebaseLogin: FirebaseLogin = async (
@@ -132,7 +142,7 @@ function useFirebaseAuth(): {
         await signOut(auth);
         setLoading(false);
         openModal({
-          modalText: "Email address not verified! Please check your inbox!",
+          modalText: t("error.unverifiedEmailErr"),
         });
         return;
       }
@@ -193,7 +203,7 @@ function useFirebaseAuth(): {
         dispatch(setUserAuth(authData));
       } else {
         openModal({
-          modalText: "We were unable to fetch your data :(",
+          modalText: t("error.dataFetchFailedErr"),
         });
         console.error("Unable to load user data --> userData falsy");
       }
@@ -211,16 +221,16 @@ function useFirebaseAuth(): {
       if (errMsg.includes("invalid-email")) {
         setFormErrors((prevErrors) => ({
           ...prevErrors,
-          email: "Invalid e-mail",
+          email: t("validation.invalidEmail"),
         }));
       } else if (errMsg.includes("invalid-credential")) {
         setFormErrors((prevErrors) => ({
           ...prevErrors,
-          email: "Wrong e-mail or password",
+          email: t("validation.wrongEmailOrPw"),
         }));
       } else {
         openModal({
-          modalText: "Something went wrong. Please try again.",
+          modalText: t("error.general"),
         });
       }
       console.error(errMsg);
@@ -231,7 +241,6 @@ function useFirebaseAuth(): {
   const firebaseRegister: FirebaseRegister = async (
     email,
     password,
-    userName,
     resetFormState,
     setLoading,
     validateForm
@@ -246,56 +255,65 @@ function useFirebaseAuth(): {
 
     try {
       // Create user in firebase
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      let userCredentials: UserCredential | null = null;
+      try {
+        userCredentials = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+      } catch (err) {
+        const error = new Error(ERROR_EMAIL_ALREADY_IN_USE);
+        throw error.message;
+      }
 
       const user = userCredentials.user;
       const userUID: UserUID = user.uid;
 
-      try {
-        // Write user with userAuth object into users document in Firestore
-        const userDocRef = doc(firestore, "users", userUID);
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: {
-              email: email,
-              uid: userUID,
-              userName: userName,
-              firstLogin: true,
-            },
+      // Write user with userAuth object into users document in Firestore
+      const userDocRef = doc(firestore, "users", userUID);
+      await setDoc(
+        userDocRef,
+        {
+          userAuth: {
+            email: email,
+            uid: userUID,
+            userName: userAuth.userName,
+            firstLogin: true,
           },
-          { merge: true }
-        ); // Merges data with existing document
+        },
+        { merge: true }
+      ); // Merges data with existing document
 
-        // Send the email verification to the email the user input in the form
-        await sendEmailVerification(user);
+      // Send the email verification to the email the user input in the form
+      await sendEmailVerification(user);
 
-        setLoading(false);
+      setLoading(false);
 
-        openModal({
-          modalText:
-            "Verification Email Sent! Please check your email to verify your account!",
-          onConfirm: () => {
-            navigation.navigate(MainRouteName.Home);
-          },
-        });
-      } catch (error) {
-        setLoading(false);
-        console.error("Error during registration:", error);
-        openModal({
-          modalText: "Something went wrong. Please try again later.",
-        });
-      }
+      openModal({
+        modalText: t("settings.account.verifyEmail"),
+        onConfirm: () => {
+          navigation.navigate(MainRouteName.Home);
+        },
+      });
 
       resetFormState();
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setLoading(false);
+
+      /* Handle errors */
+      switch (error) {
+        case ERROR_EMAIL_ALREADY_IN_USE:
+          openModal({
+            modalText: t("error.emailAlreadyInUse"),
+          });
+          return;
+      }
+
+      openModal({
+        modalText: t("error.general"),
+      });
     }
   };
 
@@ -312,7 +330,7 @@ function useFirebaseAuth(): {
       if (!appleCredentials.identityToken) {
         console.error("Couldn't fetch identityToken from appleCredentials");
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: t("error.general"),
         });
         return;
       }
@@ -332,7 +350,7 @@ function useFirebaseAuth(): {
       if (!user.email) {
         console.error("Apple returned nil email");
         openModal({
-          modalText: "Something went wrong.",
+          modalText: t("error.general"),
         });
         return;
       }
@@ -342,7 +360,7 @@ function useFirebaseAuth(): {
       if (!additionalUserInfo) {
         console.error("Additional user info is null");
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: t("error.general"),
         });
         return;
       }
@@ -414,9 +432,9 @@ function useFirebaseAuth(): {
       // Navigate to home screen after successful signin
       navigation.navigate(MainRouteName.Home);
     } catch (e) {
-      if (e instanceof Error && e.message !== signInWithAppleCanceled) {
+      if (e instanceof Error && e.message !== ERROR_APPLE_SIGNIN_CANCELLED) {
         openModal({
-          modalText: "Something went wrong. Please try again later.",
+          modalText: t("error.general"),
         });
       }
       console.error(e);
@@ -428,15 +446,8 @@ function useFirebaseAuth(): {
       // Sign out user
       await signOut(auth);
 
-      const userAuth: UserAuth = {
-        uid: null,
-        userName: null,
-        email: null,
-        isLoggedIn: false,
-      };
-
       // Reset userAuth object in store and clear user data
-      dispatch(setUserAuth(userAuth));
+      dispatch(setUserAuth(initialUserAuth));
       await clearAuthData();
 
       // Prompt user a choice between clearing or keeping local data
@@ -444,8 +455,7 @@ function useFirebaseAuth(): {
     } catch (error) {
       console.error("Error signing out:", error);
       openModal({
-        modalText:
-          "An error occured while trying to sign out. Please try again.",
+        modalText: t("error.logoutErr"),
       });
     }
   };

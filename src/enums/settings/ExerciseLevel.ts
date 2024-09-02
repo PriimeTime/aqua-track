@@ -1,5 +1,5 @@
 export enum ExerciseLevel {
-  Low = "Low",
-  Medium = "Medium",
-  High = "High",
+  No = "low",
+  Sometimes = "mid",
+  Often = "high",
 }

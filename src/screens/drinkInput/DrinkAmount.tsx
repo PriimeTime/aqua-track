@@ -9,6 +9,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
+import { useTranslation } from "react-i18next";
 
 import { drinkTypeList } from "@/utils/maps";
 import { inputDrinkConfig } from "@/utils/constants";
@@ -45,6 +46,8 @@ const useDebouncedCallback = (callback: () => void, delay: number) => {
 };
 
 function DrinkAmount() {
+  const { t } = useTranslation();
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const route =
     useRoute<RouteProp<{ params: { drinkType: DrinkItem } }, "params">>();
@@ -132,9 +135,7 @@ function DrinkAmount() {
   const drinkTypeObject = drinkTypeList.find(
     (item) => item.typeID === drinkType.typeID
   );
-  const drinkTypeLabel = drinkTypeObject
-    ? drinkTypeObject.label.toLowerCase() + " "
-    : "";
+  const drinkTypeLabel = drinkTypeObject ? t(drinkTypeObject.label) + " " : "";
 
   return (
     <GradientWrapper style={styles.wrapper}>
@@ -144,7 +145,7 @@ function DrinkAmount() {
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
           <PrimaryText fontSize={headerFontSize}>
-            How much {drinkTypeLabel}?
+            {`${t("drinks.quantityPrompt")} ${drinkTypeLabel}?`}
           </PrimaryText>
         </Animated.View>
       </View>
@@ -159,7 +160,7 @@ function DrinkAmount() {
       </View>
       <View style={styles.buttonWrapper}>
         <PrimaryButton onPress={handleContinue}>
-          {"Add this amount".toUpperCase()}
+          {t("button.continue").toUpperCase()}
         </PrimaryButton>
       </View>
     </GradientWrapper>

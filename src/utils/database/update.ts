@@ -10,7 +10,8 @@ import {
 import { firestore } from "../../../firebase";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { readAsyncStorage } from "@/utils/storage";
+
+import { readAsyncStorage, writeAsyncStorage } from "@/utils/storage";
 
 import { type UID } from "@/types/UID";
 
@@ -68,10 +69,7 @@ const addDrinkToUserHistory = async (
 
     drinksToSync.push(drink);
 
-    await AsyncStorage.setItem(
-      LOCAL_DRINKS_TO_ADD_KEY,
-      JSON.stringify(drinksToSync)
-    );
+    await writeAsyncStorage(LOCAL_DRINKS_TO_ADD_KEY, drinksToSync);
     return;
   }
 
@@ -127,20 +125,14 @@ const removeDrinkFromUserHistory = async (
        * to the database later.
        */
       if (filteredDrinksToAdd.length < drinksToAdd.length) {
-        await AsyncStorage.setItem(
-          LOCAL_DRINKS_TO_ADD_KEY,
-          JSON.stringify(filteredDrinksToAdd)
-        );
+        await writeAsyncStorage(LOCAL_DRINKS_TO_ADD_KEY, filteredDrinksToAdd);
         return;
       }
     }
 
     drinksToSync.push(drink);
 
-    await AsyncStorage.setItem(
-      LOCAL_DRINKS_TO_REMOVE_KEY,
-      JSON.stringify(drinksToSync)
-    );
+    await writeAsyncStorage(LOCAL_DRINKS_TO_REMOVE_KEY, drinksToSync);
     return;
   }
 

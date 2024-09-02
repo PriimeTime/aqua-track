@@ -2,6 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { UserAuth } from "@/models/UserAuth";
 
+import { writeAsyncStorage } from "@/utils/storage";
+
 const AUTH_DATA_KEY = "authData";
 
 /**
@@ -30,7 +32,7 @@ const saveAuthData = async (authData: UserAuth) => {
   };
 
   try {
-    await AsyncStorage.setItem(AUTH_DATA_KEY, JSON.stringify(data));
+    await writeAsyncStorage(AUTH_DATA_KEY, data);
   } catch (error) {
     console.error("Failed to save authData:", error);
   }

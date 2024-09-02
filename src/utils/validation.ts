@@ -22,14 +22,14 @@ const validateEmail = (emailField: string) => {
   if (emailField.length === 0) {
     return {
       isValid: false,
-      newErrors: "Please enter your e-mail",
+      newErrors: "validation.emptyEmail",
     };
   }
 
   if (!isEmailValid(emailField)) {
     return {
       isValid: false,
-      newErrors: "Invalid e-mail.",
+      newErrors: "validation.invalidEmail",
     };
   }
 
@@ -40,14 +40,23 @@ const validateUserName = (userNameField: string) => {
   if (userNameField.length === 0) {
     return {
       isValid: false,
-      newErrors: "Please enter your username",
+      newErrors: "validation.emptyUsername",
     };
   } else if (userNameField.length < 3) {
     return {
       isValid: false,
-      newErrors: "Your username must be at least 3 characters long!",
+      newErrors: "validation.invalidUsername",
     };
   }
+  return { isValid: true, newErrors: "" };
+};
+
+const validateWeight = (weightField: number) => {
+  if (weightField < 10 || weightField > 800)
+    return {
+      isValid: false,
+      newErrors: "validation.invalidWeight",
+    };
   return { isValid: true, newErrors: "" };
 };
 
@@ -59,42 +68,44 @@ const validatePassword = (isRegister: boolean, pwField: string) => {
     if (pwField.length < pwMinLen) {
       return {
         isValid: false,
-        newErrors: `Password must be at least ${pwMinLen} characters`,
+        newErrors: `validation.passwordMinLenRule`,
+        params: { pwMinLen },
       };
     }
 
     if (pwField.length > pwMaxLen) {
       return {
         isValid: false,
-        newErrors: `Password must not be longer than ${pwMaxLen} characters`,
+        newErrors: `validation.passwordMaxLenRule`,
+        params: { pwMaxLen },
       };
     }
 
     if (!hasPasswordDigit(pwField)) {
       return {
         isValid: false,
-        newErrors: `Password must contain at least one digit`,
+        newErrors: `validation.passwordDigitRule`,
       };
     }
 
     if (!hasPasswordLowerCaseChar(pwField)) {
       return {
         isValid: false,
-        newErrors: `Password must contain at least one lower case character`,
+        newErrors: `validation.passwordLowercaseCharRule`,
       };
     }
 
     if (!hasPasswordUpperCaseChar(pwField)) {
       return {
         isValid: false,
-        newErrors: `Password must contain at least one upper case character`,
+        newErrors: `validation.passwordUppercaseCharRule`,
       };
     }
   } else {
     if (pwField.length === 0) {
       return {
         isValid: false,
-        newErrors: `Please enter your password`,
+        newErrors: `validation.emptyPassword`,
       };
     }
   }
@@ -111,7 +122,7 @@ const validateConfirmPassword = (
     if (confPwField !== pwField) {
       return {
         isValid: false,
-        newErrors: "Passwords do not match",
+        newErrors: "validation.invalidConfPassword",
       };
     }
   }
@@ -121,6 +132,7 @@ const validateConfirmPassword = (
 
 export {
   validateUserName,
+  validateWeight,
   validateEmail,
   validatePassword,
   validateConfirmPassword,

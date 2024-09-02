@@ -9,6 +9,7 @@ import {
 import { TabNavigationState, ParamListBase } from "@react-navigation/native";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 import { WaterDropButton } from "@/components/navigation";
 
@@ -20,6 +21,7 @@ import {
 } from "@/utils/constants/components";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 interface CustomTabBarProps {
   state: TabNavigationState<ParamListBase>;
@@ -27,10 +29,21 @@ interface CustomTabBarProps {
 }
 
 function CustomTabBar({ state, navigation }: CustomTabBarProps) {
+  const { t } = useTranslation();
+
   return (
     <View style={[{ flexDirection: "row" }, styles.navigationBar]}>
       {state.routes.map((route, index) => {
-        const label = route.name;
+        let label = "";
+
+        switch (route.name) {
+          case MainRouteName.Home:
+            label = t("tabBar.home");
+            break;
+          case MainRouteName.History:
+            label = t("tabBar.history");
+            break;
+        }
 
         const isFocused = state.index === index;
 

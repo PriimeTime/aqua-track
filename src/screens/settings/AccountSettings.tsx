@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
@@ -21,6 +22,8 @@ import { useModal, useFirebaseAuth } from "@/hooks";
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
 
 function AccountSettings() {
+  const { t } = useTranslation();
+
   const { firebaseLogout } = useFirebaseAuth();
 
   const { resetStore } = useResetStore();
@@ -48,21 +51,21 @@ function AccountSettings() {
     const getTitle = (state: AccountSettingsState) => {
       switch (state) {
         case AccountSettingsState.ShowAccount:
-          return "Account";
+          return t("settings.account.accountHeader");
         case AccountSettingsState.ShowLogin:
-          return "Login";
+          return t("settings.account.loginHeader");
         case AccountSettingsState.ShowRegister:
-          return "Register";
+          return t("settings.account.registerHeader");
         case AccountSettingsState.ShowForgotPassword:
-          return "Forgot Password";
+          return t("settings.account.forgotPwHeader");
         default:
-          return "Account Settings";
+          return t("settings.account.accountSettingsHeader");
       }
     };
     setTitle(getTitle(accountSettingsState));
   }, [accountSettingsState]);
 
-  const [title, setTitle] = useState("initial title");
+  const [title, setTitle] = useState(t("settings.account.accountHeader"));
 
   const handleConfirmLogout = () => {
     firebaseLogout(shouldResetLocalData);
@@ -82,7 +85,7 @@ function AccountSettings() {
 
   const handleLogout = () => {
     openModal({
-      modalText: "Are you sure you want to log out?",
+      modalText: t("settings.account.logoutPrompt"),
       onConfirm: handleConfirmLogout,
       hasDecision: true,
     });
@@ -90,7 +93,7 @@ function AccountSettings() {
 
   const shouldResetLocalData = () => {
     openModal({
-      modalText: "Reset local data?",
+      modalText: t("settings.account.resetLocalData"),
       onConfirm: handleResetLocalData,
       hasDecision: true,
     });

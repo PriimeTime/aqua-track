@@ -35,7 +35,7 @@ function IntakeInfoCard() {
   const todaysDrinks = useTodaysDrinks();
   const hydratingDrinkQuantity = totalHydratingDrinkQuantity(todaysDrinks);
 
-  const { gender, weight } = useSelector(
+  const { gender, weight, dailyHydrationGoal } = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
 
@@ -49,7 +49,7 @@ function IntakeInfoCard() {
   const minsUntilSober = minsUntilSoberInteger(currentBAC);
   const hydrationLevelInPercent = displayPositivePercent(
     hydratingDrinkQuantity,
-    2500
+    dailyHydrationGoal
   );
 
   const [currentHydrationLevel, setCurrentHydrationLevel] = useState(
@@ -97,7 +97,6 @@ function IntakeInfoCard() {
     <View style={styles.wrapper}>
       <PrimaryText fontSize={totalIntakeFontSize} color={color.BLUE}>
         {/* {metricUnitConversion(totalDrinkQuantityToday)} */}
-        {/* TODO change hard coded 2500ml to dynamic value */}
         <CountUp
           key={currentHydrationLevel}
           isCounting

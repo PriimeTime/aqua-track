@@ -6,6 +6,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { setUserAccessToken, setUserRefreshToken } from "@/store/userData";
 
+import { writeAsyncStorage } from "@/utils/storage";
+
 const TOKEN_KEY = "authTokens";
 
 /**
@@ -36,9 +38,10 @@ const useAuth = () => {
               accessToken,
               refreshToken,
             };
-            AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(tokens));
+            writeAsyncStorage(TOKEN_KEY, tokens);
           });
         } catch (error) {
+          // TODO: implement force user logout here too
           console.error("Failed to get ID token or save tokens:", error);
         }
       } else {

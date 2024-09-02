@@ -26,16 +26,16 @@ interface CardButtonProps {
 
 function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
-  const shadowOpacity = useRef(animatedScaleValue(0)).current;
+  // const shadowOpacity = useRef(animatedScaleValue(0)).current;
 
   const handleOnPressIn = () => {
     animateButtonPress(scaleValue, animatedScaleValue(0.9));
-    animateButtonPress(shadowOpacity, animatedScaleValue(0.25));
+    // animateButtonPress(shadowOpacity, animatedScaleValue(0.25));
   };
 
   const handleOnPressOut = () => {
     animateButtonPress(scaleValue, animatedScaleValue(1));
-    animateButtonPress(shadowOpacity, animatedScaleValue(0));
+    // animateButtonPress(shadowOpacity, animatedScaleValue(0));
   };
 
   return (
@@ -44,7 +44,7 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
         styles.wrapper,
         {
           transform: [{ scale: scaleValue }],
-          shadowOpacity: shadowOpacity,
+          // shadowOpacity: shadowOpacity,
           shadowOffset: { width: 0, height: 4 },
         },
         style,

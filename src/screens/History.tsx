@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useTranslation } from "react-i18next";
 
 import { SettingsButton } from "@/components/buttons";
 import { HistoryItem, HistoryBottom } from "@/components/history";
@@ -17,6 +18,8 @@ import { headerFontSize } from "@/utils/constants/components/typography";
 import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
 function History() {
+  const { t } = useTranslation();
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const drinkHistory = useTodaysDrinks();
 
@@ -34,7 +37,9 @@ function History() {
         ></SettingsButton>
       </View>
       <View style={styles.tabsWrapper}>
-        <PrimaryText fontSize={headerFontSize}>{"History"}</PrimaryText>
+        <PrimaryText fontSize={headerFontSize}>
+          {t("history.header")}
+        </PrimaryText>
       </View>
       <CustomFlatList
         data={drinkHistory}

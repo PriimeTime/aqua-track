@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import { useState } from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { useTranslation } from "react-i18next";
 
 import { CustomTextField } from "@/components/input";
 import { PrimaryText } from "@/components/texts";
@@ -11,6 +12,7 @@ import { formErrorStyles } from "@/utils/styles";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+import { FormInputType } from "@/enums/input/FormInputType";
 
 import { useFormValidation, useModal } from "@/hooks";
 
@@ -19,6 +21,7 @@ interface ForgotPasswordProps {
 }
 
 function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
+  const { t } = useTranslation();
   const [openModal] = useModal();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,7 +35,7 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
   const auth = getAuth();
 
   const handleSendPasswordResetEmail = async () => {
-    if (!validateForm(false, "email")) return;
+    if (!validateForm(false, FormInputType.Email)) return;
 
     try {
       setIsLoading(true);
@@ -40,32 +43,35 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
       setIsLoading(false);
 
       openModal({
-        modalText:
-          "We've sent out an email to your address. Please check your inbox!",
+        modalText: t("settings.account.forgotPw.confEmailSentSucc"),
         onConfirm: () =>
           setAccountSettingsState(AccountSettingsState.ShowLogin),
       });
     } catch (error) {
       setIsLoading(false);
-      openModal({ modalText: "Couldn't send email. Please try again later" });
+      openModal({
+        modalText: t("settings.account.forgotPw.confEmailSentFail"),
+      });
     }
   };
 
   return (
     <>
       <PrimaryText fontSize={paragraphSmallFontSize}>
-        {"Don't worry! Just enter the email address of your account."}
+        {t("settings.account.forgotPw.infoText1")}
       </PrimaryText>
       <PrimaryText fontSize={paragraphSmallFontSize}>
-        {"We will send you a link to reset your password :)"}
+        {t("settings.account.forgotPw.infoText2")}
       </PrimaryText>
       <CustomTextField
         customStyles={styles.textField}
         value={formState.email}
-        handleOnChangeText={(text) => handleInputChange("email", text)}
-        handleOnFocus={() => resetInputValidation("email")}
+        handleOnChangeText={(text) =>
+          handleInputChange(FormInputType.Email, text)
+        }
+        handleOnFocus={() => resetInputValidation(FormInputType.Email)}
         inputType={CustomTextFieldInputType.Email}
-        placeholder={"E-mail"}
+        placeholder={t("settings.account.email")}
         fullWidth
       ></CustomTextField>
       <View style={styles.errorWrapper}>
@@ -75,7 +81,7 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
         isLoading={isLoading}
         onPress={handleSendPasswordResetEmail}
       >
-        {"Send E-mail".toUpperCase()}
+        {t("settings.account.forgotPw.sendConfEmail").toUpperCase()}
       </PrimaryButton>
     </>
   );

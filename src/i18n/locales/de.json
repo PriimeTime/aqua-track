@@ -1,0 +1,131 @@
+{
+  "home": {
+    "header": "Deine Hydration heute",
+    "welcome": "Willkommen bei Drinky!"
+  },
+  "tabBar": {
+    "home": "Home",
+    "history": "Verlauf"
+  },
+  "button": {
+    "back": "Zurück",
+    "continue": "Weiter"
+  },
+  "history": {
+    "header": "Verlauf",
+    "todayTotal": "Heutige Gesamtmenge",
+    "total": "Gesamt"
+  },
+  "unit": {
+    "millilitersAbbrv": "ml",
+    "hoursAbbrv": "h",
+    "minutesAbbrv": "m",
+    "kilogramAbbrv": "kg"
+  },
+  "drinks": {
+    "untilSober": "bis nüchtern",
+    "quantityPrompt": "Wie viel",
+    "drinkTypePrompt": "Was hast du getrunken?",
+    "water": "Wasser",
+    "juice": "Saft",
+    "soda": "Softdrink",
+    "coffee": "Kaffee",
+    "dairy": "Milch",
+    "tea": "Tee",
+    "energyDrink": "Energydrink",
+    "beer": "Bier",
+    "cocktail": "Cocktail",
+    "wine": "Wein",
+    "spirit": "Spirituose"
+  },
+  "modal": {
+    "yes": "Ja",
+    "no": "Nein",
+    "ok": "Ok"
+  },
+  "settings": {
+    "header": "Einstellungen",
+    "account": {
+      "accountHeader": "Konto",
+      "loginHeader": "Anmelden",
+      "registerHeader": "Registrieren",
+      "forgotPwHeader": "Passwort vergessen",
+      "accountSettingsHeader": "Kontoeinstellungen",
+      "loginApple": "Mit Apple anmelden",
+      "login": "Anmelden",
+      "register": "Registrieren",
+      "username": "Benutzername",
+      "email": "E-Mail",
+      "verifyEmail": "Bestätigungs-E-Mail gesendet! Bitte überprüfe deine E-Mails, um dein Konto zu verifizieren!",
+      "password": "Passwort",
+      "confPassword": "Passwort bestätigen",
+      "forgotPwText": "Passwort vergessen",
+      "logout": "Abmelden",
+      "logoutPrompt": "Bist du sicher, dass du dich abmelden möchtest?",
+      "resetLocalData": "Lokale Daten zurücksetzen?",
+      "forgotPw": {
+        "infoText1": "Keine Sorge! Gib einfach die E-Mail-Adresse deines Kontos ein.",
+        "infoText2": "Wir senden dir einen Link, um dein Passwort zurückzusetzen :)",
+        "sendConfEmail": "E-Mail senden",
+        "confEmailSentSucc": "Wir haben dir eine E-Mail gesendet. Bitte überprüfe dein Postfach!",
+        "confEmailSentFail": "E-Mail konnte nicht gesendet werden. Bitte versuche es später erneut"
+      }
+    },
+    "about": {
+      "header": "Über uns"
+    },
+    "language": {
+      "header": "Sprache"
+    },
+    "notifications": {
+      "header": "Benachrichtigungen"
+    },
+    "profile": {
+      "header": "Metriken & Körpermaße",
+      "gender": "Geschlecht",
+      "male": "Männlich",
+      "female": "Weiblich",
+      "other": "Andere",
+      "genderPrompt": "Was ist dein Geschlecht?",
+      "namePrompt": "Wie heißt du?",
+      "weight": "Gewicht",
+      "weightPrompt": "Wie viel wiegst du?",
+      "exercisePrompt": "Machst du Sport?",
+      "exerciseLow": "Nein",
+      "exerciseMid": "Manchmal",
+      "exerciseHigh": "Oft",
+      "calcDailyIntake": "Berechnung vom täglichen Wasserbedarf...",
+      "dailyIntake": "Empfohlener täglicher Wasserbedarf",
+      "save": "Änderungen speichern"
+    },
+    "statistics": {
+      "header": "Statistiken & Verlauf"
+    },
+    "themes": {
+      "header": "Themen"
+    },
+    "comingSoon": "Demnächst verfügbar..."
+  },
+  "error": {
+    "general": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "unverifiedEmailErr": "E-Mail-Adresse nicht verifiziert! Bitte überprüfe dein Postfach!",
+    "dataFetchFailedErr": "Daten konnten nicht abgerufen werden :(",
+    "emailAlreadyInUse": "Diese E-Mail Addresse wird bereits verwendet!",
+    "logoutErr": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut."
+  },
+  "validation": {
+    "emptyEmail": "Bitte gib deine E-Mail-Adresse ein",
+    "invalidEmail": "Ungültige E-Mail",
+    "wrongEmailOrPw": "Falsche E-Mail oder falsches Passwort",
+    "invalidWeight": "Bitte gib ein sinnvolles Gewicht ein!",
+    "emptyUsername": "Bitte gib deinen Benutzernamen ein",
+    "invalidUsername": "Dein Benutzername muss mindestens 3 Zeichen lang sein!",
+    "emptyPassword": "Bitte gib dein Passwort ein",
+    "passwordDigitRule": "Das Passwort muss mindestens eine Zahl enthalten",
+    "passwordMinLenRule": "Das Passwort muss mindestens {{pwMinLen}} Zeichen lang sein",
+    "passwordMaxLenRule": "Das Passwort darf maximal {{pwMaxLen}} Zeichen lang sein",
+    "passwordLowercaseCharRule": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten",
+    "passwordUppercaseRule": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+    "invalidConfPassword": "Die Passwörter stimmen nicht überein"
+  }
+}
