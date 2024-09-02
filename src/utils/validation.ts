@@ -51,8 +51,8 @@ const validateUserName = (userNameField: string) => {
   return { isValid: true, newErrors: "" };
 };
 
-const validateWeight = (weightField: number) => {
-  if (weightField < 10 || weightField > 800)
+const validateWeight = (weightField: number | null) => {
+  if (!weightField || weightField < 10 || weightField > 800)
     return {
       isValid: false,
       newErrors: "validation.invalidWeight",

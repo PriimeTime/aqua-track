@@ -1,3 +1,4 @@
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { GradientWrapper } from "@/components/wrappers";
@@ -10,13 +11,16 @@ function AskWeight() {
   const { t } = useTranslation();
 
   return (
-    <GradientWrapper style={{ flex: 1 }}>
-      <AskWrapper
-        question={t("settings.profile.weightPrompt")}
-        inputType={FormInputType.Weight}
-        nextRoute={StartupRouteName.Exercise}
-      />
-    </GradientWrapper>
+    /* Workaround for not being able to dismiss keyboard natively */
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <GradientWrapper style={{ flex: 1 }}>
+        <AskWrapper
+          question={t("settings.profile.weightPrompt")}
+          inputType={FormInputType.Weight}
+          nextRoute={StartupRouteName.Exercise}
+        />
+      </GradientWrapper>
+    </TouchableWithoutFeedback>
   );
 }
 

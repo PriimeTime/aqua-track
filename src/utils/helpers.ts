@@ -67,7 +67,7 @@ const formatDecimals = (num: number, decimals: number): number => {
 
 const numToString = (num: number | null) => {
   if (num === null || isNaN(num)) {
-    return "0";
+    return "";
   }
 
   return String(num);
