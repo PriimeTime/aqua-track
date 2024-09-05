@@ -8,20 +8,20 @@ import { FormInputType } from "@/enums/input/FormInputType";
 
 import { useSelectBoxItems } from "@/hooks";
 
-function AskGender() {
+function AskMeasurementSystem() {
   const { t } = useTranslation();
-  const { genderSelectBoxItems } = useSelectBoxItems();
+  const { measurementSystemSelectBoxItems } = useSelectBoxItems();
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
       <AskWrapper
-        question={t("settings.profile.genderPrompt")}
-        inputType={FormInputType.Gender}
-        nextRoute={StartupRouteName.MeasurementSystem}
-        selectBoxItems={genderSelectBoxItems}
+        question={t("settings.profile.measurementSystemPrompt")}
+        inputType={FormInputType.MeasurementSystem}
+        nextRoute={StartupRouteName.Weight}
+        selectBoxItems={measurementSystemSelectBoxItems}
       />
     </GradientWrapper>
   );
 }
 
-export { AskGender };
+export { AskMeasurementSystem };

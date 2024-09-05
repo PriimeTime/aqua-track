@@ -1,6 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
+
+import { CustomTabBar } from "@/navigation/CustomTabBar";
+
 import { RootScreen, History, DrinkAmount, DrinkSelection } from "@/screens";
 import {
   AccountSettings,
@@ -17,13 +20,16 @@ import {
   AskUserName,
   AskWeight,
   WelcomeScreen,
+  AskMeasurementSystem,
 } from "@/screens/startup";
+
 import { SettingsList } from "@/components/settings/SettingsList";
-import { CustomTabBar } from "@/navigation/CustomTabBar";
+
 import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
+
 import { CalculateDailyIntake } from "@/screens/startup/CalculateDailyIntake";
 
 const Stack = createNativeStackNavigator();
@@ -72,6 +78,10 @@ function StartupNavigation({
       <Stack.Screen name={StartupRouteName.Welcome} component={WelcomeScreen} />
       <Stack.Screen name={StartupRouteName.UserName} component={AskUserName} />
       <Stack.Screen name={StartupRouteName.Gender} component={AskGender} />
+      <Stack.Screen
+        name={StartupRouteName.MeasurementSystem}
+        component={AskMeasurementSystem}
+      />
       <Stack.Screen name={StartupRouteName.Weight} component={AskWeight} />
       <Stack.Screen name={StartupRouteName.Exercise} component={AskExercise} />
       <Stack.Screen name={StartupRouteName.CalcIntake}>

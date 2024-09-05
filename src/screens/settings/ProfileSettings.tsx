@@ -23,6 +23,7 @@ import { calculateDailyHydrationGoalInMl, numToString } from "@/utils/helpers";
 import { color, initialUserMetrics } from "@/utils/constants";
 
 import { useModal, useSelectBoxItems } from "@/hooks";
+import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
 function ProfileSettings() {
   const { t } = useTranslation();
@@ -37,8 +38,11 @@ function ProfileSettings() {
 
   const [metricObject, setMetricObject] = useState(userMetrics);
 
-  const { genderSelectBoxItems, exerciseLevelSelectBoxItems } =
-    useSelectBoxItems();
+  const {
+    genderSelectBoxItems,
+    measurementSystemSelectBoxItems,
+    exerciseLevelSelectBoxItems,
+  } = useSelectBoxItems();
 
   useEffect(() => {
     /* Recalculate daily water intake on render
@@ -102,6 +106,16 @@ function ProfileSettings() {
           label={t("settings.profile.gender")}
           handleOnSelect={(value) => handleOnChange(value as Gender, "gender")}
           value={metricObject.gender}
+        ></CustomSelectBox>
+      </InputContentWrapper>
+      <InputContentWrapper>
+        <CustomSelectBox
+          items={measurementSystemSelectBoxItems}
+          label={t("settings.profile.measurementSystem")}
+          handleOnSelect={(value) =>
+            handleOnChange(value as MeasurementSystem, "measurementSystem")
+          }
+          value={metricObject.measurementSystem}
         ></CustomSelectBox>
       </InputContentWrapper>
       <InputContentWrapper>
