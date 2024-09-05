@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
@@ -14,19 +16,19 @@ import {
 } from "@/components/settings";
 import { ContentPage } from "@/components/wrappers";
 
-import { useResetStore } from "@/utils/store";
-
 import { useModal, useFirebaseAuth } from "@/hooks";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
 
 function AccountSettings() {
   const { t } = useTranslation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const { firebaseLogout } = useFirebaseAuth();
 
-  const { resetStore } = useResetStore();
+  // const { resetApp } = useResetApp();
 
   const isLoggedIn = useSelector(
     (state: UserDataState) => state.userData.userAuth.isLoggedIn
@@ -68,33 +70,26 @@ function AccountSettings() {
   const [title, setTitle] = useState(t("settings.account.accountHeader"));
 
   const handleConfirmLogout = () => {
-    firebaseLogout(shouldResetLocalData);
+    firebaseLogout(/*clearLocalData*/);
+    navigation.navigate(MainRouteName.Home);
   };
 
-  const handleResetLocalData = async () => {
-    setLoading(true);
+  // const clearLocalData = async () => {
+  //   setLoading(true);
 
-    try {
-      await resetStore();
-    } catch (e) {
-      console.error("Failed to reset store", e);
-    }
+  //   try {
+  //     await resetApp();
+  //   } catch (e) {
+  //     console.error("Failed to reset store", e);
+  //   }
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   const handleLogout = () => {
     openModal({
       modalText: t("settings.account.logoutPrompt"),
       onConfirm: handleConfirmLogout,
-      hasDecision: true,
-    });
-  };
-
-  const shouldResetLocalData = () => {
-    openModal({
-      modalText: t("settings.account.resetLocalData"),
-      onConfirm: handleResetLocalData,
       hasDecision: true,
     });
   };
