@@ -17,16 +17,18 @@ import { UserMetrics } from "@/models/UserMetrics";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { Gender } from "@/enums/settings/Gender";
 import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
+import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
 import { calculateDailyHydrationGoalInMl, numToString } from "@/utils/helpers";
 
 import { color, initialUserMetrics } from "@/utils/constants";
 
-import { useModal, useSelectBoxItems } from "@/hooks";
-import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
+import { useDisplayUnits, useModal, useSelectBoxItems } from "@/hooks";
 
 function ProfileSettings() {
   const { t } = useTranslation();
+
+  const { displayVolumeWithUnit } = useDisplayUnits();
 
   const popAction = StackActions.pop(1);
   const navigation = useNavigation();
@@ -134,7 +136,7 @@ function ProfileSettings() {
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}
           label={t("settings.profile.weight")}
-          append={t("unit.kilogramAbbrv")}
+          append={t("unit.kg")}
           value={numToString(metricObject.weight)}
           handleOnChangeText={(value) =>
             handleOnChange(Number(value), "weight")
@@ -157,9 +159,7 @@ function ProfileSettings() {
           fullWidth
           readOnly
           label={t("settings.profile.dailyIntake")}
-          value={`${userMetrics.dailyHydrationGoal} ${t(
-            "unit.millilitersAbbrv"
-          )}`}
+          value={displayVolumeWithUnit(userMetrics.dailyHydrationGoal)}
           inputColor={color.BLUE}
         ></CustomTextField>
       </InputContentWrapper>

@@ -17,10 +17,12 @@
     "total": "Total"
   },
   "unit": {
-    "millilitersAbbrv": "ml",
-    "hoursAbbrv": "h",
-    "minutesAbbrv": "m",
-    "kilogramAbbrv": "kg"
+    "ml": "ml",
+    "oz": "oz",
+    "hours": "h",
+    "minutes": "m",
+    "kg": "kg",
+    "lbs": "lbs"
   },
   "drinks": {
     "untilSober": "until sober",
@@ -90,8 +92,8 @@
       "genderPrompt": "What is your gender?",
       "namePrompt": "What is your name?",
       "measurementSystemPrompt": "What measurement system do you use?",
-      "measurementSystemImperial": "Metric",
-      "measurementSystemMetric": "Imperial",
+      "measurementSystemImperial": "Imperial",
+      "measurementSystemMetric": "Metric",
       "weight": "Weight",
       "weightPrompt": "How much do you weigh?",
       "exercisePrompt": "Do you do exercise?",

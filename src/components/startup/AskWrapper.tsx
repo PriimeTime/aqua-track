@@ -115,7 +115,7 @@ function AskWrapper({
           fullWidth
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}
-          append={t("unit.kilogramAbbrv")}
+          append={t("unit.kg")}
           value={numToString(formState.weight)}
           handleOnChangeText={(value) => {
             setInput(value);

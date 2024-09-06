@@ -17,13 +17,15 @@
     "total": "Összesen"
   },
   "unit": {
-    "millilitersAbbrv": "ml",
-    "hoursAbbrv": "ó",
-    "minutesAbbrv": "p",
-    "kilogramAbbrv": "kg"
+    "ml": "ml",
+    "oz": "uncia",
+    "hours": "ó",
+    "minutes": "p",
+    "kg": "kg",
+    "lbs": "font"
   },
   "drinks": {
-    "untilSober": "józanodásig",
+    "untilSober": "mire kijózanodsz",
     "quantityPrompt": "Mennyit ittál?",
     "drinkTypePrompt": "Mit ittál?",
     "water": "Víz",

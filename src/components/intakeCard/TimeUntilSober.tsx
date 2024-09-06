@@ -37,7 +37,7 @@ function TimeUntilSober({
               duration={2} // Duration in seconds
               easing={"easeOutCubic"}
             />
-            {currentHrsUntilSober > 0 && `${t("unit.hoursAbbrv")} `}
+            {currentHrsUntilSober > 0 && `${t("unit.hours")} `}
           </>
         )}
         {currentMinsUntilSober > 0 && (
@@ -50,7 +50,7 @@ function TimeUntilSober({
               duration={2} // Duration in seconds
               easing={"easeOutCubic"}
             />
-            {currentMinsUntilSober > 0 && `${t("unit.minutesAbbrv")} `}
+            {currentMinsUntilSober > 0 && `${t("unit.minutes")} `}
           </>
         )}
       </PrimaryText>

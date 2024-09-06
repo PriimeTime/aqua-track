@@ -18,12 +18,12 @@ const useSelectBoxItems = () => {
 
   const measurementSystemSelectBoxItems: SelectBoxItem[] = [
     {
-      id: MeasurementSystem.Imperial,
-      label: t("settings.profile.measurementSystemImperial"),
-    },
-    {
       id: MeasurementSystem.Metric,
       label: t("settings.profile.measurementSystemMetric"),
+    },
+    {
+      id: MeasurementSystem.Imperial,
+      label: t("settings.profile.measurementSystemImperial"),
     },
   ];
 

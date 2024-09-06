@@ -1,4 +1,4 @@
 export enum MeasurementSystem {
-  Metric = "imperial",
-  Imperial = "metric",
+  Metric = "metric",
+  Imperial = "imperial",
 }

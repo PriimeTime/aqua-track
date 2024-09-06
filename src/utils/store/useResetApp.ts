@@ -7,7 +7,7 @@ import { HAS_BEEN_STARTED, initialUserMetrics } from "@/utils/constants";
 
 import { writeAsyncStorage } from "@/utils/storage";
 
-/** CURRENTLY UNUSED! */
+/** TODO: CURRENTLY UNUSED! */
 
 /**
  * Custom hook to reset the Redux store to its default state.

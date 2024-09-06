@@ -27,6 +27,7 @@ const sleep = (timeMs: number): Promise<void> => {
 };
 
 /**
+ * Function to format a number to the nearest integer
  *
  * @param {*} num - the number to format
  * @returns the rounded number or zero if the result would be negative
@@ -74,6 +75,7 @@ const numToString = (num: number | null) => {
 };
 
 /**
+ * TODO: CURRENTLY UNUSED
  *
  * @param {*} totalIntake - the total intake in milliliters
  * @returns a string depicting formatted beverage quantity in metric units
@@ -306,6 +308,7 @@ const emptyFunc = () => {};
 
 export {
   sleep,
+  formatNumber,
   metricUnitConversion,
   totalDrinkQuantity,
   totalHydratingDrinkQuantity,

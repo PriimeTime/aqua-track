@@ -17,10 +17,12 @@
     "total": "Gesamt"
   },
   "unit": {
-    "millilitersAbbrv": "ml",
-    "hoursAbbrv": "h",
-    "minutesAbbrv": "m",
-    "kilogramAbbrv": "kg"
+    "ml": "ml",
+    "oz": "Unzen",
+    "hours": "Std",
+    "minutes": "Min",
+    "kg": "kg",
+    "lbs": "Pfund"
   },
   "drinks": {
     "untilSober": "bis nüchtern",
