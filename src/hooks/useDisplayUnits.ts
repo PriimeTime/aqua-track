@@ -68,6 +68,7 @@ function useDisplayUnits() {
     displayVolumeUnit,
     displayVolumeWithUnit,
     displayWeight,
+    displayRoundedWeight,
     displayWeightUnit,
     displayWeightWithUnit,
   };

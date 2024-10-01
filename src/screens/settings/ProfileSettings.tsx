@@ -28,7 +28,8 @@ import { useDisplayUnits, useModal, useSelectBoxItems } from "@/hooks";
 function ProfileSettings() {
   const { t } = useTranslation();
 
-  const { displayVolumeWithUnit } = useDisplayUnits();
+  const { displayVolumeWithUnit, displayRoundedWeight, displayWeightUnit } =
+    useDisplayUnits();
 
   const popAction = StackActions.pop(1);
   const navigation = useNavigation();
@@ -136,8 +137,8 @@ function ProfileSettings() {
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}
           label={t("settings.profile.weight")}
-          append={t("unit.kg")}
-          value={numToString(metricObject.weight)}
+          append={t(displayWeightUnit())}
+          value={numToString(displayRoundedWeight(metricObject.weight || 0))}
           handleOnChangeText={(value) =>
             handleOnChange(Number(value), "weight")
           }

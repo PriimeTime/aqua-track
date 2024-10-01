@@ -15,7 +15,7 @@ import { paragraphMediumFontSize } from "@/utils/constants/components/typography
 import { formErrorStyles } from "@/utils/styles";
 import { numToString } from "@/utils/helpers";
 
-import { useFormValidation } from "@/hooks";
+import { useDisplayUnits, useFormValidation } from "@/hooks";
 
 import { FormInputType } from "@/enums/input/FormInputType";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
@@ -79,6 +79,8 @@ function AskWrapper({
 
   const [input, setInput] = useState<string | number | null>(null);
 
+  const { displayRoundedWeight, displayWeightUnit } = useDisplayUnits();
+
   const {
     validateForm,
     formState,
@@ -115,8 +117,8 @@ function AskWrapper({
           fullWidth
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}
-          append={t("unit.kg")}
-          value={numToString(formState.weight)}
+          append={t(displayWeightUnit())}
+          value={numToString(displayRoundedWeight(formState.weight || 0))}
           handleOnChangeText={(value) => {
             setInput(value);
             handleInputChange(FormInputType.Weight, value);
