@@ -19,7 +19,11 @@ import { Gender } from "@/enums/settings/Gender";
 import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
 import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
-import { calculateDailyHydrationGoalInMl, numToString } from "@/utils/helpers";
+import {
+  calculateDailyHydrationGoalInMl,
+  convertWeightInputToKg,
+  numToString,
+} from "@/utils/helpers";
 
 import { color, initialUserMetrics } from "@/utils/constants";
 
@@ -139,9 +143,13 @@ function ProfileSettings() {
           label={t("settings.profile.weight")}
           append={t(displayWeightUnit())}
           value={numToString(displayRoundedWeight(metricObject.weight || 0))}
-          handleOnChangeText={(value) =>
-            handleOnChange(Number(value), "weight")
-          }
+          handleOnChangeText={(value) => {
+            const weightInKg = convertWeightInputToKg(
+              value,
+              metricObject.measurementSystem || MeasurementSystem.Metric
+            );
+            handleOnChange(weightInKg, "weight");
+          }}
         ></CustomTextField>
         {/* </View> */}
       </InputContentWrapper>
