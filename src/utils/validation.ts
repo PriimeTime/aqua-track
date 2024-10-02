@@ -52,11 +52,12 @@ const validateUserName = (userNameField: string) => {
 };
 
 const validateWeight = (weightField: number | null) => {
-  if (!weightField || weightField < 10 || weightField > 800)
+  if (!weightField || weightField < 25 || weightField > 300) {
     return {
       isValid: false,
       newErrors: "validation.invalidWeight",
     };
+  }
   return { isValid: true, newErrors: "" };
 };
 

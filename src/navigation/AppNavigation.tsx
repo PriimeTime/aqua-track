@@ -72,7 +72,7 @@ function StartupNavigation({
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        gestureEnabled: true,
+        gestureEnabled: false,
       }}
     >
       <Stack.Screen name={StartupRouteName.Welcome} component={WelcomeScreen} />
