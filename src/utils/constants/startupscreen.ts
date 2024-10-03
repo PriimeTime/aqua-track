@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const startupStyles = StyleSheet.create({
   wrapper: {
     alignItems: "center",
-    // justifyContent: "space-around",
+    justifyContent: "space-around",
     width: "50%",
     left: "25%",
     top: "25%",

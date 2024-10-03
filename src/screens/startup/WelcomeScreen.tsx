@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { PrimaryText } from "@/components/texts";
 import { GradientWrapper } from "@/components/wrappers";
 
-import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
+import { mainHeaderFontSize } from "@/utils/constants/components/typography";
 import { startupStyles } from "@/utils/constants";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 import { useEffect } from "react";
@@ -30,8 +30,8 @@ function WelcomeScreen() {
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
-      <View style={startupStyles.wrapper}>
-        <PrimaryText fontSize={paragraphMediumFontSize}>
+      <View style={[startupStyles.wrapper, styles.wrapper]}>
+        <PrimaryText fontSize={mainHeaderFontSize}>
           {t("home.welcome")}
         </PrimaryText>
       </View>
@@ -40,3 +40,11 @@ function WelcomeScreen() {
 }
 
 export { WelcomeScreen };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: "75%",
+    left: "12.5%",
+    top: "15%",
+  },
+});

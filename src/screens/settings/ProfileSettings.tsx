@@ -124,6 +124,18 @@ function ProfileSettings() {
           label={t("settings.profile.weight")}
           append={t(displayWeightUnit())}
           value={numToString(displayRoundedWeight(metricObject.weight || 0))}
+          // handleOnBlur={() => {
+          //   if (
+          //     !metricObject.weight ||
+          //     metricObject.weight < 25 ||
+          //     metricObject.weight > 300
+          //   ) {
+          //     /** Validate weight input */
+          //     openModal({
+          //       modalText: t("validation.invalidWeight"),
+          //     });
+          //   }
+          // }}
           handleOnChangeText={(value) => {
             const weightInKg = convertWeightInputToKg(
               value,
