@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts";
 import { GradientWrapper } from "@/components/wrappers";
+import { CircularLoadingSpinner } from "@/components/loading";
 
 import { paragraphLargeFontSize } from "@/utils/constants/components/typography";
 import { startupStyles } from "@/utils/constants";
@@ -55,6 +56,7 @@ function CalculateDailyIntake({
         <PrimaryText fontSize={paragraphLargeFontSize}>
           {t("settings.profile.calcDailyIntake")}
         </PrimaryText>
+        <CircularLoadingSpinner />
       </View>
     </GradientWrapper>
   );

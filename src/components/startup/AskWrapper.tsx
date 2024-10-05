@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useDispatch, useSelector } from "react-redux";
@@ -188,22 +196,31 @@ function AskWrapper({
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
-      <View style={startupStyles.wrapper}>
-        <View style={styles.questionWrapper}>
-          <PrimaryText fontSize={paragraphMediumFontSize}>
-            {question}
-          </PrimaryText>
-        </View>
-        <View style={styles.inputFieldWrapper}>{renderInputField()}</View>
-        <View style={styles.errorTextWrapper}>
-          <Text style={styles.errorText}>{formErrors[inputType]}</Text>
-        </View>
-        <View style={styles.continueButtonWrapper}>
-          <PrimaryButton onPress={handleSaveInput}>
-            {t("button.continue")}
-          </PrimaryButton>
-        </View>
-      </View>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={startupStyles.wrapper}>
+              <View style={styles.questionWrapper}>
+                <PrimaryText fontSize={paragraphMediumFontSize}>
+                  {question}
+                </PrimaryText>
+              </View>
+              <View style={styles.inputFieldWrapper}>{renderInputField()}</View>
+              <View style={styles.errorTextWrapper}>
+                <Text style={styles.errorText}>{formErrors[inputType]}</Text>
+              </View>
+              <View style={styles.continueButtonWrapper}>
+                <PrimaryButton onPress={handleSaveInput}>
+                  {t("button.continue")}
+                </PrimaryButton>
+              </View>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </GradientWrapper>
   );
 }

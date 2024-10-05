@@ -14,7 +14,7 @@ interface CustomFlatListProps<T> {
 }
 
 /**
- * CustomFlatList is a component that renders a list of items in a grid or list layout.
+ * Component that renders a list of items in a grid or list layout.
  *
  * @param {*} data - array of data items to be displayed in the list
  * @param {*} rowsOfListItemsOnScreen - number of rows of list items visible on the screen
