@@ -2,7 +2,7 @@ import { Pressable, ViewStyle } from "react-native";
 import { useState } from "react";
 
 import WaterDrop from "../../../assets/icons/WaterDrop.svg";
-import WaterDropPressed from "../../../assets/icons/WaterDropPressed.svg"; // TODO: replace this with a pressed state .svg
+import WaterDropPressed from "../../../assets/icons/WaterDropPressed.svg";
 
 import { waterDropButtonSize } from "@/utils/constants/components/buttons";
 

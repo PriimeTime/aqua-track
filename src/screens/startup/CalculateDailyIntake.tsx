@@ -35,7 +35,6 @@ function CalculateDailyIntake({
 
   useEffect(() => {
     setTimeout(() => {
-      // TODO: play some animation
       onCompleteStartup();
     }, 7000);
 
