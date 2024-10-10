@@ -8,6 +8,7 @@ import { initialUserAuth, initialUserMetrics } from "@/utils/constants";
 
 import { Gender } from "@/enums/settings/Gender";
 import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
+import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
 const initialState: UserData = {
   userMetrics: initialUserMetrics,
@@ -44,6 +45,9 @@ const userDataSlice = createSlice({
     },
     setGender: (state, action: PayloadAction<Gender>) => {
       state.userMetrics.gender = action.payload;
+    },
+    setMeasurementSystem: (state, action: PayloadAction<MeasurementSystem>) => {
+      state.userMetrics.measurementSystem = action.payload;
     },
     setWeight: (state, action: PayloadAction<number>) => {
       state.userMetrics.weight = action.payload;

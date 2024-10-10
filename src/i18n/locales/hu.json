@@ -1,7 +1,7 @@
 {
   "home": {
     "header": "A mai hidratációd",
-    "welcome": "Üdv a Drinky-ben!"
+    "welcome": "Üdv a Drinky-ben 😊"
   },
   "tabBar": {
     "home": "Kezdőlap",
@@ -17,13 +17,15 @@
     "total": "Összesen"
   },
   "unit": {
-    "millilitersAbbrv": "ml",
-    "hoursAbbrv": "ó",
-    "minutesAbbrv": "p",
-    "kilogramAbbrv": "kg"
+    "ml": "ml",
+    "oz": "uncia",
+    "hours": "ó",
+    "minutes": "p",
+    "kg": "kg",
+    "lbs": "font"
   },
   "drinks": {
-    "untilSober": "józanodásig",
+    "untilSober": "mire kijózanodsz",
     "quantityPrompt": "Mennyit ittál?",
     "drinkTypePrompt": "Mit ittál?",
     "water": "Víz",
@@ -83,18 +85,22 @@
     "profile": {
       "header": "Testméretek és adatok",
       "gender": "Nem",
+      "measurementSystem": "Mértékegységrendszer",
       "male": "Férfi",
       "female": "Nő",
       "other": "Egyéb",
       "genderPrompt": "Mi a nemed?",
       "namePrompt": "Hogy hívnak?",
+      "measurementSystemPrompt": "Melyik mértékegységrendszert használod?",
+      "measurementSystemImperial": "Angolszász",
+      "measurementSystemMetric": "Metrikus",
       "weight": "Súly",
       "weightPrompt": "Mennyi a súlyod?",
       "exercisePrompt": "Szoktál sportolni?",
       "exerciseLow": "Nem",
       "exerciseMid": "Néha",
       "exerciseHigh": "Gyakran",
-      "calcDailyIntake": "Ajánlott napi vízbevitel kiszámítása...",
+      "calcDailyIntake": "Ajánlott napi vízbeviteled kiszámítása",
       "dailyIntake": "Ajánlott napi vízbevitel",
       "save": "Változások mentése"
     },

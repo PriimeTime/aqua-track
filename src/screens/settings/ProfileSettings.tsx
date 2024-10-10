@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation, StackActions } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
 import { ContentPage } from "@/components/wrappers";
 import { CustomTextField, CustomSelectBox } from "@/components/input";
-import { PrimaryButton } from "@/components/buttons";
 import { InputContentWrapper } from "@/components/input";
 
 import { setDailyHydrationGoal, setUserMetrics } from "@/store/userData";
@@ -17,35 +15,44 @@ import { UserMetrics } from "@/models/UserMetrics";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { Gender } from "@/enums/settings/Gender";
 import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
+import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
-import { calculateDailyHydrationGoalInMl, numToString } from "@/utils/helpers";
+import {
+  calculateDailyHydrationGoalInMl,
+  convertWeightInputToKg,
+  numToString,
+} from "@/utils/helpers";
 
 import { color, initialUserMetrics } from "@/utils/constants";
 
-import { useModal, useSelectBoxItems } from "@/hooks";
+import { useDisplayUnits, useSelectBoxItems } from "@/hooks";
 
 function ProfileSettings() {
   const { t } = useTranslation();
 
-  const popAction = StackActions.pop(1);
-  const navigation = useNavigation();
+  const { displayVolumeWithUnit, displayRoundedWeight, displayWeightUnit } =
+    useDisplayUnits();
+
   const dispatch = useDispatch();
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
-  const [openModal] = useModal();
+
+  // const [openModal] = useModal();
 
   const [metricObject, setMetricObject] = useState(userMetrics);
 
-  const { genderSelectBoxItems, exerciseLevelSelectBoxItems } =
-    useSelectBoxItems();
+  const {
+    genderSelectBoxItems,
+    measurementSystemSelectBoxItems,
+    exerciseLevelSelectBoxItems,
+  } = useSelectBoxItems();
 
   useEffect(() => {
-    /* Recalculate daily water intake on render
-      to make sure it is always up to date
-      (Could be out of sync when i.e. changing language) */
+    /* Recalculate daily water intake when weight or exercise level changes
+      to make sure it is always up to date */
     recalculateDailyWaterIntakeInMl();
-  }, []);
+  }, [metricObject.weight, metricObject.exerciseLvl]);
 
   const recalculateDailyWaterIntakeInMl = () => {
     let dailyHydrationGoalInMl = initialUserMetrics.dailyHydrationGoal;
@@ -64,25 +71,10 @@ function ProfileSettings() {
     value: UserMetrics[T],
     name: T
   ) => {
-    setMetricObject((prevValue) => {
-      const retVal = { ...prevValue };
-      retVal[name] = value;
-      return retVal;
-    });
-  };
-
-  const handleOnSave = () => {
-    /** Validate weight input */
-    if (Number(metricObject.weight) < 10 || Number(metricObject.weight) > 800) {
-      openModal({
-        modalText: t("validation.invalidWeight"),
-      });
-      return;
-    }
-
-    dispatch(setUserMetrics(metricObject));
+    const updatedMetricObject = { ...metricObject, [name]: value };
+    setMetricObject(updatedMetricObject);
+    dispatch(setUserMetrics(updatedMetricObject));
     recalculateDailyWaterIntakeInMl();
-    navigation.dispatch(popAction);
   };
 
   return (
@@ -105,6 +97,16 @@ function ProfileSettings() {
         ></CustomSelectBox>
       </InputContentWrapper>
       <InputContentWrapper>
+        <CustomSelectBox
+          items={measurementSystemSelectBoxItems}
+          label={t("settings.profile.measurementSystem")}
+          handleOnSelect={(value) =>
+            handleOnChange(value as MeasurementSystem, "measurementSystem")
+          }
+          value={metricObject.measurementSystem}
+        ></CustomSelectBox>
+      </InputContentWrapper>
+      <InputContentWrapper>
         {/* <View style={{ flex: 1, flexDirection: "row" }}> */}
         {/* <CustomTextField
             inputType={CustomTextFieldInputType.Number}
@@ -120,11 +122,27 @@ function ProfileSettings() {
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}
           label={t("settings.profile.weight")}
-          append={t("unit.kilogramAbbrv")}
-          value={numToString(metricObject.weight)}
-          handleOnChangeText={(value) =>
-            handleOnChange(Number(value), "weight")
-          }
+          append={t(displayWeightUnit())}
+          value={numToString(displayRoundedWeight(metricObject.weight || 0))}
+          // handleOnBlur={() => {
+          //   if (
+          //     !metricObject.weight ||
+          //     metricObject.weight < 25 ||
+          //     metricObject.weight > 300
+          //   ) {
+          //     /** Validate weight input */
+          //     openModal({
+          //       modalText: t("validation.invalidWeight"),
+          //     });
+          //   }
+          // }}
+          handleOnChangeText={(value) => {
+            const weightInKg = convertWeightInputToKg(
+              value,
+              metricObject.measurementSystem || MeasurementSystem.Metric
+            );
+            handleOnChange(weightInKg, "weight");
+          }}
         ></CustomTextField>
         {/* </View> */}
       </InputContentWrapper>
@@ -143,15 +161,10 @@ function ProfileSettings() {
           fullWidth
           readOnly
           label={t("settings.profile.dailyIntake")}
-          value={`${userMetrics.dailyHydrationGoal} ${t(
-            "unit.millilitersAbbrv"
-          )}`}
+          value={displayVolumeWithUnit(userMetrics.dailyHydrationGoal)}
           inputColor={color.BLUE}
         ></CustomTextField>
       </InputContentWrapper>
-      <PrimaryButton onPress={handleOnSave}>
-        {t("settings.profile.save").toUpperCase()}
-      </PrimaryButton>
     </ContentPage>
   );
 }

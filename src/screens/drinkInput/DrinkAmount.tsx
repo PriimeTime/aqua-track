@@ -27,7 +27,7 @@ import { DrinkItem } from "@/models/DrinkItem";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
-import { useDrinkManager } from "@/hooks";
+import { useDrinkManager, useDisplayUnits } from "@/hooks";
 
 /**
  * Debounce function to control
@@ -54,6 +54,8 @@ function DrinkAmount() {
 
   const { drinkType } = route.params;
   const scaleValue = useRef(animatedScaleValue(1)).current;
+
+  const { displayVolumeWithUnit } = useDisplayUnits();
 
   const inputBottleObject = inputDrinkConfig.filter(
     (item) => item.drinkType === drinkType.drinkType
@@ -156,7 +158,9 @@ function DrinkAmount() {
         ></DrinkAmountBottle>
       </View>
       <View style={styles.amountDrank}>
-        <PrimaryText fontSize={headerFontSize}>{quantityValue} ml</PrimaryText>
+        <PrimaryText fontSize={headerFontSize}>
+          {displayVolumeWithUnit(quantityValue)}
+        </PrimaryText>
       </View>
       <View style={styles.buttonWrapper}>
         <PrimaryButton onPress={handleContinue}>

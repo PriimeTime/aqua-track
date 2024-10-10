@@ -7,7 +7,8 @@ const initialUserMetrics: UserMetrics = {
   height: null,
   weight: null,
   exerciseLvl: null,
-  dailyHydrationGoal: 2600,
+  measurementSystem: null,
+  dailyHydrationGoal: 0, // 2600
 };
 
 const initialUserAuth: UserAuth = {

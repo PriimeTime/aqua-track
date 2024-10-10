@@ -17,6 +17,7 @@ import {
   readAsyncStorage,
   writeAsyncStorage,
 } from "@/utils/storage";
+import { HAS_BEEN_STARTED } from "@/utils/constants";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type ModalState } from "@/types/ModalState";
@@ -46,7 +47,7 @@ function MainAppScreen() {
     const checkAppStarted = async () => {
       try {
         const hasBeenStarted = await readAsyncStorage<boolean>(
-          "hasBeenStarted"
+          HAS_BEEN_STARTED
         );
         setShowStartup(!hasBeenStarted);
       } catch (e) {
@@ -58,7 +59,7 @@ function MainAppScreen() {
   }, []);
 
   const handleCompleteStartup = async () => {
-    await writeAsyncStorage("hasBeenStarted", true);
+    await writeAsyncStorage(HAS_BEEN_STARTED, true);
     setShowStartup(false);
   };
 

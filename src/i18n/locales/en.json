@@ -1,7 +1,7 @@
 {
   "home": {
     "header": "Your hydration today",
-    "welcome": "Welcome to Drinky!"
+    "welcome": "Welcome to Drinky 😊"
   },
   "tabBar": {
     "home": "Home",
@@ -17,10 +17,12 @@
     "total": "Total"
   },
   "unit": {
-    "millilitersAbbrv": "ml",
-    "hoursAbbrv": "h",
-    "minutesAbbrv": "m",
-    "kilogramAbbrv": "kg"
+    "ml": "ml",
+    "oz": "oz",
+    "hours": "h",
+    "minutes": "m",
+    "kg": "kg",
+    "lbs": "lbs"
   },
   "drinks": {
     "untilSober": "until sober",
@@ -83,18 +85,22 @@
     "profile": {
       "header": "Metrics & Body Measurements",
       "gender": "Gender",
+      "measurementSystem": "Measurement system",
       "male": "Male",
       "female": "Female",
       "other": "Other",
       "genderPrompt": "What is your gender?",
       "namePrompt": "What is your name?",
+      "measurementSystemPrompt": "What measurement system do you use?",
+      "measurementSystemImperial": "Imperial",
+      "measurementSystemMetric": "Metric",
       "weight": "Weight",
       "weightPrompt": "How much do you weigh?",
       "exercisePrompt": "Do you do exercise?",
       "exerciseLow": "No",
       "exerciseMid": "Sometimes",
       "exerciseHigh": "Often",
-      "calcDailyIntake": "Calculating recommended daily intake...",
+      "calcDailyIntake": "Calculating your recommended daily intake...",
       "dailyIntake": "Recommended daily water intake",
       "save": "Save changes"
     },

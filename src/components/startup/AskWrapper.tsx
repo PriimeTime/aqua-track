@@ -1,7 +1,15 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -13,18 +21,21 @@ import { CustomSelectBox, CustomTextField } from "@/components/input";
 import { startupStyles } from "@/utils/constants";
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 import { formErrorStyles } from "@/utils/styles";
-import { numToString } from "@/utils/helpers";
+import { convertWeightInputToKg, numToString } from "@/utils/helpers";
 
-import { useFormValidation } from "@/hooks";
+import { useDisplayUnits, useFormValidation } from "@/hooks";
 
 import { FormInputType } from "@/enums/input/FormInputType";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
+import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
 import { setUserMetrics, setUsername } from "@/store/userData";
 
 import { UserMetrics } from "@/models/UserMetrics";
 import { SelectBoxItem } from "@/models/SelectBoxItem";
+
+import { type UserDataState } from "@/types/store/UserDataState";
 
 interface AskWrapperProps {
   question: string;
@@ -79,6 +90,12 @@ function AskWrapper({
 
   const [input, setInput] = useState<string | number | null>(null);
 
+  const measurementSystem = useSelector(
+    (state: UserDataState) => state.userData.userMetrics.measurementSystem
+  );
+
+  const { displayRoundedWeight, displayWeightUnit } = useDisplayUnits();
+
   const {
     validateForm,
     formState,
@@ -115,11 +132,15 @@ function AskWrapper({
           fullWidth
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}
-          append={"kg"}
-          value={numToString(formState.weight)}
+          append={t(displayWeightUnit())}
+          value={numToString(displayRoundedWeight(formState.weight || 0))}
           handleOnChangeText={(value) => {
+            const weightInKg = convertWeightInputToKg(
+              value,
+              measurementSystem || MeasurementSystem.Metric
+            );
             setInput(value);
-            handleInputChange(FormInputType.Weight, value);
+            handleInputChange(FormInputType.Weight, weightInKg.toString());
           }}
           handleOnFocus={() => resetInputValidation(FormInputType.Weight)}
         />
@@ -149,11 +170,25 @@ function AskWrapper({
   const handleSaveInput = async () => {
     if (!validateForm(false, inputType)) return;
 
-    const updatedMetrics: Partial<UserMetrics> = { [inputType]: input };
+    let valueToStore = input;
+
+    /**
+     * Convert weight input to kg if the user is using the imperial system
+     * to ensure proper storage in the redux store and in the database
+     */
+    if (
+      inputType === FormInputType.Weight &&
+      measurementSystem === MeasurementSystem.Imperial
+    ) {
+      valueToStore = convertWeightInputToKg(String(input), measurementSystem);
+    }
 
     if (inputType === FormInputType.Username) {
-      dispatch(setUsername(String(input) || "Jordan Doe"));
+      dispatch(setUsername(String(valueToStore) || "Jordan Doe"));
     } else {
+      const updatedMetrics: Partial<UserMetrics> = {
+        [inputType]: valueToStore,
+      };
       dispatch(setUserMetrics(updatedMetrics));
     }
     navigation.navigate(nextRoute);
@@ -161,22 +196,31 @@ function AskWrapper({
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
-      <View style={startupStyles.wrapper}>
-        <View style={styles.questionWrapper}>
-          <PrimaryText fontSize={paragraphMediumFontSize}>
-            {question}
-          </PrimaryText>
-        </View>
-        <View style={styles.inputFieldWrapper}>{renderInputField()}</View>
-        <View style={styles.errorTextWrapper}>
-          <Text style={styles.errorText}>{formErrors[inputType]}</Text>
-        </View>
-        <View style={styles.continueButtonWrapper}>
-          <PrimaryButton onPress={handleSaveInput}>
-            {t("button.continue")}
-          </PrimaryButton>
-        </View>
-      </View>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={startupStyles.wrapper}>
+              <View style={styles.questionWrapper}>
+                <PrimaryText fontSize={paragraphMediumFontSize}>
+                  {question}
+                </PrimaryText>
+              </View>
+              <View style={styles.inputFieldWrapper}>{renderInputField()}</View>
+              <View style={styles.errorTextWrapper}>
+                <Text style={styles.errorText}>{formErrors[inputType]}</Text>
+              </View>
+              <View style={styles.continueButtonWrapper}>
+                <PrimaryButton onPress={handleSaveInput}>
+                  {t("button.continue")}
+                </PrimaryButton>
+              </View>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </GradientWrapper>
   );
 }

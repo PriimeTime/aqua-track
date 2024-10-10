@@ -11,19 +11,22 @@ import { CustomFlatList } from "@/components/lists";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
-import { totalDrinkQuantity } from "@/utils/helpers";
 import { ONE_MIN } from "@/utils/constants";
 import { headerFontSize } from "@/utils/constants/components/typography";
 
-import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
+import { useDisplayUnits, usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
 function History() {
   const { t } = useTranslation();
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const drinkHistory = useTodaysDrinks();
+  const { displayRoundedVolume } = useDisplayUnits();
 
-  const totalDrinkQuantityToday = totalDrinkQuantity(drinkHistory);
+  const totalDrinkQuantityToday = drinkHistory.reduce(
+    (acc, val) => acc + displayRoundedVolume(val.quantity),
+    0
+  );
 
   const condition = drinkHistory.length > 0;
   const interval = ONE_MIN;

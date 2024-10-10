@@ -13,7 +13,7 @@ import { FormInputType } from "@/enums/input/FormInputType";
 
 const initialFormState = {
   userName: "",
-  weight: 0,
+  weight: null,
   email: "",
   password: "",
   confirmPassword: "",

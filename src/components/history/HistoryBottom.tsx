@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 
-import { metricUnitConversion } from "@/utils/helpers";
 import { color, fontFamily } from "@/utils/constants";
 import {
   historyBottomFontSize,
@@ -11,12 +10,16 @@ import {
   historyBottomTextIndent,
 } from "@/utils/constants/components/history";
 
+import { useDisplayUnits } from "@/hooks";
+
 function HistoryBottom({
   totalDrinkQuantityToday,
 }: {
   totalDrinkQuantityToday: number;
 }) {
   const { t } = useTranslation();
+
+  const { displayVolumeUnit } = useDisplayUnits();
 
   return (
     <>
@@ -27,9 +30,9 @@ function HistoryBottom({
       </LinearGradient>
       <View style={styles.bottomSection}>
         <Text style={styles.bottomText}>{`${t("history.todayTotal")}:`}</Text>
-        <Text style={styles.bottomValue}>
-          {metricUnitConversion(totalDrinkQuantityToday)}
-        </Text>
+        <Text style={styles.bottomValue}>{`${totalDrinkQuantityToday} ${t(
+          displayVolumeUnit()
+        )}`}</Text>
       </View>
     </>
   );

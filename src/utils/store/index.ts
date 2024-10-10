@@ -1,1 +1,1 @@
-export * from "./useResetStore";
+export * from "./useResetApp";

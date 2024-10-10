@@ -65,7 +65,7 @@ type FirebaseRegister = (
 
 type FirebaseSignInWithApple = () => void;
 
-type FirebaseLogout = (shouldResetLocalData: () => void) => void;
+type FirebaseLogout = (cb?: () => void) => void;
 
 /**
  * A custom hook for Firebase authentication
@@ -441,7 +441,7 @@ function useFirebaseAuth(): {
     }
   };
 
-  const firebaseLogout: FirebaseLogout = async (shouldResetLocalData) => {
+  const firebaseLogout: FirebaseLogout = async (cb) => {
     try {
       // Sign out user
       await signOut(auth);
@@ -450,8 +450,8 @@ function useFirebaseAuth(): {
       dispatch(setUserAuth(initialUserAuth));
       await clearAuthData();
 
-      // Prompt user a choice between clearing or keeping local data
-      shouldResetLocalData();
+      // Execute callback after loggin user out
+      if (cb) cb();
     } catch (error) {
       console.error("Error signing out:", error);
       openModal({

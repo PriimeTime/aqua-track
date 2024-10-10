@@ -1,5 +1,6 @@
 import { ExerciseLevel } from "@/enums/settings/ExerciseLevel";
 import { Gender } from "@/enums/settings/Gender";
+import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
@@ -11,6 +12,7 @@ import {
   DISTRIBUTION_RATIO_FEMALE,
   DISTRIBUTION_RATIO_MALE,
   DISTRIBUTION_RATIO_OTHER,
+  AVOIRDUPOIS_POUND_FACTOR,
   MIN_PER_HOUR,
   MS_PER_HOUR,
   ONE_THOUSAND,
@@ -27,6 +29,7 @@ const sleep = (timeMs: number): Promise<void> => {
 };
 
 /**
+ * Function to format a number to the nearest integer
  *
  * @param {*} num - the number to format
  * @returns the rounded number or zero if the result would be negative
@@ -67,13 +70,14 @@ const formatDecimals = (num: number, decimals: number): number => {
 
 const numToString = (num: number | null) => {
   if (num === null || isNaN(num)) {
-    return "0";
+    return "";
   }
 
   return String(num);
 };
 
 /**
+ * TODO: CURRENTLY UNUSED
  *
  * @param {*} totalIntake - the total intake in milliliters
  * @returns a string depicting formatted beverage quantity in metric units
@@ -91,6 +95,24 @@ const metricUnitConversion = (totalIntake: number): string => {
 
   return retVal;
 };
+
+/**
+ *
+ * @param {*} inputValue - weight input from the user
+ * @param {*} measurementSystem - current measurement system
+ * @returns the weight converted to kilograms
+ */
+export function convertWeightInputToKg(
+  inputValue: string,
+  measurementSystem: MeasurementSystem
+): number {
+  const value = Number(inputValue);
+  if (measurementSystem === MeasurementSystem.Imperial) {
+    return value * AVOIRDUPOIS_POUND_FACTOR;
+  } else {
+    return value;
+  }
+}
 
 /**
  *
@@ -306,6 +328,7 @@ const emptyFunc = () => {};
 
 export {
   sleep,
+  formatNumber,
   metricUnitConversion,
   totalDrinkQuantity,
   totalHydratingDrinkQuantity,

@@ -1,4 +1,5 @@
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { useDisplayUnits } from "@/hooks/useDisplayUnits";
 
 /**
  * Custom hook for calculating the total quantity of a specific drink type.
@@ -11,9 +12,11 @@ function useGroupedDrinkHistoryQuantity(
   typeID: number,
   drinkList: DrinkHistoryItem[]
 ): number {
+  const { displayRoundedVolume } = useDisplayUnits();
+
   const totalQuantity = drinkList
     .filter((item) => item.typeID === typeID)
-    .reduce((total, item) => total + item.quantity, 0);
+    .reduce((total, item) => total + displayRoundedVolume(item.quantity), 0);
 
   return totalQuantity;
 }

@@ -7,7 +7,11 @@ import { HistoryDeleteButton } from "@/components/history/HistoryDeleteButton";
 
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
 
-import { useGroupedDrinkHistoryQuantity, useTodaysDrinks } from "@/hooks";
+import {
+  useDisplayUnits,
+  useGroupedDrinkHistoryQuantity,
+  useTodaysDrinks,
+} from "@/hooks";
 
 import { drinkImageMap } from "@/utils/maps";
 import { color, cardBorderWidth, fontFamily } from "@/utils/constants";
@@ -22,10 +26,7 @@ import {
   infoCardTotalAmountRadius,
   infoCardSizeTotalFontSize,
 } from "@/utils/constants/components/history";
-import {
-  getHoursMinutesFromUnixDate,
-  metricUnitConversion,
-} from "@/utils/helpers";
+import { getHoursMinutesFromUnixDate } from "@/utils/helpers";
 import { cardBorderRadius } from "@/utils/constants/components/buttons";
 import {
   paragraphLargeFontSize,
@@ -35,6 +36,7 @@ import {
 function HistoryItem({ item }: { item: DrinkHistoryItem }) {
   const { imageSrc, label: title, date, quantity, typeID } = item;
   const todaysDrinks = useTodaysDrinks();
+  const { displayVolumeWithUnit, displayVolumeUnit } = useDisplayUnits();
   const { t } = useTranslation();
 
   const groupedDrinkHistoryQuantity = useGroupedDrinkHistoryQuantity(
@@ -65,7 +67,7 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
             borderRadius={infoCardCurrentAmountRadius}
             fontSize={infoCardCurrentAmountFontSize}
           >
-            {`+${quantity} ${t("unit.millilitersAbbrv")}`}
+            {`+${displayVolumeWithUnit(quantity)}`}
           </InfoCard>
         </View>
         <View style={styles.cardTotalBottom}>
@@ -78,7 +80,7 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
             height={infoCardTotalAmountHeight}
             borderRadius={infoCardTotalAmountRadius}
           >
-            {metricUnitConversion(groupedDrinkHistoryQuantity)}
+            {`${groupedDrinkHistoryQuantity} ${t(displayVolumeUnit())}`}
           </InfoCard>
         </View>
       </View>

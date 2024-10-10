@@ -1,7 +1,7 @@
 {
   "home": {
     "header": "Deine Hydration heute",
-    "welcome": "Willkommen bei Drinky!"
+    "welcome": "Willkommen bei Drinky 😊"
   },
   "tabBar": {
     "home": "Home",
@@ -17,10 +17,12 @@
     "total": "Gesamt"
   },
   "unit": {
-    "millilitersAbbrv": "ml",
-    "hoursAbbrv": "h",
-    "minutesAbbrv": "m",
-    "kilogramAbbrv": "kg"
+    "ml": "ml",
+    "oz": "Unzen",
+    "hours": "Std",
+    "minutes": "Min",
+    "kg": "kg",
+    "lbs": "Pfund"
   },
   "drinks": {
     "untilSober": "bis nüchtern",
@@ -83,18 +85,22 @@
     "profile": {
       "header": "Metriken & Körpermaße",
       "gender": "Geschlecht",
+      "measurementSystem": "Maßsystem",
       "male": "Männlich",
       "female": "Weiblich",
       "other": "Andere",
       "genderPrompt": "Was ist dein Geschlecht?",
       "namePrompt": "Wie heißt du?",
+      "measurementSystemPrompt": "Welches Maßsystem verwendest du?",
+      "measurementSystemImperial": "Angloamerikanisch",
+      "measurementSystemMetric": "Metrisch",
       "weight": "Gewicht",
       "weightPrompt": "Wie viel wiegst du?",
       "exercisePrompt": "Machst du Sport?",
       "exerciseLow": "Nein",
       "exerciseMid": "Manchmal",
       "exerciseHigh": "Oft",
-      "calcDailyIntake": "Berechnung vom täglichen Wasserbedarf...",
+      "calcDailyIntake": "Berechnung deines täglichen Wasserbedarfs...",
       "dailyIntake": "Empfohlener täglicher Wasserbedarf",
       "save": "Änderungen speichern"
     },

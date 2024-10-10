@@ -1,11 +1,12 @@
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { PrimaryText } from "@/components/texts";
 import { GradientWrapper } from "@/components/wrappers";
+import { CircularLoadingSpinner } from "@/components/loading";
 
-import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
+import { paragraphLargeFontSize } from "@/utils/constants/components/typography";
 import { startupStyles } from "@/utils/constants";
 
 import { useEffect } from "react";
@@ -34,7 +35,6 @@ function CalculateDailyIntake({
 
   useEffect(() => {
     setTimeout(() => {
-      // TODO: play some animation
       onCompleteStartup();
     }, 7000);
 
@@ -51,13 +51,22 @@ function CalculateDailyIntake({
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
-      <View style={startupStyles.wrapper}>
-        <PrimaryText fontSize={paragraphMediumFontSize}>
+      <View style={[startupStyles.wrapper, styles.wrapper]}>
+        <PrimaryText fontSize={paragraphLargeFontSize}>
           {t("settings.profile.calcDailyIntake")}
         </PrimaryText>
+        <CircularLoadingSpinner />
       </View>
     </GradientWrapper>
   );
 }
 
 export { CalculateDailyIntake };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: "75%",
+    left: "12.5%",
+    top: "15%",
+  },
+});

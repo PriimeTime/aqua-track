@@ -66,14 +66,14 @@ const settingsList = [
     imageSrc: "theme",
     routeName: SettingsRouteName.ThemeSettings,
   },
+  // {
+  //   id: "6",
+  //   title: "settings.language.header",
+  //   imageSrc: "language",
+  //   routeName: SettingsRouteName.LanguageSettings,
+  // },
   {
     id: "6",
-    title: "settings.language.header",
-    imageSrc: "language",
-    routeName: SettingsRouteName.LanguageSettings,
-  },
-  {
-    id: "7",
     title: "settings.about.header",
     imageSrc: "about",
     routeName: SettingsRouteName.AboutSettings,
