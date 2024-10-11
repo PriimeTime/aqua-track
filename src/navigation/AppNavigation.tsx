@@ -31,6 +31,7 @@ import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 
 import { CalculateDailyIntake } from "@/screens/startup/CalculateDailyIntake";
+import { DeleteAccount } from "@/screens/DeleteAccount";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -114,6 +115,10 @@ function MainNavigation() {
         component={DrinkSelection}
       />
       <Stack.Screen name={MainRouteName.Settings} component={SettingsList} />
+      <Stack.Screen
+        name={MainRouteName.DeleteAccount}
+        component={DeleteAccount}
+      />
       <Stack.Screen
         name={SettingsRouteName.AccountSettings}
         component={AccountSettings}

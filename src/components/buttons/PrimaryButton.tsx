@@ -19,9 +19,13 @@ import {
 } from "@/utils/constants/components/typography/button";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 
-const getTextStyle = (flat = false, fontSize = primaryButtonFontSize) => ({
+const getTextStyle = (
+  flat = false,
+  fontSize = primaryButtonFontSize,
+  btnColor = color.BLUE
+) => ({
   ...styles.text,
-  ...(flat && { color: color.BLUE }),
+  ...(flat && { color: btnColor }),
   fontSize,
 });
 
@@ -119,7 +123,9 @@ function PrimaryButton({
 
   const defaultContent = (
     <View style={styles.textWrapper}>
-      <Text style={[getTextStyle(flat, fontSize), textStyle]}>{children}</Text>
+      <Text style={[getTextStyle(flat, fontSize, btnColor), textStyle]}>
+        {children}
+      </Text>
     </View>
   );
 

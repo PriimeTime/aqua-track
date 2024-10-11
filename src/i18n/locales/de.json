@@ -64,6 +64,10 @@
       "forgotPwText": "Passwort vergessen",
       "logout": "Abmelden",
       "logoutPrompt": "Bist du sicher, dass du dich abmelden möchtest?",
+      "removeAccount": "Konto löschen",
+      "removeAccountPrompt": "Bist du sicher, dass du dein Konto löschen möchtest? Alle Daten gehen verloren!",
+      "pwToRemoveAccount": "Gib dein Passwort ein, um dein Konto zu löschen",
+      "removeAccountErr": "Konto konnte nicht gelöscht werden. Bitte versuche es später erneut",
       "resetLocalData": "Lokale Daten zurücksetzen?",
       "forgotPw": {
         "infoText1": "Keine Sorge! Gib einfach die E-Mail-Adresse deines Kontos ein.",
@@ -71,7 +75,8 @@
         "sendConfEmail": "E-Mail senden",
         "confEmailSentSucc": "Wir haben dir eine E-Mail gesendet. Bitte überprüfe dein Postfach!",
         "confEmailSentFail": "E-Mail konnte nicht gesendet werden. Bitte versuche es später erneut"
-      }
+      },
+      "accountDeleted": "Konto gelöscht"
     },
     "about": {
       "header": "Über uns"
@@ -114,6 +119,7 @@
   },
   "error": {
     "general": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "noInternetErr": "Keine Internetverbindung! Bitte überprüfe deine Verbindung und versuche es erneut.",
     "unverifiedEmailErr": "E-Mail-Adresse nicht verifiziert! Bitte überprüfe dein Postfach!",
     "dataFetchFailedErr": "Daten konnten nicht abgerufen werden :(",
     "emailAlreadyInUse": "Diese E-Mail Addresse wird bereits verwendet!",
@@ -123,6 +129,7 @@
     "emptyEmail": "Bitte gib deine E-Mail-Adresse ein",
     "invalidEmail": "Ungültige E-Mail",
     "wrongEmailOrPw": "Falsche E-Mail oder falsches Passwort",
+    "wrongPw": "Falsches Passwort",
     "invalidWeight": "Bitte gib ein sinnvolles Gewicht ein!",
     "emptyUsername": "Bitte gib deinen Benutzernamen ein",
     "invalidUsername": "Dein Benutzername muss mindestens 3 Zeichen lang sein!",

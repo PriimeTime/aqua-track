@@ -64,6 +64,9 @@
       "forgotPwText": "Forgot Password",
       "logout": "Log out",
       "logoutPrompt": "Are you sure you want to log out?",
+      "removeAccount": "Delete account",
+      "removeAccountPrompt": "Are you sure you want to permanently remove your account? All your data will be lost and cannot be recovered!",
+      "pwToRemoveAccount": "Enter your password to remove your account",
       "resetLocalData": "Reset local data?",
       "forgotPw": {
         "infoText1": "Don't worry! Just enter the e-mail address of your account.",
@@ -71,7 +74,8 @@
         "sendConfEmail": "Send e-mail",
         "confEmailSentSucc": "We've sent out an e-mail to your address. Please check your inbox!",
         "confEmailSentFail": "Couldn't send e-mail. Please try again later"
-      }
+      },
+      "accountDeleted": "Account deleted successfully!"
     },
     "about": {
       "header": "About"
@@ -114,15 +118,18 @@
   },
   "error": {
     "general": "Something went wrong. Please try again.",
+    "noInternetErr": "You are not connected to the internet. Please check your connection and try again.",
     "unverifiedEmailErr": "E-mail address not verified! Please check your inbox!",
     "emailAlreadyInUse": "This E-mail address is already in use!",
     "dataFetchFailedErr": "We were unable to fetch your data :(",
-    "logoutErr": "An error occured while trying to sign out. Please try again."
+    "logoutErr": "An error occured while trying to sign out. Please try again.",
+    "removeAccountErr": "An error occured while trying to remove your account. Please try again later."
   },
   "validation": {
     "emptyEmail": "Please enter your e-mail",
     "invalidEmail": "Invalid e-mail",
     "wrongEmailOrPw": "Wrong e-mail or password",
+    "wrongPw": "Wrong password",
     "invalidWeight": "Please enter a meaningful weight!",
     "emptyUsername": "Please enter your username",
     "invalidUsername": "Your username must be at least 3 characters long!",

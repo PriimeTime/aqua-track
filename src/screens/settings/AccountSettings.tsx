@@ -74,6 +74,10 @@ function AccountSettings() {
     navigation.navigate(MainRouteName.Home);
   };
 
+  const handleConfirmRemoveAccount = () => {
+    navigation.navigate(MainRouteName.DeleteAccount);
+  };
+
   // const clearLocalData = async () => {
   //   setLoading(true);
 
@@ -90,6 +94,14 @@ function AccountSettings() {
     openModal({
       modalText: t("settings.account.logoutPrompt"),
       onConfirm: handleConfirmLogout,
+      hasDecision: true,
+    });
+  };
+
+  const handleRemoveAccount = () => {
+    openModal({
+      modalText: t("settings.account.removeAccountPrompt"),
+      onConfirm: handleConfirmRemoveAccount,
       hasDecision: true,
     });
   };
@@ -119,7 +131,12 @@ function AccountSettings() {
           ></ForgotPassword>
         );
       case AccountSettingsState.ShowAccount:
-        return <AccountDetails onLogout={handleLogout}></AccountDetails>;
+        return (
+          <AccountDetails
+            onLogout={handleLogout}
+            onRemoveAccount={handleRemoveAccount}
+          ></AccountDetails>
+        );
     }
   };
 
