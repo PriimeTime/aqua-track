@@ -1,5 +1,5 @@
 {
-  "name": "aqua-track",
+  "name": "Drinky",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build-simulator": "eas build --profile development-simulator --platform ios",
     "build-device": "eas build --profile development --platform ios",
     "build-device-standalone": "eas build --profile preview --platform ios",
-    "build-production-release": "eas build --profile production --platform ios",
+    "build-production-release": "eas build --profile production --platform ios --auto-submit",
     "dev": "expo start --dev-client",
     "ios": "npm run ts:check && watchman watch-del-all && expo start --ios",
     "ios-no-ts": "watchman watch-del-all && expo start --ios",
