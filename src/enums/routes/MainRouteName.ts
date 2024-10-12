@@ -4,4 +4,5 @@ export enum MainRouteName {
   Settings = "Settings",
   DeleteAccount = "DeleteAccount",
   History = "History",
+  InAppBrowser = "InAppBrowser",
 }

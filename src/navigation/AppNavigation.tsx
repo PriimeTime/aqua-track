@@ -33,6 +33,7 @@ import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 
 import { CalculateDailyIntake } from "@/screens/startup/CalculateDailyIntake";
 import { DeleteAccount } from "@/screens/DeleteAccount";
+import InAppBrowser from "@/screens/InAppBrowser";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,10 +102,14 @@ function StartupNavigation({
 function MainNavigation() {
   return (
     <Stack.Navigator
+      initialRouteName={MainRouteName.HomeTabs}
       screenOptions={{
         headerShown: false,
       }}
     >
+      <Stack.Screen name={MainRouteName.InAppBrowser}>
+        {(props: any) => <InAppBrowser {...props} />}
+      </Stack.Screen>
       <Stack.Screen
         name={MainRouteName.HomeTabs}
         component={HomeTabs}

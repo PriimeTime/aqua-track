@@ -8,6 +8,7 @@ import {
   paragraphLargeFontSize,
   paragraphMediumFontSize,
 } from "@/utils/constants/components/typography";
+import LinkButton from "@/components/buttons/LinkButton";
 
 function SourcesSettings() {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ function SourcesSettings() {
         <PrimaryText fontSize={paragraphMediumFontSize}>
           {t("settings.sources.text_1")}
         </PrimaryText>
+        <LinkButton url="https://google.com" />
       </View>
       <View style={styles.section}>
         <PrimaryText fontSize={paragraphLargeFontSize}>
@@ -29,6 +31,7 @@ function SourcesSettings() {
         <PrimaryText fontSize={paragraphMediumFontSize}>
           {t("settings.sources.text_2")}
         </PrimaryText>
+        <LinkButton text="google likn" url="https://google.com" />
       </View>
     </ContentPage>
   );
