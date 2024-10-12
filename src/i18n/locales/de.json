@@ -78,7 +78,21 @@
       "accountDeleted": "Konto gelöscht"
     },
     "sources": {
-      "header": "Gesundheitsinfos & Hilfe"
+      "header": "Gesundheitsinfos & Hilfe",
+      "subtitle_1": "Wie wird mein Hydrationsziel berechnet?",
+      "text_1": "Wir benutzen die Informationen, die du uns gibst – wie Geschlecht, Gewicht und Aktivitätsniveau –, um ein personalisiertes Hydrationsziel zu erstellen, das speziell auf deine Bedürfnisse abgestimmt ist.",
+      "subtitle_2": "Beeinflusst Alkohol wirklich meine Hydration?",
+      "text_2": "Ja. Unsere App schätzt, wie viel Wasser (oder ein anderes hydratisierendes Getränk) du trinken musst, um die durch Alkohol verursachte Dehydration auszugleichen. \n\nDer Hydrationsprozentsatz auf deinem Startbildschirm spiegelt dies wider. \n\nMehr kannst du hier erfahren:",
+      "link_2_1": "Hydration und die harntreibende Wirkung von Alkohol",
+      "link_2_2": "Auswirkungen von Alkohol",
+      "link_2_3": "Der Einfluss von Alkohol auf das Urinieren und die Hydration",
+      "subtitle_3": "Wie genau ist die Berechnung des Blutalkoholgehalts (BAK)?",
+      "text_3": "Unsere BAK-Schätzungen basieren auf den Daten, die du uns gibst. \nAuch wenn individuelle Ergebnisse variieren können, geben wir dir eine allgemeine Schätzung, wann du nüchtern sein wirst. \n\nKEIN ALKOHOL AM STEUER! \n\nMehr kannst du hier erfahren:",
+      "link_3": "Wie der BAK berechnet wird",
+      "subtitle_4": "Benötigst du mehr Informationen?",
+      "text_4": "Wenn du weitere Fragen hast, sieh dir hier unser FAQ an: ",
+      "text_4_2": "\nDu kannst uns auch direkt unter drinkydailydrinktracker@gmail.com kontaktieren. Wir helfen dir gerne weiter!",
+      "link_4": "Drinky FAQ"
     },
     "about": {
       "header": "Über uns"

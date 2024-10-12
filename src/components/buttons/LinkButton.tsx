@@ -18,9 +18,10 @@ type InAppBrowserNavigationProp = NativeStackNavigationProp<
 interface LinkButtonProps {
   url: string;
   text?: string;
+  fontSize?: number;
 }
 
-function LinkButton({ url, text }: LinkButtonProps) {
+function LinkButton({ url, text, fontSize }: LinkButtonProps) {
   const navigation = useNavigation<InAppBrowserNavigationProp>();
 
   const openInAppBrowser = () => {
@@ -31,7 +32,10 @@ function LinkButton({ url, text }: LinkButtonProps) {
 
   return (
     <TouchableOpacity onPress={openInAppBrowser}>
-      <PrimaryText color={color.BLUE} fontSize={paragraphMediumFontSize}>
+      <PrimaryText
+        fontSize={fontSize || paragraphMediumFontSize}
+        color={color.LIGHTBLUE}
+      >
         {text || url}
       </PrimaryText>
     </TouchableOpacity>

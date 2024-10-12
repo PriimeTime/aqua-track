@@ -78,7 +78,21 @@
       "accountDeleted": "Account deleted successfully!"
     },
     "sources": {
-      "header": "Health Info & Help"
+      "header": "Health Info & Help",
+      "subtitle_1": "How is your hydration goal calculated?",
+      "text_1": "We use the information you provide—such as gender, weight, and activity level—to create a personalized hydration target, tailored specifically to your needs.",
+      "subtitle_2": "Does alcohol really affect my hydration?",
+      "text_2": "Yes, it does. Our app estimates how much water (or any hydrating beverage) you need to drink to counterbalance the dehydration caused by alcohol. \n\nThe hydration percentage on your home screen reflects this. \n\nLearn more here: ",
+      "link_2_1": "Hydration and Alcohol's Diuretic Effect",
+      "link_2_2": "Effects of Alcohol",
+      "link_2_3": "Alcohol's Effect on Urination and Hydration",
+      "subtitle_3": "How accurate is the BAC (Blood Alcohol Content) calculation?",
+      "text_3": "Our BAC estimates are based on the data you provide. \nWhile individual results may vary, we give you a general estimate of when you’ll be sober. \n\nNEVER DRINK AND DRIVE! \n\nLearn more here:",
+      "link_3": "How BAC is calculated",
+      "subtitle_4": "Need More Information?",
+      "text_4": "If you have additional questions, check out our FAQ here: ",
+      "text_4_2": "\nYou can also reach out to us directly at drinkydailydrinktracker@gmail.com. We're happy to help!",
+      "link_4": "Drinky FAQ"
     },
     "about": {
       "header": "About"

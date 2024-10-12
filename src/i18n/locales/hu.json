@@ -4,15 +4,15 @@
     "welcome": "Üdv a Drinky-ben 😊"
   },
   "tabBar": {
-    "home": "Kezdőlap",
-    "history": "Előzmények"
+    "home": "Kezdôlap",
+    "history": "Elôzmények"
   },
   "button": {
     "back": "Vissza",
     "continue": "Folytatás"
   },
   "history": {
-    "header": "Előzmények",
+    "header": "Elôzmények",
     "todayTotal": "Mai összes",
     "total": "Összesen"
   },
@@ -58,9 +58,9 @@
       "register": "Regisztráció",
       "username": "Felhasználónév",
       "email": "E-mail",
-      "verifyEmail": "Ellenőrző e-mail elküldve! Nézd meg az e-mail fiókodat, és erősítsd meg a fiókodat!",
+      "verifyEmail": "Ellenôrzô e-mail elküldve! Nézd meg az e-mail fiókodat, és erôsítsd meg a fiókodat!",
       "password": "Jelszó",
-      "confPassword": "Jelszó megerősítése",
+      "confPassword": "Jelszó megerôsítése",
       "forgotPwText": "Elfelejtett jelszó",
       "logout": "Kijelentkezés",
       "logoutPrompt": "Biztos ki akarsz jelentkezni?",
@@ -73,12 +73,26 @@
         "infoText2": "Küldünk egy linket, amivel visszaállíthatod a jelszavad :)",
         "sendConfEmail": "E-mail küldése",
         "confEmailSentSucc": "Küldtünk egy e-mailt. Nézd meg a beérkezettek között!",
-        "confEmailSentFail": "Nem sikerült elküldeni az e-mailt. Próbáld újra később!"
+        "confEmailSentFail": "Nem sikerült elküldeni az e-mailt. Próbáld újra késôbb!"
       },
       "accountDeleted": "Fiók törölve"
     },
     "sources": {
-      "header": "EÜ infók & segítség"
+      "header": "EÜ infók & segítség",
+      "subtitle_1": "Hogyan számítjátok ki a hidratálási célomat?",
+      "text_1": "Az általad megadott információkat (nemed, testsúlyod és az aktivitási szinted) használjuk fel, hogy személyre szabott hidratálási célt hozzunk létre, ami kifejezetten a te igényeidre van szabva.",
+      "subtitle_2": "Valóban befolyásolja az alkohol a hidratáltságomat?",
+      "text_2": "Igen. Az alkalmazásunk becslést ad arra, hogy mennyi vizet (vagy más hidratáló italt) kell fogyasztanod, hogy ellensúlyozd az alkohol okozta kiszáradást. \n\nA kezdôképernyôdön található hidratáltsági százalék ezt tükrözi. \n\nTovábbi információk itt:",
+      "link_2_1": "Hidratáció és az alkohol vízhajtó hatása",
+      "link_2_2": "Az alkohol hatásai",
+      "link_2_3": "Az alkohol hatása a vizeletürítésre és a hidratáltságra",
+      "subtitle_3": "Mennyire pontos a véralkoholszint (Blood Alcohol Content - BAC) számítás?",
+      "text_3": "A BAC becsléseink az általad megadott adatokon alapulnak. \nBár az egyéni eredmények eltérhetnek, általános becslést adunk arra vonatkozóan, mikor leszel józan. \n\nSOHA NE VEZESS ITTASAN! \n\nTovábbi információk itt:",
+      "link_3": "Hogyan számítják ki a BAC-t",
+      "subtitle_4": "További információra van szükséged?",
+      "text_4": "Ha további kérdéseid vannak, nézd meg a GYIK-ünket itt: ",
+      "text_4_2": "\nKözvetlenül is kapcsolatba léphetsz velünk a drinkydailydrinktracker@gmail.com címen. Szívesen segítünk!",
+      "link_4": "Drinky GYIK"
     },
     "about": {
       "header": "Rólunk"
@@ -94,7 +108,7 @@
       "gender": "Nem",
       "measurementSystem": "Mértékegységrendszer",
       "male": "Férfi",
-      "female": "Nő",
+      "female": "Nô",
       "other": "Egyéb",
       "genderPrompt": "Mi a nemed?",
       "namePrompt": "Hogy hívnak?",
@@ -112,17 +126,17 @@
       "save": "Változások mentése"
     },
     "statistics": {
-      "header": "Statisztikák és előzmények"
+      "header": "Statisztikák és elôzmények"
     },
     "themes": {
       "header": "Témák"
     },
-    "comingSoon": "Hamarosan elérhető..."
+    "comingSoon": "Hamarosan elérhetô..."
   },
   "error": {
     "general": "Valami hiba történt. Próbáld újra!",
-    "noInternetErr": "Nincs internetkapcsolat! Kérlek, ellenőrizd a kapcsolatodat, majd próbáld újra!",
-    "unverifiedEmailErr": "Az e-mail címed nincs megerősítve! Nézd meg a beérkezett üzeneteket!",
+    "noInternetErr": "Nincs internetkapcsolat! Kérlek, ellenôrizd a kapcsolatodat, majd próbáld újra!",
+    "unverifiedEmailErr": "Az e-mail címed nincs megerôsítve! Nézd meg a beérkezett üzeneteket!",
     "dataFetchFailedErr": "Nem sikerült letölteni az adatokat :(",
     "emailAlreadyInUse": "Ezzel az e-mail címmel már regisztráltak!",
     "logoutErr": "Hiba történt a kijelentkezés során. Próbáld újra!",
@@ -140,8 +154,8 @@
     "passwordDigitRule": "A jelszónak tartalmaznia kell legalább egy számjegyet",
     "passwordMinLenRule": "A jelszónak legalább {{pwMinLen}} karakter hosszúnak kell lennie",
     "passwordMaxLenRule": "A jelszónak legfeljebb {{pwMaxLen}} karakter hosszúnak kell lennie",
-    "passwordLowercaseCharRule": "A jelszónak tartalmaznia kell legalább egy kisbetűt",
-    "passwordUppercaseRule": "A jelszónak tartalmaznia kell legalább egy nagybetűt",
+    "passwordLowercaseCharRule": "A jelszónak tartalmaznia kell legalább egy kisbetût",
+    "passwordUppercaseRule": "A jelszónak tartalmaznia kell legalább egy nagybetût",
     "invalidConfPassword": "A jelszavak nem egyeznek"
   }
 }
