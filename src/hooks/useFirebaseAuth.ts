@@ -7,9 +7,12 @@ import {
   signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
   UserCredential,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, deleteDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
@@ -25,6 +28,7 @@ import { useModal } from "@/hooks/useModal";
 import { type UserUID } from "@/types/UserUID";
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { type GeneralState } from "@/types/store/GeneralState";
 
 import { loadUserData, updateUserData } from "@/utils/database";
 import { clearAuthData, saveAuthData } from "@/utils/auth";
@@ -67,6 +71,11 @@ type FirebaseSignInWithApple = () => void;
 
 type FirebaseLogout = (cb?: () => void) => void;
 
+type FirebaseRemoveAccount = (
+  password: string,
+  cb?: (val: boolean) => void
+) => void;
+
 /**
  * A custom hook for Firebase authentication
  * including user registration, login, signin with apple and logout functionalities.
@@ -93,6 +102,7 @@ function useFirebaseAuth(): {
   firebaseRegister: FirebaseRegister;
   firebaseSignInWithApple: FirebaseSignInWithApple;
   firebaseLogout: FirebaseLogout;
+  firebaseRemoveAccount: FirebaseRemoveAccount;
 } {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -100,6 +110,10 @@ function useFirebaseAuth(): {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const [openModal] = useModal();
+
+  const isInternetReachable = useSelector(
+    (state: GeneralState) => state.general.networkStatus.isReachable
+  );
 
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
@@ -460,11 +474,91 @@ function useFirebaseAuth(): {
     }
   };
 
+  const reauthenticateUser = async (providerId: string, password?: string) => {
+    const user = auth.currentUser;
+
+    if (!user) throw new Error("No authenticated user found");
+
+    if (providerId === "password") {
+      if (!userAuth.email || !password)
+        throw new Error("User email or password missing");
+
+      const credentials = EmailAuthProvider.credential(
+        userAuth.email,
+        password
+      );
+
+      return reauthenticateWithCredential(user, credentials);
+    } else if (providerId === "apple.com") {
+      const appleCredentials = await signInAsync({
+        requestedScopes: [
+          AppleAuthenticationScope.FULL_NAME,
+          AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      if (!appleCredentials.identityToken)
+        throw new Error("Failed to obtain Apple identity token");
+
+      const credential = new OAuthProvider("apple.com").credential({
+        idToken: appleCredentials.identityToken,
+      });
+
+      return reauthenticateWithCredential(user, credential);
+    }
+
+    throw new Error("Unsupported provider for reauthentication");
+  };
+
+  const firebaseRemoveAccount: FirebaseRemoveAccount = async (
+    password,
+    cb?
+  ) => {
+    try {
+      if (!isInternetReachable) {
+        openModal({ modalText: t("error.noInternetErr") });
+        return;
+      }
+
+      const user = auth.currentUser;
+      if (!user || !user.providerData[0])
+        throw new Error("No user or provider data found");
+
+      const providerId = user.providerData[0].providerId;
+      await reauthenticateUser(providerId, password);
+
+      // Delete user data from firestore
+      const userDocRef = doc(firestore, "users", user.uid);
+      await deleteDoc(userDocRef);
+
+      // Delete user from firebase auth
+      await deleteUser(user);
+
+      dispatch(setUserAuth(initialUserAuth));
+      await clearAuthData();
+
+      navigation.navigate(MainRouteName.Home);
+      openModal({ modalText: t("settings.account.accountDeleted") });
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("auth/invalid-credential")
+      ) {
+        openModal({ modalText: t("validation.wrongPw") });
+        cb && cb(false);
+        return;
+      }
+      openModal({ modalText: t("error.removeAccountErr") });
+      cb && cb(false);
+    }
+  };
+
   return {
     firebaseLogin,
     firebaseRegister,
     firebaseSignInWithApple,
     firebaseLogout,
+    firebaseRemoveAccount,
   };
 }
 

@@ -5,5 +5,6 @@ export enum SettingsRouteName {
   StatisticsSettings = "StatisticsSettings",
   ThemeSettings = "ThemeSettings",
   LanguageSettings = "LanguageSettings",
+  SourcesSettings = "SourcesSettings",
   AboutSettings = "AboutSettings",
 }

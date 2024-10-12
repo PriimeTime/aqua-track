@@ -17,7 +17,7 @@ import notification from "../../assets/icons/settings/notification-cute.png";
 import statistics from "../../assets/icons/settings/statistic-cute.png";
 import theme from "../../assets/icons/settings/theme-cute.png";
 import language from "../../assets/icons/settings/language-cute.png";
-import about from "../../assets/icons/settings/about-cute.png";
+import info from "../../assets/icons/settings/info-cute.png";
 
 import { SettingsRouteName } from "@/enums/routes/SettingsRouteName";
 import { DrinkImage } from "@/enums/maps/DrinkImage";
@@ -32,7 +32,7 @@ const settingsImageMap: { [key: string]: ImageSourcePropType } = {
   statistics,
   theme,
   language,
-  about,
+  info,
 };
 
 const settingsList = [
@@ -60,12 +60,12 @@ const settingsList = [
     imageSrc: "statistics",
     routeName: SettingsRouteName.StatisticsSettings,
   },
-  {
-    id: "5",
-    title: "settings.themes.header",
-    imageSrc: "theme",
-    routeName: SettingsRouteName.ThemeSettings,
-  },
+  // {
+  //   id: "5",
+  //   title: "settings.themes.header",
+  //   imageSrc: "theme",
+  //   routeName: SettingsRouteName.ThemeSettings,
+  // },
   // {
   //   id: "6",
   //   title: "settings.language.header",
@@ -73,11 +73,17 @@ const settingsList = [
   //   routeName: SettingsRouteName.LanguageSettings,
   // },
   {
-    id: "6",
-    title: "settings.about.header",
-    imageSrc: "about",
-    routeName: SettingsRouteName.AboutSettings,
+    id: "5",
+    title: "settings.sources.header",
+    imageSrc: "info",
+    routeName: SettingsRouteName.SourcesSettings,
   },
+  // {
+  //   id: "6",
+  //   title: "settings.about.header",
+  //   imageSrc: "about",
+  //   routeName: SettingsRouteName.AboutSettings,
+  // },
 ];
 
 const drinkImageMap: { [key: string]: ImageSourcePropType } = {

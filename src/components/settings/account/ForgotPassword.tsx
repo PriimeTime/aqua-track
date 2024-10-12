@@ -7,7 +7,7 @@ import { CustomTextField } from "@/components/input";
 import { PrimaryText } from "@/components/texts";
 import { PrimaryButton } from "@/components/buttons";
 
-import { paragraphSmallFontSize } from "@/utils/constants/components/typography";
+import { paragraphVerySmallFontSize } from "@/utils/constants/components/typography";
 import { formErrorStyles } from "@/utils/styles";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
@@ -57,10 +57,10 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
 
   return (
     <>
-      <PrimaryText fontSize={paragraphSmallFontSize}>
+      <PrimaryText fontSize={paragraphVerySmallFontSize}>
         {t("settings.account.forgotPw.infoText1")}
       </PrimaryText>
-      <PrimaryText fontSize={paragraphSmallFontSize}>
+      <PrimaryText fontSize={paragraphVerySmallFontSize}>
         {t("settings.account.forgotPw.infoText2")}
       </PrimaryText>
       <CustomTextField

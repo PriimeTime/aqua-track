@@ -11,9 +11,10 @@ import { color } from "@/utils/constants";
 
 interface AccountDetailsProps {
   onLogout: () => void;
+  onRemoveAccount: () => void;
 }
 
-function AccountDetails({ onLogout }: AccountDetailsProps) {
+function AccountDetails({ onLogout, onRemoveAccount }: AccountDetailsProps) {
   const { t } = useTranslation();
 
   const userAuth = useSelector(
@@ -40,6 +41,9 @@ function AccountDetails({ onLogout }: AccountDetailsProps) {
       ></CustomTextField>
       <PrimaryButton btnColor={color.RED} onPress={onLogout}>
         {t("settings.account.logout").toUpperCase()}
+      </PrimaryButton>
+      <PrimaryButton btnColor={color.RED} flat onPress={onRemoveAccount}>
+        {t("settings.account.removeAccount").toUpperCase()}
       </PrimaryButton>
     </>
   );

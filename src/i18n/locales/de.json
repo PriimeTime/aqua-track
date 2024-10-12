@@ -64,6 +64,9 @@
       "forgotPwText": "Passwort vergessen",
       "logout": "Abmelden",
       "logoutPrompt": "Bist du sicher, dass du dich abmelden möchtest?",
+      "removeAccount": "Konto löschen",
+      "removeAccountPrompt": "Bist du sicher, dass du dein Konto löschen möchtest? Alle Daten gehen verloren!",
+      "pwToRemoveAccount": "Gib dein Passwort ein, um dein Konto zu löschen",
       "resetLocalData": "Lokale Daten zurücksetzen?",
       "forgotPw": {
         "infoText1": "Keine Sorge! Gib einfach die E-Mail-Adresse deines Kontos ein.",
@@ -71,7 +74,25 @@
         "sendConfEmail": "E-Mail senden",
         "confEmailSentSucc": "Wir haben dir eine E-Mail gesendet. Bitte überprüfe dein Postfach!",
         "confEmailSentFail": "E-Mail konnte nicht gesendet werden. Bitte versuche es später erneut"
-      }
+      },
+      "accountDeleted": "Konto gelöscht"
+    },
+    "sources": {
+      "header": "Gesundheitsinfos & Hilfe",
+      "subtitle_1": "Wie wird mein Hydrationsziel berechnet?",
+      "text_1": "Wir benutzen die Informationen, die du uns gibst – wie Geschlecht, Gewicht und Aktivitätsniveau –, um ein personalisiertes Hydrationsziel zu erstellen, das speziell auf deine Bedürfnisse abgestimmt ist.",
+      "subtitle_2": "Beeinflusst Alkohol wirklich meine Hydration?",
+      "text_2": "Ja. Unsere App schätzt, wie viel Wasser (oder ein anderes hydratisierendes Getränk) du trinken musst, um die durch Alkohol verursachte Dehydration auszugleichen. \n\nDer Hydrationsprozentsatz auf deinem Startbildschirm spiegelt dies wider. \n\nMehr kannst du hier erfahren:",
+      "link_2_1": "Hydration und die harntreibende Wirkung von Alkohol",
+      "link_2_2": "Auswirkungen von Alkohol",
+      "link_2_3": "Der Einfluss von Alkohol auf das Urinieren und die Hydration",
+      "subtitle_3": "Wie genau ist die Berechnung des Blutalkoholgehalts (BAK)?",
+      "text_3": "Unsere BAK-Schätzungen basieren auf den Daten, die du uns gibst. \nAuch wenn individuelle Ergebnisse variieren können, geben wir dir eine allgemeine Schätzung, wann du nüchtern sein wirst. \n\nKEIN ALKOHOL AM STEUER! \n\nMehr kannst du hier erfahren:",
+      "link_3": "Wie der BAK berechnet wird",
+      "subtitle_4": "Benötigst du mehr Informationen?",
+      "text_4": "Wenn du weitere Fragen hast, sieh dir hier unser FAQ an: ",
+      "text_4_2": "\nDu kannst uns auch direkt unter drinkydailydrinktracker@gmail.com kontaktieren. Wir helfen dir gerne weiter!",
+      "link_4": "Drinky FAQ"
     },
     "about": {
       "header": "Über uns"
@@ -114,15 +135,18 @@
   },
   "error": {
     "general": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "noInternetErr": "Keine Internetverbindung! Bitte überprüfe deine Verbindung und versuche es erneut.",
     "unverifiedEmailErr": "E-Mail-Adresse nicht verifiziert! Bitte überprüfe dein Postfach!",
     "dataFetchFailedErr": "Daten konnten nicht abgerufen werden :(",
     "emailAlreadyInUse": "Diese E-Mail Addresse wird bereits verwendet!",
-    "logoutErr": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut."
+    "logoutErr": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "removeAccountErr": "Konto konnte nicht gelöscht werden. Bitte versuche es später erneut"
   },
   "validation": {
     "emptyEmail": "Bitte gib deine E-Mail-Adresse ein",
     "invalidEmail": "Ungültige E-Mail",
     "wrongEmailOrPw": "Falsche E-Mail oder falsches Passwort",
+    "wrongPw": "Falsches Passwort",
     "invalidWeight": "Bitte gib ein sinnvolles Gewicht ein!",
     "emptyUsername": "Bitte gib deinen Benutzernamen ein",
     "invalidUsername": "Dein Benutzername muss mindestens 3 Zeichen lang sein!",

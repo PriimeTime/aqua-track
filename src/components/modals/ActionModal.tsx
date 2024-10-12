@@ -46,7 +46,15 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
     setBlurVisible(false);
     springAnimation(scaleValue, configObject, () => {
       closeModal();
+
       onConfirm();
+      // Clear onConfirm to prevent it being saved and called again in case of multiple modals
+      if (
+        window.modalHandlers &&
+        window.modalHandlers.onConfirm &&
+        typeof window.modalHandlers.onConfirm === "function"
+      )
+        window.modalHandlers.onConfirm = () => {};
     });
   };
 
