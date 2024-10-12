@@ -77,6 +77,9 @@
       },
       "accountDeleted": "Account deleted successfully!"
     },
+    "sources": {
+      "header": "Health Info & Help"
+    },
     "about": {
       "header": "About"
     },

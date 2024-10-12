@@ -77,6 +77,9 @@
       },
       "accountDeleted": "Fiók törölve"
     },
+    "sources": {
+      "header": "EÜ infók & segítség"
+    },
     "about": {
       "header": "Rólunk"
     },

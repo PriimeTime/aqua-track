@@ -13,6 +13,7 @@ import {
   ThemeSettings,
   LanguageSettings,
   AboutSettings,
+  SourcesSettings,
 } from "@/screens/settings";
 import {
   AskExercise,
@@ -142,6 +143,10 @@ function MainNavigation() {
       <Stack.Screen
         name={SettingsRouteName.LanguageSettings}
         component={LanguageSettings}
+      />
+      <Stack.Screen
+        name={SettingsRouteName.SourcesSettings}
+        component={SourcesSettings}
       />
       <Stack.Screen
         name={SettingsRouteName.AboutSettings}
