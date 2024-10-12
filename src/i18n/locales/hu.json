@@ -67,7 +67,6 @@
       "removeAccount": "Fiók törlése",
       "removeAccountPrompt": "Biztosan törölni szeretnéd a fiókodat? Minden adatod elveszik!",
       "pwToRemoveAccount": "Add meg a jelszavad a fiók törléséhez",
-      "removeAccountErr": "Hiba történt a fiók törlése közben. Próbáld újra!",
       "resetLocalData": "Helyi adatok visszaállítása?",
       "forgotPw": {
         "infoText1": "Ne aggódj! Csak add meg a fiókod e-mail címét.",
@@ -123,7 +122,8 @@
     "unverifiedEmailErr": "Az e-mail címed nincs megerősítve! Nézd meg a beérkezett üzeneteket!",
     "dataFetchFailedErr": "Nem sikerült letölteni az adatokat :(",
     "emailAlreadyInUse": "Ezzel az e-mail címmel már regisztráltak!",
-    "logoutErr": "Hiba történt a kijelentkezés során. Próbáld újra!"
+    "logoutErr": "Hiba történt a kijelentkezés során. Próbáld újra!",
+    "removeAccountErr": "Hiba történt a fiók törlése közben. Próbáld újra!"
   },
   "validation": {
     "emptyEmail": "Kérlek, add meg az e-mail címedet!",

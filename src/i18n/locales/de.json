@@ -67,7 +67,6 @@
       "removeAccount": "Konto löschen",
       "removeAccountPrompt": "Bist du sicher, dass du dein Konto löschen möchtest? Alle Daten gehen verloren!",
       "pwToRemoveAccount": "Gib dein Passwort ein, um dein Konto zu löschen",
-      "removeAccountErr": "Konto konnte nicht gelöscht werden. Bitte versuche es später erneut",
       "resetLocalData": "Lokale Daten zurücksetzen?",
       "forgotPw": {
         "infoText1": "Keine Sorge! Gib einfach die E-Mail-Adresse deines Kontos ein.",
@@ -123,7 +122,8 @@
     "unverifiedEmailErr": "E-Mail-Adresse nicht verifiziert! Bitte überprüfe dein Postfach!",
     "dataFetchFailedErr": "Daten konnten nicht abgerufen werden :(",
     "emailAlreadyInUse": "Diese E-Mail Addresse wird bereits verwendet!",
-    "logoutErr": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut."
+    "logoutErr": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "removeAccountErr": "Konto konnte nicht gelöscht werden. Bitte versuche es später erneut"
   },
   "validation": {
     "emptyEmail": "Bitte gib deine E-Mail-Adresse ein",

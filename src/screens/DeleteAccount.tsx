@@ -18,6 +18,7 @@ import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 function DeleteAccount() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { firebaseRemoveAccount } = useFirebaseAuth();
 
   return (

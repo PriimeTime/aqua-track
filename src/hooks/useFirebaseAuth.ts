@@ -73,7 +73,7 @@ type FirebaseLogout = (cb?: () => void) => void;
 
 type FirebaseRemoveAccount = (
   password: string,
-  cb: (val: boolean) => void
+  cb?: (val: boolean) => void
 ) => void;
 
 /**
@@ -474,61 +474,81 @@ function useFirebaseAuth(): {
     }
   };
 
-  const firebaseRemoveAccount: FirebaseRemoveAccount = async (password, cb) => {
-    try {
-      // TODO: check if apple or email user and decide the flow
+  const reauthenticateUser = async (providerId: string, password?: string) => {
+    const user = auth.currentUser;
 
-      // Silently reauthenticate user
-      const user = auth.currentUser;
+    if (!user) throw new Error("No authenticated user found");
 
-      if (!isInternetReachable) {
-        openModal({
-          modalText: t("error.noInternetErr"),
-        });
-        return;
-      }
-
-      if (!user || !userAuth.email || !password) {
-        throw new Error("User or userAuth falsy");
-      }
+    if (providerId === "password") {
+      if (!userAuth.email || !password)
+        throw new Error("User email or password missing");
 
       const credentials = EmailAuthProvider.credential(
         userAuth.email,
         password
       );
 
-      await reauthenticateWithCredential(user, credentials);
+      return reauthenticateWithCredential(user, credentials);
+    } else if (providerId === "apple.com") {
+      const appleCredentials = await signInAsync({
+        requestedScopes: [
+          AppleAuthenticationScope.FULL_NAME,
+          AppleAuthenticationScope.EMAIL,
+        ],
+      });
 
-      // Delete user data from Firestore
+      if (!appleCredentials.identityToken)
+        throw new Error("Failed to obtain Apple identity token");
+
+      const credential = new OAuthProvider("apple.com").credential({
+        idToken: appleCredentials.identityToken,
+      });
+
+      return reauthenticateWithCredential(user, credential);
+    }
+
+    throw new Error("Unsupported provider for reauthentication");
+  };
+
+  const firebaseRemoveAccount: FirebaseRemoveAccount = async (
+    password,
+    cb?
+  ) => {
+    try {
+      if (!isInternetReachable) {
+        openModal({ modalText: t("error.noInternetErr") });
+        return;
+      }
+
+      const user = auth.currentUser;
+      if (!user || !user.providerData[0])
+        throw new Error("No user or provider data found");
+
+      const providerId = user.providerData[0].providerId;
+      await reauthenticateUser(providerId, password);
+
+      // Delete user data from firestore
       const userDocRef = doc(firestore, "users", user.uid);
       await deleteDoc(userDocRef);
 
+      // Delete user from firebase auth
       await deleteUser(user);
 
       dispatch(setUserAuth(initialUserAuth));
-
-      // Reset userAuth object in store and clear user data
       await clearAuthData();
 
-      // Navigate to home screen after successful account removal
       navigation.navigate(MainRouteName.Home);
-      openModal({
-        modalText: t("settings.account.accountDeleted"),
-      });
+      openModal({ modalText: t("settings.account.accountDeleted") });
     } catch (error) {
       if (
         error instanceof Error &&
         error.message.includes("auth/invalid-credential")
       ) {
-        openModal({
-          modalText: t("validation.wrongPw"),
-        });
+        openModal({ modalText: t("validation.wrongPw") });
         cb && cb(false);
         return;
       }
-      openModal({
-        modalText: t("error.removeAccountErr"),
-      });
+      openModal({ modalText: t("error.removeAccountErr") });
       cb && cb(false);
     }
   };

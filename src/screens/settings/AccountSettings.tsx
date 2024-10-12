@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { getAuth } from "firebase/auth";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
 import { AccountSettingsState } from "@/enums/settings/AccountSettingsState";
+import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import {
   LoginForm,
@@ -17,7 +19,6 @@ import {
 import { ContentPage } from "@/components/wrappers";
 
 import { useModal, useFirebaseAuth } from "@/hooks";
-import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 // TODO: outsource this into themes.js
 // --> also use direct fontSizes for PrimaryButton, PrimaryText, etc.
@@ -26,7 +27,7 @@ function AccountSettings() {
   const { t } = useTranslation();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  const { firebaseLogout } = useFirebaseAuth();
+  const { firebaseLogout, firebaseRemoveAccount } = useFirebaseAuth();
 
   // const { resetApp } = useResetApp();
 
@@ -75,7 +76,33 @@ function AccountSettings() {
   };
 
   const handleConfirmRemoveAccount = () => {
-    navigation.navigate(MainRouteName.DeleteAccount);
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const providerId = user?.providerData[0]?.providerId;
+
+    if (!providerId) {
+      openModal({
+        modalText: t("error.removeAccountErr"),
+      });
+      return;
+    }
+
+    // In case user is logged in with email and password
+    if (providerId === "password") {
+      navigation.navigate(MainRouteName.DeleteAccount);
+    }
+
+    // In case user is logged in with Apple
+    else if (providerId === "apple.com") {
+      firebaseRemoveAccount("");
+    }
+
+    // Fallback
+    else {
+      openModal({
+        modalText: t("error.removeAccountErr"),
+      });
+    }
   };
 
   // const clearLocalData = async () => {

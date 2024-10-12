@@ -52,7 +52,7 @@ const getButtonStyle = (
 interface PrimaryButtonProps {
   onPress: () => void;
   children: React.ReactNode;
-  btnColor?: ColorValue;
+  btnColor?: string;
   fontSize?: number;
   textStyle?: TextStyle;
   flat?: boolean;
