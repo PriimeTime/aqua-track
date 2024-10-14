@@ -55,7 +55,7 @@ const userDataSlice = createSlice({
     setExerciseLvl: (state, action: PayloadAction<ExerciseLevel>) => {
       state.userMetrics.exerciseLvl = action.payload;
     },
-    setUserAuth: (state, action: PayloadAction<UserAuth>) => {
+    setUserAuth: (state, action: PayloadAction<Partial<UserAuth>>) => {
       state.userAuth = { ...state.userAuth, ...action.payload };
     },
     setUserAccessToken: (state, action: PayloadAction<string | null>) => {

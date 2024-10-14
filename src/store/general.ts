@@ -8,6 +8,7 @@ const initialState: General = {
     isConnected: false,
     isReachable: false,
   },
+  alreadyHasAccount: false,
 };
 
 const generalSlice = createSlice({
@@ -17,9 +18,12 @@ const generalSlice = createSlice({
     setNetworkStatus: (state, action: PayloadAction<NetworkStatus>) => {
       state.networkStatus = { ...action.payload };
     },
+    setAlreadyHasAccount: (state, action: PayloadAction<boolean>) => {
+      state.alreadyHasAccount = action.payload;
+    },
   },
 });
 
-export const { setNetworkStatus } = generalSlice.actions;
+export const { setNetworkStatus, setAlreadyHasAccount } = generalSlice.actions;
 
 export default generalSlice.reducer;

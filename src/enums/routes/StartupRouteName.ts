@@ -6,4 +6,5 @@ export enum StartupRouteName {
   Weight = "AskWeight",
   Exercise = "AskExercise",
   CalcIntake = "CalculateIntake",
+  LoginScreen = "LoginScreen",
 }

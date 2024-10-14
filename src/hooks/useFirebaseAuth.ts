@@ -1,6 +1,5 @@
 import {
   createUserWithEmailAndPassword,
-  getAdditionalUserInfo,
   getAuth,
   OAuthProvider,
   sendEmailVerification,
@@ -25,6 +24,8 @@ import { useTranslation } from "react-i18next";
 
 import { useModal } from "@/hooks/useModal";
 
+import { setAlreadyHasAccount } from "@/store/general";
+
 import { type UserUID } from "@/types/UserUID";
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
@@ -37,7 +38,9 @@ import {
   initialUserAuth,
   ONE_MONTH,
   ERROR_APPLE_SIGNIN_CANCELLED,
+  HAS_BEEN_STARTED,
 } from "@/utils/constants";
+import { writeAsyncStorage } from "@/utils/storage";
 
 import { UserAuth } from "@/models/UserAuth";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
@@ -46,6 +49,7 @@ import { setUserAuth, setUserMetrics } from "@/store/userData";
 import { setHistory } from "@/store/drinkHistory";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
+import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 
 type FirebaseLogin = (
   email: string,
@@ -223,6 +227,10 @@ function useFirebaseAuth(): {
       }
       setLoading(false);
 
+      // already has account simply pings the useEffect in the MainAppScreen
+      dispatch(setAlreadyHasAccount(true));
+      await writeAsyncStorage(HAS_BEEN_STARTED, true);
+
       // Navigate to home screen after successful login
       navigation.navigate(MainRouteName.Home);
     } catch (error) {
@@ -349,7 +357,7 @@ function useFirebaseAuth(): {
         return;
       }
 
-      // Create an OAuth credentials using the Apple ID token
+      // Create an OAuth credential using the Apple ID token
       const appleProvider = new OAuthProvider("apple.com");
       const credentials = appleProvider.credential({
         idToken: appleCredentials.identityToken,
@@ -369,28 +377,34 @@ function useFirebaseAuth(): {
         return;
       }
 
-      const additionalUserInfo = getAdditionalUserInfo(userCredential);
+      // Load user data from Firestore
+      const userData = await loadUserData(userUID);
 
-      if (!additionalUserInfo) {
-        console.error("Additional user info is null");
-        openModal({
-          modalText: t("error.general"),
-        });
-        return;
-      }
+      // Prepare auth data
+      const authData: UserAuth = {
+        isLoggedIn: true,
+        userName:
+          userData?.userAuth.userName || userAuth.userName || "Apple user :)",
+        email: userData?.userAuth.email || user.email,
+        uid: userUID,
+      };
 
-      // Handle (register) new user
-      if (additionalUserInfo.isNewUser) {
+      // Set user auth object in redux store
+      dispatch(setUserAuth(authData));
+
+      // Check if user data is missing or incomplete
+      if (
+        !userData ||
+        !userData.userMetrics ||
+        !userData.userAuth.userName ||
+        !userData.userMetrics.weight ||
+        !userData.userMetrics.gender ||
+        !userData.userMetrics.exerciseLvl ||
+        !userData.userMetrics.measurementSystem
+      ) {
+        // Create or update entry for user in Firestore
         const userDocRef = doc(firestore, "users", userUID);
 
-        const authData: UserAuth = {
-          isLoggedIn: true,
-          userName: user.displayName || "Apple user :)",
-          email: user.email,
-          uid: userUID,
-        };
-
-        // Create entry for new user in Firestore
         await setDoc(
           userDocRef,
           {
@@ -403,45 +417,28 @@ function useFirebaseAuth(): {
           { merge: true }
         );
 
-        // Set user auth object in redux store
-        dispatch(setUserAuth(authData));
-
-        // Upload user data stored in AsyncStorage to Firestore
-        await updateUserData(userUID, {
-          userMetrics,
-          userDrinkHistory,
-          userAuth: {
-            userName: authData.userName,
-            email: authData.email,
-            uid: authData.uid,
-          },
+        openModal({
+          modalText: t("error.signinWithAppleBypass"),
         });
 
-        // Handle (login) already registered user
-      } else {
-        // load user data from Firestore
-        const userData = await loadUserData(userUID);
+        // already has account simply pings the useEffect in the MainAppScreen
+        dispatch(setAlreadyHasAccount(true));
+        await writeAsyncStorage(HAS_BEEN_STARTED, true);
 
-        const authData: UserAuth = {
-          isLoggedIn: true,
-          userName: userData?.userAuth.userName,
-          email: userData?.userAuth.email,
-          uid: userUID,
-          firstLogin: userData?.userAuth.firstLogin,
-        };
-
-        // Load one month worth of drink history
-        const thirtyDaysAgo = Date.now() - ONE_MONTH;
-        const userDrinkHistory =
-          userData?.userDrinkHistory?.filter(
-            (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
-          ) || [];
-
-        // Hydrate redux store with fetched data
-        dispatch(setHistory(userDrinkHistory));
-        dispatch(setUserMetrics(userData?.userMetrics));
-        dispatch(setUserAuth(authData));
+        navigation.navigate(StartupRouteName.UserName);
+        return;
       }
+
+      // Load one month worth of drink history
+      const thirtyDaysAgo = Date.now() - ONE_MONTH;
+      const userDrinkHistory =
+        userData.userDrinkHistory?.filter(
+          (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
+        ) || [];
+
+      // Hydrate redux store with fetched data
+      dispatch(setHistory(userDrinkHistory));
+      dispatch(setUserMetrics(userData.userMetrics));
 
       // Navigate to home screen after successful signin
       navigation.navigate(MainRouteName.Home);

@@ -1,5 +1,6 @@
 import { Pressable, ViewStyle } from "react-native";
 import { useState } from "react";
+import * as Haptics from "expo-haptics";
 
 import WaterDrop from "../../../assets/icons/WaterDrop.svg";
 import WaterDropPressed from "../../../assets/icons/WaterDropPressed.svg";
@@ -20,6 +21,7 @@ function WaterDropButton({ onPress, style, ...props }: WaterDropButtonProps) {
 
   const handlePressOut = () => {
     setIsPressed(false);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPress();
   };
 

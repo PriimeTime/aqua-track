@@ -1,6 +1,6 @@
 import { Pressable, Animated, View, StyleSheet } from "react-native";
 import { useRef } from "react";
-import * as Haptics from "expo-haptics";
+// import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
@@ -18,7 +18,7 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
 
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPress();
   };
 
