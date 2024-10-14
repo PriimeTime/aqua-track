@@ -31,7 +31,7 @@ function WelcomeScreen() {
   return (
     <GradientWrapper style={{ flex: 1 }}>
       <View style={[startupStyles.wrapper, styles.wrapper]}>
-        <PrimaryText fontSize={mainHeaderFontSize}>
+        <PrimaryText textAlign="center" fontSize={mainHeaderFontSize}>
           {t("home.welcome")}
         </PrimaryText>
       </View>
