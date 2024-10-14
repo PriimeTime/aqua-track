@@ -110,6 +110,7 @@
       "male": "Male",
       "female": "Female",
       "other": "Other",
+      "alreadyHasAccount": "I already have an account",
       "genderPrompt": "What is your gender?",
       "namePrompt": "What is your name?",
       "measurementSystemPrompt": "What measurement system do you use?",
@@ -140,7 +141,8 @@
     "emailAlreadyInUse": "This E-mail address is already in use!",
     "dataFetchFailedErr": "We were unable to fetch your data :(",
     "logoutErr": "An error occured while trying to sign out. Please try again.",
-    "removeAccountErr": "An error occured while trying to remove your account. Please try again later."
+    "removeAccountErr": "An error occured while trying to remove your account. Please try again later.",
+    "signinWithAppleBypass": "Let’s get your account set up before you jump in 😉"
   },
   "validation": {
     "emptyEmail": "Please enter your e-mail",

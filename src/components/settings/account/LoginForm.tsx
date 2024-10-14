@@ -14,7 +14,7 @@ import { loginFormErrorFontSize } from "@/utils/constants/components/forms";
 import { FormInputType } from "@/enums/input/FormInputType";
 
 interface LoginFormProps {
-  setAccountSettingsState: React.Dispatch<
+  setAccountSettingsState?: React.Dispatch<
     React.SetStateAction<AccountSettingsState>
   >;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,7 +39,11 @@ function LoginForm({
   } = useFormValidation();
 
   const redirectToRegister = () => {
-    setAccountSettingsState(AccountSettingsState.ShowRegister);
+    if (
+      setAccountSettingsState &&
+      typeof setAccountSettingsState === "function"
+    )
+      setAccountSettingsState(AccountSettingsState.ShowRegister);
   };
 
   const handleOnAppleSignIn = async () => {
@@ -47,7 +51,11 @@ function LoginForm({
   };
 
   const redirectToForgotPassword = () => {
-    setAccountSettingsState(AccountSettingsState.ShowForgotPassword);
+    if (
+      setAccountSettingsState &&
+      typeof setAccountSettingsState === "function"
+    )
+      setAccountSettingsState(AccountSettingsState.ShowForgotPassword);
   };
 
   const handleOnLogin = async () => {
@@ -90,19 +98,25 @@ function LoginForm({
       <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{formErrors.password}</Text>
       </View>
-      <PrimaryButton flat onPress={redirectToForgotPassword}>
-        {t("settings.account.forgotPwText").toUpperCase()}
-      </PrimaryButton>
+      {setAccountSettingsState &&
+        typeof setAccountSettingsState === "function" && (
+          <PrimaryButton flat onPress={redirectToForgotPassword}>
+            {t("settings.account.forgotPwText").toUpperCase()}
+          </PrimaryButton>
+        )}
       <PrimaryButton isLoading={loading} onPress={handleOnLogin}>
         {t("settings.account.login").toUpperCase()}
       </PrimaryButton>
-      <PrimaryButton
-        btnColor={color.WHITE}
-        textStyle={{ color: color.BLUE }}
-        onPress={redirectToRegister}
-      >
-        {t("settings.account.register").toUpperCase()}
-      </PrimaryButton>
+      {setAccountSettingsState &&
+        typeof setAccountSettingsState === "function" && (
+          <PrimaryButton
+            btnColor={color.WHITE}
+            textStyle={{ color: color.BLUE }}
+            onPress={redirectToRegister}
+          >
+            {t("settings.account.register").toUpperCase()}
+          </PrimaryButton>
+        )}
       <PrimaryButton
         btnColor={color.BLACK}
         onPress={handleOnAppleSignIn}

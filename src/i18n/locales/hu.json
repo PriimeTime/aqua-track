@@ -110,6 +110,7 @@
       "male": "Férfi",
       "female": "Nô",
       "other": "Egyéb",
+      "alreadyHasAccount": "Már van fiókom",
       "genderPrompt": "Mi a nemed?",
       "namePrompt": "Hogy hívnak?",
       "measurementSystemPrompt": "Melyik mértékegységrendszert használod?",
@@ -140,7 +141,8 @@
     "dataFetchFailedErr": "Nem sikerült letölteni az adatokat :(",
     "emailAlreadyInUse": "Ezzel az e-mail címmel már regisztráltak!",
     "logoutErr": "Hiba történt a kijelentkezés során. Próbáld újra!",
-    "removeAccountErr": "Hiba történt a fiók törlése közben. Próbáld újra!"
+    "removeAccountErr": "Hiba történt a fiók törlése közben. Próbáld újra!",
+    "signinWithAppleBypass": "Állítsuk be a fiókodat, mielôtt belevágsz 😉"
   },
   "validation": {
     "emptyEmail": "Kérlek, add meg az e-mail címedet!",

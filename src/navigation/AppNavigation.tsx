@@ -22,6 +22,7 @@ import {
   AskWeight,
   WelcomeScreen,
   AskMeasurementSystem,
+  LoginScreen,
 } from "@/screens/startup";
 
 import { SettingsList } from "@/components/settings/SettingsList";
@@ -95,6 +96,10 @@ function StartupNavigation({
           />
         )}
       </Stack.Screen>
+      <Stack.Screen
+        name={StartupRouteName.LoginScreen}
+        component={LoginScreen}
+      />
     </Stack.Navigator>
   );
 }

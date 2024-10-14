@@ -110,6 +110,7 @@
       "male": "Männlich",
       "female": "Weiblich",
       "other": "Andere",
+      "alreadyHasAccount": "Ich habe bereits ein Konto",
       "genderPrompt": "Was ist dein Geschlecht?",
       "namePrompt": "Wie heißt du?",
       "measurementSystemPrompt": "Welches Maßsystem verwendest du?",
@@ -140,7 +141,8 @@
     "dataFetchFailedErr": "Daten konnten nicht abgerufen werden :(",
     "emailAlreadyInUse": "Diese E-Mail Addresse wird bereits verwendet!",
     "logoutErr": "Beim Abmelden ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-    "removeAccountErr": "Konto konnte nicht gelöscht werden. Bitte versuche es später erneut"
+    "removeAccountErr": "Konto konnte nicht gelöscht werden. Bitte versuche es später erneut",
+    "signinWithAppleBypass": "Lass uns dein Konto einrichten, bevor du loslegst 😉"
   },
   "validation": {
     "emptyEmail": "Bitte gib deine E-Mail-Adresse ein",

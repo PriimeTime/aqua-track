@@ -23,6 +23,7 @@ import { type UserDataState } from "@/types/store/UserDataState";
 import { type ModalState } from "@/types/ModalState";
 
 import { ActionModal } from "@/components/modals";
+import { GeneralState } from "@/types/store/GeneralState";
 
 function MainAppScreen() {
   const dispatch = useDispatch();
@@ -30,6 +31,10 @@ function MainAppScreen() {
 
   const [isInternetReachable, setIsInternetReachable] = useState(false);
   const [showStartup, setShowStartup] = useState(false);
+
+  const alreadyHasAccount = useSelector(
+    (state: GeneralState) => state.general.alreadyHasAccount
+  );
 
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
@@ -56,7 +61,7 @@ function MainAppScreen() {
     };
 
     checkAppStarted();
-  }, []);
+  }, [alreadyHasAccount]);
 
   const handleCompleteStartup = async () => {
     await writeAsyncStorage(HAS_BEEN_STARTED, true);
