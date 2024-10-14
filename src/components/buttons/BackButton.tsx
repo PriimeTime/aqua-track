@@ -1,7 +1,7 @@
 import { Pressable, Text, Animated, StyleSheet } from "react-native";
 import { useRef } from "react";
 import { StackActions, useNavigation } from "@react-navigation/native";
-import * as Haptics from "expo-haptics";
+// import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
 
 import { color, shadow, fontFamily } from "@/utils/constants";
@@ -19,7 +19,7 @@ function BackButton() {
   const popAction = StackActions.pop(1);
 
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.dispatch(popAction);
   };
 
