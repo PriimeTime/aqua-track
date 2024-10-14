@@ -11,11 +11,13 @@ import { startupStyles } from "@/utils/constants";
 
 import { useEffect } from "react";
 
-import { setDailyHydrationGoal } from "@/store/userData";
+import { setUserMetrics } from "@/store/userData";
 
 import { calculateDailyHydrationGoalInMl } from "@/utils/helpers";
 
 import { type UserDataState } from "@/types/store/UserDataState";
+
+import { UserMetrics } from "@/models/UserMetrics";
 
 interface CalculateDailyIntakeProps {
   onCompleteStartup: () => void;
@@ -45,7 +47,11 @@ function CalculateDailyIntake({
         weight,
         exerciseLvl
       );
-      dispatch(setDailyHydrationGoal(dailyHydrationGoalInMl));
+
+      const updatedMetrics: Partial<UserMetrics> = {
+        dailyHydrationGoal: dailyHydrationGoalInMl,
+      };
+      dispatch(setUserMetrics(updatedMetrics));
     }
   }, []);
 

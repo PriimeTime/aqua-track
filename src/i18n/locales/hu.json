@@ -26,7 +26,7 @@
   },
   "drinks": {
     "untilSober": "mire kijózanodsz",
-    "quantityPrompt": "Mennyit ittál?",
+    "quantityPrompt": "Mennyit ittál ebbôl: ",
     "drinkTypePrompt": "Mit ittál?",
     "water": "Víz",
     "juice": "Gyümölcslé",
