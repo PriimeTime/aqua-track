@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
@@ -15,19 +14,17 @@ import { TipCard } from "@/components/cards";
 
 import { Statistics } from "@/screens/Statistics";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
 import { color } from "@/utils/constants";
 import { getTip } from "@/utils/tipManager";
 
+import { useTodaysDrinks } from "@/hooks";
+
 function RootScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const drinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
+  const drinkHistory = useTodaysDrinks();
 
   const { t } = useTranslation();
 

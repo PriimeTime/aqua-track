@@ -1,6 +1,5 @@
 import { View, StyleSheet } from "react-native";
 import { VictoryPie } from "victory-native";
-import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { t } from "i18next";
@@ -15,14 +14,11 @@ import {
   pieLabelRadius,
 } from "@/utils/constants/components/pieChart";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { useTodaysDrinks } from "@/hooks";
 
 function Statistics() {
-  const drinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
+  const drinkHistory = useTodaysDrinks();
 
   const reducedDrinkHistory: DrinkHistoryItem[] = Object.values(
     drinkHistory.reduce<Record<number, DrinkHistoryItem>>((acc, item) => {

@@ -1,5 +1,5 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
-
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 
 /**
@@ -11,16 +11,24 @@ import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
  *
  * @returns an array of drink history items logged today.
  */
+
 function useTodaysDrinks() {
   const drinkHistory = useSelector(
     (state: DrinkHistoryState) => state.drinkHistory
   );
 
-  const startOfToday = new Date();
-  startOfToday.setHours(0, 0, 0, 0); // Set to the start of today (midnight)
+  const startOfToday = useMemo(() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date.getTime();
+  }, []);
 
-  return drinkHistory.filter(
-    (drink) => new Date(drink.date).getTime() >= startOfToday.getTime()
+  return useMemo(
+    () =>
+      drinkHistory.filter(
+        (drink) => new Date(drink.date).getTime() >= startOfToday
+      ),
+    [drinkHistory, startOfToday]
   );
 }
 
