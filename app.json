@@ -2,7 +2,7 @@
   "expo": {
     "name": "Drinky",
     "slug": "aqua-track",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "bundleIdentifier": "com.priimetime.aquatrack",
-      "buildNumber": "1.5.1",
+      "buildNumber": "1.5.2",
       "config": {
         "usesNonExemptEncryption": false
       }
