@@ -157,7 +157,7 @@
     "passwordMinLenRule": "Password must be at least {{pwMinLen}} characters long",
     "passwordMaxLenRule": "Password must be maximum {{pwMaxLen}} characters long",
     "passwordLowercaseCharRule": "Password must contain at least one lower case character",
-    "passwordUppercaseRule": "Password must contain at least one upper case character",
+    "passwordUppercaseCharRule": "Password must contain at least one upper case character",
     "invalidConfPassword": "Passwords do not match"
   },
 
