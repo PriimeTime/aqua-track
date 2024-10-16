@@ -7,7 +7,7 @@ import { CountUp } from "use-count-up";
 import { PrimaryText } from "@/components/texts";
 import { TimeUntilSober } from "@/components/intakeCard/TimeUntilSober";
 
-import { ONE_MIN, color, shadow } from "@/utils/constants";
+import { color, shadow } from "@/utils/constants";
 import {
   totalIntakeFontSize,
   totalIntakeCardPadding,
@@ -25,7 +25,7 @@ import {
 import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
 import { type UserDataState } from "@/types/store/UserDataState";
 
-import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
+import { useTodaysDrinks } from "@/hooks";
 
 function IntakeInfoCard() {
   const drinkHistory = useSelector(
@@ -83,15 +83,6 @@ function IntakeInfoCard() {
   );
 
   const isTimeUntilSoberVisible = hrsUntilSober > 0 || minsUntilSober > 0;
-
-  /**
-   * If user is currently under the influence,
-   * rerender component every minute
-   * to update time until sober
-   */
-  const condition = currentBAC > 0;
-  const interval = ONE_MIN;
-  usePeriodicRerender(condition, interval);
 
   return (
     <View style={styles.wrapper}>

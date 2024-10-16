@@ -17,10 +17,10 @@ import { Statistics } from "@/screens/Statistics";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
 
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
-import { color } from "@/utils/constants";
+import { color, ONE_MIN } from "@/utils/constants";
 import { getTip } from "@/utils/tipManager";
 
-import { useTodaysDrinks } from "@/hooks";
+import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
 function RootScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -37,6 +37,14 @@ function RootScreen() {
   useEffect(() => {
     setTipString(getTip());
   }, []);
+
+  /**
+   * Rerender component every minute
+   * to update time until sober and
+   * hydration percent to make sure it's
+   * set back to 0% after midnight
+   */
+  usePeriodicRerender(true, ONE_MIN);
 
   return (
     <GradientWrapper style={styles.screen}>
