@@ -6,7 +6,7 @@ import { ContentPage } from "@/components/wrappers";
 import { CustomTextField, CustomSelectBox } from "@/components/input";
 import { InputContentWrapper } from "@/components/input";
 
-import { setDailyHydrationGoal, setUserMetrics } from "@/store/userData";
+import { setUserMetrics } from "@/store/userData";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
@@ -64,7 +64,10 @@ function ProfileSettings() {
       );
     }
 
-    dispatch(setDailyHydrationGoal(dailyHydrationGoalInMl));
+    const updatedMetrics: Partial<UserMetrics> = {
+      dailyHydrationGoal: dailyHydrationGoalInMl,
+    };
+    dispatch(setUserMetrics(updatedMetrics));
   };
 
   const handleOnChange = <T extends keyof UserMetrics>(

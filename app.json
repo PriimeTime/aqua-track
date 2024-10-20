@@ -2,21 +2,22 @@
   "expo": {
     "name": "Drinky",
     "slug": "aqua-track",
-    "version": "1.4.0",
+    "version": "1.5.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "usesAppleSignIn": true,
+      "ascAppId": "6478781926",
       "bundleIdentifier": "com.priimetime.aquatrack",
-      "buildNumber": "1.4.0",
+      "buildNumber": "1.5.8",
       "config": {
         "usesNonExemptEncryption": false
       }

@@ -30,12 +30,13 @@ import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 import { MeasurementSystem } from "@/enums/settings/MeasurementSystem";
 
-import { setUserMetrics, setUsername } from "@/store/userData";
+import { setUserAuth, setUserMetrics } from "@/store/userData";
 
 import { UserMetrics } from "@/models/UserMetrics";
 import { SelectBoxItem } from "@/models/SelectBoxItem";
 
 import { type UserDataState } from "@/types/store/UserDataState";
+import { UserAuth } from "@/models/UserAuth";
 
 interface AskWrapperProps {
   question: string;
@@ -184,7 +185,11 @@ function AskWrapper({
     }
 
     if (inputType === FormInputType.Username) {
-      dispatch(setUsername(String(valueToStore) || "Jordan Doe"));
+      const updatedUserAuth: Partial<UserAuth> = {
+        userName: String(valueToStore || "Jordan Doe"),
+      };
+
+      dispatch(setUserAuth(updatedUserAuth));
     } else {
       const updatedMetrics: Partial<UserMetrics> = {
         [inputType]: valueToStore,
@@ -194,31 +199,52 @@ function AskWrapper({
     navigation.navigate(nextRoute);
   };
 
+  // const toLoginForm = () => {
+  //   navigation.navigate(StartupRouteName.LoginScreen);
+  // };
+
   return (
     <GradientWrapper style={{ flex: 1 }}>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
-            keyboardShouldPersistTaps="handled"
-          >
-            <View style={startupStyles.wrapper}>
-              <View style={styles.questionWrapper}>
-                <PrimaryText fontSize={paragraphMediumFontSize}>
-                  {question}
-                </PrimaryText>
+          <View style={{ flex: 1, justifyContent: "space-between" }}>
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1 }}
+              keyboardShouldPersistTaps="handled"
+            >
+              <View style={startupStyles.wrapper}>
+                <View style={styles.questionWrapper}>
+                  <PrimaryText fontSize={paragraphMediumFontSize}>
+                    {question}
+                  </PrimaryText>
+                </View>
+                <View style={styles.inputFieldWrapper}>
+                  {renderInputField()}
+                </View>
+                <View style={styles.errorTextWrapper}>
+                  <Text style={styles.errorText}>{formErrors[inputType]}</Text>
+                </View>
+                <View style={styles.continueButtonWrapper}>
+                  <PrimaryButton onPress={handleSaveInput}>
+                    {t("button.continue")}
+                  </PrimaryButton>
+                </View>
               </View>
-              <View style={styles.inputFieldWrapper}>{renderInputField()}</View>
-              <View style={styles.errorTextWrapper}>
-                <Text style={styles.errorText}>{formErrors[inputType]}</Text>
-              </View>
-              <View style={styles.continueButtonWrapper}>
-                <PrimaryButton onPress={handleSaveInput}>
-                  {t("button.continue")}
-                </PrimaryButton>
-              </View>
-            </View>
-          </ScrollView>
+            </ScrollView>
+
+            {/* TODO: Temporarily disabled already has an account feature */}
+            {/* <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                paddingBottom: "5%",
+              }}
+            >
+              <PrimaryButton onPress={toLoginForm} flat>
+                {t("settings.profile.alreadyHasAccount")}
+              </PrimaryButton>
+            </View> */}
+          </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </GradientWrapper>

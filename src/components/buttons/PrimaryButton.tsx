@@ -8,7 +8,7 @@ import {
   ColorValue,
   TextStyle,
 } from "react-native";
-import * as Haptics from "expo-haptics";
+// import * as Haptics from "expo-haptics";
 import { useRef } from "react";
 
 import { color, fontFamily, shadow } from "@/utils/constants";
@@ -64,8 +64,8 @@ interface PrimaryButtonProps {
 /**
  * PrimaryButton Component
  *
- * A customizable button component for React Native that supports custom styles,
- * loading states, and haptic feedback on press. The button can be used with text
+ * A customizable button component for React Native that supports custom stylesand
+ * loading states. The button can be used with text
  * or custom components as its children.
  *
  * @param {*} onPress - function to call when the button is pressed
@@ -117,7 +117,7 @@ function PrimaryButton({
   const handlePress = () => {
     if (!isLoading) {
       onPress();
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
   };
 

@@ -10,12 +10,14 @@ import { color, fontFamily } from "@/utils/constants";
 
 function getTextStyle(
   fontSize: number,
-  colorParam?: ColorValue
+  colorParam?: ColorValue,
+  textAlign?: "left" | "center" | "right"
 ): StyleProp<TextStyle> {
   const colorVal = colorParam || color.DARK_BLUE;
 
   return {
     ...styles.text,
+    textAlign: textAlign || "left",
     fontSize,
     color: colorVal,
   };
@@ -25,6 +27,7 @@ interface PrimaryTextProps {
   children: React.ReactNode;
   fontSize: number;
   color?: ColorValue;
+  textAlign?: "left" | "center" | "right";
   numberOfLines?: number;
 }
 
@@ -33,11 +36,12 @@ function PrimaryText({
   fontSize,
   color,
   numberOfLines,
+  textAlign,
 }: PrimaryTextProps) {
   return (
     <Text
       numberOfLines={numberOfLines ?? undefined}
-      style={getTextStyle(fontSize, color)}
+      style={getTextStyle(fontSize, color, textAlign)}
     >
       {children}
     </Text>

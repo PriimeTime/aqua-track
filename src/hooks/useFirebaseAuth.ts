@@ -1,6 +1,5 @@
 import {
   createUserWithEmailAndPassword,
-  getAdditionalUserInfo,
   getAuth,
   OAuthProvider,
   sendEmailVerification,
@@ -12,7 +11,7 @@ import {
   EmailAuthProvider,
   UserCredential,
 } from "firebase/auth";
-import { doc, setDoc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
@@ -180,31 +179,22 @@ function useFirebaseAuth(): {
       if (authData.firstLogin) {
         authData.firstLogin = false;
 
-        const userDocRef = doc(firestore, "users", userUID);
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: { ...authData },
-          },
-          { merge: true }
-        ); // Merges data with existing document
-
         dispatch(setUserAuth(authData));
 
         // Initialize user data in Firestore
         await updateUserData(userUID, {
           userMetrics,
           userDrinkHistory,
-          userAuth: {
-            userName: authData.userName,
-            email: authData.email,
-            uid: userUID,
-          },
+          userAuth: authData,
         });
+        setLoading(false);
+
+        // Navigate to home screen after successful login
+        navigation.navigate(MainRouteName.Home);
         return;
       }
 
-      // Load entire user data from database into local storage and redux store
+      // Load one month worth of drink history
       if (userData) {
         const thirtyDaysAgo = Date.now() - ONE_MONTH;
         const userDrinkHistory =
@@ -212,6 +202,7 @@ function useFirebaseAuth(): {
             (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
           ) || [];
 
+        // Hydrate redux store with fetched data
         dispatch(setHistory(userDrinkHistory));
         dispatch(setUserMetrics(userData.userMetrics));
         dispatch(setUserAuth(authData));
@@ -284,20 +275,14 @@ function useFirebaseAuth(): {
       const user = userCredentials.user;
       const userUID: UserUID = user.uid;
 
-      // Write user with userAuth object into users document in Firestore
-      const userDocRef = doc(firestore, "users", userUID);
-      await setDoc(
-        userDocRef,
-        {
-          userAuth: {
-            email: email,
-            uid: userUID,
-            userName: userAuth.userName,
-            firstLogin: true,
-          },
+      await updateUserData(userUID, {
+        userAuth: {
+          email,
+          uid: userUID,
+          userName: userAuth.userName,
+          firstLogin: true,
         },
-        { merge: true }
-      ); // Merges data with existing document
+      });
 
       // Send the email verification to the email the user input in the form
       await sendEmailVerification(user);
@@ -349,7 +334,7 @@ function useFirebaseAuth(): {
         return;
       }
 
-      // Create an OAuth credentials using the Apple ID token
+      // Create an OAuth credential using the Apple ID token
       const appleProvider = new OAuthProvider("apple.com");
       const credentials = appleProvider.credential({
         idToken: appleCredentials.identityToken,
@@ -369,79 +354,55 @@ function useFirebaseAuth(): {
         return;
       }
 
-      const additionalUserInfo = getAdditionalUserInfo(userCredential);
+      // Load user data from Firestore
+      const userData = await loadUserData(userUID);
 
-      if (!additionalUserInfo) {
-        console.error("Additional user info is null");
-        openModal({
-          modalText: t("error.general"),
-        });
-        return;
-      }
+      // Prepare auth data
+      const authData: UserAuth = {
+        isLoggedIn: true,
+        userName:
+          userData?.userAuth.userName || userAuth.userName || "Apple user :)",
+        email: userData?.userAuth.email || user.email,
+        uid: userUID,
+        firstLogin:
+          userData?.userAuth.firstLogin === undefined ||
+          userData?.userAuth.firstLogin === null
+            ? true
+            : userData.userAuth.firstLogin,
+      };
 
-      // Handle (register) new user
-      if (additionalUserInfo.isNewUser) {
-        const userDocRef = doc(firestore, "users", userUID);
+      // Save auth data (token, uid, name, etc.) to local storage
+      saveAuthData(authData);
 
-        const authData: UserAuth = {
-          isLoggedIn: true,
-          userName: user.displayName || "Apple user :)",
-          email: user.email,
-          uid: userUID,
-        };
-
-        // Create entry for new user in Firestore
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: {
-              email: authData.email,
-              uid: authData.uid,
-              userName: authData.userName,
-            },
-          },
-          { merge: true }
-        );
+      // If userData missing or first login, initialize user data in Firestore
+      if (!userData || authData.firstLogin) {
+        authData.firstLogin = false;
 
         // Set user auth object in redux store
         dispatch(setUserAuth(authData));
 
-        // Upload user data stored in AsyncStorage to Firestore
+        // Initialize user data in Firestore
         await updateUserData(userUID, {
           userMetrics,
           userDrinkHistory,
-          userAuth: {
-            userName: authData.userName,
-            email: authData.email,
-            uid: authData.uid,
-          },
+          userAuth: authData,
         });
 
-        // Handle (login) already registered user
-      } else {
-        // load user data from Firestore
-        const userData = await loadUserData(userUID);
-
-        const authData: UserAuth = {
-          isLoggedIn: true,
-          userName: userData?.userAuth.userName,
-          email: userData?.userAuth.email,
-          uid: userUID,
-          firstLogin: userData?.userAuth.firstLogin,
-        };
-
-        // Load one month worth of drink history
-        const thirtyDaysAgo = Date.now() - ONE_MONTH;
-        const userDrinkHistory =
-          userData?.userDrinkHistory?.filter(
-            (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
-          ) || [];
-
-        // Hydrate redux store with fetched data
-        dispatch(setHistory(userDrinkHistory));
-        dispatch(setUserMetrics(userData?.userMetrics));
-        dispatch(setUserAuth(authData));
+        navigation.navigate(MainRouteName.Home);
+        return;
       }
+
+      // Load one month worth of drink history
+      const thirtyDaysAgo = Date.now() - ONE_MONTH;
+      const loadedUserDrinkHistory =
+        userData.userDrinkHistory?.filter(
+          (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
+        ) || [];
+
+      // Hydrate redux store with fetched data
+      dispatch(setHistory(loadedUserDrinkHistory));
+      dispatch(setUserMetrics(userData.userMetrics));
+      dispatch(setUserAuth(authData));
 
       // Navigate to home screen after successful signin
       navigation.navigate(MainRouteName.Home);

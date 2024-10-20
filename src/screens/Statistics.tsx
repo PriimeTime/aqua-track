@@ -1,21 +1,25 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { VictoryPie } from "victory-native";
-import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
+import { t } from "i18next";
 
-import { shadow } from "@/utils/constants";
-import { totalDrinkQuantity } from "@/utils/helpers";
-
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
+import { color } from "@/utils/constants";
+import { formatNumber, totalDrinkQuantity } from "@/utils/helpers";
+import { paragraphVerySmallFontSize } from "@/utils/constants/components/typography";
+import {
+  pieCornerRadius,
+  pieDimensions,
+  pieInnerRadius,
+  pieLabelRadius,
+} from "@/utils/constants/components/pieChart";
 
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
+import { useTodaysDrinks } from "@/hooks";
 
 function Statistics() {
-  const drinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
-  const pieDimensions = 250;
+  const drinkHistory = useTodaysDrinks();
+  const [_, setIsFocused] = useState(false); // State to trigger rerender
 
   const reducedDrinkHistory: DrinkHistoryItem[] = Object.values(
     drinkHistory.reduce<Record<number, DrinkHistoryItem>>((acc, item) => {
@@ -30,87 +34,50 @@ function Statistics() {
   );
 
   const sliceColor = reducedDrinkHistory.map((item) => item.color);
-  const pieValues = reducedDrinkHistory.map((item) => item.quantity);
 
   /**
-   * Add percentage property to drink history
-   * to be able to loop through it too when
-   * displaying statistics
-   *
-   * Then sort it descending by percentage
+   * Prepare the data for the pie chart, including labels.
    */
-  const drinkHistoryWithPercentages = reducedDrinkHistory
-    .map((item) => {
-      return {
-        ...item,
-        percent: (item.quantity / totalDrinkQuantity(drinkHistory)) * 100,
-      };
-    })
-    .sort((a, b) => b.percent - a.percent);
-
-  /**
-   * Define default and wanted
-   * values so the pie can animate
-   * rising from 0 to 100 values
-   */
-  const defaultGraphicData = pieValues.map((_, index) => {
-    /**
-     * Set the y value of the last
-     * object in the array to 100,
-     * so that by default the pie
-     * is one colored, and entirely
-     * taken up by 1 item
-     */
-    if (index < pieValues.length - 1) {
-      return { y: 0 };
-    }
-    return { x: " ", y: 100 };
+  const graphicsData = reducedDrinkHistory.map((item) => {
+    return {
+      x: t(item.label), // Use the translated label
+      y: (item.quantity / totalDrinkQuantity(drinkHistory)) * 100,
+    };
   });
 
-  const wantedGraphicData = pieValues.map((item) => {
-    return { x: " ", y: item };
-  });
-
-  const [graphicData, setGraphicData] = useState(defaultGraphicData);
-
+  // Update state when screen is focused
   useFocusEffect(
     useCallback(() => {
-      setGraphicData(defaultGraphicData);
-      const timeoutId = setTimeout(() => {
-        setGraphicData(wantedGraphicData);
-      }, 1);
-      return () => clearTimeout(timeoutId);
-    }, [drinkHistory])
+      setIsFocused(true);
+      return () => setIsFocused(false);
+    }, [])
   );
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.pieChartWrapper}>
         <VictoryPie
-          padAngle={5}
-          animate={{ easing: "exp" }}
-          data={graphicData}
+          padAngle={10}
+          animate={{ easing: "exp", duration: 150 }}
+          data={graphicsData}
           width={pieDimensions}
           height={pieDimensions}
           colorScale={sliceColor}
-          innerRadius={50}
+          innerRadius={pieInnerRadius}
+          labelRadius={pieLabelRadius}
+          cornerRadius={pieCornerRadius}
+          labels={({ datum }) =>
+            `${Math.min(formatNumber(datum.y), 100)}% ${datum.x}`
+          }
+          style={{
+            labels: {
+              fontFamily: "Chewy-Regular",
+              fill: color.DARK_BLUE,
+              fontSize: paragraphVerySmallFontSize,
+              padding: 16,
+            },
+          }}
         />
-      </View>
-      <View style={styles.legendWrapper}>
-        {drinkHistoryWithPercentages.map((item) => (
-          <View key={item.typeID} style={styles.legendItemWrapper}>
-            <View style={styles.legendItemColorWrapper}>
-              <View
-                style={[styles.legendItemColor, { borderColor: item.color }]}
-              ></View>
-            </View>
-            <View style={styles.legendItemLabel}>
-              <Text>
-                {Math.round(item.percent)} % {item.label}
-              </Text>
-            </View>
-          </View>
-        ))}
       </View>
     </View>
   );
@@ -118,7 +85,6 @@ function Statistics() {
 
 export { Statistics };
 
-// TODO: refactor to use proper pseudo-flexbox styling
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -127,45 +93,8 @@ const styles = StyleSheet.create({
   },
   pieChartWrapper: {
     width: "100%",
-    height: "75%",
+    height: "100%", // Adjusted to occupy full height since legend is removed
     justifyContent: "center",
     alignItems: "center",
-  },
-  pieChart: {
-    ...shadow,
-  },
-  legendWrapper: {
-    flexDirection: "row", // Align children horizontally
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignContent: "center", // Aligns wrapped lines
-    width: "100%",
-    height: "25%",
-  },
-  legendItemWrapper: {
-    ...shadow,
-    alignContent: "center",
-    flexWrap: "wrap",
-    width: "33.33%",
-    height: "25%",
-  },
-  legendItemColorWrapper: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "10%",
-    height: "100%",
-  },
-  legendItemColor: {
-    width: 0,
-    height: 0,
-    borderWidth: 6,
-    borderRadius: 180,
-  },
-  legendItemLabel: {
-    marginLeft: "5%",
-    width: "80%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "flex-start",
   },
 });

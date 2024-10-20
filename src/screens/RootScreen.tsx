@@ -1,28 +1,50 @@
 import { StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
-import WaterBottleImage from "../../assets/icons/mainwaterbottle.png";
+import { useTranslation } from "react-i18next";
 
 import { MainHeader } from "@/components/MainHeader";
-import { HomeWaterBottle } from "@/components/HomeWaterBottle";
 import { IntakeInfoCard } from "@/components/intakeCard/IntakeInfoCard";
 import { SettingsButton } from "@/components/buttons";
 import { GradientWrapper } from "@/components/wrappers";
+import { PrimaryText } from "@/components/texts";
+import { TipCard } from "@/components/cards";
 
 import { Statistics } from "@/screens/Statistics";
 
-import { type DrinkHistoryState } from "@/types/DrinkHistoryState";
-
 import { MainRouteName } from "@/enums/routes/MainRouteName";
+
+import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
+import { color, ONE_MIN } from "@/utils/constants";
+import { getTip } from "@/utils/tipManager";
+
+import { usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 
 function RootScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const drinkHistory = useSelector(
-    (state: DrinkHistoryState) => state.drinkHistory
-  );
+  const drinkHistory = useTodaysDrinks();
+
+  const { t } = useTranslation();
+
+  const [tipString, setTipString] = useState("Hmmm...");
+
+  const handleOnPressTipCard = () => {
+    setTipString(getTip());
+  };
+
+  useEffect(() => {
+    setTipString(getTip());
+  }, []);
+
+  /**
+   * Rerender component every minute
+   * to update time until sober and
+   * hydration percent to make sure it's
+   * set back to 0% after midnight
+   */
+  usePeriodicRerender(true, ONE_MIN);
 
   return (
     <GradientWrapper style={styles.screen}>
@@ -38,20 +60,19 @@ function RootScreen() {
         <View style={styles.totalIntakeWrapper}>
           <IntakeInfoCard></IntakeInfoCard>
         </View>
-        <View
-          style={[
-            /*styles.homeWaterBottleWrapper,*/
-            { height: drinkHistory.length > 0 && false ? "40%" : "70%" },
-          ]}
-        >
-          <HomeWaterBottle imgSrc={WaterBottleImage} />
+        <View style={styles.contentWrapper}>
+          {drinkHistory.length > 0 && <Statistics></Statistics>}
+          {drinkHistory.length === 0 && (
+            <TipCard onPress={handleOnPressTipCard}>
+              <PrimaryText
+                color={color.BLUE}
+                fontSize={paragraphMediumFontSize}
+              >
+                {t(tipString)}
+              </PrimaryText>
+            </TipCard>
+          )}
         </View>
-        {/* TODO: uncomment statistics */}
-        {drinkHistory.length > 0 && false && (
-          <View style={styles.statisticsWrapper}>
-            <Statistics></Statistics>
-          </View>
-        )}
         <StatusBar style="auto" />
       </View>
     </GradientWrapper>
@@ -100,7 +121,9 @@ const styles = StyleSheet.create({
   },
   // homeWaterBottleWrapper: {
   // },
-  statisticsWrapper: {
-    height: "25%",
+  contentWrapper: {
+    height: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
