@@ -11,7 +11,7 @@ import {
   EmailAuthProvider,
   UserCredential,
 } from "firebase/auth";
-import { doc, setDoc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
@@ -23,8 +23,6 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { useModal } from "@/hooks/useModal";
-
-import { setAlreadyHasAccount } from "@/store/general";
 
 import { type UserUID } from "@/types/UserUID";
 import { type UserDataState } from "@/types/store/UserDataState";
@@ -38,9 +36,7 @@ import {
   initialUserAuth,
   ONE_MONTH,
   ERROR_APPLE_SIGNIN_CANCELLED,
-  HAS_BEEN_STARTED,
 } from "@/utils/constants";
-import { writeAsyncStorage } from "@/utils/storage";
 
 import { UserAuth } from "@/models/UserAuth";
 import { DrinkHistoryItem } from "@/models/DrinkHistoryItem";
@@ -49,7 +45,6 @@ import { setUserAuth, setUserMetrics } from "@/store/userData";
 import { setHistory } from "@/store/drinkHistory";
 
 import { MainRouteName } from "@/enums/routes/MainRouteName";
-import { StartupRouteName } from "@/enums/routes/StartupRouteName";
 
 type FirebaseLogin = (
   email: string,
@@ -184,31 +179,22 @@ function useFirebaseAuth(): {
       if (authData.firstLogin) {
         authData.firstLogin = false;
 
-        const userDocRef = doc(firestore, "users", userUID);
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: { ...authData },
-          },
-          { merge: true }
-        ); // Merges data with existing document
-
         dispatch(setUserAuth(authData));
 
         // Initialize user data in Firestore
         await updateUserData(userUID, {
           userMetrics,
           userDrinkHistory,
-          userAuth: {
-            userName: authData.userName,
-            email: authData.email,
-            uid: userUID,
-          },
+          userAuth: authData,
         });
+        setLoading(false);
+
+        // Navigate to home screen after successful login
+        navigation.navigate(MainRouteName.Home);
         return;
       }
 
-      // Load entire user data from database into local storage and redux store
+      // Load one month worth of drink history
       if (userData) {
         const thirtyDaysAgo = Date.now() - ONE_MONTH;
         const userDrinkHistory =
@@ -216,6 +202,7 @@ function useFirebaseAuth(): {
             (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
           ) || [];
 
+        // Hydrate redux store with fetched data
         dispatch(setHistory(userDrinkHistory));
         dispatch(setUserMetrics(userData.userMetrics));
         dispatch(setUserAuth(authData));
@@ -226,10 +213,6 @@ function useFirebaseAuth(): {
         console.error("Unable to load user data --> userData falsy");
       }
       setLoading(false);
-
-      // already has account simply pings the useEffect in the MainAppScreen
-      dispatch(setAlreadyHasAccount(true));
-      await writeAsyncStorage(HAS_BEEN_STARTED, true);
 
       // Navigate to home screen after successful login
       navigation.navigate(MainRouteName.Home);
@@ -292,20 +275,14 @@ function useFirebaseAuth(): {
       const user = userCredentials.user;
       const userUID: UserUID = user.uid;
 
-      // Write user with userAuth object into users document in Firestore
-      const userDocRef = doc(firestore, "users", userUID);
-      await setDoc(
-        userDocRef,
-        {
-          userAuth: {
-            email: email,
-            uid: userUID,
-            userName: userAuth.userName,
-            firstLogin: true,
-          },
+      await updateUserData(userUID, {
+        userAuth: {
+          email,
+          uid: userUID,
+          userName: userAuth.userName,
+          firstLogin: true,
         },
-        { merge: true }
-      ); // Merges data with existing document
+      });
 
       // Send the email verification to the email the user input in the form
       await sendEmailVerification(user);
@@ -387,58 +364,45 @@ function useFirebaseAuth(): {
           userData?.userAuth.userName || userAuth.userName || "Apple user :)",
         email: userData?.userAuth.email || user.email,
         uid: userUID,
+        firstLogin:
+          userData?.userAuth.firstLogin === undefined ||
+          userData?.userAuth.firstLogin === null
+            ? true
+            : userData.userAuth.firstLogin,
       };
 
-      // Set user auth object in redux store
-      dispatch(setUserAuth(authData));
+      // Save auth data (token, uid, name, etc.) to local storage
+      saveAuthData(authData);
 
-      // Check if user data is missing or incomplete
-      if (
-        !userData ||
-        !userData.userMetrics ||
-        !userData.userAuth.userName ||
-        !userData.userMetrics.weight ||
-        !userData.userMetrics.gender ||
-        !userData.userMetrics.exerciseLvl ||
-        !userData.userMetrics.measurementSystem
-      ) {
-        // Create or update entry for user in Firestore
-        const userDocRef = doc(firestore, "users", userUID);
+      // If userData missing or first login, initialize user data in Firestore
+      if (!userData || authData.firstLogin) {
+        authData.firstLogin = false;
 
-        await setDoc(
-          userDocRef,
-          {
-            userAuth: {
-              email: authData.email,
-              uid: authData.uid,
-              userName: authData.userName,
-            },
-          },
-          { merge: true }
-        );
+        // Set user auth object in redux store
+        dispatch(setUserAuth(authData));
 
-        openModal({
-          modalText: t("error.signinWithAppleBypass"),
+        // Initialize user data in Firestore
+        await updateUserData(userUID, {
+          userMetrics,
+          userDrinkHistory,
+          userAuth: authData,
         });
 
-        // already has account simply pings the useEffect in the MainAppScreen
-        dispatch(setAlreadyHasAccount(true));
-        await writeAsyncStorage(HAS_BEEN_STARTED, true);
-
-        navigation.navigate(StartupRouteName.UserName);
+        navigation.navigate(MainRouteName.Home);
         return;
       }
 
       // Load one month worth of drink history
       const thirtyDaysAgo = Date.now() - ONE_MONTH;
-      const userDrinkHistory =
+      const loadedUserDrinkHistory =
         userData.userDrinkHistory?.filter(
           (drink: DrinkHistoryItem) => drink.date >= thirtyDaysAgo
         ) || [];
 
       // Hydrate redux store with fetched data
-      dispatch(setHistory(userDrinkHistory));
+      dispatch(setHistory(loadedUserDrinkHistory));
       dispatch(setUserMetrics(userData.userMetrics));
+      dispatch(setUserAuth(authData));
 
       // Navigate to home screen after successful signin
       navigation.navigate(MainRouteName.Home);

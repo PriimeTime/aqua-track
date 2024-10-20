@@ -199,9 +199,9 @@ function AskWrapper({
     navigation.navigate(nextRoute);
   };
 
-  const toLoginForm = () => {
-    navigation.navigate(StartupRouteName.LoginScreen);
-  };
+  // const toLoginForm = () => {
+  //   navigation.navigate(StartupRouteName.LoginScreen);
+  // };
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
@@ -232,7 +232,8 @@ function AskWrapper({
               </View>
             </ScrollView>
 
-            <View
+            {/* TODO: Temporarily disabled already has an account feature */}
+            {/* <View
               style={{
                 flexDirection: "row",
                 justifyContent: "center",
@@ -242,7 +243,7 @@ function AskWrapper({
               <PrimaryButton onPress={toLoginForm} flat>
                 {t("settings.profile.alreadyHasAccount")}
               </PrimaryButton>
-            </View>
+            </View> */}
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

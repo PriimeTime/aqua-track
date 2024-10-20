@@ -19,6 +19,7 @@ import { useTodaysDrinks } from "@/hooks";
 
 function Statistics() {
   const drinkHistory = useTodaysDrinks();
+  const [_, setIsFocused] = useState(false); // State to trigger rerender
 
   const reducedDrinkHistory: DrinkHistoryItem[] = Object.values(
     drinkHistory.reduce<Record<number, DrinkHistoryItem>>((acc, item) => {
@@ -37,34 +38,19 @@ function Statistics() {
   /**
    * Prepare the data for the pie chart, including labels.
    */
-  const wantedGraphicData = reducedDrinkHistory.map((item) => {
+  const graphicsData = reducedDrinkHistory.map((item) => {
     return {
       x: t(item.label), // Use the translated label
       y: (item.quantity / totalDrinkQuantity(drinkHistory)) * 100,
     };
   });
 
-  /**
-   * Define default values so the pie can animate
-   * rising from 0 to actual values.
-   */
-  const defaultGraphicData = wantedGraphicData.map((item, index) => {
-    if (index < wantedGraphicData.length - 1) {
-      return { ...item, y: 0 };
-    }
-    return { ...item, y: totalDrinkQuantity(drinkHistory) };
-  });
-
-  const [graphicData, setGraphicData] = useState(defaultGraphicData);
-
+  // Update state when screen is focused
   useFocusEffect(
     useCallback(() => {
-      setGraphicData(defaultGraphicData);
-      const timeoutId = setTimeout(() => {
-        setGraphicData(wantedGraphicData);
-      }, 1);
-      return () => clearTimeout(timeoutId);
-    }, [drinkHistory])
+      setIsFocused(true);
+      return () => setIsFocused(false);
+    }, [])
   );
 
   return (
@@ -73,14 +59,16 @@ function Statistics() {
         <VictoryPie
           padAngle={10}
           animate={{ easing: "exp", duration: 150 }}
-          data={graphicData}
+          data={graphicsData}
           width={pieDimensions}
           height={pieDimensions}
           colorScale={sliceColor}
           innerRadius={pieInnerRadius}
           labelRadius={pieLabelRadius}
           cornerRadius={pieCornerRadius}
-          labels={({ datum }) => `${formatNumber(datum.y)}% ${datum.x}`}
+          labels={({ datum }) =>
+            `${Math.min(formatNumber(datum.y), 100)}% ${datum.x}`
+          }
           style={{
             labels: {
               fontFamily: "Chewy-Regular",

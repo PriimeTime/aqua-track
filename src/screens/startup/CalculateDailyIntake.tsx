@@ -51,6 +51,7 @@ function CalculateDailyIntake({
       const updatedMetrics: Partial<UserMetrics> = {
         dailyHydrationGoal: dailyHydrationGoalInMl,
       };
+
       dispatch(setUserMetrics(updatedMetrics));
     }
   }, []);
