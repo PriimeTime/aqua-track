@@ -26,7 +26,7 @@
   },
   "drinks": {
     "untilSober": "until sober",
-    "quantityPrompt": "How much",
+    "quantityPrompt": "How much did you drink?",
     "drinkTypePrompt": "What did you drink?",
     "water": "Water",
     "juice": "Juice",
@@ -46,7 +46,7 @@
     "ok": "Ok"
   },
   "settings": {
-    "header": "Settings",
+    "header": "Menu",
     "account": {
       "accountHeader": "Account",
       "loginHeader": "Login",
@@ -69,8 +69,7 @@
       "pwToRemoveAccount": "Enter your password to remove your account",
       "resetLocalData": "Reset local data?",
       "forgotPw": {
-        "infoText1": "Don't worry! Just enter the e-mail address of your account.",
-        "infoText2": "We will send you a link to reset your password :)",
+        "infoText": "Don't worry! Just enter the e-mail address of your account.\nWe will send you a link to reset your password :)",
         "sendConfEmail": "Send e-mail",
         "confEmailSentSucc": "We've sent out an e-mail to your address. Please check your inbox!",
         "confEmailSentFail": "Couldn't send e-mail. Please try again later"
@@ -78,7 +77,7 @@
       "accountDeleted": "Account deleted successfully!"
     },
     "sources": {
-      "header": "Health Info & Help",
+      "header": "Info",
       "subtitle_1": "How is your hydration goal calculated?",
       "text_1": "We use the information you provide—such as gender, weight, and activity level—to create a personalized hydration target, tailored specifically to your needs.",
       "subtitle_2": "Does alcohol really affect my hydration?",
@@ -104,7 +103,7 @@
       "header": "Notifications"
     },
     "profile": {
-      "header": "Metrics & Body Measurements",
+      "header": "Preferences",
       "gender": "Gender",
       "measurementSystem": "Measurement system",
       "male": "Male",
@@ -127,7 +126,7 @@
       "save": "Save changes"
     },
     "statistics": {
-      "header": "Statistics & History"
+      "header": "Statistics"
     },
     "themes": {
       "header": "Themes"

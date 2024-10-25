@@ -45,7 +45,7 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
         {
           transform: [{ scale: scaleValue }],
           // shadowOpacity: shadowOpacity,
-          shadowOffset: { width: 0, height: 4 },
+          // shadowOffset: { width: 0, height: 4 },
         },
         style,
       ]}
@@ -60,7 +60,7 @@ function CardButton({ onPress, imageSrc, children, style }: CardButtonProps) {
           <Image style={styles.cardImage} source={drinkImageMap[imageSrc]} />
         </View>
         <View style={styles.cardTextWrapper}>
-          <PrimaryText fontSize={paragraphMediumFontSize}>
+          <PrimaryText numberOfLines={2} fontSize={paragraphMediumFontSize}>
             {children}
           </PrimaryText>
         </View>

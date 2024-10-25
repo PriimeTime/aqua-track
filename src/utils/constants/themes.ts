@@ -1,9 +1,9 @@
+import { ms } from "react-native-size-matters";
+
 import { ScreenSize } from "@/enums/maps/ScreenSize";
 
 import { FontSizeConfig } from "@/models/FontSizeConfig";
 import { ResponsiveSize } from "@/models/ResponsiveSize";
-
-import { SCREEN_SIZE } from "@/utils/constants/screensize";
 
 const color = {
   TRANSPARENT: "transparent",
@@ -31,9 +31,9 @@ const fontFamily = {
 
 const shadow = {
   shadowColor: color.BLUE,
-  shadowOffset: { width: 5, height: 5 },
-  shadowOpacity: 0.2,
-  shadowRadius: 5,
+  shadowOffset: { width: ms(5), height: ms(5) },
+  shadowOpacity: ms(0.2),
+  shadowRadius: ms(5),
 };
 
 const dimensions = {
@@ -72,21 +72,8 @@ const getFontSizeForScreen = (
   return fontSize;
 };
 
-const inputFieldHeightObj = {
-  SMALL: 40,
-  MEDIUM: 50,
-  LARGE: 100,
-};
-
-const inputFieldHeight = inputFieldHeightObj[SCREEN_SIZE];
-
-const cardBorderWidthObj = {
-  SMALL: 1,
-  MEDIUM: 1.5,
-  LARGE: 3,
-};
-
-const cardBorderWidth = cardBorderWidthObj[SCREEN_SIZE];
+const inputFieldHeight = ms(50);
+const cardBorderWidth = ms(1.5);
 
 export {
   color,

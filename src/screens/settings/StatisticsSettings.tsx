@@ -12,7 +12,7 @@ function StatisticsSettings() {
   return (
     <ContentPage title={t("settings.statistics.header")}>
       <View style={{ alignItems: "center" }}>
-        <PrimaryText fontSize={paragraphMediumFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={paragraphMediumFontSize}>
           {t("settings.comingSoon")}
         </PrimaryText>
       </View>

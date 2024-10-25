@@ -1,13 +1,11 @@
 import { View } from "react-native";
 import { CountUp } from "use-count-up";
 import { useTranslation } from "react-i18next";
+import { ms } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts/PrimaryText";
 
-import {
-  timeUntilSoberFontSize,
-  timeUntilSoberTextFontSize,
-} from "@/utils/constants/components/typography";
+import { FONT_SIZE_15, FONT_SIZE_20 } from "@/utils/constants";
 
 interface TimeUntilSoberProps {
   currentHrsUntilSober: number;
@@ -26,7 +24,7 @@ function TimeUntilSober({
 
   return (
     <View>
-      <PrimaryText fontSize={timeUntilSoberFontSize}>
+      <PrimaryText numberOfLines={1} fontSize={ms(FONT_SIZE_20)}>
         {currentHrsUntilSober > 0 && (
           <>
             <CountUp
@@ -55,7 +53,7 @@ function TimeUntilSober({
         )}
       </PrimaryText>
       <View>
-        <PrimaryText fontSize={timeUntilSoberTextFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={ms(FONT_SIZE_15)}>
           {t("drinks.untilSober")}
         </PrimaryText>
       </View>

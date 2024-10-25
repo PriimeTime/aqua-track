@@ -1,5 +1,6 @@
 import { View, StyleSheet, Image, Text } from "react-native";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryText, SecondaryText } from "@/components/texts";
 import { InfoCard } from "@/components/cards";
@@ -53,12 +54,14 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
         ></Image>
       </View>
       <View style={styles.cardInfoWrapper}>
-        <PrimaryText fontSize={paragraphLargeFontSize}>{t(title)}</PrimaryText>
+        <PrimaryText numberOfLines={1} fontSize={paragraphLargeFontSize}>
+          {t(title)}
+        </PrimaryText>
         <SecondaryText fontSize={paragraphMediumFontSize}>
           {getHoursMinutesFromUnixDate(date)}
         </SecondaryText>
       </View>
-      <View style={styles.cardTotalWrapper}>
+      <View style={scaledStyles.cardTotalWrapper}>
         <View style={styles.cardTotalTop}>
           <InfoCard
             secondary
@@ -71,7 +74,7 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
           </InfoCard>
         </View>
         <View style={styles.cardTotalBottom}>
-          <Text style={styles.cardTotalBottomText}>{`${t(
+          <Text style={scaledStyles.cardTotalBottomText}>{`${t(
             "history.total"
           )}:`}</Text>
           <InfoCard
@@ -93,6 +96,20 @@ function HistoryItem({ item }: { item: DrinkHistoryItem }) {
 
 export { HistoryItem };
 
+const scaledStyles = ScaledSheet.create({
+  cardTotalBottomText: {
+    fontFamily: fontFamily.DEFAULT,
+    color: color.BLUE,
+    marginRight: "10@ms",
+    fontSize: infoCardSizeTotalFontSize,
+  },
+  cardTotalWrapper: {
+    width: "30%",
+    top: "10@ms",
+    height: "80%",
+  },
+});
+
 const styles = StyleSheet.create({
   cardWrapper: {
     backgroundColor: color.WHITE,
@@ -108,21 +125,16 @@ const styles = StyleSheet.create({
     width: "20%",
   },
   cardImage: {
-    width: "80%",
-    height: "80%",
-    left: "10%",
-    top: "10%",
+    width: "75%",
+    height: "75%",
+    left: "12.5%",
+    top: "12.5%",
     objectFit: "contain",
   },
   cardInfoWrapper: {
     justifyContent: "center",
     width: "35%",
     height: "100%",
-  },
-  cardTotalWrapper: {
-    width: "30%",
-    top: "2.5%",
-    height: "80%",
   },
   cardTotalTop: {
     height: "50%",
@@ -134,12 +146,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-  },
-  cardTotalBottomText: {
-    fontFamily: fontFamily.DEFAULT,
-    color: color.BLUE,
-    marginRight: 5,
-    fontSize: infoCardSizeTotalFontSize,
   },
   cardDeleteButtonWrapper: {
     width: "15%",

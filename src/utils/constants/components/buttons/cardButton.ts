@@ -1,11 +1,5 @@
-import { SCREEN_SIZE } from "@/utils/constants";
+import { ms } from "react-native-size-matters";
 
-const cardBorderRadiusObj = {
-  SMALL: 20,
-  MEDIUM: 20,
-  LARGE: 48,
-};
-
-const cardBorderRadius = cardBorderRadiusObj[SCREEN_SIZE];
+const cardBorderRadius = ms(20);
 
 export { cardBorderRadius };

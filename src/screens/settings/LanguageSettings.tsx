@@ -12,7 +12,7 @@ function LanguageSettings() {
   return (
     <ContentPage title={t("settings.language.header")}>
       <View style={{ alignItems: "center" }}>
-        <PrimaryText fontSize={paragraphMediumFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={paragraphMediumFontSize}>
           {t("settings.comingSoon")}
         </PrimaryText>
       </View>

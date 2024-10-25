@@ -10,6 +10,8 @@ import { useTranslation } from "react-i18next";
 import { settingsList } from "@/utils/maps";
 import { headerFontSize } from "@/utils/constants/components/typography";
 
+const rowOfItems = 7;
+
 function SettingsList() {
   const { t } = useTranslation();
 
@@ -19,13 +21,13 @@ function SettingsList() {
         <BackButton />
       </View>
       <View style={styles.headerWrapper}>
-        <PrimaryText fontSize={headerFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={headerFontSize}>
           {t("settings.header")}
         </PrimaryText>
       </View>
       <CustomFlatList
         data={settingsList}
-        rowsOfListItemsOnScreen={8}
+        rowsOfListItemsOnScreen={rowOfItems}
         wrapperStyles={styles.settingsListWrapper}
         renderItem={({ item }) => (
           <SettingsItem

@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useEffect, useState } from "react";
+import { ms, ScaledSheet } from "react-native-size-matters";
 
 import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
@@ -74,7 +75,7 @@ function CustomSelectBox<T>({
   return (
     <>
       {label && (
-        <View style={styles.labelWrapper}>
+        <View style={scaledStyles.labelWrapper}>
           <SecondaryText
             fontSize={paragraphMediumFontSize}
             color={color.DARK_BLUE}
@@ -98,7 +99,7 @@ function CustomSelectBox<T>({
                 left: isVertical ? "10%" : "0%",
                 width: isVertical ? "80%" : `${(100 / items.length) * 0.95}%`,
                 height: isVertical ? "90%" : "100%",
-                marginBottom: isVertical ? "5%" : "0%",
+                marginBottom: isVertical ? ms(10) : "0%",
                 backgroundColor:
                   selectedItemId === item.id ? color.BLUE : color.WHITE,
               },
@@ -125,8 +126,14 @@ function CustomSelectBox<T>({
 
 export { CustomSelectBox };
 
+const scaledStyles = ScaledSheet.create({
+  labelWrapper: {
+    width: "100%",
+    marginBottom: "10@ms",
+  },
+});
+
 const styles = StyleSheet.create({
-  labelWrapper: { width: "100%", marginBottom: "2.5%" },
   selectBoxListWrapper: {
     width: "100%",
     height: inputFieldHeight,

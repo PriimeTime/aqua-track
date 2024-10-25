@@ -1,5 +1,6 @@
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts";
 import { ContentPage } from "@/components/wrappers";
@@ -16,7 +17,7 @@ function SourcesSettings() {
 
   return (
     <ContentPage title={t("settings.sources.header")}>
-      <View style={styles.section}>
+      <View style={scaledStyles.section}>
         <PrimaryText color={color.BLUE} fontSize={paragraphLargeFontSize}>
           {t("settings.sources.subtitle_1")}
         </PrimaryText>
@@ -24,28 +25,28 @@ function SourcesSettings() {
           {t("settings.sources.text_1")}
         </PrimaryText>
       </View>
-      <View style={styles.section}>
+      <View style={scaledStyles.section}>
         <PrimaryText color={color.BLUE} fontSize={paragraphLargeFontSize}>
           {t("settings.sources.subtitle_2")}
         </PrimaryText>
         <PrimaryText fontSize={paragraphSmallFontSize}>
           {t("settings.sources.text_2")}
         </PrimaryText>
-        <View style={styles.wrapper}>
+        <View style={scaledStyles.wrapper}>
           <LinkButton
             fontSize={paragraphSmallFontSize}
             text={t("settings.sources.link_2_1")}
             url="https://academic.oup.com/alcalc/article-abstract/45/4/366/155478?redirectedFrom=fulltext&login=false"
           />
         </View>
-        <View style={styles.wrapper}>
+        <View style={scaledStyles.wrapper}>
           <LinkButton
             fontSize={paragraphSmallFontSize}
             text={t("settings.sources.link_2_2")}
             url="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6286152/"
           />
         </View>
-        <View style={styles.wrapper}>
+        <View style={scaledStyles.wrapper}>
           <LinkButton
             fontSize={paragraphSmallFontSize}
             text={t("settings.sources.link_2_3")}
@@ -53,7 +54,7 @@ function SourcesSettings() {
           />
         </View>
       </View>
-      <View style={styles.section}>
+      <View style={scaledStyles.section}>
         <PrimaryText color={color.BLUE} fontSize={paragraphLargeFontSize}>
           {t("settings.sources.subtitle_3")}
         </PrimaryText>
@@ -66,7 +67,7 @@ function SourcesSettings() {
           url="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3400212/"
         />
       </View>
-      <View style={styles.section}>
+      <View style={scaledStyles.section}>
         <PrimaryText color={color.BLUE} fontSize={paragraphLargeFontSize}>
           {t("settings.sources.subtitle_4")}
         </PrimaryText>
@@ -88,11 +89,11 @@ function SourcesSettings() {
 
 export { SourcesSettings };
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   section: {
-    marginBottom: "5%",
+    marginBottom: "10@ms",
   },
   wrapper: {
-    marginBottom: "2%",
+    marginBottom: "5@ms",
   },
 });

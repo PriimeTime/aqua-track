@@ -1,18 +1,6 @@
-import { SCREEN_SIZE } from "@/utils/constants";
+import { ms } from "react-native-size-matters";
 
-const historyButtonIconSizeObj = {
-  SMALL: 20,
-  MEDIUM: 25,
-  LARGE: 45,
-};
-
-const historyButtonRadiusObj = {
-  SMALL: 10,
-  MEDIUM: 15,
-  LARGE: 25,
-};
-
-const historyButtonIconSize = historyButtonIconSizeObj[SCREEN_SIZE];
-const historyButtonRadius = historyButtonRadiusObj[SCREEN_SIZE];
+const historyButtonIconSize = ms(25);
+const historyButtonRadius = ms(12.5);
 
 export { historyButtonIconSize, historyButtonRadius };

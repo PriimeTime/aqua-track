@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryButton } from "@/components/buttons/PrimaryButton";
 import { CustomTextField } from "@/components/input";
@@ -24,7 +24,7 @@ function AccountDetails({ onLogout, onRemoveAccount }: AccountDetailsProps) {
   return (
     <>
       <CustomTextField
-        customStyles={styles.textField}
+        customStyles={scaledStyles.textField}
         readOnly
         value={userAuth.userName ?? ""}
         fullWidth
@@ -32,7 +32,7 @@ function AccountDetails({ onLogout, onRemoveAccount }: AccountDetailsProps) {
         labelColor={color.BLUE}
       ></CustomTextField>
       <CustomTextField
-        customStyles={styles.textField}
+        customStyles={scaledStyles.textField}
         readOnly
         value={userAuth.email ?? ""}
         fullWidth
@@ -51,8 +51,8 @@ function AccountDetails({ onLogout, onRemoveAccount }: AccountDetailsProps) {
 
 export { AccountDetails };
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   textField: {
-    marginBottom: "2.5%",
+    marginBottom: "10@ms",
   },
 });

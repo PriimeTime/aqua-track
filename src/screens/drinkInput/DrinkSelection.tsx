@@ -3,6 +3,7 @@ import { View, StyleSheet, Animated } from "react-native";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
+import { ms, ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts";
 import { CardButton, BackButton } from "@/components/buttons";
@@ -19,7 +20,8 @@ import { DrinkItem } from "@/models/DrinkItem";
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 
 const numColumns = 2; // Number of columns for the flatlist
-const spacing = 16; // Spacing for the flatlist items in pixels
+const numberOfRows = 5; // Number of rows for the flatlist
+const spacing = ms(12); // Spacing for the flatlist items in pixels
 
 const itemWidth = (screenWidth - spacing * (numColumns + 1)) / numColumns;
 
@@ -41,15 +43,15 @@ function DrinkSelection() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText fontSize={headerFontSize}>
+          <PrimaryText numberOfLines={1} fontSize={headerFontSize}>
             {t("drinks.drinkTypePrompt")}
           </PrimaryText>
         </Animated.View>
       </View>
       <CustomFlatList
         data={drinkTypeList}
-        rowsOfListItemsOnScreen={5}
-        wrapperStyles={styles.flatListWrapper}
+        rowsOfListItemsOnScreen={numberOfRows}
+        wrapperStyles={scaledStyles.flatListWrapper}
         listItemStyles={{ width: itemWidth, marginVertical: spacing / 2 }}
         verticalSpacingOffset={spacing}
         columnWrapperStyle={styles.columnWrapper}
@@ -71,6 +73,15 @@ function DrinkSelection() {
 
 export { DrinkSelection };
 
+const scaledStyles = ScaledSheet.create({
+  flatListWrapper: {
+    height: "75%",
+    bottom: "15@ms",
+    width: "100%",
+    position: "absolute",
+  },
+});
+
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -89,11 +100,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  flatListWrapper: {
-    height: "75%",
-    bottom: "2.5%",
+  cardButton: {
     width: "100%",
-    position: "absolute",
+    height: "100%",
   },
   flatListContent: {
     paddingHorizontal: spacing / 2,
@@ -101,9 +110,5 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: "space-between",
     paddingHorizontal: spacing / 2,
-  },
-  cardButton: {
-    width: "100%",
-    height: "100%",
   },
 });

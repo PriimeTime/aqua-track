@@ -26,7 +26,7 @@
   },
   "drinks": {
     "untilSober": "bis nüchtern",
-    "quantityPrompt": "Wie viel",
+    "quantityPrompt": "Wie viel hast du getrunken?",
     "drinkTypePrompt": "Was hast du getrunken?",
     "water": "Wasser",
     "juice": "Saft",
@@ -34,7 +34,7 @@
     "coffee": "Kaffee",
     "dairy": "Milch",
     "tea": "Tee",
-    "energyDrink": "Energydrink",
+    "energyDrink": "Energy-drink",
     "beer": "Bier",
     "cocktail": "Cocktail",
     "wine": "Wein",
@@ -46,7 +46,7 @@
     "ok": "Ok"
   },
   "settings": {
-    "header": "Einstellungen",
+    "header": "Menü",
     "account": {
       "accountHeader": "Konto",
       "loginHeader": "Anmelden",
@@ -69,8 +69,7 @@
       "pwToRemoveAccount": "Gib dein Passwort ein, um dein Konto zu löschen",
       "resetLocalData": "Lokale Daten zurücksetzen?",
       "forgotPw": {
-        "infoText1": "Keine Sorge! Gib einfach die E-Mail-Adresse deines Kontos ein.",
-        "infoText2": "Wir senden dir einen Link, um dein Passwort zurückzusetzen :)",
+        "infoText": "Keine Sorge! Gib einfach die E-Mail-Adresse deines Kontos ein.\nWir senden dir einen Link, um dein Passwort zurückzusetzen :)",
         "sendConfEmail": "E-Mail senden",
         "confEmailSentSucc": "Wir haben dir eine E-Mail gesendet. Bitte überprüfe dein Postfach!",
         "confEmailSentFail": "E-Mail konnte nicht gesendet werden. Bitte versuche es später erneut"
@@ -78,7 +77,7 @@
       "accountDeleted": "Konto gelöscht"
     },
     "sources": {
-      "header": "Gesundheitsinfos & Hilfe",
+      "header": "Infos",
       "subtitle_1": "Wie wird mein Hydrationsziel berechnet?",
       "text_1": "Wir benutzen die Informationen, die du uns gibst – wie Geschlecht, Gewicht und Aktivitätsniveau –, um ein personalisiertes Hydrationsziel zu erstellen, das speziell auf deine Bedürfnisse abgestimmt ist.",
       "subtitle_2": "Beeinflusst Alkohol wirklich meine Hydration?",
@@ -104,7 +103,7 @@
       "header": "Benachrichtigungen"
     },
     "profile": {
-      "header": "Metriken & Körpermaße",
+      "header": "Einstellungen",
       "gender": "Geschlecht",
       "measurementSystem": "Maßsystem",
       "male": "Männlich",
@@ -127,7 +126,7 @@
       "save": "Änderungen speichern"
     },
     "statistics": {
-      "header": "Statistiken & Verlauf"
+      "header": "Statistiken"
     },
     "themes": {
       "header": "Themen"

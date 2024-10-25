@@ -1,18 +1,15 @@
 import { useSelector } from "react-redux";
 import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { CountUp } from "use-count-up";
+import { ms, ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts";
 import { TimeUntilSober } from "@/components/intakeCard/TimeUntilSober";
 
-import { color, shadow } from "@/utils/constants";
-import {
-  totalIntakeFontSize,
-  totalIntakeCardPadding,
-  totalIntakeCardBorderRadius,
-} from "@/utils/constants/components/typography";
+import { color, FONT_SIZE_34, shadow } from "@/utils/constants";
+
 import {
   // totalDrinkQuantity,
   totalHydratingDrinkQuantity,
@@ -86,7 +83,11 @@ function IntakeInfoCard() {
 
   return (
     <View style={styles.wrapper}>
-      <PrimaryText fontSize={totalIntakeFontSize} color={color.BLUE}>
+      <PrimaryText
+        numberOfLines={1}
+        fontSize={ms(FONT_SIZE_34)}
+        color={color.BLUE}
+      >
         {/* {metricUnitConversion(totalDrinkQuantityToday)} */}
         <CountUp
           key={currentHydrationLevel}
@@ -119,13 +120,13 @@ function IntakeInfoCard() {
 
 export { IntakeInfoCard };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   wrapper: {
     alignItems: "center",
     flexDirection: "row",
-    paddingHorizontal: totalIntakeCardPadding.paddingHorizontal,
-    paddingVertical: totalIntakeCardPadding.paddingVertical,
-    borderRadius: totalIntakeCardBorderRadius,
+    paddingHorizontal: "27@ms",
+    paddingVertical: "12.5@ms",
+    borderRadius: "36@ms",
     color: color.BLUE,
     backgroundColor: color.WHITE,
     ...shadow,

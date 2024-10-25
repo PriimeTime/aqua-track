@@ -26,7 +26,7 @@
   },
   "drinks": {
     "untilSober": "mire kijózanodsz",
-    "quantityPrompt": "Mennyit ittál ebbôl: ",
+    "quantityPrompt": "Mennyit ittál?",
     "drinkTypePrompt": "Mit ittál?",
     "water": "Víz",
     "juice": "Gyümölcslé",
@@ -46,7 +46,7 @@
     "ok": "Oké"
   },
   "settings": {
-    "header": "Beállítások",
+    "header": "Menü",
     "account": {
       "accountHeader": "Fiók",
       "loginHeader": "Bejelentkezés",
@@ -69,8 +69,7 @@
       "pwToRemoveAccount": "Add meg a jelszavad a fiók törléséhez",
       "resetLocalData": "Helyi adatok visszaállítása?",
       "forgotPw": {
-        "infoText1": "Ne aggódj! Csak add meg a fiókod e-mail címét.",
-        "infoText2": "Küldünk egy linket, amivel visszaállíthatod a jelszavad :)",
+        "infoText": "Ne aggódj! Csak add meg a fiókod e-mail címét.\nKüldünk egy linket, amivel visszaállíthatod a jelszavad :)",
         "sendConfEmail": "E-mail küldése",
         "confEmailSentSucc": "Küldtünk egy e-mailt. Nézd meg a beérkezettek között!",
         "confEmailSentFail": "Nem sikerült elküldeni az e-mailt. Próbáld újra késôbb!"
@@ -78,7 +77,7 @@
       "accountDeleted": "Fiók törölve"
     },
     "sources": {
-      "header": "EÜ infók & segítség",
+      "header": "Infók",
       "subtitle_1": "Hogyan számítjátok ki a hidratálási célomat?",
       "text_1": "Az általad megadott információkat (nemed, testsúlyod és az aktivitási szinted) használjuk fel, hogy személyre szabott hidratálási célt hozzunk létre, ami kifejezetten a te igényeidre van szabva.",
       "subtitle_2": "Valóban befolyásolja az alkohol a hidratáltságomat?",
@@ -104,7 +103,7 @@
       "header": "Értesítések"
     },
     "profile": {
-      "header": "Testméretek és adatok",
+      "header": "Beállítások",
       "gender": "Nem",
       "measurementSystem": "Mértékegységrendszer",
       "male": "Férfi",
@@ -127,7 +126,7 @@
       "save": "Változások mentése"
     },
     "statistics": {
-      "header": "Statisztikák és elôzmények"
+      "header": "Statisztikák"
     },
     "themes": {
       "header": "Témák"

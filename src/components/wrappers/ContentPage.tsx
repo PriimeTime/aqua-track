@@ -18,7 +18,9 @@ function ContentPage({ title, children }: ContentPageProps) {
         <BackButton></BackButton>
       </View>
       <View style={styles.titleWrapper}>
-        <PrimaryText fontSize={headerFontSize}>{title}</PrimaryText>
+        <PrimaryText numberOfLines={1} fontSize={headerFontSize}>
+          {title}
+        </PrimaryText>
       </View>
       <ScrollView alwaysBounceVertical={false}>
         <View style={styles.wrapper}>{children}</View>
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: "90%",
-    height: "80%",
+    height: "100%",
     left: "5%",
   },
   titleWrapper: {

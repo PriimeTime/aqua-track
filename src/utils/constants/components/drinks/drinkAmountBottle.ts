@@ -1,18 +1,6 @@
-import { SCREEN_SIZE } from "@/utils/constants";
+import { ms } from "react-native-size-matters";
 
-const drinkAmountBorderWidthObj = {
-  SMALL: 10,
-  MEDIUM: 12,
-  LARGE: 18,
-};
-
-const drinkAmountRadiusObj = {
-  SMALL: 20,
-  MEDIUM: 24,
-  LARGE: 42,
-};
-
-const drinkAmountBorderWidth = drinkAmountBorderWidthObj[SCREEN_SIZE];
-const drinkAmountRadius = drinkAmountRadiusObj[SCREEN_SIZE];
+const drinkAmountBorderWidth = ms(12);
+const drinkAmountRadius = ms(24);
 
 export { drinkAmountBorderWidth, drinkAmountRadius };
