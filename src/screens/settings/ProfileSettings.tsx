@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useNavigation, StackActions } from "@react-navigation/native";
 
 import { ContentPage } from "@/components/wrappers";
 import { CustomTextField, CustomSelectBox } from "@/components/input";
 import { InputContentWrapper } from "@/components/input";
+import { PrimaryButton } from "@/components/buttons";
 
 import { setUserMetrics } from "@/store/userData";
 
@@ -25,7 +27,7 @@ import {
 
 import { color, initialUserMetrics } from "@/utils/constants";
 
-import { useDisplayUnits, useSelectBoxItems } from "@/hooks";
+import { useDisplayUnits, useModal, useSelectBoxItems } from "@/hooks";
 
 function ProfileSettings() {
   const { t } = useTranslation();
@@ -33,12 +35,14 @@ function ProfileSettings() {
   const { displayVolumeWithUnit, displayRoundedWeight, displayWeightUnit } =
     useDisplayUnits();
 
+  const popAction = StackActions.pop(1);
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const userMetrics = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
 
-  // const [openModal] = useModal();
+  const [openModal] = useModal();
 
   const [metricObject, setMetricObject] = useState(userMetrics);
 
@@ -52,7 +56,7 @@ function ProfileSettings() {
     /* Recalculate daily water intake when weight or exercise level changes
       to make sure it is always up to date */
     recalculateDailyWaterIntakeInMl();
-  }, [metricObject.weight, metricObject.exerciseLvl]);
+  }, []);
 
   const recalculateDailyWaterIntakeInMl = () => {
     let dailyHydrationGoalInMl = initialUserMetrics.dailyHydrationGoal;
@@ -74,10 +78,24 @@ function ProfileSettings() {
     value: UserMetrics[T],
     name: T
   ) => {
-    const updatedMetricObject = { ...metricObject, [name]: value };
-    setMetricObject(updatedMetricObject);
-    dispatch(setUserMetrics(updatedMetricObject));
+    setMetricObject((prevValue) => {
+      const retVal = { ...prevValue };
+      retVal[name] = value;
+      return retVal;
+    });
+  };
+
+  const handleOnSave = () => {
+    /** Validate weight input */
+    if (Number(metricObject.weight) < 10 || Number(metricObject.weight) > 800) {
+      openModal({
+        modalText: t("validation.invalidWeight"),
+      });
+      return;
+    }
+    dispatch(setUserMetrics(metricObject));
     recalculateDailyWaterIntakeInMl();
+    navigation.dispatch(popAction);
   };
 
   return (
@@ -168,6 +186,9 @@ function ProfileSettings() {
           inputColor={color.BLUE}
         ></CustomTextField>
       </InputContentWrapper>
+      <PrimaryButton onPress={handleOnSave}>
+        {t("settings.profile.save").toLocaleUpperCase()}
+      </PrimaryButton>
     </ContentPage>
   );
 }
