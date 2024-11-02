@@ -122,14 +122,12 @@ function AskWrapper({
   const renderInputField = () => {
     if (selectBoxItems) {
       return (
-        <View>
-          <CustomSelectBox
-            isVertical
-            items={selectBoxItems}
-            handleOnSelect={(value) => setInput(value)}
-            value={input || t(selectBoxItems[0]!.id)} // If there is no input yet, take first object of select array
-          ></CustomSelectBox>
-        </View>
+        <CustomSelectBox
+          isVertical
+          items={selectBoxItems}
+          handleOnSelect={(value) => setInput(value)}
+          value={input || t(selectBoxItems[0]!.id)} // If there is no input yet, take first object of select array
+        ></CustomSelectBox>
       );
     }
 
@@ -164,6 +162,7 @@ function AskWrapper({
           handleInputChange(inputType, text);
         }}
         handleOnFocus={() => resetInputValidation(inputType)}
+        customStyles={{ height: "50%" }}
         fullWidth
       />
     );
@@ -214,6 +213,7 @@ function AskWrapper({
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={{ flex: 1, justifyContent: "space-between" }}>
             <ScrollView
+              alwaysBounceVertical={false}
               contentContainerStyle={{ flexGrow: 1 }}
               keyboardShouldPersistTaps="handled"
             >
@@ -261,12 +261,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputFieldWrapper: {
-    height: "60%",
+    height: "40%",
     width: "100%",
     justifyContent: "space-between",
   },
   continueButtonWrapper: {
-    height: "20%",
+    height: "40%",
     justifyContent: "center",
   },
 });
