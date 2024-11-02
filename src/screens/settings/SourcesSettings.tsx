@@ -77,10 +77,23 @@ function SourcesSettings() {
         <LinkButton
           fontSize={paragraphSmallFontSize}
           text={t("settings.sources.link_4")}
+          url="https://pmc.ncbi.nlm.nih.gov/articles/PMC3886980/"
+        />
+      </View>
+      <View style={scaledStyles.section}>
+        <PrimaryText color={color.BLUE} fontSize={paragraphLargeFontSize}>
+          {t("settings.sources.subtitle_5")}
+        </PrimaryText>
+        <PrimaryText fontSize={paragraphSmallFontSize}>
+          {t("settings.sources.text_5")}
+        </PrimaryText>
+        <LinkButton
+          fontSize={paragraphSmallFontSize}
+          text={t("settings.sources.link_5")}
           url="https://sites.google.com/view/drinky-faq/"
         />
         <PrimaryText fontSize={paragraphSmallFontSize}>
-          {t("settings.sources.text_4_2")}
+          {t("settings.sources.text_5_2")}
         </PrimaryText>
       </View>
     </ContentPage>
