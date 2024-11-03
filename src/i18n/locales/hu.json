@@ -124,7 +124,9 @@
       "exerciseLow": "Nem",
       "exerciseMid": "Néha",
       "exerciseHigh": "Gyakran",
-      "calcDailyIntake": "Ajánlott napi vízbeviteled kiszámítása",
+      "calcDailyIntake1": "Ajánlott napi vízbevitel kiszámítása...",
+      "calcDailyIntake2": "Szükségletek elemzése... Személyre szabott hidratálás neked!",
+      "calcDailyIntake3": "Mindjárt kész! Egyéni vízfogyasztási terv elkészítése...",
       "dailyIntake": "Ajánlott napi vízbevitel",
       "save": "Változások mentése"
     },

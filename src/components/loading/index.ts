@@ -1,1 +1,1 @@
-export * from "./CircularLoadingSpinner";
+export * from "./HorizontalLoadingIndicator";

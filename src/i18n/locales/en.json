@@ -124,7 +124,9 @@
       "exerciseLow": "No",
       "exerciseMid": "Sometimes",
       "exerciseHigh": "Often",
-      "calcDailyIntake": "Calculating your recommended daily intake...",
+      "calcDailyIntake1": "Calculating your recommended daily intake...",
+      "calcDailyIntake2": "Analyzing your needs... Tailoring hydration just for you!",
+      "calcDailyIntake3": "Almost there! Preparing your personalized water intake plan…",
       "dailyIntake": "Recommended daily water intake",
       "save": "Save changes"
     },

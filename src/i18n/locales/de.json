@@ -124,7 +124,9 @@
       "exerciseLow": "Nein",
       "exerciseMid": "Manchmal",
       "exerciseHigh": "Oft",
-      "calcDailyIntake": "Berechnung deines täglichen Wasserbedarfs...",
+      "calcDailyIntake1": "Berechnung deines täglichen Wasserbedarfs...",
+      "calcDailyIntake2": "Analyse deiner Bedürfnisse... Maßgeschneiderte Hydration für dich!",
+      "calcDailyIntake3": "Fast geschafft! Vorbereitung deines individuellen Wasserplans...",
       "dailyIntake": "Empfohlener täglicher Wasserbedarf",
       "save": "Änderungen speichern"
     },
