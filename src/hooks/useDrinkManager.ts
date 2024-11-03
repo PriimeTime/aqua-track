@@ -15,7 +15,7 @@ import {
   addDrinkToUserHistory,
   removeDrinkFromUserHistory,
 } from "@/utils/database";
-import { inputDrinkConfig } from "@/utils/constants";
+import { inputDrinkConfig, ONE_THOUSAND } from "@/utils/constants";
 
 import { DrinkType } from "@/enums/maps/DrinkType";
 
@@ -77,7 +77,7 @@ function useDrinkManager(): UseDrinkManagerReturn {
 
     if (drinkType.drinkType === DrinkType.Normal) {
       const options: HealthValueOptions = {
-        value: quantityValue,
+        value: quantityValue / ONE_THOUSAND,
         unit: appleHealthKit.Constants.Units.gram,
         startDate: new Date(date).toISOString(),
       };

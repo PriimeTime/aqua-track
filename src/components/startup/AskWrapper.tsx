@@ -113,7 +113,8 @@ function AskWrapper({
 
   /** Display validation error message when there is an error */
   useEffect(() => {
-    formErrors[inputType] && openModal({ modalText: formErrors[inputType] });
+    formErrors[inputType] &&
+      openModal({ modalText: formErrors[inputType] || "" });
   }, [formErrors]);
 
   /**
