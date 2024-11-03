@@ -8,7 +8,7 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import * as Haptics from "expo-haptics";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { useTranslation } from "react-i18next";
 
 import { inputDrinkConfig } from "@/utils/constants";
@@ -64,8 +64,8 @@ function DrinkAmount() {
   const incrementValue = inputBottleObject?.increment ?? 0;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  }, 25);
+    ReactNativeHapticFeedback.trigger("effectTick");
+  }, 50);
 
   const triggerAnimation = () => {
     Animated.sequence([
@@ -89,7 +89,9 @@ function DrinkAmount() {
   const [addDrink] = useDrinkManager();
 
   useEffect(() => {
-    debouncedHapticFeedback();
+    if (quantityValue > 0) {
+      debouncedHapticFeedback();
+    }
   }, [quantityValue]);
 
   const panResponder = PanResponder.create({
