@@ -13,6 +13,7 @@ const color = {
   BLUE: "#3C91E6",
   DARK_BLUE: "#003061",
   RED: "#FF7575",
+  GREEN: "lightgreen",
   BLACK: "#000000",
 
   GRADIENT_LIGHTER_BLUE: "#BADCFF",

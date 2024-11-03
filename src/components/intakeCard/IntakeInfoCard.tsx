@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
-import { useState, useCallback } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useState, useCallback, useRef } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { View } from "react-native";
-import { CountUp } from "use-count-up";
+import { CountUp, ReturnValue } from "use-count-up";
 import { ms, ScaledSheet } from "react-native-size-matters";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { PrimaryText } from "@/components/texts";
 import { TimeUntilSober } from "@/components/intakeCard/TimeUntilSober";
@@ -32,6 +34,8 @@ function IntakeInfoCard() {
   const todaysDrinks = useTodaysDrinks();
   const hydratingDrinkQuantity = totalHydratingDrinkQuantity(todaysDrinks);
 
+  const prevCountUpValue = useRef<ReturnValue | null>(null);
+
   const { gender, weight, dailyHydrationGoal } = useSelector(
     (state: UserDataState) => state.userData.userMetrics
   );
@@ -44,9 +48,9 @@ function IntakeInfoCard() {
   const currentBAC = calculateCurrentBAC(drinkHistory, gender, weight, 10);
   const hrsUntilSober = hoursUntilSoberInteger(currentBAC);
   const minsUntilSober = minsUntilSoberInteger(currentBAC);
-  const hydrationLevelInPercent = displayPositivePercent(
-    hydratingDrinkQuantity,
-    dailyHydrationGoal
+  const hydrationLevelInPercent = Math.min(
+    displayPositivePercent(hydratingDrinkQuantity, dailyHydrationGoal),
+    100
   );
 
   const [currentHydrationLevel, setCurrentHydrationLevel] = useState(
@@ -69,7 +73,11 @@ function IntakeInfoCard() {
   useFocusEffect(
     useCallback(() => {
       setPrevHydrationLevel(currentHydrationLevel);
-      setCurrentHydrationLevel(hydrationLevelInPercent);
+      if (currentHydrationLevel < 100 && hydrationLevelInPercent === 100) {
+        setCurrentHydrationLevel(100);
+      } else {
+        setCurrentHydrationLevel(hydrationLevelInPercent);
+      }
 
       setPrevHrsUntilSober(currentHrsUntilSober);
       setCurrentHrsUntilSober(hrsUntilSober);
@@ -79,10 +87,22 @@ function IntakeInfoCard() {
     }, [hydrationLevelInPercent, hrsUntilSober, minsUntilSober])
   );
 
+  const handleHapticFeedback = useCallback(() => {
+    ReactNativeHapticFeedback.trigger("effectTick");
+  }, []);
+
   const isTimeUntilSoberVisible = hrsUntilSober > 0 || minsUntilSober > 0;
 
   return (
-    <View style={styles.wrapper}>
+    <View
+      style={[
+        styles.wrapper,
+        {
+          backgroundColor:
+            currentHydrationLevel == 100 ? color.GREEN : color.WHITE,
+        },
+      ]}
+    >
       <PrimaryText
         numberOfLines={1}
         fontSize={ms(FONT_SIZE_34)}
@@ -96,8 +116,24 @@ function IntakeInfoCard() {
           end={currentHydrationLevel}
           duration={1} // Duration in seconds
           easing={"easeOutCubic"}
+          onUpdate={(value) => {
+            if (value !== prevCountUpValue.current) {
+              handleHapticFeedback();
+              prevCountUpValue.current = value;
+            }
+          }}
         />
         %
+        {currentHydrationLevel == 100 && (
+          <>
+            {" "}
+            <Ionicons
+              color={color.BLUE}
+              size={ms(25)}
+              name="checkmark-circle-outline"
+            />
+          </>
+        )}
       </PrimaryText>
       {isTimeUntilSoberVisible && (
         <>
@@ -128,7 +164,6 @@ const styles = ScaledSheet.create({
     paddingVertical: "12.5@ms",
     borderRadius: "36@ms",
     color: color.BLUE,
-    backgroundColor: color.WHITE,
     ...shadow,
   },
 });

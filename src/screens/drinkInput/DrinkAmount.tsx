@@ -64,7 +64,7 @@ function DrinkAmount() {
   const incrementValue = inputBottleObject?.increment ?? 0;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
-    ReactNativeHapticFeedback.trigger("effectTick");
+    ReactNativeHapticFeedback.trigger("selection");
   }, 50);
 
   const triggerAnimation = () => {
