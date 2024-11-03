@@ -18,6 +18,7 @@ import {
   primaryButtonWrapperHeight,
 } from "@/utils/constants/components/typography/button";
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
+import { ms } from "react-native-size-matters";
 
 const getTextStyle = (
   flat = false,
@@ -185,12 +186,12 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: fontFamily.DEFAULT,
     textAlign: "center",
-    letterSpacing: 1.2,
+    letterSpacing: ms(1.2),
     color: color.WHITE,
   },
   button: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: ms(5),
+    paddingHorizontal: ms(10),
     width: "100%",
     height: "75%",
     ...shadow,

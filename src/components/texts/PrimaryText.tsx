@@ -40,6 +40,7 @@ function PrimaryText({
 }: PrimaryTextProps) {
   return (
     <Text
+      ellipsizeMode="tail"
       numberOfLines={numberOfLines ?? undefined}
       style={getTextStyle(fontSize, color, textAlign)}
     >

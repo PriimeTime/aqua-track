@@ -1,6 +1,7 @@
 const FONT_SIZE_11 = 11;
 const FONT_SIZE_12 = 12;
 const FONT_SIZE_13 = 13;
+const FONT_SIZE_14 = 14;
 const FONT_SIZE_15 = 15;
 const FONT_SIZE_16 = 16;
 const FONT_SIZE_17 = 17;
@@ -20,6 +21,7 @@ export {
   FONT_SIZE_11,
   FONT_SIZE_12,
   FONT_SIZE_13,
+  FONT_SIZE_14,
   FONT_SIZE_15,
   FONT_SIZE_16,
   FONT_SIZE_17,

@@ -2,6 +2,7 @@ import { View, Image, StyleSheet, Animated, Pressable } from "react-native";
 import { useRef } from "react";
 import { useNavigation, ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts";
 
@@ -49,9 +50,9 @@ function SettingsItem({ title, imageSrc, routeName }: SettingsItemProps) {
               source={settingsImageMap[imageSrc]}
             ></Image>
           </View>
-          <View style={styles.itemTitleWrapper}>
+          <View style={scaledStyles.itemTitleWrapper}>
             <View style={{ width: "95%", left: 0 }}>
-              <PrimaryText fontSize={paragraphLargeFontSize}>
+              <PrimaryText numberOfLines={1} fontSize={paragraphLargeFontSize}>
                 {title}
               </PrimaryText>
             </View>
@@ -63,6 +64,15 @@ function SettingsItem({ title, imageSrc, routeName }: SettingsItemProps) {
 }
 
 export { SettingsItem };
+
+const scaledStyles = ScaledSheet.create({
+  itemTitleWrapper: {
+    justifyContent: "center",
+    width: "80%",
+    height: "100%",
+    padding: "8@ms",
+  },
+});
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -84,10 +94,5 @@ const styles = StyleSheet.create({
     left: "30%",
     top: "30%",
     objectFit: "contain",
-  },
-  itemTitleWrapper: {
-    justifyContent: "center",
-    width: "80%",
-    height: "100%",
   },
 });

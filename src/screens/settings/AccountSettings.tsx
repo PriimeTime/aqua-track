@@ -72,7 +72,7 @@ function AccountSettings() {
 
   const handleConfirmLogout = () => {
     firebaseLogout(/*clearLocalData*/);
-    navigation.navigate(MainRouteName.Home);
+    // navigation.navigate(MainRouteName.Home);
   };
 
   const handleConfirmRemoveAccount = () => {

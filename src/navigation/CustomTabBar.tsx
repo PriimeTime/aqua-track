@@ -1,24 +1,14 @@
-import React from "react";
-import {
-  View,
-  Pressable,
-  Text,
-  StyleSheet,
-  DimensionValue,
-} from "react-native";
+import { View, Pressable, Text, StyleSheet } from "react-native";
 import { TabNavigationState, ParamListBase } from "@react-navigation/native";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { WaterDropButton } from "@/components/navigation";
 
 import { color, shadow, fontFamily } from "@/utils/constants";
-import {
-  customTabBarPadding,
-  customTabBarRadius,
-  customTabBarFontSize,
-} from "@/utils/constants/components";
+import { customTabBarRadius } from "@/utils/constants/components";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
@@ -32,7 +22,7 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
   const { t } = useTranslation();
 
   return (
-    <View style={[{ flexDirection: "row" }, styles.navigationBar]}>
+    <View style={[{ flexDirection: "row" }, scaledStyles.navigationBar]}>
       {state.routes.map((route, index) => {
         let label = "";
 
@@ -69,7 +59,7 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
         if (route.name === DrinkRouteName.DrinkInput) {
           return (
             <WaterDropButton
-              style={{ bottom: "10%" }}
+              style={scaledStyles.waterDropButton as any}
               key={label}
               onPress={onPress}
             />
@@ -77,9 +67,15 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
         } else {
           // Render standard button for other tabs
           return (
-            <Pressable key={label} onPress={onPress} style={styles.wrapper}>
+            <Pressable
+              key={label}
+              onPress={onPress}
+              style={scaledStyles.wrapper}
+            >
               <View style={[styles.container, dynamicBgStyle]}>
-                <Text style={[styles.text, dynamicTextStyle]}>{label}</Text>
+                <Text style={[scaledStyles.text, dynamicTextStyle]}>
+                  {label}
+                </Text>
               </View>
             </Pressable>
           );
@@ -91,31 +87,37 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
 
 export { CustomTabBar };
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   wrapper: {
     flex: 1,
-    padding: customTabBarPadding as DimensionValue,
+    padding: "9@ms",
   },
   navigationBar: {
     position: "absolute",
-    bottom: "2.5%",
+    bottom: "10@ms",
     left: "5%",
     backgroundColor: color.WHITE,
     ...shadow,
     borderRadius: customTabBarRadius,
-    height: "7.5%",
+    height: "60@ms",
     width: "90%",
   },
+  text: {
+    fontFamily: fontFamily.DEFAULT,
+    fontSize: "20@ms",
+    textTransform: "uppercase",
+  },
+  waterDropButton: {
+    bottom: "39@ms",
+  },
+});
+
+const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
     borderRadius: customTabBarRadius,
     justifyContent: "center",
     alignItems: "center",
-  },
-  text: {
-    fontFamily: fontFamily.DEFAULT,
-    fontSize: customTabBarFontSize,
-    textTransform: "uppercase",
   },
 });

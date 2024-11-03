@@ -5,6 +5,7 @@ import {
   drinkAmountBorderWidth,
   drinkAmountRadius,
 } from "@/utils/constants/components/drinks";
+import { ScaledSheet } from "react-native-size-matters";
 
 interface DrinkAmountBottleProps {
   heightVal: number;
@@ -16,8 +17,8 @@ function DrinkAmountBottle({ heightVal, liquidColor }: DrinkAmountBottleProps) {
     <View style={styles.glass}>
       <View
         style={[
-          styles.liquid,
-          { height: `${(heightVal / 100) * 80}%` },
+          scaledStyles.liquid,
+          { height: `${(heightVal / 100) * 90}%` },
           { backgroundColor: liquidColor },
         ]}
       ></View>
@@ -26,6 +27,16 @@ function DrinkAmountBottle({ heightVal, liquidColor }: DrinkAmountBottleProps) {
 }
 
 export { DrinkAmountBottle };
+
+const scaledStyles = ScaledSheet.create({
+  liquid: {
+    position: "absolute",
+    bottom: "10@ms",
+    left: "5%",
+    width: "90%",
+    borderRadius: "8@ms",
+  },
+});
 
 const styles = StyleSheet.create({
   glass: {
@@ -41,12 +52,5 @@ const styles = StyleSheet.create({
     borderTopRightRadius: drinkAmountBorderWidth,
     borderBottomRightRadius: drinkAmountRadius,
     borderBottomLeftRadius: drinkAmountRadius,
-  },
-  liquid: {
-    position: "absolute",
-    bottom: "2.5%",
-    left: "5%",
-    width: "90%",
-    borderRadius: 8,
   },
 });

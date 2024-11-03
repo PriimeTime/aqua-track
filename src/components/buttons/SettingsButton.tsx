@@ -2,13 +2,10 @@ import { Pressable, Animated, View, StyleSheet } from "react-native";
 import { useRef } from "react";
 // import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { ms, ScaledSheet } from "react-native-size-matters";
 
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 import { color, shadow } from "@/utils/constants";
-import {
-  settingsButtonSize,
-  settingsIconSize,
-} from "@/utils/constants/components/buttons";
 
 interface SettingsButtonProps {
   onPress: () => void;
@@ -33,18 +30,17 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
   return (
     <View style={styles.container}>
       <Animated.View
-        style={[{ transform: [{ scale: scaleValue }] }, styles.baseButton]}
+        style={[
+          { transform: [{ scale: scaleValue }] },
+          scaledStyles.baseButton,
+        ]}
       >
         <Pressable
           onPress={handlePress}
           onPressIn={handleOnPressIn}
           onPressOut={handleOnPressOut}
         >
-          <Ionicons
-            color={color.BLUE}
-            size={settingsIconSize}
-            name="settings"
-          />
+          <Ionicons color={color.BLUE} size={ms(35)} name="menu" />
         </Pressable>
       </Animated.View>
     </View>
@@ -53,16 +49,19 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
 
 export { SettingsButton };
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   baseButton: {
     alignItems: "center",
     justifyContent: "center",
     ...shadow,
     backgroundColor: color.WHITE,
-    width: settingsButtonSize,
-    height: settingsButtonSize,
-    borderRadius: settingsButtonSize / 2,
+    width: "64@ms",
+    height: "64@ms",
+    borderRadius: "32@ms",
   },
+});
+
+const styles = StyleSheet.create({
   container: {
     alignItems: "flex-end",
   },

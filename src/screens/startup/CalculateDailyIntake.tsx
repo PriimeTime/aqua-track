@@ -1,23 +1,23 @@
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { PrimaryText } from "@/components/texts";
+import { FadingText } from "@/components/texts";
 import { GradientWrapper } from "@/components/wrappers";
-import { CircularLoadingSpinner } from "@/components/loading";
+import { HorizontalLoadingIndicator } from "@/components/loading";
 
-import { paragraphLargeFontSize } from "@/utils/constants/components/typography";
-import { startupStyles } from "@/utils/constants";
-
-import { useEffect } from "react";
+import { ONE_SECOND, startupStyles } from "@/utils/constants";
+import { calculateDailyHydrationGoalInMl } from "@/utils/helpers";
 
 import { setUserMetrics } from "@/store/userData";
-
-import { calculateDailyHydrationGoalInMl } from "@/utils/helpers";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 
 import { UserMetrics } from "@/models/UserMetrics";
+
+// Duration of the loading animation in ms
+const duration = 15 * ONE_SECOND;
 
 interface CalculateDailyIntakeProps {
   onCompleteStartup: () => void;
@@ -33,12 +33,18 @@ function CalculateDailyIntake({
     (state: UserDataState) => state.userData.userMetrics
   );
 
+  const textArray = [
+    t("settings.profile.calcDailyIntake1"),
+    t("settings.profile.calcDailyIntake2"),
+    t("settings.profile.calcDailyIntake3"),
+  ];
+
   const { weight, exerciseLvl } = userMetrics;
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       onCompleteStartup();
-    }, 7000);
+    }, duration);
 
     /** If weight and exercise level are successfully fetched,
      * set the hydration goal, otherwise the fallback value in the store will be used */
@@ -54,15 +60,17 @@ function CalculateDailyIntake({
 
       dispatch(setUserMetrics(updatedMetrics));
     }
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
     <GradientWrapper style={{ flex: 1 }}>
       <View style={[startupStyles.wrapper, styles.wrapper]}>
-        <PrimaryText fontSize={paragraphLargeFontSize}>
-          {t("settings.profile.calcDailyIntake")}
-        </PrimaryText>
-        <CircularLoadingSpinner />
+        <FadingText rotatingTexts={textArray} duration={duration}></FadingText>
+        <HorizontalLoadingIndicator
+          duration={duration}
+        ></HorizontalLoadingIndicator>
       </View>
     </GradientWrapper>
   );

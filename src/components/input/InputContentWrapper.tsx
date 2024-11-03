@@ -1,4 +1,5 @@
 import { View } from "react-native";
+import { ms } from "react-native-size-matters";
 
 interface InputContentWrapperProps {
   children: React.ReactNode;
@@ -6,7 +7,7 @@ interface InputContentWrapperProps {
 
 function InputContentWrapper({ children, ...props }: InputContentWrapperProps) {
   return (
-    <View style={{ marginBottom: "5%" }} {...props}>
+    <View style={{ marginBottom: ms(20) }} {...props}>
       {children}
     </View>
   );

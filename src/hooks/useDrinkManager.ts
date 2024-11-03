@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { uid } from "uid";
+import appleHealthKit, { HealthValueOptions } from "react-native-health";
 
 import { addToHistory, removeFromHistory } from "@/store/drinkHistory";
 
@@ -14,7 +15,9 @@ import {
   addDrinkToUserHistory,
   removeDrinkFromUserHistory,
 } from "@/utils/database";
-import { inputDrinkConfig } from "@/utils/constants";
+import { inputDrinkConfig, ONE_THOUSAND } from "@/utils/constants";
+
+import { DrinkType } from "@/enums/maps/DrinkType";
 
 type UseDrinkManagerReturn = [
   (drinkType: DrinkItem, quantityValue: number) => void,
@@ -72,6 +75,21 @@ function useDrinkManager(): UseDrinkManagerReturn {
       id,
     };
 
+    if (drinkType.drinkType === DrinkType.Normal) {
+      const options: HealthValueOptions = {
+        value: quantityValue / ONE_THOUSAND,
+        unit: appleHealthKit.Constants.Units.gram,
+        startDate: new Date(date).toISOString(),
+      };
+
+      appleHealthKit.saveWater(options, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("Water data saved successfully!");
+        }
+      });
+    }
     dispatch(addToHistory(drinkItem));
     if (userUID) {
       await addDrinkToUserHistory(userUID, drinkItem, isInternetReachable);

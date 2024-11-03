@@ -7,6 +7,7 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
+import { ms, ScaledSheet } from "react-native-size-matters";
 
 import { CustomTextFieldInputType } from "@/enums/CustomTextFieldInputType";
 
@@ -93,7 +94,8 @@ function CustomTextField({
   let isPassword = false;
 
   switch (inputType) {
-    case undefined || null:
+    case undefined:
+    case null:
       break;
     case CustomTextFieldInputType.Number:
       textAlign = "center";
@@ -124,7 +126,10 @@ function CustomTextField({
       {...props}
     >
       <View
-        style={[styles.labelWrapper, { width: fullWidth ? "100%" : "50%" }]}
+        style={[
+          scaledStyles.labelWrapper,
+          { width: fullWidth ? "100%" : "50%" },
+        ]}
       >
         <SecondaryText
           fontSize={paragraphMediumFontSize}
@@ -135,9 +140,9 @@ function CustomTextField({
       </View>
       <View
         style={[
-          styles.textInputWrapper,
+          scaledStyles.textInputWrapper,
           {
-            paddingLeft: readOnly ? "0%" : "2.5%",
+            paddingLeft: readOnly ? "0%" : ms(10),
             backgroundColor: readOnly ? "" : color.WHITE,
             width: textFieldWidth,
           } as StyleProp<ViewStyle>,
@@ -179,10 +184,20 @@ function CustomTextField({
 
 export { CustomTextField };
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   labelWrapper: {
-    marginBottom: "2.5%",
+    marginBottom: "10@ms",
   },
+  textInputWrapper: {
+    paddingRight: "10@ms",
+    height: inputFieldHeight,
+    flexDirection: "row",
+    borderRadius: inputFieldHeight / 2,
+    justifyContent: "center",
+  },
+});
+
+const styles = StyleSheet.create({
   appendWrapper: {
     height: "100%",
     width: "25%",
@@ -194,13 +209,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.DEFAULT,
     color: color.DARK_BLUE,
     fontSize: paragraphMediumFontSize,
-  },
-  textInputWrapper: {
-    paddingRight: "2.5%",
-    height: inputFieldHeight,
-    flexDirection: "row",
-    borderRadius: inputFieldHeight / 2,
-    justifyContent: "center",
   },
   textInput: {
     height: "100%",

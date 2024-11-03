@@ -3,6 +3,7 @@ import { VictoryPie } from "victory-native";
 import { useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { t } from "i18next";
+import { ms } from "react-native-size-matters";
 
 import { color } from "@/utils/constants";
 import { formatNumber, totalDrinkQuantity } from "@/utils/helpers";
@@ -74,7 +75,7 @@ function Statistics() {
               fontFamily: "Chewy-Regular",
               fill: color.DARK_BLUE,
               fontSize: paragraphVerySmallFontSize,
-              padding: 16,
+              padding: ms(16),
             },
           }}
         />

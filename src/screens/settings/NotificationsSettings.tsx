@@ -12,7 +12,7 @@ function NotificationsSettings() {
   return (
     <ContentPage title={t("settings.notifications.header")}>
       <View style={{ alignItems: "center" }}>
-        <PrimaryText fontSize={paragraphMediumFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={paragraphMediumFontSize}>
           {t("settings.comingSoon")}
         </PrimaryText>
       </View>

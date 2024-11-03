@@ -31,6 +31,8 @@ import { type GeneralState } from "@/types/store/GeneralState";
 
 import { loadUserData, updateUserData } from "@/utils/database";
 import { clearAuthData, saveAuthData } from "@/utils/auth";
+import { useResetApp } from "@/utils/store";
+
 import {
   ERROR_EMAIL_ALREADY_IN_USE,
   initialUserAuth,
@@ -109,6 +111,7 @@ function useFirebaseAuth(): {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const [openModal] = useModal();
+  const { resetApp } = useResetApp();
 
   const isInternetReachable = useSelector(
     (state: GeneralState) => state.general.networkStatus.isReachable
@@ -425,8 +428,10 @@ function useFirebaseAuth(): {
       dispatch(setUserAuth(initialUserAuth));
       await clearAuthData();
 
-      // Execute callback after loggin user out
+      // Execute callback after logging out
       if (cb) cb();
+
+      resetApp();
     } catch (error) {
       console.error("Error signing out:", error);
       openModal({

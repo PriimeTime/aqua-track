@@ -2,6 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { useState } from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { CustomTextField } from "@/components/input";
 import { PrimaryText } from "@/components/texts";
@@ -58,13 +59,10 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
   return (
     <>
       <PrimaryText fontSize={paragraphVerySmallFontSize}>
-        {t("settings.account.forgotPw.infoText1")}
-      </PrimaryText>
-      <PrimaryText fontSize={paragraphVerySmallFontSize}>
-        {t("settings.account.forgotPw.infoText2")}
+        {t("settings.account.forgotPw.infoText")}
       </PrimaryText>
       <CustomTextField
-        customStyles={styles.textField}
+        customStyles={scaledStyles.textField}
         value={formState.email}
         handleOnChangeText={(text) =>
           handleInputChange(FormInputType.Email, text)
@@ -89,9 +87,12 @@ function ForgotPassword({ setAccountSettingsState }: ForgotPasswordProps) {
 
 export { ForgotPassword };
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   textField: {
-    marginBottom: "2.5%",
+    marginBottom: "10@ms",
   },
+});
+
+const styles = StyleSheet.create({
   ...formErrorStyles,
 });

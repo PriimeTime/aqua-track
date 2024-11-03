@@ -40,7 +40,7 @@ function History() {
         ></SettingsButton>
       </View>
       <View style={styles.tabsWrapper}>
-        <PrimaryText fontSize={headerFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={headerFontSize}>
           {t("history.header")}
         </PrimaryText>
       </View>

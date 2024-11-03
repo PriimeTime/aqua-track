@@ -8,10 +8,9 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import * as Haptics from "expo-haptics";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import { useTranslation } from "react-i18next";
 
-import { drinkTypeList } from "@/utils/maps";
 import { inputDrinkConfig } from "@/utils/constants";
 import { animatedScaleValue } from "@/utils/animations";
 import { drinkAmountSensitivity } from "@/utils/constants/components/drinks";
@@ -65,8 +64,8 @@ function DrinkAmount() {
   const incrementValue = inputBottleObject?.increment ?? 0;
 
   const debouncedHapticFeedback = useDebouncedCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  }, 25);
+    ReactNativeHapticFeedback.trigger("selection");
+  }, 50);
 
   const triggerAnimation = () => {
     Animated.sequence([
@@ -90,7 +89,9 @@ function DrinkAmount() {
   const [addDrink] = useDrinkManager();
 
   useEffect(() => {
-    debouncedHapticFeedback();
+    if (quantityValue > 0) {
+      debouncedHapticFeedback();
+    }
   }, [quantityValue]);
 
   const panResponder = PanResponder.create({
@@ -134,11 +135,6 @@ function DrinkAmount() {
     }
   };
 
-  const drinkTypeObject = drinkTypeList.find(
-    (item) => item.typeID === drinkType.typeID
-  );
-  const drinkTypeLabel = drinkTypeObject ? t(drinkTypeObject.label) + " " : "";
-
   return (
     <GradientWrapper style={styles.wrapper}>
       <View style={styles.backButton}>
@@ -146,8 +142,8 @@ function DrinkAmount() {
       </View>
       <View style={styles.header}>
         <Animated.View style={{ transform: [{ scale: scaleValue }] }}>
-          <PrimaryText fontSize={headerFontSize}>
-            {`${t("drinks.quantityPrompt")} ${drinkTypeLabel}?`}
+          <PrimaryText numberOfLines={1} fontSize={headerFontSize}>
+            {`${t("drinks.quantityPrompt")}`}
           </PrimaryText>
         </Animated.View>
       </View>
@@ -158,7 +154,7 @@ function DrinkAmount() {
         ></DrinkAmountBottle>
       </View>
       <View style={styles.amountDrank}>
-        <PrimaryText fontSize={headerFontSize}>
+        <PrimaryText numberOfLines={1} fontSize={headerFontSize}>
           {displayVolumeWithUnit(quantityValue)}
         </PrimaryText>
       </View>

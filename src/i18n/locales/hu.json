@@ -26,7 +26,7 @@
   },
   "drinks": {
     "untilSober": "mire kijózanodsz",
-    "quantityPrompt": "Mennyit ittál ebbôl: ",
+    "quantityPrompt": "Mennyit ittál?",
     "drinkTypePrompt": "Mit ittál?",
     "water": "Víz",
     "juice": "Gyümölcslé",
@@ -46,7 +46,7 @@
     "ok": "Oké"
   },
   "settings": {
-    "header": "Beállítások",
+    "header": "Menü",
     "account": {
       "accountHeader": "Fiók",
       "loginHeader": "Bejelentkezés",
@@ -69,8 +69,7 @@
       "pwToRemoveAccount": "Add meg a jelszavad a fiók törléséhez",
       "resetLocalData": "Helyi adatok visszaállítása?",
       "forgotPw": {
-        "infoText1": "Ne aggódj! Csak add meg a fiókod e-mail címét.",
-        "infoText2": "Küldünk egy linket, amivel visszaállíthatod a jelszavad :)",
+        "infoText": "Ne aggódj! Csak add meg a fiókod e-mail címét.\nKüldünk egy linket, amivel visszaállíthatod a jelszavad :)",
         "sendConfEmail": "E-mail küldése",
         "confEmailSentSucc": "Küldtünk egy e-mailt. Nézd meg a beérkezettek között!",
         "confEmailSentFail": "Nem sikerült elküldeni az e-mailt. Próbáld újra késôbb!"
@@ -78,7 +77,7 @@
       "accountDeleted": "Fiók törölve"
     },
     "sources": {
-      "header": "EÜ infók & segítség",
+      "header": "Infók",
       "subtitle_1": "Hogyan számítjátok ki a hidratálási célomat?",
       "text_1": "Az általad megadott információkat (nemed, testsúlyod és az aktivitási szinted) használjuk fel, hogy személyre szabott hidratálási célt hozzunk létre, ami kifejezetten a te igényeidre van szabva.",
       "subtitle_2": "Valóban befolyásolja az alkohol a hidratáltságomat?",
@@ -89,10 +88,13 @@
       "subtitle_3": "Mennyire pontos a véralkoholszint (Blood Alcohol Content - BAC) számítás?",
       "text_3": "A BAC becsléseink az általad megadott adatokon alapulnak. \nBár az egyéni eredmények eltérhetnek, általános becslést adunk arra vonatkozóan, mikor leszel józan. \n\nSOHA NE VEZESS ITTASAN! \n\nTovábbi információk itt:",
       "link_3": "Hogyan számítják ki a BAC-t",
-      "subtitle_4": "További információra van szükséged?",
-      "text_4": "Ha további kérdéseid vannak, nézd meg a GYIK-ünket itt: ",
-      "text_4_2": "\nKözvetlenül is kapcsolatba léphetsz velünk a drinkydailydrinktracker@gmail.com címen. Szívesen segítünk!",
-      "link_4": "Drinky GYIK"
+      "subtitle_4": "A kávé tényleg kiszárít?",
+      "text_4": "Egyáltalán nem!\nBár a koffeinnek lehet enyhe vízhajtó hatása, a kutatások azt mutatják, hogy a kávé folyadéktartalma ezt bőven ellensúlyozza.\n\nSzóval igen, a kávézás közben is hidratálsz, csak kicsit kevésbé, mintha vizet innál.\n\nTovábbi információk itt:",
+      "link_4": "A mérsékelt kávéfogyasztás hidratáló hatásai",
+      "subtitle_5": "További információra van szükséged?",
+      "text_5": "Ha további kérdéseid vannak, nézd meg a GYIK-ünket itt: ",
+      "text_5_2": "\nKözvetlenül is kapcsolatba léphetsz velünk a drinkydailydrinktracker@gmail.com címen. Szívesen segítünk!",
+      "link_5": "Drinky GYIK"
     },
     "about": {
       "header": "Rólunk"
@@ -104,7 +106,7 @@
       "header": "Értesítések"
     },
     "profile": {
-      "header": "Testméretek és adatok",
+      "header": "Beállítások",
       "gender": "Nem",
       "measurementSystem": "Mértékegységrendszer",
       "male": "Férfi",
@@ -122,12 +124,14 @@
       "exerciseLow": "Nem",
       "exerciseMid": "Néha",
       "exerciseHigh": "Gyakran",
-      "calcDailyIntake": "Ajánlott napi vízbeviteled kiszámítása",
+      "calcDailyIntake1": "Ajánlott napi vízbevitel kiszámítása...",
+      "calcDailyIntake2": "Szükségletek elemzése... Személyre szabott hidratálás neked!",
+      "calcDailyIntake3": "Mindjárt kész! Egyéni vízfogyasztási terv elkészítése...",
       "dailyIntake": "Ajánlott napi vízbevitel",
       "save": "Változások mentése"
     },
     "statistics": {
-      "header": "Statisztikák és elôzmények"
+      "header": "Statisztikák"
     },
     "themes": {
       "header": "Témák"

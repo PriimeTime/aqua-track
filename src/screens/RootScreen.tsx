@@ -119,8 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  // homeWaterBottleWrapper: {
-  // },
   contentWrapper: {
     height: "50%",
     justifyContent: "center",

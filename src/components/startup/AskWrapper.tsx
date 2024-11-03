@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   StyleSheet,
   Keyboard,
   TouchableWithoutFeedback,
@@ -20,10 +19,9 @@ import { CustomSelectBox, CustomTextField } from "@/components/input";
 
 import { startupStyles } from "@/utils/constants";
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
-import { formErrorStyles } from "@/utils/styles";
 import { convertWeightInputToKg, numToString } from "@/utils/helpers";
 
-import { useDisplayUnits, useFormValidation } from "@/hooks";
+import { useDisplayUnits, useFormValidation, useModal } from "@/hooks";
 
 import { FormInputType } from "@/enums/input/FormInputType";
 import { StartupRouteName } from "@/enums/routes/StartupRouteName";
@@ -34,9 +32,9 @@ import { setUserAuth, setUserMetrics } from "@/store/userData";
 
 import { UserMetrics } from "@/models/UserMetrics";
 import { SelectBoxItem } from "@/models/SelectBoxItem";
+import { UserAuth } from "@/models/UserAuth";
 
 import { type UserDataState } from "@/types/store/UserDataState";
-import { UserAuth } from "@/models/UserAuth";
 
 interface AskWrapperProps {
   question: string;
@@ -88,6 +86,7 @@ function AskWrapper({
 
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const dispatch = useDispatch();
+  const [openModal] = useModal();
 
   const [input, setInput] = useState<string | number | null>(null);
 
@@ -111,6 +110,12 @@ function AskWrapper({
       setInput(selectBoxItems[0]!.id);
     }
   }, [selectBoxItems]);
+
+  /** Display validation error message when there is an error */
+  useEffect(() => {
+    formErrors[inputType] &&
+      openModal({ modalText: formErrors[inputType] || "" });
+  }, [formErrors]);
 
   /**
    * Render a selectbox or a textfield dynamically
@@ -158,8 +163,8 @@ function AskWrapper({
           handleInputChange(inputType, text);
         }}
         handleOnFocus={() => resetInputValidation(inputType)}
-        fullWidth
         customStyles={{ height: "50%" }}
+        fullWidth
       />
     );
   };
@@ -209,6 +214,7 @@ function AskWrapper({
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={{ flex: 1, justifyContent: "space-between" }}>
             <ScrollView
+              alwaysBounceVertical={false}
               contentContainerStyle={{ flexGrow: 1 }}
               keyboardShouldPersistTaps="handled"
             >
@@ -220,9 +226,6 @@ function AskWrapper({
                 </View>
                 <View style={styles.inputFieldWrapper}>
                   {renderInputField()}
-                </View>
-                <View style={styles.errorTextWrapper}>
-                  <Text style={styles.errorText}>{formErrors[inputType]}</Text>
                 </View>
                 <View style={styles.continueButtonWrapper}>
                   <PrimaryButton onPress={handleSaveInput}>
@@ -254,22 +257,17 @@ function AskWrapper({
 export { AskWrapper };
 
 const styles = StyleSheet.create({
-  ...formErrorStyles,
   questionWrapper: {
-    height: "30%",
-    justifyContent: "center",
-  },
-  inputFieldWrapper: {
-    height: "25%",
-    width: "100%",
-    justifyContent: "space-between",
-  },
-  errorTextWrapper: {
     height: "20%",
     justifyContent: "center",
   },
+  inputFieldWrapper: {
+    height: "40%",
+    width: "100%",
+    justifyContent: "space-between",
+  },
   continueButtonWrapper: {
-    height: "25%",
+    height: "40%",
     justifyContent: "center",
   },
 });

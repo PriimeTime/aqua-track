@@ -26,7 +26,7 @@
   },
   "drinks": {
     "untilSober": "until sober",
-    "quantityPrompt": "How much",
+    "quantityPrompt": "How much did you drink?",
     "drinkTypePrompt": "What did you drink?",
     "water": "Water",
     "juice": "Juice",
@@ -46,7 +46,7 @@
     "ok": "Ok"
   },
   "settings": {
-    "header": "Settings",
+    "header": "Menu",
     "account": {
       "accountHeader": "Account",
       "loginHeader": "Login",
@@ -69,8 +69,7 @@
       "pwToRemoveAccount": "Enter your password to remove your account",
       "resetLocalData": "Reset local data?",
       "forgotPw": {
-        "infoText1": "Don't worry! Just enter the e-mail address of your account.",
-        "infoText2": "We will send you a link to reset your password :)",
+        "infoText": "Don't worry! Just enter the e-mail address of your account.\nWe will send you a link to reset your password :)",
         "sendConfEmail": "Send e-mail",
         "confEmailSentSucc": "We've sent out an e-mail to your address. Please check your inbox!",
         "confEmailSentFail": "Couldn't send e-mail. Please try again later"
@@ -78,7 +77,7 @@
       "accountDeleted": "Account deleted successfully!"
     },
     "sources": {
-      "header": "Health Info & Help",
+      "header": "Info",
       "subtitle_1": "How is your hydration goal calculated?",
       "text_1": "We use the information you provide—such as gender, weight, and activity level—to create a personalized hydration target, tailored specifically to your needs.",
       "subtitle_2": "Does alcohol really affect my hydration?",
@@ -89,10 +88,13 @@
       "subtitle_3": "How accurate is the BAC (Blood Alcohol Content) calculation?",
       "text_3": "Our BAC estimates are based on the data you provide. \nWhile individual results may vary, we give you a general estimate of when you’ll be sober. \n\nNEVER DRINK AND DRIVE! \n\nLearn more here:",
       "link_3": "How BAC is calculated",
-      "subtitle_4": "Need More Information?",
-      "text_4": "If you have additional questions, check out our FAQ here: ",
-      "text_4_2": "\nYou can also reach out to us directly at drinkydailydrinktracker@gmail.com. We're happy to help!",
-      "link_4": "Drinky FAQ"
+      "subtitle_4": "Does coffee really dehydrate me?",
+      "text_4": "Not at all!\nWhile caffeine can have a mild diuretic effect, studies show that the liquid in coffee more than makes up for it.\n\nSo, yes, you’re actually hydrating when you enjoy your coffee—just a bit less than if you were drinking water.\n\nLearn more here:",
+      "link_4": "How moderate coffee keeps you hydrated",
+      "subtitle_5": "Need More Information?",
+      "text_5": "If you have additional questions, check out our FAQ here: ",
+      "text_5_2": "\nYou can also reach out to us directly at drinkydailydrinktracker@gmail.com. We're happy to help!",
+      "link_5": "Drinky FAQ"
     },
     "about": {
       "header": "About"
@@ -104,7 +106,7 @@
       "header": "Notifications"
     },
     "profile": {
-      "header": "Metrics & Body Measurements",
+      "header": "Preferences",
       "gender": "Gender",
       "measurementSystem": "Measurement system",
       "male": "Male",
@@ -122,12 +124,14 @@
       "exerciseLow": "No",
       "exerciseMid": "Sometimes",
       "exerciseHigh": "Often",
-      "calcDailyIntake": "Calculating your recommended daily intake...",
+      "calcDailyIntake1": "Calculating your recommended daily intake...",
+      "calcDailyIntake2": "Analyzing your needs... Tailoring hydration just for you!",
+      "calcDailyIntake3": "Almost there! Preparing your personalized water intake plan…",
       "dailyIntake": "Recommended daily water intake",
       "save": "Save changes"
     },
     "statistics": {
-      "header": "Statistics & History"
+      "header": "Statistics"
     },
     "themes": {
       "header": "Themes"

@@ -1,13 +1,14 @@
 import NetInfo from "@react-native-community/netinfo";
+import appleHealthKit from "react-native-health";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View } from "react-native";
+import { View, LayoutAnimation } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { MainNavigation, StartupNavigation } from "@/navigation/AppNavigation";
 
-import { setNetworkStatus } from "@/store/general";
+import { setAppState, setNetworkStatus } from "@/store/general";
 
 import { useDatabaseSync, useAuth, useDataFromAsyncStorage } from "@/hooks";
 
@@ -21,6 +22,7 @@ import { HAS_BEEN_STARTED } from "@/utils/constants";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type ModalState } from "@/types/ModalState";
+import { type GeneralState } from "@/types/store/GeneralState";
 
 import { ActionModal } from "@/components/modals";
 
@@ -37,13 +39,20 @@ function MainAppScreen() {
   const userUID = useSelector(
     (state: UserDataState) => state.userData.userAuth.uid
   );
+  const reset = useSelector(
+    (state: GeneralState) => state.general.appState.reset
+  );
 
   const modal = useSelector((state: ModalState) => state.modal);
 
   const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
 
-  /** Check if first startup */
   useEffect(() => {
+    if (reset) {
+      dispatch(setAppState({ reset: false }));
+    }
+
+    /** Check if first startup */
     const checkAppStarted = async () => {
       try {
         const hasBeenStarted = await readAsyncStorage<boolean>(
@@ -55,11 +64,26 @@ function MainAppScreen() {
       }
     };
 
+    /** Check HealthKit permissions */
+    const permissions = {
+      permissions: {
+        read: [appleHealthKit.Constants.Permissions.Water],
+        write: [appleHealthKit.Constants.Permissions.Water],
+      },
+    };
+
+    appleHealthKit.initHealthKit(permissions, (error) => {
+      if (error) {
+        console.error("Error initializing HealthKit: ", error);
+      }
+    });
     checkAppStarted();
-  }, []);
+  }, [reset]);
 
   const handleCompleteStartup = async () => {
     await writeAsyncStorage(HAS_BEEN_STARTED, true);
+
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setShowStartup(false);
   };
 

@@ -3,6 +3,7 @@ import { BlurView } from "expo-blur";
 import { useRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts";
 import { PrimaryButton } from "@/components/buttons";
@@ -90,7 +91,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
             {hasDecision && (
               <>
                 <PrimaryButton
-                  customStyles={styles.buttonStyles}
+                  customStyles={scaledStyles.buttonStyles}
                   fontSize={modalPrimaryButtonFontSize}
                   btnColor={color.WHITE}
                   textStyle={{ color: color.BLUE }}
@@ -99,7 +100,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
                   {t("modal.no")}
                 </PrimaryButton>
                 <PrimaryButton
-                  customStyles={styles.buttonStyles}
+                  customStyles={scaledStyles.buttonStyles}
                   fontSize={modalPrimaryButtonFontSize}
                   onPress={handleOnConfirm}
                 >
@@ -109,7 +110,7 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
             )}
             {!hasDecision && (
               <PrimaryButton
-                customStyles={styles.buttonStyles}
+                customStyles={scaledStyles.buttonStyles}
                 fontSize={modalPrimaryButtonFontSize}
                 onPress={handleOnConfirm}
               >
@@ -124,6 +125,13 @@ function ActionModal({ modalText, hasDecision }: ActionModalProps) {
 }
 
 export { ActionModal };
+
+const scaledStyles = ScaledSheet.create({
+  buttonStyles: {
+    width: "40%",
+    margin: "10@ms",
+  },
+});
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -147,9 +155,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: "10%",
     flexDirection: "row",
-  },
-  buttonStyles: {
-    width: "40%",
-    margin: "2.5%",
   },
 });

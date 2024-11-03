@@ -1,78 +1,15 @@
-import {
-  FONT_SIZE_13,
-  FONT_SIZE_16,
-  FONT_SIZE_17,
-  FONT_SIZE_20,
-  FONT_SIZE_22,
-  FONT_SIZE_24,
-  FONT_SIZE_28,
-  SCREEN_SIZE,
-} from "@/utils/constants";
+import { FONT_SIZE_14, FONT_SIZE_16, FONT_SIZE_20 } from "@/utils/constants";
+import { mvs } from "react-native-size-matters";
 
-const infoCardCurrentAmountHeightObj = {
-  SMALL: 30,
-  MEDIUM: 40,
-  LARGE: 60,
-};
-
-const infoCardCurrentAmountWidthObj = {
-  SMALL: 80,
-  MEDIUM: 100,
-  LARGE: 140,
-};
-
-const infoCardCurrentAmountRadiusObj = {
-  SMALL: 10,
-  MEDIUM: 12.5,
-  LARGE: 20,
-};
-
-const infoCardCurrentAmountFontSizeObj = {
-  SMALL: FONT_SIZE_17,
-  MEDIUM: FONT_SIZE_22,
-  LARGE: FONT_SIZE_28,
-};
-
-const infoCardTotalAmountFontSizeObj = {
-  SMALL: FONT_SIZE_13,
-  MEDIUM: FONT_SIZE_16,
-  LARGE: FONT_SIZE_22,
-};
-
-const infoCardTotalAmountWidthObj = {
-  SMALL: 50,
-  MEDIUM: 60,
-  LARGE: 100,
-};
-
-const infoCardTotalAmountHeightObj = {
-  SMALL: 25,
-  MEDIUM: 25,
-  LARGE: 40,
-};
-
-const infoCardTotalAmountRadiusObj = {
-  SMALL: 7.5,
-  MEDIUM: 10,
-  LARGE: 12.5,
-};
-
-const infoCardSizeTotalFontSizeObj = {
-  SMALL: FONT_SIZE_16,
-  MEDIUM: FONT_SIZE_20,
-  LARGE: FONT_SIZE_24,
-};
-
-const infoCardCurrentAmountHeight = infoCardCurrentAmountHeightObj[SCREEN_SIZE];
-const infoCardCurrentAmountWidth = infoCardCurrentAmountWidthObj[SCREEN_SIZE];
-const infoCardCurrentAmountRadius = infoCardCurrentAmountRadiusObj[SCREEN_SIZE];
-const infoCardCurrentAmountFontSize =
-  infoCardCurrentAmountFontSizeObj[SCREEN_SIZE];
-const infoCardTotalAmountFontSize = infoCardTotalAmountFontSizeObj[SCREEN_SIZE];
-const infoCardTotalAmountWidth = infoCardTotalAmountWidthObj[SCREEN_SIZE];
-const infoCardTotalAmountHeight = infoCardTotalAmountHeightObj[SCREEN_SIZE];
-const infoCardTotalAmountRadius = infoCardTotalAmountRadiusObj[SCREEN_SIZE];
-const infoCardSizeTotalFontSize = infoCardSizeTotalFontSizeObj[SCREEN_SIZE];
+const infoCardCurrentAmountHeight = mvs(35);
+const infoCardCurrentAmountWidth = mvs(90);
+const infoCardCurrentAmountRadius = mvs(12.5);
+const infoCardCurrentAmountFontSize = mvs(FONT_SIZE_20);
+const infoCardTotalAmountFontSize = mvs(FONT_SIZE_14);
+const infoCardTotalAmountWidth = mvs(60);
+const infoCardTotalAmountHeight = mvs(25);
+const infoCardTotalAmountRadius = mvs(10);
+const infoCardSizeTotalFontSize = mvs(FONT_SIZE_16);
 
 export {
   infoCardCurrentAmountHeight,

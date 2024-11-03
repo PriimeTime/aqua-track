@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 
 import { setHistory } from "@/store/drinkHistory";
 import { setUserMetrics, setUserLoginState } from "@/store/userData";
+import { setAppState } from "@/store/general";
 
 import { HAS_BEEN_STARTED, initialUserMetrics } from "@/utils/constants";
 
@@ -26,6 +27,7 @@ export const useResetApp = () => {
     dispatch(setHistory([]));
     dispatch(setUserMetrics(initialUserMetrics));
     dispatch(setUserLoginState(false));
+    dispatch(setAppState({ reset: true }));
     await writeAsyncStorage(HAS_BEEN_STARTED, false);
   };
 
