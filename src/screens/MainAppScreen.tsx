@@ -8,7 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { MainNavigation, StartupNavigation } from "@/navigation/AppNavigation";
 
-import { setNetworkStatus } from "@/store/general";
+import { setAppState, setNetworkStatus } from "@/store/general";
 
 import { useDatabaseSync, useAuth, useDataFromAsyncStorage } from "@/hooks";
 
@@ -22,6 +22,7 @@ import { HAS_BEEN_STARTED } from "@/utils/constants";
 
 import { type UserDataState } from "@/types/store/UserDataState";
 import { type ModalState } from "@/types/ModalState";
+import { type GeneralState } from "@/types/store/GeneralState";
 
 import { ActionModal } from "@/components/modals";
 
@@ -38,12 +39,19 @@ function MainAppScreen() {
   const userUID = useSelector(
     (state: UserDataState) => state.userData.userAuth.uid
   );
+  const reset = useSelector(
+    (state: GeneralState) => state.general.appState.reset
+  );
 
   const modal = useSelector((state: ModalState) => state.modal);
 
   const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
 
   useEffect(() => {
+    if (reset) {
+      dispatch(setAppState({ reset: false }));
+    }
+
     /** Check if first startup */
     const checkAppStarted = async () => {
       try {
@@ -70,7 +78,7 @@ function MainAppScreen() {
       }
     });
     checkAppStarted();
-  }, []);
+  }, [reset]);
 
   const handleCompleteStartup = async () => {
     await writeAsyncStorage(HAS_BEEN_STARTED, true);

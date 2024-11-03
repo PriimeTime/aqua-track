@@ -8,6 +8,9 @@ const initialState: General = {
     isConnected: false,
     isReachable: false,
   },
+  appState: {
+    reset: false,
+  },
 };
 
 const generalSlice = createSlice({
@@ -17,9 +20,12 @@ const generalSlice = createSlice({
     setNetworkStatus: (state, action: PayloadAction<NetworkStatus>) => {
       state.networkStatus = { ...action.payload };
     },
+    setAppState: (state, action: PayloadAction<{ reset: boolean }>) => {
+      state.appState = { ...action.payload };
+    },
   },
 });
 
-export const { setNetworkStatus } = generalSlice.actions;
+export const { setNetworkStatus, setAppState } = generalSlice.actions;
 
 export default generalSlice.reducer;
