@@ -2,7 +2,7 @@
   "expo": {
     "name": "Drinky",
     "slug": "aqua-track",
-    "version": "1.5.8",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,9 +17,18 @@
       "usesAppleSignIn": true,
       "ascAppId": "6478781926",
       "bundleIdentifier": "com.priimetime.aquatrack",
-      "buildNumber": "1.5.8",
+      "buildNumber": "1.6.0",
       "config": {
         "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "This app uses HealthKit to track your water intake.",
+        "NSHealthUpdateUsageDescription": "This app uses HealthKit to track your water intake."
+      },
+      "entitlements": {
+        "com.apple.developer.healthkit": [
+          "HKQuantityTypeIdentifierDietaryWater"
+        ]
       }
     },
     "android": {
@@ -37,8 +46,14 @@
       }
     },
     "plugins": [
-      ["expo-font", { "fonts": ["./assets/fonts/Chewy-Regular.ttf"] }],
-      "expo-apple-authentication"
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Chewy-Regular.ttf"]
+        }
+      ],
+      "expo-apple-authentication",
+      "react-native-health"
     ]
   }
 }

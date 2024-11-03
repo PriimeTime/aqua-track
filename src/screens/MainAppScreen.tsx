@@ -1,4 +1,5 @@
 import NetInfo from "@react-native-community/netinfo";
+import appleHealthKit from "react-native-health";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -42,8 +43,8 @@ function MainAppScreen() {
 
   const { fetchDataFromAsyncStorage } = useDataFromAsyncStorage();
 
-  /** Check if first startup */
   useEffect(() => {
+    /** Check if first startup */
     const checkAppStarted = async () => {
       try {
         const hasBeenStarted = await readAsyncStorage<boolean>(
@@ -55,6 +56,19 @@ function MainAppScreen() {
       }
     };
 
+    /** Check HealthKit permissions */
+    const permissions = {
+      permissions: {
+        read: [appleHealthKit.Constants.Permissions.Water],
+        write: [appleHealthKit.Constants.Permissions.Water],
+      },
+    };
+
+    appleHealthKit.initHealthKit(permissions, (error) => {
+      if (error) {
+        console.error("Error initializing HealthKit: ", error);
+      }
+    });
     checkAppStarted();
   }, []);
 
