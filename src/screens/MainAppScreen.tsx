@@ -3,7 +3,7 @@ import appleHealthKit from "react-native-health";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { View } from "react-native";
+import { View, LayoutAnimation } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { MainNavigation, StartupNavigation } from "@/navigation/AppNavigation";
@@ -82,6 +82,8 @@ function MainAppScreen() {
 
   const handleCompleteStartup = async () => {
     await writeAsyncStorage(HAS_BEEN_STARTED, true);
+
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setShowStartup(false);
   };
 
