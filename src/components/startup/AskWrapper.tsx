@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   continueButtonWrapper: {
-    height: "40%",
+    height: "20%",
     justifyContent: "center",
   },
 });

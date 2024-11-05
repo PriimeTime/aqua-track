@@ -99,7 +99,7 @@ function CustomSelectBox<T>({
                 left: isVertical ? "10%" : "0%",
                 width: isVertical ? "80%" : `${(100 / items.length) * 0.95}%`,
                 height: isVertical ? "90%" : "100%",
-                marginBottom: isVertical ? ms(10) : "0%",
+                marginBottom: isVertical ? ms(5) : "0%",
                 backgroundColor:
                   selectedItemId === item.id ? color.BLUE : color.WHITE,
               },
@@ -129,7 +129,7 @@ export { CustomSelectBox };
 const scaledStyles = ScaledSheet.create({
   labelWrapper: {
     width: "100%",
-    marginBottom: "10@ms",
+    marginBottom: "5@ms",
   },
 });
 

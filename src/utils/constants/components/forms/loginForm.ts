@@ -1,6 +1,5 @@
-import { FONT_SIZE_20 } from "@/utils/constants";
-import { ms } from "react-native-size-matters";
+import { FONT_SIZE_17 } from "@/utils/constants";
 
-const loginFormErrorFontSize = ms(FONT_SIZE_20);
+const loginFormErrorFontSize = FONT_SIZE_17;
 
 export { loginFormErrorFontSize };

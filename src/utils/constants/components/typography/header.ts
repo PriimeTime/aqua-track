@@ -1,6 +1,5 @@
-import { FONT_SIZE_30 } from "@/utils/constants";
-import { ms } from "react-native-size-matters";
+import { FONT_SIZE_26 } from "@/utils/constants";
 
-const headerFontSize = ms(FONT_SIZE_30);
+const headerFontSize = FONT_SIZE_26;
 
 export { headerFontSize };

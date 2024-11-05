@@ -100,15 +100,6 @@ function ProfileSettings() {
 
   return (
     <ContentPage title={t("settings.profile.header")}>
-      {/* <InputContentWrapper>
-        <CustomTextField
-          inputType={CustomTextFieldInputType.Number}
-          maxLength={2}
-          label="Age"
-          value={numToString(metricObject.age)}
-          handleOnChangeText={(value) => handleOnChange(Number(value), "age")}
-        ></CustomTextField>
-      </InputContentWrapper> */}
       <InputContentWrapper>
         <CustomSelectBox
           items={genderSelectBoxItems}
@@ -128,17 +119,6 @@ function ProfileSettings() {
         ></CustomSelectBox>
       </InputContentWrapper>
       <InputContentWrapper>
-        {/* <View style={{ flex: 1, flexDirection: "row" }}> */}
-        {/* <CustomTextField
-            inputType={CustomTextFieldInputType.Number}
-            maxLength={3}
-            label="Height"
-            append="cm"
-            value={numToString(metricObject.height)}
-            handleOnChangeText={(value) =>
-              handleOnChange(Number(value), "height")
-            }
-          ></CustomTextField> */}
         <CustomTextField
           inputType={CustomTextFieldInputType.Number}
           maxLength={3}

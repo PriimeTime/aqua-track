@@ -1,6 +1,5 @@
 import { Pressable, Animated, View, StyleSheet } from "react-native";
 import { useRef } from "react";
-// import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ms, ScaledSheet } from "react-native-size-matters";
 
@@ -13,11 +12,6 @@ interface SettingsButtonProps {
 
 function SettingsButton({ onPress }: SettingsButtonProps) {
   const scaleValue = useRef(animatedScaleValue(1)).current;
-
-  const handlePress = () => {
-    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    onPress();
-  };
 
   const handleOnPressIn = () => {
     animateButtonPress(scaleValue, animatedScaleValue(0.8));
@@ -36,11 +30,11 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
         ]}
       >
         <Pressable
-          onPress={handlePress}
+          onPress={onPress}
           onPressIn={handleOnPressIn}
           onPressOut={handleOnPressOut}
         >
-          <Ionicons color={color.BLUE} size={ms(35)} name="menu" />
+          <Ionicons color={color.BLUE} size={ms(25)} name="menu" />
         </Pressable>
       </Animated.View>
     </View>
@@ -55,9 +49,9 @@ const scaledStyles = ScaledSheet.create({
     justifyContent: "center",
     ...shadow,
     backgroundColor: color.WHITE,
-    width: "64@ms",
-    height: "64@ms",
-    borderRadius: "32@ms",
+    width: "48@ms",
+    height: "48@ms",
+    borderRadius: "24@ms",
   },
 });
 

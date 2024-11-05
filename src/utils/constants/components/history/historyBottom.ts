@@ -1,10 +1,10 @@
-import { FONT_SIZE_22 } from "@/utils/constants";
+import { FONT_SIZE_20 } from "@/utils/constants";
 import { ms } from "react-native-size-matters";
 
-const historyBottomLineBorderTopWidth = ms(2);
+const historyBottomLineBorderTopWidth = ms(1);
 const historyBottomLineHeight = ms(20);
 const historyBottomTextIndent = ms(20);
-const historyBottomFontSize = ms(FONT_SIZE_22);
+const historyBottomFontSize = FONT_SIZE_20;
 
 export {
   historyBottomLineBorderTopWidth,

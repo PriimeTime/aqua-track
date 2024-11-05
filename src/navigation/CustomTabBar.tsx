@@ -1,4 +1,4 @@
-import { View, Pressable, Text, StyleSheet } from "react-native";
+import { View, Pressable, Text, StyleSheet, ViewStyle } from "react-native";
 import { TabNavigationState, ParamListBase } from "@react-navigation/native";
 import { BottomTabNavigationEventMap } from "@react-navigation/bottom-tabs";
 import { NavigationHelpers } from "@react-navigation/native";
@@ -7,7 +7,7 @@ import { ScaledSheet } from "react-native-size-matters";
 
 import { WaterDropButton } from "@/components/navigation";
 
-import { color, shadow, fontFamily } from "@/utils/constants";
+import { color, shadow, fontFamily, FONT_SIZE_18 } from "@/utils/constants";
 import { customTabBarRadius } from "@/utils/constants/components";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
@@ -59,7 +59,7 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
         if (route.name === DrinkRouteName.DrinkInput) {
           return (
             <WaterDropButton
-              style={scaledStyles.waterDropButton as any}
+              style={scaledStyles.waterDropButton as ViewStyle}
               key={label}
               onPress={onPress}
             />
@@ -104,7 +104,7 @@ const scaledStyles = ScaledSheet.create({
   },
   text: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: "20@ms",
+    fontSize: FONT_SIZE_18,
     textTransform: "uppercase",
   },
   waterDropButton: {
