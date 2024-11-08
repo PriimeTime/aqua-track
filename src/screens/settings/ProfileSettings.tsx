@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useNavigation, StackActions } from "@react-navigation/native";
+import { StyleSheet } from "react-native";
 
 import { ContentPage } from "@/components/wrappers";
 import { CustomTextField, CustomSelectBox } from "@/components/input";
@@ -25,7 +26,7 @@ import {
   numToString,
 } from "@/utils/helpers";
 
-import { color, initialUserMetrics } from "@/utils/constants";
+import { color, initialUserMetrics, inputFieldHeight } from "@/utils/constants";
 
 import { useDisplayUnits, useModal, useSelectBoxItems } from "@/hooks";
 
@@ -100,7 +101,7 @@ function ProfileSettings() {
 
   return (
     <ContentPage title={t("settings.profile.header")}>
-      <InputContentWrapper>
+      <InputContentWrapper style={styles.inputWrapper}>
         <CustomSelectBox
           items={genderSelectBoxItems}
           label={t("settings.profile.gender")}
@@ -108,7 +109,7 @@ function ProfileSettings() {
           value={metricObject.gender}
         ></CustomSelectBox>
       </InputContentWrapper>
-      <InputContentWrapper>
+      <InputContentWrapper style={styles.inputWrapper}>
         <CustomSelectBox
           items={measurementSystemSelectBoxItems}
           label={t("settings.profile.measurementSystem")}
@@ -147,7 +148,7 @@ function ProfileSettings() {
         ></CustomTextField>
         {/* </View> */}
       </InputContentWrapper>
-      <InputContentWrapper>
+      <InputContentWrapper style={styles.inputWrapper}>
         <CustomSelectBox
           items={exerciseLevelSelectBoxItems}
           label={t("settings.profile.exercisePrompt")}
@@ -174,3 +175,9 @@ function ProfileSettings() {
 }
 
 export { ProfileSettings };
+
+const styles = StyleSheet.create({
+  inputWrapper: {
+    height: inputFieldHeight * 1.5,
+  },
+});

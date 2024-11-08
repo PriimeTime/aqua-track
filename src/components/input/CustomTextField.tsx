@@ -119,24 +119,28 @@ function CustomTextField({
     <View
       style={[
         {
+          flex: 1,
           width: textFieldWidth,
+          justifyContent: "center",
         } as StyleProp<ViewStyle>,
         customStyles,
       ]}
       {...props}
     >
       <View
-        style={[
-          scaledStyles.labelWrapper,
-          { width: fullWidth ? "100%" : "50%" },
-        ]}
+        style={{
+          marginBottom: label ? ms(10) : 0,
+          width: fullWidth ? "100%" : "50%",
+        }}
       >
-        <SecondaryText
-          fontSize={paragraphMediumFontSize}
-          color={labelColor ?? color.DARK_BLUE}
-        >
-          {label}
-        </SecondaryText>
+        {label && (
+          <SecondaryText
+            fontSize={paragraphMediumFontSize}
+            color={labelColor ?? color.DARK_BLUE}
+          >
+            {label}
+          </SecondaryText>
+        )}
       </View>
       <View
         style={[
@@ -185,9 +189,6 @@ function CustomTextField({
 export { CustomTextField };
 
 const scaledStyles = ScaledSheet.create({
-  labelWrapper: {
-    marginBottom: "10@ms",
-  },
   textInputWrapper: {
     paddingRight: "10@ms",
     height: inputFieldHeight,

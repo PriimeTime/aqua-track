@@ -85,10 +85,10 @@ function CustomSelectBox<T>({
         </View>
       )}
       <View
-        style={[
-          styles.selectBoxListWrapper,
-          { flexDirection: isVertical ? "column" : "row" },
-        ]}
+        style={{
+          flexDirection: isVertical ? "column" : "row",
+          flex: 1,
+        }}
       >
         {items.map((item) => (
           <Pressable
@@ -99,7 +99,8 @@ function CustomSelectBox<T>({
                 left: isVertical ? "10%" : "0%",
                 width: isVertical ? "80%" : `${(100 / items.length) * 0.95}%`,
                 height: isVertical ? "90%" : "100%",
-                marginBottom: isVertical ? ms(5) : "0%",
+                marginBottom: isVertical ? ms(10) : "0%",
+                marginHorizontal: ms(5),
                 backgroundColor:
                   selectedItemId === item.id ? color.BLUE : color.WHITE,
               },
@@ -134,15 +135,11 @@ const scaledStyles = ScaledSheet.create({
 });
 
 const styles = StyleSheet.create({
-  selectBoxListWrapper: {
-    width: "100%",
-    height: inputFieldHeight,
-    justifyContent: "space-between",
-  },
   selectBoxItemWrapper: {
     borderRadius: inputFieldHeight / 2,
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
   },
   selectBoxText: {
     fontSize: paragraphMediumFontSize,
