@@ -7,8 +7,11 @@ import { ScaledSheet } from "react-native-size-matters";
 
 import { WaterDropButton } from "@/components/navigation";
 
-import { color, shadow, fontFamily, FONT_SIZE_18 } from "@/utils/constants";
-import { customTabBarRadius } from "@/utils/constants/components";
+import { color, shadow, fontFamily } from "@/utils/constants";
+import {
+  customTabBarFontSize,
+  customTabBarRadius,
+} from "@/utils/constants/components";
 
 import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { MainRouteName } from "@/enums/routes/MainRouteName";
@@ -73,7 +76,13 @@ function CustomTabBar({ state, navigation }: CustomTabBarProps) {
               style={scaledStyles.wrapper}
             >
               <View style={[styles.container, dynamicBgStyle]}>
-                <Text style={[scaledStyles.text, dynamicTextStyle]}>
+                <Text
+                  style={[
+                    scaledStyles.text,
+                    dynamicTextStyle,
+                    { fontSize: customTabBarFontSize },
+                  ]}
+                >
                   {label}
                 </Text>
               </View>
@@ -104,7 +113,6 @@ const scaledStyles = ScaledSheet.create({
   },
   text: {
     fontFamily: fontFamily.DEFAULT,
-    fontSize: FONT_SIZE_18,
     textTransform: "uppercase",
   },
   waterDropButton: {

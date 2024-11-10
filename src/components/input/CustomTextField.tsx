@@ -15,6 +15,7 @@ import { SecondaryText } from "@/components/texts";
 
 import { color, fontFamily, inputFieldHeight } from "@/utils/constants";
 import { paragraphMediumFontSize } from "@/utils/constants/components/typography";
+import { customTextFieldPadding } from "@/utils/constants/components/input";
 
 interface CustomTextFieldProps {
   value: string;
@@ -97,6 +98,9 @@ function CustomTextField({
     case undefined:
     case null:
       break;
+    case CustomTextFieldInputType.Default:
+      textAlign = "center";
+      break;
     case CustomTextFieldInputType.Number:
       textAlign = "center";
       keyboardType = inputType;
@@ -146,7 +150,7 @@ function CustomTextField({
         style={[
           scaledStyles.textInputWrapper,
           {
-            paddingLeft: readOnly ? "0%" : ms(10),
+            paddingLeft: readOnly ? "0%" : customTextFieldPadding,
             backgroundColor: readOnly ? "" : color.WHITE,
             width: textFieldWidth,
           } as StyleProp<ViewStyle>,

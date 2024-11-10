@@ -17,7 +17,7 @@ import { headerFontSize } from "@/utils/constants/components/typography";
 import { useDisplayUnits, usePeriodicRerender, useTodaysDrinks } from "@/hooks";
 import { ScreenSize } from "@/enums/maps/ScreenSize";
 
-const numberOfRows = SCREEN_SIZE === ScreenSize.Small ? 4 : 5;
+const numberOfRows = SCREEN_SIZE === ScreenSize.SMALL ? 4 : 5;
 
 function History() {
   const { t } = useTranslation();

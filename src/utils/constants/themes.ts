@@ -1,10 +1,5 @@
 import { ms } from "react-native-size-matters";
 
-import { ScreenSize } from "@/enums/maps/ScreenSize";
-
-import { FontSizeConfig } from "@/models/FontSizeConfig";
-import { ResponsiveSize } from "@/models/ResponsiveSize";
-
 const color = {
   TRANSPARENT: "transparent",
   WHITE: "#FFFFFF",

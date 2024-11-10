@@ -1,10 +1,11 @@
 import { Pressable, Animated, View, StyleSheet } from "react-native";
 import { useRef } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { ms, ScaledSheet } from "react-native-size-matters";
+import { ms } from "react-native-size-matters";
 
 import { animateButtonPress, animatedScaleValue } from "@/utils/animations";
 import { color, shadow } from "@/utils/constants";
+import { settingsButtonIconSize } from "@/utils/constants/components/settings";
 
 interface SettingsButtonProps {
   onPress: () => void;
@@ -26,7 +27,8 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
       <Animated.View
         style={[
           { transform: [{ scale: scaleValue }] },
-          scaledStyles.baseButton,
+          styles.baseButton,
+          { width: ms(48), height: ms(48), borderRadius: ms(24) },
         ]}
       >
         <Pressable
@@ -34,7 +36,11 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
           onPressIn={handleOnPressIn}
           onPressOut={handleOnPressOut}
         >
-          <Ionicons color={color.BLUE} size={ms(25)} name="menu" />
+          <Ionicons
+            color={color.BLUE}
+            size={settingsButtonIconSize}
+            name="menu"
+          />
         </Pressable>
       </Animated.View>
     </View>
@@ -43,20 +49,14 @@ function SettingsButton({ onPress }: SettingsButtonProps) {
 
 export { SettingsButton };
 
-const scaledStyles = ScaledSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "flex-end",
+  },
   baseButton: {
     alignItems: "center",
     justifyContent: "center",
     ...shadow,
     backgroundColor: color.WHITE,
-    width: "48@ms",
-    height: "48@ms",
-    borderRadius: "24@ms",
-  },
-});
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "flex-end",
   },
 });

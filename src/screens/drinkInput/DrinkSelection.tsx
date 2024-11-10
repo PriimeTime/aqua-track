@@ -21,7 +21,7 @@ import { DrinkRouteName } from "@/enums/routes/DrinkRouteName";
 import { ScreenSize } from "@/enums/maps/ScreenSize";
 
 const numColumns = 2; // Number of columns for the flatlist
-const numberOfRows = SCREEN_SIZE === ScreenSize.Large ? 6 : 5; // Number of rows for the flatlist
+const numberOfRows = SCREEN_SIZE === ScreenSize.LARGE ? 6 : 5; // Number of rows for the flatlist
 const spacing = ms(12); // Spacing for the flatlist items in pixels
 
 const itemWidth = (screenWidth - spacing * (numColumns + 1)) / numColumns;

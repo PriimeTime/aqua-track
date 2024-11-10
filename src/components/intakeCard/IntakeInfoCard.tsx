@@ -4,7 +4,7 @@ import { useState, useCallback, useRef } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { View } from "react-native";
 import { CountUp, ReturnValue } from "use-count-up";
-import { ms, ScaledSheet } from "react-native-size-matters";
+import { ScaledSheet } from "react-native-size-matters";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import { PrimaryText } from "@/components/texts";

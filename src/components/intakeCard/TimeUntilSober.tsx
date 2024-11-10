@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import { CountUp } from "use-count-up";
 import { useTranslation } from "react-i18next";
-import { ms } from "react-native-size-matters";
 
 import { PrimaryText } from "@/components/texts/PrimaryText";
+
 import { FONT_SIZE_12, FONT_SIZE_16 } from "@/utils/constants";
 
 interface TimeUntilSoberProps {

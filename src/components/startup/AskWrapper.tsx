@@ -158,6 +158,7 @@ function AskWrapper({
         value={String(
           formState[inputType as keyof typeof formState] || input || ""
         )}
+        inputType={CustomTextFieldInputType.Default}
         handleOnChangeText={(text) => {
           setInput(text);
           handleInputChange(inputType, text);

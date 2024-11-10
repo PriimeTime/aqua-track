@@ -12,7 +12,7 @@ import { headerFontSize } from "@/utils/constants/components/typography";
 import { SCREEN_SIZE } from "@/utils/constants";
 import { ScreenSize } from "@/enums/maps/ScreenSize";
 
-const numberOfRows = SCREEN_SIZE === ScreenSize.Small ? 7 : 8;
+const numberOfRows = SCREEN_SIZE === ScreenSize.SMALL ? 7 : 8;
 
 function SettingsList() {
   const { t } = useTranslation();

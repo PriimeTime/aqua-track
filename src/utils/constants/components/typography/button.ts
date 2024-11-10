@@ -1,9 +1,19 @@
-import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_22 } from "@/utils/constants";
-
 import { ms } from "react-native-size-matters";
 
-const primaryButtonFontSize = FONT_SIZE_20;
-const modalPrimaryButtonFontSize = FONT_SIZE_17;
+import { ScreenSize } from "@/enums/maps/ScreenSize";
+
+import {
+  FONT_SIZE_17,
+  FONT_SIZE_20,
+  FONT_SIZE_24,
+  FONT_SIZE_26,
+  SCREEN_SIZE,
+} from "@/utils/constants";
+
+const primaryButtonFontSize =
+  SCREEN_SIZE === ScreenSize.LARGE ? FONT_SIZE_24 : FONT_SIZE_20;
+const modalPrimaryButtonFontSize =
+  SCREEN_SIZE === ScreenSize.LARGE ? FONT_SIZE_26 : FONT_SIZE_17;
 const primaryButtonRadius = ms(20);
 const primaryButtonWrapperHeight = ms(60);
 
